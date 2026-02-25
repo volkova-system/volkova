@@ -1,0 +1,13 @@
+@commitlint/cli --save-dev
+@commitlint/config-conventional --save-dev
+husky --save-dev
+lint-staged --save-dev
+
+@picocss/pico --save
+htmx.org --save
+feather-icons --save
+
+storybook --save-dev --prefix ./storybook
+@storybook/html-vite --save-dev --prefix ./storybook
+typescript --save-dev --prefix ./storybook
+vite --save-dev --prefix ./storybook

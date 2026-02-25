@@ -1,0 +1,416 @@
+|<------------------------------->[ BEGIN-CRFCF ]<------------------------------->|
+
+NOTICE: UNAUTHORIZED MODIFICATION OF THIS DOCUMENT IS EXPRESSLY PROHIBITED.
+EDITING PRIVILEGES ARE EXCLUSIVELY RESERVED FOR THE AUTHOR, DESIGNATED
+CONTRIBUTORS, AND AUTHORIZED ARTIFICIAL INTELLIGENCE AGENTS. DOCUMENT
+INTEGRITY IS SECURED BY A CRYPTOGRAPHIC CHECKSUM; AUTOMATED VERIFICATION
+SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
+
+0.  METADATA:
+
+    - RFC:      CONCISE-RFC-000000
+    - GROUP:    VS-SCRIPTS
+    - TITLE:    SETUP SETTING RESTRICTIONS FORMAT
+    - ACRONYM:  SSRSF
+    - AUTHOR:   Richeve Bebedor <richeve.bebedor+vs-scripts@gmail.com>
+    - CATEGORY: SPECIFICATION
+    - STATUS:   DRAFT
+    - VERSION:  000000 (0.0.0)
+    - CREATED:  2026-02-07
+    - CHECKSUM: <SHA-256>
+
+1.  Summary:
+
+    This document defines the restriction fields available in
+    settings/setup.setting files and how they are enforced by the
+    setup-concise-repository script. It provides examples and
+    guidelines for configuring platform, interpreter, and version
+    restrictions.
+
+2.  Permission:
+
+    NOTICE: PERMISSION TO USE, MODIFY, COPY, AND/OR DISTRIBUTE THIS DOCUMENT
+    AND/OR REPOSITORY IS GRANTED UNDER THE TERMS OF THE LICENSE AGREEMENT
+    SPECIFIED IN THE LICENSE FILE. PLEASE REFER TO THE LICENSE FILE FOR DETAILS.
+
+3.  Contents:
+
+    0.  METADATA ........................................................... 009
+    1.  Summary ............................................................ 022
+    2.  Permission ......................................................... 030
+    3.  Contents ........................................................... 036
+    4.  Document Status .................................................... 049
+    5.  Operating System Platform Mapping .................................. 056
+    6.  File Extension Restrictions ........................................ 091
+    7.  Command Restrictions ............................................... 182
+    8.  Dependency Configuration ........................................... 264
+    9.  Examples ........................................................... 308
+
+4.  Document Status:
+
+    - This document is a DRAFT specification for setup.setting restrictions.
+    - It defines normative guidance for OS platform mapping, file/command
+      restrictions, and dependency configuration.
+    - It is not an Internet Standards Track specification.
+
+5.  Operating System Platform Mapping:
+
+    5.1 Required Table:
+
+        [os_platform.map]
+
+    5.2 Purpose:
+
+        This repository will only use the following interpreters per platform:
+
+        - pwsh on Windows
+        - bash on Linux
+        - sh on macOS
+
+        A single capability MUST be used to obtain the OS type, based on
+        interpreter-native identifiers:
+
+        - Windows (pwsh): $env:OS -> Windows_NT
+        - macOS (sh): uname -s -> Darwin
+        - Linux (bash): uname -s -> Linux
+
+        The [os_platform.map] table converts these raw identifiers into
+        standardized names:
+
+        - windows: Windows operating system
+        - macos: macOS operating system
+        - linux: Linux operating system
+
+    5.3 Example:
+
+        [os_platform.map]
+        Windows_NT = "windows"
+        Darwin = "macos"
+        Linux = "linux"
+
+6.  File Extension Restrictions:
+
+    File extension tables define restrictions for executable files based
+    on their extension (.ps1, .sh, .bash).
+
+    Execution policy:
+
+        - .ps1 scripts MUST run only in pwsh on Windows
+        - .bash scripts MUST run only in bash on Linux
+        - .sh scripts MUST run only in sh on macOS
+
+    6.1 Table Format:
+
+        ["*.<extension>"]
+
+    6.2 Available Fields:
+
+        All tables (except [os_platform.map]) MUST include all keys, even when a
+        key value is false to denote "not restricted".
+
+        - interpreter: Required interpreter name
+        - interpreter_version: Required interpreter version
+        - command_version: Required command version
+        - os_platform: Required OS platform name
+        - windows_dependency: Windows-specific dependency executable expression
+          (script file path or dependency command expression)
+        - macos_dependency: macOS-specific dependency executable expression
+          (script file path or dependency command expression)
+        - linux_dependency: Linux-specific dependency executable expression
+          (script file path or dependency command expression)
+
+    6.3 Field Behavior:
+
+        - Keys MUST always be present in tables (except [os_platform.map]).
+        - If a key value is false: No restriction is applied for that key.
+        - If a key value is a string: Restriction is applied strictly.
+        - Version restrictions MUST be strict. Higher or lower versions are
+          NOT accepted.
+        - interpreter_version MUST equal the first line of the version string
+          emitted by the version command of that interpreter:
+
+          - pwsh: pwsh --version (e.g., PowerShell 7.5.4)
+          - bash: bash --version
+          - sh: sh --version
+
+    6.4 PowerShell Script Examples:
+
+        ["*.ps1"]
+        interpreter = "pwsh"
+        interpreter_version = "PowerShell 7.5.4"
+        command_version = false
+        os_platform = "windows"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        This restricts .ps1 files to:
+        - Run only with pwsh interpreter
+        - Require PowerShell version 7.5.4 strictly
+        - Execute only on Windows platform
+
+    6.5 Shell Script Examples:
+
+        ["*.sh"]
+        interpreter = "sh"
+        interpreter_version = false
+        command_version = false
+        os_platform = "macos"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        This restricts .sh files to:
+        - Run only with sh interpreter
+        - Execute only on macOS platform
+        - No version restriction applied because interpreter_version = false
+
+        ["*.bash"]
+        interpreter = "bash"
+        interpreter_version = false
+        command_version = false
+        os_platform = "linux"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        This restricts .bash files to:
+        - Run only with bash interpreter
+        - Execute only on Linux platform
+        - No version restriction applied because interpreter_version = false
+
+7.  Command Restrictions:
+
+    Command tables define restrictions for command expressions based on
+    the command name (winget, node, npm, etc.).
+
+    7.1 Table Format:
+
+        [<command-name>]
+
+    7.2 Available Fields:
+
+        All keys are available to all tables except os_platform.map. Keys set to
+        false mean not applicable or not restricted.
+
+        - interpreter: Required interpreter name
+        - interpreter_version: Required interpreter version
+        - command_version: Required command version
+        - os_platform: Required OS platform name
+        - windows_dependency: Windows-specific dependency executable expression
+          (script file path or dependency command expression)
+        - macos_dependency: macOS-specific dependency executable expression
+          (script file path or dependency command expression)
+        - linux_dependency: Linux-specific dependency executable expression
+          (script file path or dependency command expression)
+
+    7.3 Field Behavior:
+
+        - Keys MUST always be present in tables (except [os_platform.map]).
+        - If a key value is false: No restriction is applied for that key.
+        - If a key value is a string: Restriction is applied strictly.
+        - command_version MUST equal the first line of the version string
+          emitted by the version command of that tool (e.g., node --version).
+          The command MUST have --version flag available. If the command does
+          not have the required --version flag, the restricting script MUST
+          throw an error due to unsupported version flag.
+
+    7.4 Node.js Example:
+
+        [node]
+        interpreter = false
+        interpreter_version = false
+        command_version = "v24.13.0"
+        os_platform = "windows"
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = false
+        linux_dependency = false
+
+        This restricts node command to:
+        - Require version 24.13.0 strictly
+        - Execute only on Windows platform
+
+    7.5 Winget Example:
+
+        [winget]
+        interpreter = false
+        interpreter_version = false
+        command_version = "v1.12.460"
+        os_platform = "windows"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        This restricts winget command to:
+        - Require version 1.12.460 strictly
+        - Execute only on Windows platform
+
+    7.6 NPM Cross-Platform Example:
+
+        [npm]
+        interpreter = false
+        interpreter_version = false
+        command_version = false
+        os_platform = false
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = false
+        linux_dependency = false
+
+        This allows npm command to:
+        - Run on any platform
+        - No version restriction applied because command_version = false
+        - Execute dependency script on Windows
+
+8.  Dependency Configuration:
+
+    Dependencies are OS platform-specific executable script files or command
+    expressions that must be executed before the main command runs.
+
+    8.1 Field Format:
+
+        <platform>_dependency = "path/to/script or command expression"
+
+        When not false, the value MUST be one of only two executable expressions:
+        - script file path expression (relative to repository root)
+        - dependency command expression
+
+    8.2 Available Dependency Keys:
+
+        - windows_dependency: Windows-specific dependency executable expression
+          (script file path or dependency command expression)
+        - macos_dependency: macOS-specific dependency executable expression
+          (script file path or dependency command expression)
+        - linux_dependency: Linux-specific dependency executable expression
+          (script file path or dependency command expression)
+
+    8.3 Behavior:
+
+        - Dependency script or command executes before main command
+        - Failure logs warning but does not stop execution
+        - Only executes on matching platform
+
+    8.4 Node Installation Example:
+
+        [node]
+        interpreter = false
+        interpreter_version = false
+        command_version = "v24.13.0"
+        os_platform = false
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = "scripts/install-node-version.sh"
+        linux_dependency = "scripts/install-node-version.bash"
+
+        This ensures:
+        - Node version 24.13.0 strictly required
+        - Platform-specific installation script runs first
+        - Each platform uses appropriate script format
+
+9.  Examples:
+
+    9.1 Complete setup.setting Example:
+
+        [os_platform.map]
+        Windows_NT = "windows"
+        Darwin = "macos"
+        Linux = "linux"
+
+        ["*.ps1"]
+        interpreter = "pwsh"
+        interpreter_version = "PowerShell 7.5.4"
+        command_version = false
+        os_platform = "windows"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        ["*.sh"]
+        interpreter = "sh"
+        interpreter_version = false
+        command_version = false
+        os_platform = "macos"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        ["*.bash"]
+        interpreter = "bash"
+        interpreter_version = false
+        command_version = false
+        os_platform = "linux"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        [winget]
+        interpreter = false
+        interpreter_version = false
+        command_version = "v1.12.460"
+        os_platform = "windows"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        [node]
+        interpreter = false
+        interpreter_version = false
+        command_version = "v24.13.0"
+        os_platform = false
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = "scripts/install-node-version.sh"
+        linux_dependency = "scripts/install-node-version.bash"
+
+        [npm]
+        interpreter = false
+        interpreter_version = false
+        command_version = "11.8.0"
+        os_platform = false
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = false
+        linux_dependency = false
+
+    9.2 Minimal setup.setting Example:
+
+        [os_platform.map]
+        Windows_NT = "windows"
+
+        ["*.ps1"]
+        interpreter = "pwsh"
+        interpreter_version = "PowerShell 7.5.4"
+        command_version = false
+        os_platform = "windows"
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        [node]
+        interpreter = false
+        interpreter_version = false
+        command_version = false
+        os_platform = false
+        windows_dependency = "scripts/install-node-version.ps1"
+        macos_dependency = false
+        linux_dependency = false
+
+        This minimal configuration:
+        - Maps Windows_NT to windows
+        - Restricts .ps1 to Windows only
+        - Ensures node dependency runs on Windows
+        - No version restriction applied where keys are false
+
+    9.3 Unrestricted Command Example:
+
+        [git]
+        interpreter = false
+        interpreter_version = false
+        command_version = false
+        os_platform = false
+        windows_dependency = false
+        macos_dependency = false
+        linux_dependency = false
+
+        This allows git command to:
+        - Run on any platform because os_platform = false
+        - No version restriction because command_version = false
+        - No dependencies required because all dependency keys = false
+
+|<------------------------------->[ ENDED-CRFCF ]<------------------------------->|

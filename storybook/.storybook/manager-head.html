@@ -1,0 +1,22 @@
+<script>
+    (function () {
+        let siteTitle = 'Concise Components';
+
+        function setTitle() {
+            if (document.title !== siteTitle) {
+                document.title = siteTitle;
+            }
+        }
+
+        setTitle();
+
+        let titleValue = document.querySelector('title');
+        if (titleValue && window.MutationObserver) {
+            new MutationObserver(setTitle).observe(titleValue, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+        }
+    })();
+</script>

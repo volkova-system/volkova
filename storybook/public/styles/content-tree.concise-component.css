@@ -1,0 +1,49 @@
+.concise-component main.content-tree.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+.concise-component main.content-tree > ol.content-tree-list.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: auto;
+
+    overflow-y: auto;
+}
+
+.concise-component li.content-tree-item.item {
+    display: flex;
+    flex-direction: row;
+}
+
+.concise-component li.content-tree-item .content {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    display: flex;
+    flex-direction: column;
+
+    padding-left: var(--concise-base-spacing);
+    padding-right: var(--concise-base-spacing);
+}
+
+.concise-component main.content-tree .main-content.content {
+    justify-content: center;
+
+    color: var(--concise-main-text-color);
+}
+
+.concise-component main.content-tree .support-content.content {
+    justify-content: center;
+
+    color: var(--concise-support-text-color);
+}

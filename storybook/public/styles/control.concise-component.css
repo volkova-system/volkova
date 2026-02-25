@@ -1,0 +1,55 @@
+.concise-component button.control {
+    height: var(--concise-control-height);
+    width: var(--concise-control-width);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent;
+}
+
+.concise-component button.icon-control.control {
+    height: var(--concise-icon-control-height);
+    width: var(--concise-icon-control-width);
+}
+
+.concise-component button.control:hover {
+    background-color: var(--concise-color-black-light);
+}
+.concise-component button.control:hover * {
+    color: var(--concise-color-white-light);
+}
+
+.concise-component button.control:active {
+    background-color: var(--concise-color-black-dark);
+}
+.concise-component button.control:active * {
+    color: var(--concise-color-white-base);
+}
+
+.concise-component button.focus-action-control.control {
+    background-color: var(--concise-focus-background-color);
+}
+
+.concise-component button.focus-action-control.control * {
+    color: var(--concise-focus-color);
+}
+
+.concise-component button.focus-action-control.control:hover {
+    background-color: var(--concise-focus-hover-background-color);
+}
+
+.concise-component button.focus-action-control.control:hover * {
+    color: var(--concise-focus-hover-color);
+}
+
+.concise-component button.focus-action-control.control:active {
+    background-color: var(--concise-focus-active-background-color);
+}
+
+.concise-component button.focus-action-control.control:active * {
+    color: var(--concise-focus-active-color);
+}
+
+

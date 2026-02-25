@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.powershell",
+        "ms-python.python",
+        "redhat.vscode-yaml",
+        "ziglang.vscode-zig",
+        "formulahendry.auto-rename-tag",
+        "detachhead.basedpyright",
+        "tamasfe.even-better-toml",
+        "arniu.vscode-abnf",
+        "ms-edgedevtools.vscode-edge-devtools"
+    ]
+}

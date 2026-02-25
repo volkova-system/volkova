@@ -1,0 +1,46 @@
+.concise-component a.link {
+    display: flex;
+    align-items: center;
+
+    padding-left: var(--concise-base-spacing);
+    padding-right: var(--concise-base-spacing);
+}
+
+.concise-component a.link:hover * {
+    color: var(--concise-color-white-light);
+}
+
+.concise-component a.link:active * {
+    color: var(--concise-color-white-dark);
+}
+
+.concise-component a.icon-link.link {
+    height: var(--concise-icon-control-height);
+    min-height: var(--concise-icon-control-height);
+    max-height: var(--concise-icon-control-height);
+
+    width: var(--concise-icon-control-width);
+    min-width: var(--concise-icon-control-width);
+    max-width: var(--concise-icon-control-width);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+}
+
+.concise-component a.icon-link.link:hover {
+    background-color: var(--concise-color-black-dark);
+}
+
+.concise-component a.icon-link.link:active {
+    background-color: var(--concise-color-black-darker);
+}
+
+.concise-component a.header-link.link {
+    height: var(--concise-list-item-content-height);
+    min-height: var(--concise-list-item-content-height);
+    max-height: var(--concise-list-item-content-height);
+
+    min-width: var(--concise-list-item-content-width);
+}

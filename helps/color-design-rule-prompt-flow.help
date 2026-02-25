@@ -1,0 +1,519 @@
+|<------------------------------->[ BEGIN-CRFCF ]<------------------------------->|
+
+NOTICE: UNAUTHORIZED MODIFICATION OF THIS DOCUMENT IS EXPRESSLY PROHIBITED. EDITING
+PRIVILEGES ARE EXCLUSIVELY RESERVED FOR THE AUTHOR, DESIGNATED CONTRIBUTORS, AND
+AUTHORIZED ARTIFICIAL INTELLIGENCE AGENTS. DOCUMENT INTEGRITY IS SECURED BY A
+CRYPTOGRAPHIC CHECKSUM; AUTOMATED VERIFICATION SCRIPTS ARE EMPLOYED TO DETECT AND
+PREVENT UNAUTHORIZED ALTERATIONS.
+
+0.  METADATA:
+
+    - RFC:      CONCISE-RFC-000000
+    - GROUP:    VS-SCRIPTS
+    - TITLE:    COLOR DESIGN RULE FLOW
+    - ACRONYM:  CDRLF
+    - AUTHOR:   RICHEVE BEBEDOR <richeve.bebedor+vs-scripts@gmail.com>
+    - CATEGORY: SPECIFICATION
+    - STATUS:   DRAFT
+    - VERSION:  000000 (0.0.0)
+    - CREATED:  2026-02-18
+    - CHECKSUM: <SHA-256>
+
+1.  Summary:
+
+    This document provides guidance for AI agents and contributors on validating
+    UI designs against the dark-first Hybrid Controlled Intelligence color
+    governance system. It explains the validation structure, requirements, and
+    decision logic for evaluating color usage compliance.
+
+    The protocol enforces 22 rules across 7 categories designed to achieve:
+    - Focus, clarity, conciseness, simplicity, dominance (user experience)
+    - Attention, curiosity, influence (user engagement)
+
+2.  Permission:
+
+    NOTICE: PERMISSION TO USE, MODIFY, COPY, AND/OR DISTRIBUTE THIS DOCUMENT
+    AND/OR REPOSITORY IS GRANTED UNDER THE TERMS OF THE LICENSE AGREEMENT
+    SPECIFIED IN THE LICENSE FILE. PLEASE REFER TO THE LICENSE FILE FOR DETAILS.
+
+3.  Contents:
+
+    0.  METADATA ........................................................... 009
+    1.  Summary ............................................................ 022
+    2.  Permission ......................................................... 033
+    3.  Contents ........................................................... 039
+    4.  Document Status .................................................... 054
+    5.  Protocol Overview .................................................. 061
+    6.  Phase Execution Guide .............................................. 077
+    7.  AI Agent Decision Tree ............................................. 313
+    8.  Common Scenarios ................................................... 345
+    9.  Validation Checklist ............................................... 389
+    10. Strategic Budget Guidance .......................................... 411
+    11. Curiosity Framework Examples ....................................... 459
+
+4.  Document Status:
+
+    - This document is a DRAFT specification guide.
+    - It explains the color validation protocol flow and decision logic.
+    - It supplements the main color-design-rule-prompt.template file.
+    - It provides procedural guidance for AI agents executing validation.
+
+5.  Protocol Overview:
+
+    The protocol consists of 6 phases, each with a specific purpose and
+    decision point:
+
+    - Phase 0: Establish authority and read all governing documents
+    - Phase 1: Ingest UI design and enumerate viewports and sections
+    - Phase 2: Normalize to single-viewport-per-cycle
+    - Phase 3: Analyze color usage against 22 validation rules
+    - Phase 4: Produce structured validation output
+    - Phase 5: Verify output structure and completeness
+
+    The protocol is designed to prevent redesign suggestions unless violations
+    are detected and ensure every validation follows the structured output
+    format.
+
+6.  Phase Execution Guide:
+
+    6.1 Phase 0 — Authority & Preconditions
+
+        Purpose: Establish that the AI agent has read and understands all
+        governing documents before proceeding.
+
+        Why this phase exists:
+        - Prevents misinterpretation of rules
+        - Ensures consistency across all validations
+        - Establishes a clear authority hierarchy
+
+        AI agent decision logic:
+        - Read 5LAWS first (overrides all other rules)
+        - Read RULES second (repository-level constraints)
+        - Read FORMAT third (document structure standards)
+        - Read templates/color-design-rule-prompt.template
+        - Use this document to resolve procedural or flow ambiguity
+        - If any rule is ambiguous, conflicting, or incomplete:
+            - Attempt resolution using this flow guide
+            - Do NOT infer intent or create new rules
+            - If ambiguity remains unresolved, STOP
+            - Request clarification from the developer
+        - Proceed only when no unresolved ambiguity exists
+
+        Success criteria:
+        - All governing documents have been read
+        - No unresolved ambiguities or conflicts remain
+        - Agent is ready to proceed to Phase 1
+
+    6.2 Phase 1 — Ingestion
+
+        Purpose: Enumerate all visible viewports and sections so the agent
+        knows exactly what UI elements need to be validated.
+
+        Why this phase exists:
+        - Prevents accidental omission of UI elements
+        - Provides a clear baseline for validation
+        - Allows developer to review what will be validated
+
+        AI agent decision logic:
+        - Accept input as image, Figma export, or code
+        - Identify all visible viewports (including modals/overlays)
+        - For each viewport, enumerate sections:
+            - Viewport: single visible screen state without scrolling
+            - Section: visually bounded content group separated by spacing,
+              container logic, or background differentiation
+        - Output this viewport/section map verbatim before proceeding
+        - Do NOT analyze, group, normalize, or plan in this phase
+        - If UI design is unclear or ambiguous:
+            - STOP and request clarification from the developer
+
+        Success criteria:
+        - All viewports and sections are enumerated
+        - UI design is unambiguous
+        - Agent may proceed to Phase 2
+
+    6.3 Phase 2 — Normalization
+
+        Purpose: Select exactly one viewport for validation to ensure atomic,
+        focused analysis.
+
+        Why this phase exists:
+        - Ensures one viewport per validation cycle
+        - Prevents batching of multiple viewports
+        - Allows focused analysis per viewport
+        - Catches violations early
+
+        AI agent decision logic:
+        - Select exactly one viewport from Phase 1 for the current cycle
+        - Include all sections visible in that viewport
+        - Batched viewport validation is never allowed
+        - Output the selected viewport before proceeding
+        - If more than one viewport is staged or planned:
+            - STOP and self-correct
+            - Unstage extra viewports from the plan
+            - Keep exactly one viewport
+            - Restart from Phase 1 with exactly one planned viewport
+
+        Self-correction (mandatory):
+        - If more than one viewport is staged or planned, STOP and self-correct
+        - Unstage extra viewports
+        - Keep exactly one viewport
+        - Restart from Phase 1 with exactly one planned viewport
+        - Do NOT ask the developer to choose a viewport
+
+        Success criteria:
+        - One viewport selected for validation
+        - All sections in that viewport are included
+        - Agent may proceed to Phase 3
+
+    6.4 Phase 3 — Analysis
+
+        Purpose: Evaluate color usage against 22 validation rules.
+
+        Why this phase exists:
+        - Ensures compliance with color governance system
+        - Provides quantitative evidence for violations
+        - Prevents subjective or inconsistent validation
+
+        AI agent decision logic:
+        - Measure surface area by input type:
+            - Image: approximate via segmentation/masking or pixel-count
+            - Figma: compute area from layer frames/bounds
+            - Code: derive from rendered box areas and computed colors
+        - Classify colors:
+            - Black variants: dark neutral family
+            - White variants: light neutral family
+            - Accent family: one semantic color group
+            - Lighter accent variant: single lighter tone
+        - Evaluate against 22 rules:
+
+            Surface Dominance (Rules 1-3) — Goals: Focus, Simplicity
+            1. Black variants occupy ≥ 70% of visible surface area per viewport
+            2. White variants occupy ≤ 30% of visible surface area
+            3. At least 50% of viewport contains no accent color
+
+            Accent Discipline (Rules 4-9) — Goals: Attention, Influence
+            4. No more than two accent families are present per viewport
+            5. Only one lighter accent variant is used across all families
+            6. Accent colors are not used decoratively or as large fills
+            7. Accent colors appear only when fulfilling semantic roles
+            8. Orange appears only as primary action
+            9. Only one primary orange CTA exists per section
+
+            Semantic Integrity (Rules 10-11) — Goals: Clarity, Influence
+            10. Color meanings are not repurposed (Orange → primary action,
+                Blue → system/data, Green → confirmation, Yellow → warning,
+                Violet → AI/premium, Red → critical/destructive)
+            11. No more than two semantic states appear within a single section
+
+            Hierarchy Control (Rules 12-13) — Goals: Dominance, Focus
+            12. Each section contains only one dominant focal element
+            13. Dominance is established through size, placement, or contrast
+
+            Energy & Noise Control (Rules 14-16) — Goals: Focus, Attention
+            14. Productive attention-getting (CTAs, alerts) uses controlled
+                saturation bursts on dark backgrounds
+            15. Distracting noise (decorative accents, excessive gradients)
+                is absent or minimal
+            16. If high energy is detected, verify it serves a clear behavioral
+                goal (click, read, avoid) before flagging as violation
+
+            Curiosity Framework (Rules 17-18) — Goals: Curiosity, Attention
+            17. Subtle accent variations (tints, shades within one family) may
+                appear to create visual interest without breaking semantic rules
+            18. Accent usage creates visual "breadcrumbs" that guide exploration
+                (e.g., progressive disclosure, hover reveals)
+
+            Interactive States (Rules 19-21) — Goals: Influence, Clarity
+            19. Hover states increase brightness/saturation within the same
+                accent family (no family shifts)
+            20. Focus states add visible outlines or glows that meet WCAG
+                contrast requirements
+            21. Active/pressed states darken or desaturate to signal response
+
+            Accessibility (Rule 22) — Goals: Clarity, Focus
+            22. Text and critical UI elements meet WCAG AA contrast requirements
+                (4.5:1 for normal text, 3:1 for large text/UI components)
+
+        - For each rule, output PASS or FAIL
+        - If FAIL, explain violation clearly and quantitatively
+        - If PASS on curiosity/interactive rules (17-21), note examples
+          of effective implementation when present
+        - Report quantitative estimates (percentages, counts, sizes)
+
+        Success criteria:
+        - All 22 rules evaluated
+        - Violations explained with quantitative evidence
+        - Agent may proceed to Phase 4
+
+    6.5 Phase 4 — Decision / Action
+
+        Purpose: Produce structured validation output.
+
+        Why this phase exists:
+        - Ensures consistent output format
+        - Prevents narrative or subjective commentary
+        - Provides actionable results
+
+        AI agent decision logic:
+        - Use only artifacts from Phase 1 ingestion
+        - Follow the single-viewport-per-cycle rule
+        - Define results strictly using the OUTPUT FORMAT
+        - Do not add narrative, recommendations, or redesign notes unless
+          FAIL exists
+        - For rules 17-21 (curiosity/interactive), provide brief positive
+          examples when patterns are well-executed
+        - Output the validation plan before execution
+        - Return the structured output exactly as defined
+        - The count of total rules must be 22
+        - The Passed/Failed counts must match individual rule outcomes
+        - Calculate 30% budget allocation (white + accent usage)
+        - Provide strategic guidance on optimizing remaining budget
+        - If any rule violates format:
+            - STOP and report the issue
+
+        Success criteria:
+        - Output matches the required format
+        - All 22 rules are included
+        - Counts are accurate
+        - Strategic budget guidance is provided
+
+    6.6 Phase 5 — Verification
+
+        Purpose: Validate output structure and completeness.
+
+        Why this phase exists:
+        - Prevents invalid output from being returned
+        - Enforces strict compliance
+
+        AI agent decision logic:
+        - Verify the structure fields exist and are in order
+        - Verify rule outcomes are complete for all 22 rules
+        - Verify failed rules section lists only the rules that failed
+        - Verify each failed rule has:
+            - Description of violation
+            - Estimated percentage or measurable evidence
+            - Severity Level: Minor / Major / Critical
+        - Verify positive patterns section (optional) only includes rules 17-21
+        - Verify strategic guidance section includes budget breakdown
+        - Verify overall assessment is one of:
+            - Controlled / Slight Drift / System Breakdown
+        - If validation is incomplete:
+            - Restart from Phase 1 and repeat all phases
+            - Continue cycling until validation is complete
+            - Do NOT terminate early while validation is incomplete
+        - If verification fails or structure is invalid:
+            - Do NOT proceed
+            - Report the failure and enter a terminal stop state
+
+        Success criteria:
+        - Output structure is valid
+        - All 22 rules are validated
+        - Protocol TERMINATES SUCCESSFULLY
+
+7.  AI Agent Decision Tree:
+
+    START
+      ↓
+    Phase 0: Read documents
+      ├─ Ambiguity resolved internally? → Continue
+      ├─ Ambiguity unresolved? → STOP, request clarification
+      ↓
+    Phase 1: Ingest UI design
+      ├─ Design unclear? → STOP
+      └─ Design clear? → Continue
+      ↓
+    Phase 2: Normalize to single viewport
+      ├─ Multiple viewports staged? → Self-correct, restart Phase 1
+      └─ Single viewport? → Continue
+      ↓
+    Phase 3: Analyze color usage
+      ├─ Violation? → Document with quantitative evidence
+      └─ Pass? → Document pass
+      ↓
+    Phase 4: Produce output
+      ├─ Format violation? → STOP
+      └─ Format valid? → Continue
+      ↓
+    Phase 5: Verify output
+      ├─ Incomplete? → Restart Phase 1
+      ├─ Invalid? → STOP
+      └─ Valid? → TERMINATE SUCCESSFULLY
+
+    Note: Rules 17-21 (curiosity/interactive) may include positive examples
+    when well-executed, even if overall result is PASS.
+
+8.  Common Scenarios:
+
+    8.1 Scenario: Developer provides template without UI design
+
+        - Phase 0: Read documents
+        - Phase 1: No UI design provided
+        - Decision: STOP, request UI design input
+
+    8.2 Scenario: Multiple viewports in UI design
+
+        - Phase 0: Read documents
+        - Phase 1: Enumerate all viewports
+        - Phase 2: STOP and self-correct (no author question)
+        - Action: Select exactly one viewport
+        - Phase 3-5: Analyze, produce output, verify that single viewport
+        - Repeat Phase 1-5 for each remaining viewport
+
+    8.3 Scenario: Violation detected in Phase 3
+
+        - Phase 3: Black variants occupy only 50% of surface area
+        - Decision: Mark Rule 1 as FAIL
+        - Action: Document violation with quantitative evidence
+        - Continue to Phase 4 with FAIL result
+
+    8.4 Scenario: Interactive states need validation
+
+        - Phase 3: Hover state changes orange CTA to blue
+        - Decision: Mark Rule 19 as FAIL (family shift violation)
+        - Action: Document that hover should brighten orange, not change family
+        - Continue to Phase 4 with FAIL result
+
+    8.5 Scenario: Curiosity pattern well-executed
+
+        - Phase 3: Subtle violet tints guide user through AI feature discovery
+        - Decision: Mark Rule 17 as PASS
+        - Action: Note positive example in output (optional section)
+        - Continue to Phase 4 with PASS result
+
+    8.6 Scenario: Verification fails in Phase 5
+
+        - Phase 5: Output missing severity level for failed rule
+        - Decision: Do NOT return output
+        - Action: Report failure, request developer review
+
+9.  Validation Checklist:
+
+    Before executing the protocol, verify:
+
+    - [ ] Developer has provided templates/color-design-rule-prompt.template
+    - [ ] UI design input is provided (image, Figma, or code)
+    - [ ] All viewports and sections are identified
+    - [ ] Each viewport will be validated separately (atomic)
+    - [ ] Surface area measurement method is appropriate for input type
+    - [ ] Color classification is clear (black, white, accent variants)
+    - [ ] All 22 rules will be evaluated
+    - [ ] Violations will be documented with quantitative evidence
+    - [ ] Output format will be followed exactly
+    - [ ] No redesign suggestions unless FAIL is present
+    - [ ] Protocol phases will be followed in order
+    - [ ] Viewport/section map will be output before analysis
+    - [ ] Validation output will be verified before return
+    - [ ] Incomplete validation will trigger restart from Phase 1
+    - [ ] Interactive states (hover, focus, active) will be evaluated
+    - [ ] Curiosity patterns will be assessed for effectiveness
+    - [ ] 30% budget allocation will be calculated and reported
+
+10. Strategic Budget Guidance:
+
+    The 30% non-black surface budget (white + accent) should be allocated
+    strategically to maximize impact on user goals.
+
+    10.1 Budget Calculation
+
+        - Total viewport surface area = 100%
+        - Black variants (minimum) = 70%
+        - Available budget = 30%
+        - Budget components:
+            - White surfaces (text, cards, highlights)
+            - Accent surfaces (CTAs, alerts, semantic indicators)
+
+    10.2 Optimal Allocation Patterns
+
+        High-conversion viewports (landing, checkout):
+        - White: 20-25% (readability, trust)
+        - Accent: 5-10% (focused CTAs, urgency indicators)
+        - Goal: Drive specific action with minimal distraction
+
+        Information-dense viewports (dashboards, data tables):
+        - White: 15-20% (data clarity, grid structure)
+        - Accent: 10-15% (status indicators, alerts)
+        - Goal: Enable quick scanning and pattern recognition
+
+        Exploratory viewports (feature discovery, onboarding):
+        - White: 10-15% (progressive disclosure cards)
+        - Accent: 15-20% (curiosity breadcrumbs, interactive hints)
+        - Goal: Encourage exploration without overwhelming
+
+    10.3 Budget Optimization Recommendations
+
+        When budget is underutilized (< 20% total):
+        - Consider adding white space for breathing room
+        - Evaluate if key CTAs have sufficient contrast
+        - Check if semantic states are clearly communicated
+
+        When budget is overutilized (> 30% total):
+        - Identify decorative accent usage to remove
+        - Consolidate white surfaces (merge cards, reduce borders)
+        - Verify accent colors serve semantic purposes
+
+        When budget is well-balanced (20-30% total):
+        - Document effective patterns for reuse
+        - Verify allocation matches viewport goals
+        - Ensure remaining budget serves strategic reserve
+
+11. Curiosity Framework Examples:
+
+    Curiosity is achieved through subtle variations and progressive disclosure,
+    not through adding more accent families or increasing saturation.
+
+    11.1 Effective Curiosity Patterns
+
+        Tonal progression within one family:
+        - Violet-900 (dark) → Violet-700 (medium) → Violet-500 (bright)
+        - Use case: AI feature tiers (basic → advanced → premium)
+        - Why it works: Creates visual hierarchy without semantic confusion
+
+        Hover reveals with same-family brightening:
+        - Default: Orange-600 CTA on black background
+        - Hover: Orange-500 (brighter, same family)
+        - Reveal: Additional context text in white
+        - Why it works: Rewards exploration, maintains semantic clarity
+
+        Progressive disclosure breadcrumbs:
+        - Step 1: Blue-700 indicator (current)
+        - Step 2: Blue-500 indicator (next, slightly brighter)
+        - Step 3: Blue-300 indicator (future, subtle hint)
+        - Why it works: Guides attention forward, creates anticipation
+
+        Subtle accent variations for categorization:
+        - Category A: Green-600 (confirmation actions)
+        - Category B: Green-500 (success states)
+        - Why it works: Maintains semantic meaning while allowing distinction
+
+    11.2 Ineffective Curiosity Patterns (Violations)
+
+        Multiple accent families for decoration:
+        - Orange CTA + Blue decoration + Violet border
+        - Why it fails: Creates semantic confusion, violates Rule 4
+
+        High saturation for visual interest:
+        - Neon accents on dark background for "energy"
+        - Why it fails: Distracting noise, violates Rule 15
+
+        Family shifts on interaction:
+        - Default: Orange CTA
+        - Hover: Blue CTA (family change)
+        - Why it fails: Breaks semantic meaning, violates Rule 19
+
+        Accent backgrounds for content areas:
+        - Large violet background for "premium feel"
+        - Why it fails: Decorative usage, violates Rule 6
+
+    11.3 Curiosity Evaluation Criteria
+
+        When evaluating Rules 17-18, ask:
+        - Does the variation stay within one accent family?
+        - Does it guide user behavior toward a goal?
+        - Does it reward exploration without demanding attention?
+        - Does it maintain semantic integrity?
+        - Does it create anticipation or discovery moments?
+
+        If yes to all: PASS with positive example notation
+        If no to any: FAIL with specific violation explanation
+
+|<------------------------------->[ ENDED-CRFCF ]<------------------------------->|

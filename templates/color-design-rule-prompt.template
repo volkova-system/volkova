@@ -1,0 +1,300 @@
+AI COLOR VALIDATION PROTOCOL
+
+PHASE 0 — CONTEXT & AUTHORITY
+
+    - Design Intent:
+
+        - This protocol enforces a dark-first color system designed to achieve:
+
+            A. Focus, Clarity, Conciseness, Simplicity, Dominance
+               - Dark surfaces (70%+) create visual calm and reduce cognitive load
+               - Restrained accent usage prevents distraction
+               - Clear hierarchy guides attention to what matters
+
+            B. Attention, Curiosity, Influence
+               - Strategic accent placement directs user behavior
+               - Semantic color meanings build predictable mental models
+               - Controlled visual energy creates engagement without chaos
+
+        - Each validation rule connects directly to these goals.
+        - Violations indicate drift from user-centered design principles.
+
+    - Authority:
+
+        - Read and comply with ./5LAWS.
+        - Read and comply with ./RULES.
+        - Read and comply with ./FORMAT.
+        - Read and understand ./helps/color-design-rule-prompt-flow.help
+          for guidance only.
+        - Validate UI against dark-first "Hybrid Controlled Intelligence"
+          color governance system.
+
+    - Rule Precedence:
+
+        - Rules apply in the order listed above.
+        - Validation rules below are authoritative for this protocol.
+        - Output structure rules under OUTPUT FORMAT override general formatting.
+        - If any rule is ambiguous, conflicting, or incomplete:
+
+            - First consult ./helps/color-design-rule-prompt-flow.help
+              to resolve procedural ambiguity.
+            - Do NOT infer intent or make assumptions.
+            - If ambiguity remains after consulting the flow help file,
+              stop and request clarification from the author.
+
+    - Output Structure Binding:
+
+        - The OUTPUT FORMAT defined in this file is the ONLY permitted structure.
+        - The agent MUST use the format verbatim when creating validation outputs.
+        - The agent MUST NOT invent, omit, reorder, or rename fields.
+
+    - Flow Help Scope:
+
+        - ./helps/color-design-rule-prompt-flow.help defines
+          internal decision logic only.
+        - It MUST NOT override this protocol, RULES,
+          FORMAT, or the output structure.
+
+    - Interaction Constraint:
+
+        - Execution is non-interactive by default.
+        - The agent MUST NOT ask questions about execution,
+          validation content, or next steps unless explicitly
+          blocked by unresolved ambiguity.
+
+    - Execution Boundary:
+
+        - No redesign suggestions or stylistic recommendations are permitted
+          before PHASE 4.
+        - Redesign suggestions are permitted only when FAIL is present
+          in validation results.
+
+PHASE 1 — INGESTION
+
+    - Ingestion Artifact: UI Viewport & Section Map
+
+        - Input types supported:
+
+            1. Image (single screenshot per viewport, including overlays/modals)
+            2. Figma export (frames/artboards with layer geometry)
+            3. Code (DOM/CSS tokens and computed styles)
+
+        - Enumerate visible viewports and, for each viewport, list sections:
+
+            - Viewport: a single visible screen state without scrolling
+              (including modals/overlays).
+            - Section: a visually bounded content group separated by spacing,
+              container logic, or background differentiation.
+
+        - Output this viewport/section map verbatim before proceeding to PHASE 2.
+        - Do not analyze, group, normalize, or plan in this phase.
+
+PHASE 2 — NORMALIZATION
+
+    - Single-Target Cycle:
+
+        - Select exactly one viewport for this validation cycle.
+        - Within the selected viewport, include all sections visible in that state.
+        - Do NOT batch multiple viewports. Process additional viewports
+          in subsequent cycles.
+
+    - Failure Rule:
+
+        - If more than one viewport is staged or planned, stop and self-correct:
+          - Unstage extra viewports from the plan.
+          - Keep exactly one viewport.
+          - Restart from PHASE 1 with exactly one planned viewport.
+
+PHASE 3 — ANALYSIS
+
+    - Measurement Guidance:
+
+        - Surface area:
+
+            - Image: approximate via segmentation/masking or pixel-count by
+              luminance and hue classification.
+            - Figma: compute area from layer frames/bounds; exclude fully
+              transparent or non-visible layers.
+            - Code: derive from rendered box areas and computed background colors.
+
+        - Classification:
+
+            - Black variants: dark neutral family designated by the system.
+            - White variants: light neutral family designated by the system.
+            - Accent family: one semantic color group (orange, blue, green,
+              yellow, violet, red).
+            - Lighter accent variant: the single lighter tone permitted across
+              all accent families.
+
+        - Evidence:
+
+            - Report quantitative estimates (percentages, counts, sizes),
+              citing viewport-level and section-level measures where applicable.
+
+    - Validation Checklist (22 Rules):
+
+        - Surface Dominance (Goals: Focus, Simplicity):
+
+            1. Black variants occupy ≥ 70% of visible surface area per viewport.
+               Intent: Creates visual calm, reduces cognitive load.
+            2. White variants occupy ≤ 30% of visible surface area.
+               Intent: Preserves dark-first hierarchy, prevents glare.
+            3. At least 50% of viewport contains no accent color (by surface area).
+               Intent: Maintains visual breathing room for focus.
+
+        - Accent Discipline (Goals: Attention, Influence):
+
+            4. No more than two accent families are present per viewport.
+               Intent: Prevents semantic confusion, maintains clarity.
+            5. Only one lighter accent variant is used across all accent families.
+               Intent: Preserves hierarchy, avoids competing focal points.
+            6. Accent colors are not used decoratively or as large
+               background fills.
+               Intent: Reserves accent power for meaningful interactions.
+            7. Accent colors appear only when fulfilling their semantic roles.
+               Intent: Builds predictable mental models for users.
+            8. Orange appears only as primary action.
+               Intent: Directs user behavior toward key conversions.
+            9. Only one primary orange CTA exists per section.
+               Intent: Eliminates decision paralysis, enforces dominance.
+
+        - Semantic Integrity (Goals: Clarity, Influence):
+
+            10. Color meanings are not repurposed:
+                - Orange → primary action (influence: conversion)
+                - Blue → system/data (clarity: information)
+                - Green → confirmation (influence: positive reinforcement)
+                - Yellow → warning (attention: caution)
+                - Violet → AI/premium (curiosity: advanced features)
+                - Red → critical/destructive (attention: danger)
+                Intent: Consistent meanings reduce learning curve.
+            11. No more than two semantic states appear within a single section.
+                Intent: Prevents cognitive overload, maintains focus.
+
+        - Hierarchy Control (Goals: Dominance, Focus):
+
+            12. Each section contains only one dominant focal element.
+                Intent: Guides eye movement, eliminates competition.
+            13. Dominance is established through size, placement, or contrast —
+                not through multiple accent colors.
+                Intent: Reinforces hierarchy through structure, not chaos.
+
+        - Energy & Noise Control (Goals: Focus, Attention):
+
+            14. Productive attention-getting (CTAs, alerts) uses controlled
+                saturation bursts on dark backgrounds.
+                Intent: Directs attention without creating visual chaos.
+            15. Distracting noise (decorative accents, excessive gradients)
+                is absent or minimal.
+                Intent: Preserves cognitive resources for meaningful content.
+            16. If high energy is detected, verify it serves a clear behavioral
+                goal (click, read, avoid) before flagging as violation.
+                Intent: Distinguishes purposeful energy from visual pollution.
+
+        - Curiosity Framework (Goals: Curiosity, Attention):
+
+            17. Subtle accent variations (tints, shades within one family) may
+                appear to create visual interest without breaking semantic rules.
+                Intent: Maintains engagement through nuanced discovery.
+            18. Accent usage creates visual "breadcrumbs" that guide exploration
+                (e.g., progressive disclosure, hover reveals).
+                Intent: Encourages curiosity-driven interaction.
+
+        - Interactive States (Goals: Influence, Clarity):
+
+            19. Hover states increase brightness/saturation within the same
+                accent family (no family shifts).
+                Intent: Provides feedback without semantic confusion.
+            20. Focus states add visible outlines or glows that meet WCAG
+                contrast requirements.
+                Intent: Supports keyboard navigation and accessibility.
+            21. Active/pressed states darken or desaturate to signal response.
+                Intent: Confirms user action through visual feedback.
+
+        - Accessibility (Goals: Clarity, Focus):
+
+            22. Text and critical UI elements meet WCAG AA contrast requirements
+                (4.5:1 for normal text, 3:1 for large text/UI components).
+                Intent: High contrast supports both accessibility AND
+                visual hierarchy, reinforcing dominance through clarity.
+
+    - Rule Output Requirements:
+
+        - For each rule, output PASS or FAIL.
+        - If FAIL, explain the violation clearly and quantitatively.
+        - If PASS on curiosity/interactive rules (17-21), note examples
+          of effective implementation when present.
+
+PHASE 4 — DECISION / ACTION
+
+    - Create Validation Output:
+
+        - Use only artifacts from PHASE 1 ingestion.
+        - Follow the single-viewport-per-cycle rule.
+        - Define results strictly using the OUTPUT FORMAT.
+        - Do not add narrative, recommendations, or redesign notes unless
+          FAIL exists.
+        - For rules 17-21 (curiosity/interactive), provide brief positive
+          examples when patterns are well-executed.
+        - Output the validation plan before execution.
+
+    - Produce Results:
+
+        - Return the structured output exactly as defined.
+        - The count of total rules must be 22.
+        - The Passed/Failed counts must match individual rule outcomes.
+        - If any rule violates format, stop and report the issue.
+
+PHASE 5 — VERIFICATION
+
+    - Verify Output Structure:
+
+        - The structure fields exist and are in order.
+        - Rule outcomes are complete for all 22 rules.
+        - Failed rules section lists only the rules that failed, each with:
+            - Description of violation
+            - Estimated percentage or measurable evidence
+            - Severity Level: Minor / Major / Critical
+
+    - Verify Assessment:
+
+        - Overall assessment is one of:
+            - Controlled / Slight Drift / System Breakdown
+
+    - Verify Completeness:
+
+        - If validation is incomplete, restart from PHASE 1 and repeat all phases.
+        - Continue cycling until validation is complete.
+        - Do NOT terminate early while validation is incomplete.
+
+    - Failure Handling:
+
+        - If verification fails or structure is invalid, do not proceed.
+        - Report the failure and enter a terminal stop state.
+
+OUTPUT FORMAT
+
+    VALIDATION RESULT: PASS / FAIL
+
+    SUMMARY:
+    - Total Rules Checked: 22
+    - Passed: X
+    - Failed: X
+
+    FAILED RULES:
+    Rule #:
+    - Description of violation
+    - Estimated percentage or measurable evidence
+    - Severity Level: Minor / Major / Critical
+
+    POSITIVE PATTERNS (optional, only for rules 17-21 when well-executed):
+    Rule #:
+    - Brief description of effective implementation
+
+    STRATEGIC GUIDANCE (30% Budget Allocation):
+    - White surface usage: X% (of 30% budget)
+    - Accent surface usage: X% (of 30% budget)
+    - Recommendation: [How to optimize remaining budget for maximum impact]
+
+    OVERALL ASSESSMENT:
+    - Controlled / Slight Drift / System Breakdown

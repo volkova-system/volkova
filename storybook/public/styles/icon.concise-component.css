@@ -1,0 +1,56 @@
+.concise-component svg.icon:not(.logo-icon) {
+    width: var(--concise-icon-size);
+    height: var(--concise-icon-size);
+
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    fill: none;
+}
+
+.concise-component svg.logo-icon.icon {
+    width: var(--concise-logo-icon-size);
+    height: var(--concise-logo-icon-size);
+}
+
+.concise-component span.icon {
+    min-height: var(--concise-base-unit);
+    height: var(--concise-base-unit);
+
+    min-width: var(--concise-base-unit);
+    width: var(--concise-base-unit);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.concise-component span.letter-icon.icon {
+    font-size: var(--concise-letter-icon-size);
+}
+
+.concise-component span.color-icon.icon {
+    background-color: var(--concise-color-orange-base);
+}
+
+.concise-component span.round-icon.shape-icon.icon {
+    clip-path: circle(calc(50% - var(--concise-base-spacing)) at 50% 50%);
+}
+
+.concise-component span.triangle-icon.shape-icon.icon {
+    --pad: calc(var(--concise-base-spacing) * var(--concise-equilateral-ratio));
+    --k: var(--concise-equilateral-ratio);
+    clip-path: polygon(
+        50% calc(50% + (var(--k) / 2) * (100% - 2 * var(--pad))),
+        calc(100% - var(--pad)) calc(50% - (var(--k) / 2) * (100% - 2 * var(--pad))),
+        var(--pad) calc(50% - (var(--k) / 2) * (100% - 2 * var(--pad)))
+    );
+}
+
+.concise-component span.square-icon.shape-icon.icon {
+    clip-path: inset(var(--concise-base-spacing));
+}

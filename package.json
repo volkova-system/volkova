@@ -1,0 +1,46 @@
+{
+  "name": "richeve-bebedor.github.io",
+  "version": "0.0.0",
+  "description": "richeve bebedor portfolio",
+  "keywords": [
+    "richeve",
+    "bebedor",
+    "portfolio"
+  ],
+  "homepage": "https://github.com/bebedor-richeve/richeve-bebedor.github.io#readme",
+  "bugs": {
+    "url": "https://github.com/bebedor-richeve/richeve-bebedor.github.io/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bebedor-richeve/richeve-bebedor.github.io.git"
+  },
+  "license": "MIT",
+  "author": "Richeve Bebedor <richeve.bebedor+vs-work@gmail.com> (https://github.com/vs-work)",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky || true"
+  },
+  "engines": {
+    "node": "24.14.0",
+    "npm": "11.10.1"
+  },
+  "volta": {
+    "node": "24.14.0",
+    "npm": "11.10.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "20.4.2",
+    "@commitlint/config-conventional": "20.4.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7"
+  },
+  "dependencies": {
+    "@picocss/pico": "2.1.1",
+    "feather-icons": "4.29.2",
+    "firacode": "6.2.0",
+    "htmx.org": "2.0.8"
+  }
+}

@@ -1,0 +1,46 @@
+.concise-component article.focus-tree.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: auto;
+}
+
+.concise-component article.focus-tree > ol.focus-tree-list.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: auto;
+
+    overflow-y: auto;
+}
+
+.concise-component li.focus-tree-item.item {
+    display: flex;
+    flex-direction: row;
+}
+
+.concise-component li.focus-tree-item .content {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    display: flex;
+    flex-direction: column;
+
+    padding-left: var(--concise-base-spacing);
+    padding-right: var(--concise-base-spacing);
+}
+
+.concise-component article.focus-tree .main-content.content {
+    justify-content: center;
+
+    color: var(--concise-main-text-color);
+}
+
+.concise-component article.focus-tree .support-content.content {
+    justify-content: center;
+
+    color: var(--concise-support-text-color);
+}

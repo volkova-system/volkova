@@ -1,0 +1,9 @@
+.concise-component header.page-tree-header.list-item {
+    height: var(--concise-list-item-height);
+    width: var(--concise-list-item-width);
+}
+
+.concise-component a.header-link.link {
+    height: var(--concise-list-item-content-height);
+    width: var(--concise-list-item-content-width);
+}

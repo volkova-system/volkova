@@ -1,0 +1,63 @@
+<li id="are-you-gonna-hire-me"
+    class="content-tree-item item">
+    <article class="focus-tree list">
+        <header class="focus-tree-header item">
+            <span class="icon">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#sun" />
+                </svg>
+            </span>
+            <h5 class="support-content content">
+                why hire me?
+            </h5>
+            <button id="are-you-gonna-hire-me-control"
+                class="icon-control control"
+                aria-label="Show more information"
+                hx-get="/partials/why-hire-me.collapsed.partial.html"
+                hx-target="#are-you-gonna-hire-me"
+                hx-swap="outerHTML">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#chevron-down" />
+                </svg>
+            </button>
+        </header>
+        <ul class="focus-tree-list list">
+            <li class="focus-tree-item item">
+                <div class="spacer"></div>
+                <p class="content"
+                    hx-get="/contents/richeve-bebedor-curiosity.content.html"
+                    hx-trigger="load"
+                    hx-swap="innerHTML">
+                </p>
+                <div class="spacer"></div>
+            </li>
+            <li class="focus-tree-item item">
+                <div class="spacer"></div>
+                <p class="content"
+                    hx-get="/contents/richeve-bebedor-solutions.content.html"
+                    hx-trigger="load"
+                    hx-swap="innerHTML">
+                </p>
+                <div class="spacer"></div>
+            </li>
+            <li class="focus-tree-item item">
+                <div class="spacer"></div>
+                <p class="content"
+                    hx-get="/contents/richeve-bebedor-ethics.content.html"
+                    hx-trigger="load"
+                    hx-swap="innerHTML">
+                </p>
+                <div class="spacer"></div>
+            </li>
+            <li class="item spacer"></li>
+        </ul>
+        <footer class="focus-tree-footer item">
+            <div class="spacer"></div>
+            <button class="focus-control control" aria-label="Hire me">
+                <h4>HIRE ME</h4>
+            </button>
+            <div class="spacer"></div>
+        </footer>
+        <div class="item spacer"></div>
+    </article>
+</li>

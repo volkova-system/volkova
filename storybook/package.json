@@ -1,0 +1,15 @@
+{
+  "name": "concise-component",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 3690",
+    "build": "storybook build --output-dir storybook-static"
+  },
+  "devDependencies": {
+    "@storybook/html-vite": "10.2.12",
+    "storybook": "10.2.12",
+    "typescript": "5.9.3",
+    "vite": "7.3.1"
+  }
+}

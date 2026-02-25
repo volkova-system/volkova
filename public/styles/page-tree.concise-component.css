@@ -1,0 +1,11 @@
+.concise-component aside.page-tree.sidebar.list,
+.concise-component aside.page-tree > nav,
+.concise-component aside.page-tree > nav > ul.page-tree-list.list {
+    width: var(--concise-list-width);
+    height: auto;
+}
+
+.concise-component a.page-tree-link {
+    width: var(--concise-list-item-content-width);
+    height: var(--concise-list-item-content-height);
+}

@@ -1,0 +1,50 @@
+.concise-component div.spacer {
+    height: var(--concise-base-unit);
+    min-height: var(--concise-base-unit);
+
+    width: var(--concise-base-unit);
+    min-width: var(--concise-base-unit);
+}
+
+.concise-component div.bar.spacer {
+    height: var(--concise-base-unit);
+    min-height: var(--concise-base-unit);
+
+    width: 100vw;
+    min-width: 100vw;
+}
+
+.concise-component div.sidebar.spacer {
+    width: var(--concise-base-unit);
+    min-width: var(--concise-base-unit);
+
+    height: 100vh;
+    min-height: 100vh;
+}
+
+.concise-component div.item.spacer,
+.concise-component li.item.spacer {
+    width: var(--concise-list-item-width);
+    min-width: var(--concise-list-item-width);
+
+    height: var(--concise-base-unit);
+    min-height: var(--concise-base-unit);
+}
+
+.concise-component .one-fifth-space.item.spacer {
+    height: calc(var(--concise-base-unit) / 5);
+    min-height: calc(var(--concise-base-unit) / 5);
+    max-height: calc(var(--concise-base-unit) / 5);
+}
+
+.concise-component .one-third-space.item.spacer {
+    height: calc(var(--concise-base-unit) / 3);
+    min-height: calc(var(--concise-base-unit) / 3);
+    max-height: calc(var(--concise-base-unit) / 3);
+}
+
+.concise-component .one-half-space.item.spacer {
+    height: calc(var(--concise-base-unit) / 2);
+    min-height: calc(var(--concise-base-unit) / 2);
+    max-height: calc(var(--concise-base-unit) / 2);
+}

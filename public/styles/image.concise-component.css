@@ -1,0 +1,9 @@
+.concise-component img.picture.image {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    height: var(--concise-list-item-content-width);
+    min-height: var(--concise-list-item-content-width);
+    max-height: var(--concise-list-item-content-width);
+}

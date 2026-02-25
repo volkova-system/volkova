@@ -1,0 +1,24 @@
+.concise-component .item.level-1 {
+    min-height: var(--concise-level-1);
+    height: var(--concise-level-1);
+}
+
+.concise-component .item.level-2 {
+    min-height: var(--concise-level-2);
+    height: var(--concise-level-2);
+}
+
+.concise-component .item.level-3 {
+    min-height: var(--concise-level-3);
+    height: var(--concise-level-3);
+}
+
+.concise-component .item.level-4 {
+    min-height: var(--concise-level-4);
+    height: var(--concise-level-4);
+}
+
+.concise-component .item.level-5 {
+    min-height: var(--concise-level-5);
+    height: var(--concise-level-5);
+}

@@ -1,0 +1,254 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root,
+:host {
+    --concise-font-family: 'Fira Code', monospace;
+
+    --concise-base-unit:        47px;
+    --concise-logo-icon-size:   41px;
+    --concise-text-heading-1:   37px;
+    --concise-text-heading-2:   31px;
+    --concise-text-heading-3:   29px;
+    --concise-letter-icon-size: 23px;
+    --concise-text-heading-4:   23px;
+    --concise-icon-size:        19px;
+    --concise-text-heading-5:   19px;
+    --concise-text-heading-6:   17px;
+    --concise-text-base:        17px;
+
+    --concise-text-heading-1-line-height:   47px;
+    --concise-text-heading-2-line-height:   43px;
+    --concise-text-heading-3-line-height:   41px;
+    --concise-text-heading-4-line-height:   37px;
+    --concise-text-heading-5-line-height:   31px;
+    --concise-text-heading-6-line-height:   29px;
+    --concise-text-line-height:             23px;
+
+
+
+    --concise-text-main-section-title: var(--concise-text-heading-1);
+    --concise-text-main-section-description: var(--concise-text-heading-6);
+    --concise-text-support-section-title: var(--concise-text-heading-2);
+    --concise-text-support-section-description: var(--concise-text-heading-6);
+    --concise-text-specific-section-title: var(--concise-text-heading-3);
+    --concise-text-specific-section-description: var(--concise-text-heading-6);
+
+    --concise-equilateral-ratio: 0.8660254;
+    --concise-base-division: calc(var(--concise-base-unit) / 5);
+    --concise-base-spacing: calc(var(--concise-base-division) / 2);
+
+    --concise-level-1: calc(var(--concise-base-unit) * 1);
+    --concise-level-2: calc(var(--concise-base-unit) * 2);
+    --concise-level-3: calc(var(--concise-base-unit) * 3);
+    --concise-level-4: calc(var(--concise-base-unit) * 4);
+    --concise-level-5: calc(var(--concise-base-unit) * 5);
+
+    --concise-list-item-unit: 7;
+    --concise-list-item-content-unit: 5;
+
+    --concise-list-height: var(--concise-base-unit);
+    --concise-list-width: calc(
+        var(--concise-base-unit) * var(--concise-list-item-unit)
+    );
+
+    --concise-list-item-height: var(--concise-base-unit);
+    --concise-list-item-width: calc(
+        var(--concise-base-unit) * var(--concise-list-item-unit)
+    );
+
+    --concise-list-item-content-height: var(--concise-list-item-height);
+    --concise-list-item-content-width: calc(
+        var(--concise-base-unit) * var(--concise-list-item-content-unit)
+    );
+
+    --concise-control-height: var(--concise-base-unit);
+    --concise-control-width: calc(
+        var(--concise-base-unit) * var(--concise-list-item-unit)
+    );
+    --concise-icon-control-height: var(--concise-base-unit);
+    --concise-icon-control-width: var(--concise-base-unit);
+
+    --concise-color-white-darker:   rgba(139, 127, 109, 1);
+    --concise-color-white-dark:     rgba(173, 137, 113, 1);
+    --concise-color-white-base:     rgba(211, 173, 149, 1);
+    --concise-color-white-light:    rgba(241, 223, 199, 1);
+    --concise-color-white-lighter:  rgba(251, 247, 241, 1);
+
+    --concise-color-red-darker:     rgba(127, 11, 31, 1);
+    --concise-color-red-dark:       rgba(149, 13, 37, 1);
+    --concise-color-red-base:       rgba(173, 19, 43, 1);
+    --concise-color-red-light:      rgba(223, 37, 61, 1);
+    --concise-color-red-lighter:    rgba(239, 53, 79, 1);
+
+    --concise-color-orange-darker:  rgba(151, 71, 17, 1);
+    --concise-color-orange-dark:    rgba(181, 89, 19, 1);
+    --concise-color-orange-base:    rgba(227, 101, 29, 1);
+    --concise-color-orange-light:   rgba(239, 127, 37, 1);
+    --concise-color-orange-lighter: rgba(251, 149, 53, 1);
+
+    --concise-color-yellow-darker:  rgba(173, 131, 11, 1);
+    --concise-color-yellow-dark:    rgba(197, 157, 13, 1);
+    --concise-color-yellow-base:    rgba(223, 193, 17, 1);
+    --concise-color-yellow-light:   rgba(239, 211, 29, 1);
+    --concise-color-yellow-lighter: rgba(251, 227, 53, 1);
+
+    --concise-color-green-darker:   rgba(13, 113, 41, 1);
+    --concise-color-green-dark:     rgba(19, 137, 53, 1);
+    --concise-color-green-base:     rgba(29, 163, 71, 1);
+    --concise-color-green-light:    rgba(47, 199, 89, 1);
+    --concise-color-green-lighter:  rgba(53, 197, 97, 1);
+
+    --concise-color-blue-darker:    rgba(13, 71, 149, 1);
+    --concise-color-blue-dark:      rgba(19, 97, 173, 1);
+    --concise-color-blue-base:      rgba(29, 113, 197, 1);
+    --concise-color-blue-light:     rgba(53, 149, 223, 1);
+    --concise-color-blue-lighter:   rgba(67, 157, 215, 1);
+
+    --concise-color-indigo-darker:  rgba(37, 13, 131, 1);
+    --concise-color-indigo-dark:    rgba(47, 19, 149, 1);
+    --concise-color-indigo-base:    rgba(59, 29, 173, 1);
+    --concise-color-indigo-light:   rgba(89, 53, 211, 1);
+    --concise-color-indigo-lighter: rgba(113, 79, 239, 1);
+
+    --concise-color-violet-darker:  rgba(97, 13, 151, 1);
+    --concise-color-violet-dark:    rgba(127, 19, 181, 1);
+    --concise-color-violet-base:    rgba(149, 29, 211, 1);
+    --concise-color-violet-light:   rgba(173, 53, 239, 1);
+    --concise-color-violet-lighter: rgba(197, 79, 251, 1);
+
+    --concise-color-black-darker:   rgba(2, 2, 2, 1);
+    --concise-color-black-dark:     rgba(13, 13, 13, 1);
+    --concise-color-black-base:     rgba(29, 29, 29, 1);
+    --concise-color-black-light:    rgba(53, 53, 53, 1);
+    --concise-color-black-lighter:  rgba(79, 79, 79, 1);
+
+    --concise-base-background-color: var(--concise-color-black-base);
+    --concise-base-text-color: var(--concise-color-white-base);
+
+    --concise-main-text-color: var(--concise-color-white-lighter);
+    --concise-support-text-color: var(--concise-color-white-light);
+    --concise-specific-text-color: var(--concise-color-white-dark);
+
+    --concise-focus-background-color: var(--concise-color-orange-base);
+    --concise-focus-color: var(--concise-color-white-lighter);
+    --concise-focus-hover-background-color: var(--concise-color-orange-light);
+    --concise-focus-hover-color: var(--concise-color-black-base);
+    --concise-focus-active-background-color: var(--concise-color-orange-base);
+    --concise-focus-active-color: var(--concise-color-black-base);
+}
+
+@media (max-width: 331px) {
+    :root,
+    :host {
+        --concise-base-unit:        43px;
+        --concise-logo-icon-size:   37px;
+        --concise-text-heading-1:   31px;
+        --concise-text-heading-2:   29px;
+        --concise-text-heading-3:   23px;
+        --concise-text-heading-4:   19px;
+        --concise-icon-size:        17px;
+        --concise-text-heading-5:   17px;
+        --concise-text-heading-6:   13px;
+        --concise-text-base:        13px;
+
+        --concise-text-heading-1-line-height:   41px;
+        --concise-text-heading-2-line-height:   37px;
+        --concise-text-heading-3-line-height:   31px;
+        --concise-text-heading-4-line-height:   29px;
+        --concise-text-heading-5-line-height:   23px;
+        --concise-text-heading-6-line-height:   19px;
+        --concise-text-line-height:             17px;
+    }
+}
+
+.concise-component {
+    display: flex;
+    flex-direction: row;
+}
+
+html:has(.concise-component),
+body:has(.concise-component),
+.concise-component {
+    background: var(--concise-base-background-color);
+
+    height: 100vh;
+    width: 100vw;
+}
+
+.concise-component article.content-tree,
+.concise-component li.list-item,
+.concise-component nav:has(> .page-list),
+.concise-component ol.list,
+.concise-component ul.list,
+.concise-component,
+.concise-component * {
+    color: var(--concise-base-text-color);
+    font-family: var(--concise-font-family);
+    font-variant-ligatures: contextual;
+    font-weight: normal;
+    font-size: var(--concise-text-base);
+    line-height: var(--concise-text-line-height);
+    text-decoration: none;
+
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+
+    box-shadow: none;
+    outline: none;
+    text-shadow: none;
+
+    margin: 0;
+    padding: 0;
+
+    background: unset;
+}
+
+.concise-component h1 {
+    font-size: var(--concise-text-heading-1);
+    line-height: var(--concise-text-heading-1-line-height);
+}
+
+.concise-component h2 {
+    font-size: var(--concise-text-heading-2);
+    line-height: var(--concise-text-heading-2-line-height);
+}
+
+.concise-component h3 {
+    font-size: var(--concise-text-heading-3);
+    line-height: var(--concise-text-heading-3-line-height);
+}
+
+.concise-component h4 {
+    font-size: var(--concise-text-heading-4);
+    line-height: var(--concise-text-heading-4-line-height);
+}
+
+.concise-component h5 {
+    font-size: var(--concise-text-heading-5);
+    line-height: var(--concise-text-heading-5-line-height);
+}
+
+.concise-component h6 {
+    font-size: var(--concise-text-heading-6);
+    line-height: var(--concise-text-heading-6-line-height);
+}
+
+.concise-component .hidden {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: -1 !important;
+    opacity: 0 !important;
+}

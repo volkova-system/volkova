@@ -1,0 +1,104 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Storybook Preview",
+            "type": "shell",
+            "command": "echo ${input:openStorybookPreview}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Background Storybook",
+            "type": "npm",
+            "script": "storybook",
+            "path": "storybook",
+            "isBackground": true,
+            "promptOnClose": true,
+            "problemMatcher": [
+                {
+                    "owner": "custom",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*)$",
+                        "file": 1,
+                        "message": 1
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*Storybook.*",
+                        "endsPattern": ".*(Local:\\s*http://localhost:3690|http://localhost:3690).*"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Open Storybook",
+            "dependsOn": [
+                "Background Storybook",
+                "Storybook Preview"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Terminate Background Storybook",
+            "type": "shell",
+            "command": "echo ${input:terminateBackgroundStorybook}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Close Storybook Preview",
+            "type": "shell",
+            "command": "echo ${input:closeStorybookPreview}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Close Storybook",
+            "dependsOn": [
+                "Close Storybook Preview",
+                "Terminate Background Storybook"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "openStorybookPreview",
+            "type": "command",
+            "command": "workbench.action.debug.start"
+        },
+        {
+            "id": "terminateBackgroundStorybook",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Background Storybook"
+        },
+        {
+            "id": "closeStorybookPreview",
+            "type": "command",
+            "command": "workbench.action.debug.stop"
+        }
+    ]
+}

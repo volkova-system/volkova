@@ -1,0 +1,279 @@
+
+; ================================================================================
+; Terminal Components
+; ================================================================================
+
+SP                      = %x20
+LF                      = %x0A
+EOL                     = LF
+
+
+; ================================================================================
+; Character Components
+; ================================================================================
+
+ALPHA                   = %x41-5A / %x61-7A
+DIGIT                   = %x30-39
+ALPHANUMERIC            = ALPHA / DIGIT
+
+HYPHEN                  = "-"
+UNDERSCORE              = "_"
+DOT                     = "."
+COMMA                   = ","
+COLON                   = ":"
+SEMICOLON               = ";"
+SLASH                   = "/"
+BSLASH                  = "\"
+AT                      = "@"
+PLUS                    = "+"
+
+
+; ================================================================================
+; Indentation Components
+; ================================================================================
+
+indent-unit             = 4SP
+indent                  = indent-unit
+
+
+; ================================================================================
+; Word Components
+; ================================================================================
+
+alphanumeric-word       = 1*(ALPHANUMERIC)
+numeric-word            = 1*(DIGIT)
+
+; --------------------------------------------------------------------------------
+; Separator-Based Word Components
+; --------------------------------------------------------------------------------
+
+hyphen-word             = alphanumeric-word *(HYPHEN alphanumeric-word)
+underscore-word         = alphanumeric-word *(UNDERSCORE alphanumeric-word)
+dot-word                = alphanumeric-word *(DOT alphanumeric-word)
+colon-word              = alphanumeric-word *(COLON alphanumeric-word)
+slash-word              = alphanumeric-word *(SLASH alphanumeric-word)
+backslash-word          = alphanumeric-word *(BSLASH alphanumeric-word)
+
+; --------------------------------------------------------------------------------
+; URI Word Components
+; --------------------------------------------------------------------------------
+
+scheme                  = ALPHA *(ALPHA / DIGIT / PLUS / HYPHEN / DOT)
+authority               = alphanumeric-word *(DOT alphanumeric-word)
+path                    = slash-word
+
+url-word                = scheme COLON 2(SLASH) authority [SLASH path]
+
+; --------------------------------------------------------------------------------
+; Email Word Components
+; --------------------------------------------------------------------------------
+
+email-separator         = DOT / HYPHEN
+email-token             = alphanumeric-word *(email-separator alphanumeric-word)
+email-subaddress        = PLUS email-token
+email-part              = email-token
+email-domain            = dot-word
+
+email-word              = email-part *1(email-subaddress) AT email-domain
+
+; --------------------------------------------------------------------------------
+; Word Set Components
+; --------------------------------------------------------------------------------
+
+word-part               = email-word
+                        / url-word
+                        / slash-word
+                        / backslash-word
+                        / colon-word
+                        / dot-word
+                        / hyphen-word
+                        / underscore-word
+                        / numeric-word
+                        / alphanumeric-word
+
+quoted-word-part        = "'" word-part "'"
+                        / '"' word-part '"'
+
+contained-word-part     = "[" word-part "]"
+                        / "<" word-part ">"
+                        / "(" word-part ")"
+
+word                    = quoted-word-part
+                        / contained-word-part
+                        / word-part
+
+
+; ================================================================================
+; Lexical & Linguistic Components
+; ================================================================================
+
+phrase-separator        = COMMA
+                        / SEMICOLON
+
+phrase                  = word *(*1phrase-separator sentence-separator word)
+
+sentence                = phrase *(sentence-separator phrase) DOT
+
+sentence-separator      = SP / EOL
+
+paragraph-part          = sentence *(sentence-separator sentence)
+
+level-0-paragraph       = paragraph-part
+level-1-paragraph       = indent paragraph-part
+level-2-paragraph       = 2(indent) paragraph-part
+level-3-paragraph       = 3(indent) paragraph-part
+level-4-paragraph       = 4(indent) paragraph-part
+level-5-paragraph       = 5(indent) paragraph-part
+
+paragraph               = level-0-paragraph
+                        / level-1-paragraph
+                        / level-2-paragraph
+                        / level-3-paragraph
+                        / level-4-paragraph
+                        / level-5-paragraph
+
+
+; ================================================================================
+; Key-Value Components
+; ================================================================================
+
+key                     = phrase COLON
+key-value               = key SP phrase
+
+
+; ================================================================================
+; List Components
+; ================================================================================
+
+list-item               = key-value
+                        / key
+                        / phrase
+
+level-1-order           = ALPHANUMERIC
+
+level-2-order           = ALPHANUMERIC DOT ALPHANUMERIC
+
+order-number            = level-1-order
+                        / level-2-order
+
+level-1-order-item      = level-1-order DOT 2SP list-item
+
+level-2-order-item      = level-2-order SP list-item
+
+ordered-item            = level-1-order-item
+                        / level-2-order-item
+
+unordered-item-part     = HYPHEN SP list-item
+
+level-0-unordered-item  = unordered-item-part
+level-1-unordered-item  = indent unordered-item-part
+level-2-unordered-item  = 2(indent) unordered-item-part
+level-3-unordered-item  = 3(indent) unordered-item-part
+level-4-unordered-item  = 4(indent) unordered-item-part
+level-5-unordered-item  = 5(indent) unordered-item-part
+
+unordered-item          = level-0-unordered-item
+                        / level-1-unordered-item
+                        / level-2-unordered-item
+                        / level-3-unordered-item
+                        / level-4-unordered-item
+                        / level-5-unordered-item
+
+ordered-list            = 1*(ordered-item EOL)
+unordered-list          = 1*(unordered-item EOL)
+paragraph-list          = 1*(paragraph EOL)
+
+
+; ================================================================================
+; Content-Block Components
+; ================================================================================
+
+content                 = paragraph-list
+                        / ordered-list
+                        / unordered-list
+
+level-0-block           = content
+level-1-block           = indent content
+level-2-block           = 2(indent) content
+level-3-block           = 3(indent) content
+level-4-block           = 4(indent) content
+level-5-block           = 5(indent) content
+
+block                   = level-0-block
+                        / level-1-block
+                        / level-2-block
+                        / level-3-block
+                        / level-4-block
+                        / level-5-block
+
+
+; ================================================================================
+; Section Components
+; ================================================================================
+
+main-section-header     = level-1-order DOT 2SP key EOL
+
+subsection-header       = level-2-order SP key EOL
+
+specific-section-header = 1*(indent) HYPHEN SP key EOL
+
+section-header          = main-section-header
+                        / subsection-header
+
+main-section-body       = level-1-block
+
+support-section-body    = level-1-block
+
+specific-section-body   = level-1-block
+                        / level-2-block
+                        / level-3-block
+                        / level-4-block
+                        / level-5-block
+
+section-body            = main-section-body
+                        / support-section-body
+                        / specific-section-body
+
+main-section            = main-section-header
+                          EOL
+                          main-section-body
+
+subsection              = subsection-header
+                          EOL
+                          support-section-body
+
+specific-section        = specific-section-header
+                          EOL
+                          specific-section-body
+
+section                 = main-section
+                        / subsection
+                        / specific-section
+
+section-list            = 1*(section EOL)
+
+
+; ================================================================================
+; Document Markers
+; ================================================================================
+
+marker-line             = "<" 31(HYPHEN) ">"
+begin-tag               = "[" SP "BEGIN-CRFCF" SP "]"
+ended-tag               = "[" SP "ENDED-CRFCF" SP "]"
+
+begin-marker            = "|" marker-line begin-tag marker-line "|" EOL
+ended-marker            = "|" marker-line ended-tag marker-line "|" EOL
+
+
+; ================================================================================
+; Document Structure
+; ================================================================================
+
+document                = begin-marker
+                          disclaimer
+                          section-list
+                          *1(footer-notes)
+                          ended-marker
+
+disclaimer              = paragraph
+footer-notes            = level-0-block

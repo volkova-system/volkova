@@ -1,0 +1,47 @@
+[os_platform.map]
+Windows_NT = "windows"
+
+["*.ps1"]
+interpreter = "pwsh"
+interpreter_version = "PowerShell 7.5.4"
+command_version = false
+os_platform = "windows"
+windows_dependency = false
+macos_dependency = false
+linux_dependency = false
+
+[winget]
+interpreter = false
+interpreter_version = false
+command_version = "v1.12.460"
+os_platform = "windows"
+windows_dependency = false
+macos_dependency = false
+linux_dependency = false
+
+[npx]
+interpreter = false
+interpreter_version = false
+command_version = "11.9.0"
+os_platform = false
+windows_dependency = "scripts/install-node-version.ps1"
+macos_dependency = false
+linux_dependency = false
+
+[node]
+interpreter = false
+interpreter_version = false
+command_version = "v24.13.0"
+os_platform = false
+windows_dependency = "scripts/install-node-version.ps1"
+macos_dependency = false
+linux_dependency = false
+
+[npm]
+interpreter = false
+interpreter_version = false
+command_version = "11.9.0"
+os_platform = false
+windows_dependency = "scripts/install-node-version.ps1"
+macos_dependency = false
+linux_dependency = false
