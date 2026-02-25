@@ -1,0 +1,7 @@
+.concise-component .inverted-logo {
+    transform: rotate(180deg) scaleX(-1);
+}
+
+.concise-component .grayscale-logo {
+    filter: grayscale(100%);
+}
