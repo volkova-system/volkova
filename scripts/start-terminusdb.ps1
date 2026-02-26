@@ -396,13 +396,16 @@ try {
 
     # Resolve repository root and Docker Compose file path
     $projectRoot = Get-RepositoryRoot
+
     $composePath = [System.IO.Path]::GetFullPath(
         (Join-Path $projectRoot `
             "containers/terminusdb/terminusdb.docker-compose.yml")
     )
 
-    $starterSettingPath = [System.IO.Path]::GetFullPath((Join-Path $projectRoot `
-        "settings/terminusdb.docker-starter.setting"))
+    $starterSettingPath = [System.IO.Path]::GetFullPath(
+        (Join-Path $projectRoot `
+            "settings/terminusdb.docker-starter.setting")
+    )
 
     # Validate Docker Compose file exists before proceeding
     Write-InfoLog -Scope "START-SCRIPT" `
@@ -435,6 +438,7 @@ try {
     if (-not (Test-DockerAvailable)) {
         Write-ErrorLog -Scope "START-SCRIPT" `
             -Message "Docker not available or daemon not running"
+
         exit 1
     }
 
@@ -446,6 +450,7 @@ try {
     if (Test-ContainerRunning -ContainerName "terminusdb-service") {
         Write-InfoLog -Scope "START-SCRIPT" `
             -Message "Container already running"
+
         exit 0
     }
 
@@ -464,8 +469,8 @@ try {
 
     if (-not (Test-ContainerRunning -ContainerName `
         "terminusdb-service")) {
-        Write-ErrorLog -Scope "START-SCRIPT" `
-            -Message "Container failed to start"
+        Write-ErrorLog -Scope "START-SCRIPT" -Message "Container failed to start"
+        
         exit 1
     }
 
