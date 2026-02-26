@@ -68,6 +68,110 @@ Import-Module -Name $coreModulePath -Force -ErrorAction Stop
 
 #region Core Functions
 
+function Get-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Gets the repository root directory.
+
+    .DESCRIPTION
+        Determines the repository root directory by checking for git
+        repository. Returns the absolute path to the repository root.
+
+    .OUTPUTS
+        System.String. Returns the absolute path to the repository root.
+
+    .EXAMPLE
+        $repoRoot = Get-RepositoryRoot
+
+    .NOTES
+        This function attempts to use git to find the repository root.
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    param()
+
+    Write-DebugLog -Scope "REPO-ROOT" `
+        -Message "Determining repository root directory"
+
+    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
+
+    if (-not $gitCommand) {
+        Write-ErrorLog -Scope "REPO-ROOT" -Message "Git not found in PATH"
+
+        throw "Git is required to determine repository root"
+    }
+
+    $gitRoot = (& git rev-parse --show-toplevel 2>$null)
+
+    if (-not $gitRoot) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Git repository root could not be determined"
+
+        throw "Git repository root not found"
+    }
+
+    $absoluteRoot = [System.IO.Path]::GetFullPath($gitRoot)
+
+    if (-not (Test-Path -LiteralPath $absoluteRoot)) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Repository root path invalid: $absoluteRoot"
+
+        throw "Invalid repository root path"
+    }
+
+    Write-InfoLog -Scope "REPO-ROOT" `
+        -Message "Repository root: $absoluteRoot"
+
+    return $absoluteRoot
+}
+
+function Test-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Tests if the repository root directory exists.
+
+    .DESCRIPTION
+        Determines the repository root directory by calling Get-RepositoryRoot and
+        verifies its existence on the filesystem. Returns true if the repository
+        root is determined and exists, false otherwise.
+
+    .OUTPUTS
+        System.Boolean. Returns $true if the repository root exists, $false
+        otherwise.
+
+    .EXAMPLE
+        if (Test-RepositoryRoot) {
+            Write-InfoLog -Scope "REPO-TEST" -Message "Repository root is valid"
+        }
+
+    .NOTES
+        This function handles exceptions from Get-RepositoryRoot by logging the
+        error and returning $false.
+
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    Write-DebugLog -Scope "REPO-TEST" -Message "Testing repository root existence"
+
+    try {
+        $repositoryRoot = Get-RepositoryRoot
+
+        if (Test-Path -LiteralPath $repositoryRoot -PathType Container) {
+            return $true
+        }
+
+        return $false
+    }
+    catch {
+        Write-ErrorLog -Scope "REPO-TEST" `
+            -Message "Failed to test repository root: $($_.Exception.Message)"
+
+        return $false
+    }
+}
+
 function Get-ErlangOtpMajorVersion {
     <#
     .SYNOPSIS
@@ -250,7 +354,9 @@ function Invoke-ElixirInstallation {
 
     try {
         $repositoryRoot = Get-RepositoryRoot
-        $wasteDirectory = Join-Path $repositoryRoot 'waste'
+        $wasteDirectory = [System.IO.Path]::GetFullPath(
+            (Join-Path $repositoryRoot 'waste')
+        )
 
         if (-not (Test-Path -LiteralPath $wasteDirectory)) {
             Write-ErrorLog -Scope "ELIXIR-INSTALL" `
@@ -298,15 +404,15 @@ function Invoke-ElixirInstallation {
     }
 }
 
-function Update-SessionPath {
+function Update-EnvironmentPath {
     <#
     .SYNOPSIS
-        Updates PATH for current session with Elixir binary directory.
+        Updates PATH system-wide and for current session with Elixir.
 
     .DESCRIPTION
         Constructs the path to the installed Elixir binary directory based on
-        version and OTP major version, then prepends it to the PATH environment
-        variable for the current session.
+        version and OTP major version, then prepends it to the Machine PATH
+        environment variable and the current session's PATH.
 
     .PARAMETER ElixirVersion
         The installed Elixir version (e.g., "1.17.2").
@@ -315,14 +421,13 @@ function Update-SessionPath {
         The Erlang/OTP major version (e.g., "28").
 
     .OUTPUTS
-        None. Updates $env:PATH for current session.
+        None. Updates system-wide and session PATH.
 
     .EXAMPLE
-        Update-SessionPath -ElixirVersion "1.17.2" -OtpMajorVersion "28"
+        Update-EnvironmentPath -ElixirVersion "1.17.2" -OtpMajorVersion "28"
 
     .NOTES
-        This only affects the current PowerShell session. System-wide
-        PATH updates require administrative action outside this script.
+        Requires administrative privileges to update the Machine PATH.
     #>
     [CmdletBinding()]
     param(
@@ -352,10 +457,25 @@ function Update-SessionPath {
             throw "Elixir binary directory not found"
         }
 
-        $env:PATH = "$elixirBinDirectory;$env:PATH"
+        # Update Machine PATH (System-wide)
+        $machinePath = [Environment]::GetEnvironmentVariable('Path', 'Machine')
+        if ($machinePath -split ';' -notcontains $elixirBinDirectory) {
+            $newMachinePath = "$elixirBinDirectory;$machinePath"
+            [Environment]::SetEnvironmentVariable(
+                'Path', $newMachinePath, 'Machine'
+            )
 
-        Write-InfoLog -Scope "PATH-UPDATE" `
-            -Message "PATH updated with: $elixirBinDirectory"
+            Write-InfoLog -Scope "PATH-UPDATE" `
+                -Message "System-wide PATH updated with: $elixirBinDirectory"
+        }
+
+        # Update Process PATH (Current session)
+        if ($env:PATH -split ';' -notcontains $elixirBinDirectory) {
+            $env:PATH = "$elixirBinDirectory;$env:PATH"
+
+            Write-InfoLog -Scope "PATH-UPDATE" `
+                -Message "Current session PATH updated with: $elixirBinDirectory"
+        }
     }
     catch {
         Write-ErrorLog -Scope "PATH-UPDATE" `
@@ -429,63 +549,6 @@ function Test-ElixirInstallation {
     }
 }
 
-function Get-RepositoryRoot {
-    <#
-    .SYNOPSIS
-        Gets the repository root directory.
-
-    .DESCRIPTION
-        Determines the repository root directory by checking for git
-        repository. Returns the absolute path to the repository root.
-
-    .OUTPUTS
-        System.String. Returns the absolute path to the repository root.
-
-    .EXAMPLE
-        $repoRoot = Get-RepositoryRoot
-
-    .NOTES
-        This function attempts to use git to find the repository root.
-    #>
-    [CmdletBinding()]
-    [OutputType([string])]
-    param()
-
-    Write-DebugLog -Scope "REPO-ROOT" `
-        -Message "Determining repository root directory"
-
-    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
-
-    if (-not $gitCommand) {
-        Write-ErrorLog -Scope "REPO-ROOT" -Message "Git not found in PATH"
-
-        throw "Git is required to determine repository root"
-    }
-
-    $gitRoot = (& git rev-parse --show-toplevel 2>$null)
-
-    if (-not $gitRoot) {
-        Write-ErrorLog -Scope "REPO-ROOT" `
-            -Message "Git repository root could not be determined"
-
-        throw "Git repository root not found"
-    }
-
-    $absoluteRoot = [System.IO.Path]::GetFullPath($gitRoot)
-
-    if (-not (Test-Path -LiteralPath $absoluteRoot)) {
-        Write-ErrorLog -Scope "REPO-ROOT" `
-            -Message "Repository root path invalid: $absoluteRoot"
-
-        throw "Invalid repository root path"
-    }
-
-    Write-InfoLog -Scope "REPO-ROOT" `
-        -Message "Repository root: $absoluteRoot"
-
-    return $absoluteRoot
-}
-
 #endregion
 
 #region Main Script Execution
@@ -505,6 +568,12 @@ try {
     Write-InfoLog -Scope "SCRIPT-MAIN" `
         -Message "Starting Elixir setup process"
 
+    if (-not $(Test-RepositoryRoot)) {
+        Write-ErrorLog -Scope "REPO-TEST" -Message "Repository root not found"
+
+        throw "Repository root not found"
+    }
+
     # Detect Erlang/OTP major version
     $otpMajorVersion = Get-ErlangOtpMajorVersion
 
@@ -514,8 +583,8 @@ try {
     # Download and install Elixir
     Invoke-ElixirInstallation -ElixirVersion $elixirVersion
 
-    # Update PATH for current session
-    Update-SessionPath -ElixirVersion $elixirVersion `
+    # Update PATH for current session and system-wide
+    Update-EnvironmentPath -ElixirVersion $elixirVersion `
         -OtpMajorVersion $otpMajorVersion
 
     # Verify installation
