@@ -385,7 +385,6 @@ function Update-WingetAppsJsonVersions {
     Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating package versions"
 
     try {
-
         $wingetAppsJsonPath = Get-WingetAppsJsonPath
         $wingetAppsJsonContent = Get-Content -LiteralPath $wingetAppsJsonPath -Raw
         $configuration = $wingetAppsJsonContent | ConvertFrom-Json
@@ -402,10 +401,9 @@ function Update-WingetAppsJsonVersions {
             $packages = $packageSource.Packages
 
             if (-not $packages -or $packages.Count -eq 0) {
-                Write-WarningLog -Scope "JSON-UPDATE" `
-                    -Message "No packages defined; skipping version update"
+                Write-ErrorLog -Scope "JSON-UPDATE" -Message "No packages defined"
 
-                return
+                throw "No packages defined"
             }
 
             foreach ($package in $packages) {
@@ -435,20 +433,28 @@ function Update-WingetAppsJsonVersions {
                             $latestVersion = $showData.Version
                         }
                         else {
-                            Write-WarningLog -Scope "JSON-UPDATE" `
+                            Write-ErrorLog -Scope "JSON-UPDATE" `
                                 -Message ("Stable version not reported for "
                                     + "$($packageIdentifier)")
+
+                            throw ("Stable version not reported for " +
+                                "$packageIdentifier")
                         }
                     } else {
-                        Write-WarningLog -Scope "JSON-UPDATE" `
+                        Write-ErrorLog -Scope "JSON-UPDATE" `
                             -Message ("Get stable version failed for "
                                 + "$($packageIdentifier) (exit $LASTEXITCODE)")
+
+                        throw ("Get stable version failed for " +
+                            "$packageIdentifier (exit $LASTEXITCODE)")
                     }
                 }
                 catch {
-                    Write-WarningLog -Scope "JSON-UPDATE" `
+                    Write-ErrorLog -Scope "JSON-UPDATE" `
                         -Message ("Get stable version failed for "
                             + "$($packageIdentifier): $($_.Exception.Message)")
+
+                    throw
                 }
 
                 if ($latestVersion) {
