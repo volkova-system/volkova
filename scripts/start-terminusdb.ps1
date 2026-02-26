@@ -394,14 +394,15 @@ try {
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Starting TerminusDB container"
 
-    # Resolve Docker Compose file path relative to script location
-    $scriptDir = Split-Path -Parent $PSCommandPath
-    $projectRoot = Split-Path -Parent $scriptDir
-    $projectRoot = [System.IO.Path]::GetFullPath($projectRoot)
-    $composePath = Join-Path $projectRoot `
-        "containers/terminusdb/terminusdb.docker-compose.yml"
-    $starterSettingPath = Join-Path $projectRoot `
-        "settings/terminusdb.docker-starter.setting"
+    # Resolve repository root and Docker Compose file path
+    $projectRoot = Get-RepositoryRoot
+    $composePath = [System.IO.Path]::GetFullPath(
+        (Join-Path $projectRoot `
+            "containers/terminusdb/terminusdb.docker-compose.yml")
+    )
+
+    $starterSettingPath = [System.IO.Path]::GetFullPath((Join-Path $projectRoot `
+        "settings/terminusdb.docker-starter.setting"))
 
     # Validate Docker Compose file exists before proceeding
     Write-InfoLog -Scope "START-SCRIPT" `
@@ -410,6 +411,7 @@ try {
     if (-not (Test-DockerComposeFile -Path $composePath)) {
         Write-ErrorLog -Scope "START-SCRIPT" `
             -Message "Docker Compose file not found: $composePath"
+
         exit 1
     }
 
