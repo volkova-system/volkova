@@ -78,8 +78,7 @@
 !containers/
 !containers/terminusdb/
 !containers/terminusdb/data/
-!containers/terminusdb/docker-compose.yml
-!containers/terminusdb/.env.starter
+!containers/terminusdb/*.docker-compose.yml
 
 containers/*/data/**/*.*
 !containers/*/data/**/.gitkeep
