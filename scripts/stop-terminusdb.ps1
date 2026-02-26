@@ -260,6 +260,7 @@ function Test-DockerAvailable {
         # Test daemon connectivity by listing containers
         # If daemon not running, docker ps will fail
         & docker ps -q 2>$null | Out-Null
+
         return $LASTEXITCODE -eq 0
     }
     catch {
@@ -274,8 +275,8 @@ function Test-ContainerRunning {
         Checks if a container is currently running.
 
     .DESCRIPTION
-        Uses docker ps to verify if a container with the specified name
-        is running. Handles multiple containers with similar names.
+        Uses docker ps to verify if a container with the specified name is running.
+        Handles multiple containers with similar names.
 
     .PARAMETER ContainerName
         Name of the container to check.
@@ -284,13 +285,14 @@ function Test-ContainerRunning {
         [bool] $true if running, $false otherwise.
 
     .ERRORS
-        Returns $false if container is not running or if docker ps
-        command fails. Does not throw exceptions.
+        Returns $false if container is not running or if docker ps command fails.
+        Does not throw exceptions.
 
     .EXAMPLE
         if (Test-ContainerRunning -ContainerName "terminusdb-service") {
             Write-InfoLog -Scope "CONTAINER-CHECK" -Message "Running"
         }
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
@@ -317,9 +319,9 @@ function Stop-ContainerGracefully {
         Stops container with graceful timeout and force stop fallback.
 
     .DESCRIPTION
-        Executes docker-compose down with graceful shutdown timeout.
-        If timeout exceeded, forces stop using docker stop -t 0. Logs
-        warnings for forced termination.
+        Executes docker-compose down with graceful shutdown timeout. If timeout
+        exceeded, forces stop using docker stop -t 0. Logs warnings for forced
+        termination.
 
     .PARAMETER ComposePath
         Full path to the docker-compose.yml file.
@@ -331,14 +333,15 @@ function Stop-ContainerGracefully {
         [int] Exit code (0 for success, 1 for failure).
 
     .ERRORS
-        Returns 1 if docker-compose down fails, force stop fails, or
-        container fails to stop. Logs error details before returning.
+        Returns 1 if docker-compose down fails, force stop fails, or container
+        fails to stop. Logs error details before returning.
 
     .EXAMPLE
         $exitCode = Stop-ContainerGracefully -ComposePath $composePath
         if ($exitCode -eq 0) {
             Write-InfoLog -Scope "CONTAINER-STOP" -Message "Stopped"
         }
+
     #>
     [CmdletBinding()]
     [OutputType([int])]
@@ -368,6 +371,7 @@ function Stop-ContainerGracefully {
         if ($LASTEXITCODE -ne 0) {
             Write-ErrorLog -Scope "CONTAINER-STOP" `
                 -Message "docker-compose down failed: $output"
+
             return 1
         }
 
@@ -379,6 +383,7 @@ function Stop-ContainerGracefully {
                 "terminusdb-service")) {
                 Write-InfoLog -Scope "CONTAINER-STOP" `
                     -Message "Container stopped gracefully"
+
                 return 0
             }
 
@@ -397,6 +402,7 @@ function Stop-ContainerGracefully {
         if ($LASTEXITCODE -ne 0) {
             Write-ErrorLog -Scope "CONTAINER-STOP" `
                 -Message "Force stop failed: $forceOutput"
+
             return 1
         }
 
@@ -404,15 +410,14 @@ function Stop-ContainerGracefully {
         # Wait briefly for container to fully terminate
         Start-Sleep -Seconds 2
 
-        if (Test-ContainerRunning -ContainerName `
-            "terminusdb-service") {
+        if (Test-ContainerRunning -ContainerName "terminusdb-service") {
             Write-ErrorLog -Scope "CONTAINER-STOP" `
                 -Message "Failed to stop container"
+
             return 1
         }
 
-        Write-InfoLog -Scope "CONTAINER-STOP" `
-            -Message "Container stopped (forced)"
+        Write-InfoLog -Scope "CONTAINER-STOP" -Message "Container stopped (forced)"
 
         return 0
     }
@@ -420,6 +425,7 @@ function Stop-ContainerGracefully {
         # Handle unexpected errors during execution
         Write-ErrorLog -Scope "CONTAINER-STOP" `
             -Message "Error stopping container: $($_.Exception.Message)"
+
         return 1
     }
     finally {
