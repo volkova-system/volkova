@@ -3,9 +3,16 @@ services:
     image: terminusdb/terminusdb-server:latest
     container_name: terminusdb-service
     restart: unless-stopped
+
     ports:
       - "6363:6363"
-    environment:
-      - TERMINUSDB_ADMIN_PASS=root
+
+    env_file:
+      - path: .env.starter
+        required: true
+
+      - path: .env
+        required: false
+
     volumes:
       - ./data:/app/terminusdb/data
