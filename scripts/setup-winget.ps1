@@ -291,6 +291,53 @@ function Get-RepositoryRoot {
     return $absoluteRoot
 }
 
+function Test-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Tests if the repository root directory exists.
+
+    .DESCRIPTION
+        Determines the repository root directory by calling Get-RepositoryRoot and
+        verifies its existence on the filesystem. Returns true if the repository
+        root is determined and exists, false otherwise.
+
+    .OUTPUTS
+        System.Boolean. Returns $true if the repository root exists, $false
+        otherwise.
+
+    .EXAMPLE
+        if (Test-RepositoryRoot) {
+            Write-InfoLog -Scope "REPO-TEST" -Message "Repository root is valid"
+        }
+
+    .NOTES
+        This function handles exceptions from Get-RepositoryRoot by logging the
+        error and returning $false.
+
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    Write-DebugLog -Scope "REPO-TEST" -Message "Testing repository root existence"
+
+    try {
+        $repositoryRoot = Get-RepositoryRoot
+
+        if (Test-Path -LiteralPath $repositoryRoot -PathType Container) {
+            return $true
+        }
+
+        return $false
+    }
+    catch {
+        Write-ErrorLog -Scope "REPO-TEST" `
+            -Message "Failed to test repository root: $($_.Exception.Message)"
+
+        return $false
+    }
+}
+
 function Get-WingetAppsJsonPath {
     <#
     .SYNOPSIS
@@ -577,6 +624,12 @@ if (-not (Test-IsAdministrator)) {
 try {
     Write-InfoLog -Scope "SCRIPT-MAIN" `
         -Message "Starting winget setup process"
+
+    if (-not $(Test-RepositoryRoot)) {
+        Write-ErrorLog -Scope "REPO-TEST" -Message "Repository root not found"
+
+        throw "Repository root not found"
+    }
 
     if (-not $(Test-WingetInstalled)) {
         Write-InfoLog -Scope "SCRIPT-MAIN" -Message "Winget not found, installing"
