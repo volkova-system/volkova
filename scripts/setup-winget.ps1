@@ -433,50 +433,34 @@ function Update-WingetAppsJsonVersions {
 
                 $latestVersion = $null
 
-                try {
-                    $showOutput = & winget show `
-                        --id $packageIdentifier `
-                        -e `
-                        --source winget `
-                        --output json `
-                        --disable-interactivity
+                $showOutput = & winget show `
+                    --id $packageIdentifier `
+                    --disable-interactivity
 
-                    if ($LASTEXITCODE -eq 0 -and $showOutput) {
-                        $showData = $showOutput | ConvertFrom-Json
+                if ($LASTEXITCODE -eq 0 -and $showOutput) {
+                    $versionLine = ($showOutput -split "`r`n") |
+                        Where-Object { $_ -match '^\s*Version\s*:\s*(\S+)' } |
+                        Select-Object -First 1
 
-                        if ($showData.Version) {
-                            $latestVersion = $showData.Version
-                        }
-                        else {
-                            Write-ErrorLog -Scope "JSON-UPDATE" `
-                                -Message ("Stable version not reported for "
-                                    + "$($packageIdentifier)")
+                    if ($versionLine) {
+                        $latestVersion = [regex]::Match($versionLine,
+                            '^\s*Version\s*:\s*(\S+)'
+                        ).Groups[1].Value
 
-                            throw ("Stable version not reported for " +
-                                "$packageIdentifier")
-                        }
                     } else {
-                        Write-ErrorLog -Scope "JSON-UPDATE" `
-                            -Message ("Get stable version failed for "
-                                + "$($packageIdentifier) (exit $LASTEXITCODE)")
-
-                        throw ("Get stable version failed for " +
-                            "$packageIdentifier (exit $LASTEXITCODE)")
+                        throw ("Stable version not reported for " +
+                            "$packageIdentifier")
                     }
-                }
-                catch {
-                    Write-ErrorLog -Scope "JSON-UPDATE" `
-                        -Message ("Get stable version failed for "
-                            + "$($packageIdentifier): $($_.Exception.Message)")
-
-                    throw
+                } else {
+                    throw ("Get stable version failed for " +
+                        "$packageIdentifier (exit $LASTEXITCODE)")
                 }
 
                 if ($latestVersion) {
                     if ($package.Version -ne $latestVersion) {
                         Write-InfoLog -Scope "JSON-UPDATE" `
-                            -Message ("Updating $packageIdentifier "
-                                + "$($package.Version) -> $latestVersion")
+                            -Message ("Updating $packageIdentifier " +
+                                "$($package.Version) -> $latestVersion")
 
                         $package.Version = $latestVersion
                     }
@@ -493,7 +477,21 @@ function Update-WingetAppsJsonVersions {
         }
 
         $updatedJson = $configuration | ConvertTo-Json -Depth 10
-        Set-Content -LiteralPath $JsonPath -Value $updatedJson -Encoding UTF8
+        $updatedJson = (($updatedJson -split '\r?\n') |
+            ForEach-Object {
+                $match = [regex]::Match($_, '^( +)')
+                if ($match.Success) {
+                    $leading = $match.Groups[1].Value.Length
+                    $level = [math]::Floor($leading / 2)
+                    (' ' * (4 * $level)) + $_.TrimStart()
+                }
+                else { $_ }
+            }) -join "`r`n"
+
+        Set-Content `
+            -LiteralPath $wingetAppsJsonPath `
+            -Value $updatedJson `
+            -Encoding UTF8
 
         Write-InfoLog -Scope "JSON-UPDATE" `
             -Message "Update completed: $($packages.Count) packages resolved"
@@ -550,9 +548,6 @@ function Invoke-WingetImport {
                 -Message "Successfully imported packages"
         }
         else {
-            Write-ErrorLog -Scope "WINGET-IMPORT" `
-                -Message "Import failed with exit code: $LASTEXITCODE"
-
             throw "Winget import failed with exit code: $LASTEXITCODE"
         }
     }
@@ -583,12 +578,12 @@ try {
     Write-InfoLog -Scope "SCRIPT-MAIN" `
         -Message "Starting winget setup process"
 
-    if (-not Test-WingetInstalled) {
+    if (-not $(Test-WingetInstalled)) {
         Write-InfoLog -Scope "SCRIPT-MAIN" -Message "Winget not found, installing"
 
         Install-Winget
 
-        if (-not Test-WingetInstalled) {
+        if (-not $(Test-WingetInstalled)) {
             throw "Winget installation verification failed"
         }
     }
@@ -600,7 +595,7 @@ try {
     }
 
     # Validate winget-apps.json exists
-    if (-not Test-WingetAppsJsonExists) {
+    if (-not $(Test-WingetAppsJsonExists)) {
         throw "Required file not found: winget-apps.json"
     }
 
