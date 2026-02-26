@@ -362,6 +362,7 @@ function Invoke-ElixirInstallation {
 
     .EXAMPLE
         Invoke-ElixirInstallation -ElixirVersion "1.19.5" -OtpMajorVersion "28"
+
     #>
     [CmdletBinding()]
     param(
@@ -378,8 +379,9 @@ function Invoke-ElixirInstallation {
         -Message "Installing Elixir $ElixirVersion for OTP $OtpMajorVersion"
 
     try {
-        $installDir = Join-Path $env:USERPROFILE ".elixir-install\installs\elixir\$ElixirVersion-otp-$OtpMajorVersion"
-        $zipUrl = "https://builds.hex.pm/builds/elixir/v$ElixirVersion-otp-$OtpMajorVersion.zip"
+        $installDir = Join-Path $env:USERPROFILE `
+            ".elixir-install\installs\elixir\$ElixirVersion-otp-$OtpMajorVersion"
+        $zipUrl = "https://builds.hex.pm/builds/elixir/" + "v$ElixirVersion-otp-$OtpMajorVersion.zip"
 
         if (Test-Path -LiteralPath (Join-Path $installDir "bin\elixir.bat")) {
             Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Elixir $ElixirVersion already installed at $installDir"
