@@ -381,16 +381,20 @@ function Invoke-ElixirInstallation {
     try {
         $installDir = Join-Path $env:USERPROFILE `
             ".elixir-install\installs\elixir\$ElixirVersion-otp-$OtpMajorVersion"
-        $zipUrl = "https://builds.hex.pm/builds/elixir/" + "v$ElixirVersion-otp-$OtpMajorVersion.zip"
+        $zipUrl = ("https://builds.hex.pm/builds/elixir/" +
+            "v$ElixirVersion-otp-$OtpMajorVersion.zip")
 
         if (Test-Path -LiteralPath (Join-Path $installDir "bin\elixir.bat")) {
-            Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Elixir $ElixirVersion already installed at $installDir"
+            Write-InfoLog -Scope "ELIXIR-INSTALL" `
+                -Message "Elixir $ElixirVersion already installed at $installDir"
+
             return
         }
 
         $repositoryRoot = Get-RepositoryRoot
         $wasteDirectory = Join-Path $repositoryRoot 'waste'
-        $zipPath = Join-Path $wasteDirectory "elixir-v$ElixirVersion-otp-$OtpMajorVersion.zip"
+        $zipPath = Join-Path $wasteDirectory `
+            "elixir-v$ElixirVersion-otp-$OtpMajorVersion.zip"
 
         Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Downloading from $zipUrl"
         Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -ErrorAction Stop
@@ -401,11 +405,13 @@ function Invoke-ElixirInstallation {
 
         # Clean up
         Remove-Item -LiteralPath $zipPath -Force
-        Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Installation completed successfully"
+        Write-InfoLog -Scope "ELIXIR-INSTALL" `
+            -Message "Installation completed successfully at $installDir"
     }
     catch {
         Write-ErrorLog -Scope "ELIXIR-INSTALL" `
             -Message "Installation failed: $($_.Exception.Message)"
+
         throw
     }
 }
