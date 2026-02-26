@@ -233,8 +233,8 @@ function Test-DockerAvailable {
         Verifies Docker is installed and daemon is running.
 
     .DESCRIPTION
-        Checks Docker installation via docker --version and verifies
-        daemon connectivity via docker ps. Returns boolean result.
+        Checks Docker installation via docker --version and verifies daemon
+        connectivity via docker ps. Returns boolean result.
 
     .OUTPUTS
         [bool] $true if Docker available, $false otherwise.
@@ -247,6 +247,7 @@ function Test-DockerAvailable {
         if (Test-DockerAvailable) {
             Write-InfoLog -Scope "DOCKER-CHECK" -Message "Docker ready"
         }
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
@@ -262,6 +263,7 @@ function Test-DockerAvailable {
         # Test daemon connectivity by listing containers
         # If daemon not running, docker ps will fail
         & docker ps -q 2>$null | Out-Null
+
         return $LASTEXITCODE -eq 0
     }
     catch {
@@ -276,8 +278,8 @@ function Test-ContainerRunning {
         Checks if a container is currently running.
 
     .DESCRIPTION
-        Uses docker ps to verify if a container with the specified name
-        is running. Handles multiple containers with similar names.
+        Uses docker ps to verify if a container with the specified name is running.
+        Handles multiple containers with similar names.
 
     .PARAMETER ContainerName
         Name of the container to check.
@@ -286,13 +288,14 @@ function Test-ContainerRunning {
         [bool] $true if running, $false otherwise.
 
     .ERRORS
-        Returns $false if container is not running or if docker ps
-        command fails. Does not throw exceptions.
+        Returns $false if container is not running or if docker ps command fails.
+        Does not throw exceptions.
 
     .EXAMPLE
         if (Test-ContainerRunning -ContainerName "terminusdb-service") {
             Write-InfoLog -Scope "CONTAINER-CHECK" -Message "Running"
         }
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
