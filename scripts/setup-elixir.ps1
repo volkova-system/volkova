@@ -175,92 +175,46 @@ function Test-RepositoryRoot {
 function Get-ErlangOtpVersion {
     <#
     .SYNOPSIS
-        Retrieves the installed Erlang/OTP major and full versions.
+        Retrieves the WinGet-installed Erlang/OTP major and full versions.
 
     .DESCRIPTION
-        Searches for Erlang/OTP in the following order:
-        1. Current PATH
-        2. Common WinGet installation paths (e.g., C:\Program Files\Erlang OTP)
-        3. Using 'winget list' to find the installation status
-
-        If found but not in the current session PATH, it updates the session
-        PATH to include the Erlang bin directory. Returns an object containing
-        both major and full versions.
+        Directly checks the standard WinGet installation path for Erlang/OTP
+        (C:\Program Files\Erlang OTP). If found, it updates the session PATH
+        and returns an object containing major, full, and bin versions.
 
     .OUTPUTS
-        PSCustomObject. Returns an object with 'Major', 'Full', and 'BinPath' properties.
+        PSCustomObject. Returns an object with 'Major', 'Full', and 'BinPath'
+        properties.
 
     .EXAMPLE
         $otp = Get-ErlangOtpVersion
-        Write-InfoLog -Scope "ERLANG-CHECK" -Message "OTP: $($otp.Full) (Major: $($otp.Major))"
+        Write-InfoLog -Scope "ERLANG-CHECK" `
+            -Message "OTP: $($otp.Full) (Major: $($otp.Major))"
 
     .NOTES
-        Throws an error if Erlang/OTP cannot be found.
+        Throws an error if Erlang/OTP is not found at the expected WinGet path.
+
     #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
     param()
 
     Write-DebugLog -Scope "ERLANG-CHECK" `
-        -Message "Detecting Erlang/OTP versions"
+        -Message "Detecting WinGet-installed Erlang/OTP"
 
-    $erlBinPath = $null
-    $erlCommand = Get-Command -Name 'erl' -ErrorAction SilentlyContinue
+    $erlBinPath = "C:\Program Files\Erlang OTP\bin"
+    $erlExe = Join-Path $erlBinPath "erl.exe"
 
-    if ($erlCommand) {
-        $erlBinPath = [System.IO.Path]::GetDirectoryName($erlCommand.Source)
-        Write-DebugLog -Scope "ERLANG-CHECK" -Message "Found erl in PATH: $erlBinPath"
-    }
-    else {
-        # Search common WinGet path
-        $commonPaths = @(
-            "C:\Program Files\Erlang OTP\bin",
-            "C:\Program Files (x86)\Erlang OTP\bin"
-        )
-
-        foreach ($path in $commonPaths) {
-            if (Test-Path -LiteralPath (Join-Path $path "erl.exe")) {
-                $erlBinPath = $path
-                Write-InfoLog -Scope "ERLANG-CHECK" `
-                    -Message "Found Erlang in common WinGet path: $erlBinPath"
-
-                # Update session PATH immediately
-                $env:PATH = "$erlBinPath;$env:PATH"
-                break
-            }
-        }
-    }
-
-    # If still not found, check winget specifically
-    if (-not $erlBinPath) {
-        Write-DebugLog -Scope "ERLANG-CHECK" -Message "Searching via winget"
-        $wingetCheck = (& winget list Erlang.ErlangOTP --accept-source-agreements 2>$null)
-
-        if ($wingetCheck -match "Erlang\.ErlangOTP") {
-            # Try to find the path via Registry if winget doesn't give it easily
-            # But usually it's in Program Files. If we reach here, we know it's "installed"
-            # but we can't find the bin. Let's try one more deep search.
-            Write-WarningLog -Scope "ERLANG-CHECK" `
-                -Message "Erlang found via winget but bin path not determined. Searching Program Files..."
-
-            $foundErl = Get-ChildItem -Path "C:\Program Files\Erlang OTP*", "C:\Program Files (x86)\Erlang OTP*" `
-                -Filter "erl.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-
-            if ($foundErl) {
-                $erlBinPath = $foundErl.DirectoryName
-                Write-InfoLog -Scope "ERLANG-CHECK" `
-                    -Message "Found Erlang via deep search: $erlBinPath"
-
-                $env:PATH = "$erlBinPath;$env:PATH"
-            }
-        }
-    }
-
-    if (-not $erlBinPath) {
+    if (-not (Test-Path -LiteralPath $erlExe)) {
         Write-ErrorLog -Scope "ERLANG-CHECK" `
-            -Message "Erlang/OTP not found in PATH or WinGet installation locations"
+            -Message "Erlang/OTP not found at WinGet path: $erlBinPath"
 
-        throw "Erlang/OTP is required but not installed or could not be located"
+        throw "Erlang/OTP must be installed via 'setup-winget.ps1' first"
+    }
+
+    # Update session PATH immediately to use this specific Erlang
+    if ($env:PATH -split ';' -notcontains $erlBinPath) {
+        $env:PATH = "$erlBinPath;$env:PATH"
     }
 
     try {
@@ -272,21 +226,20 @@ function Get-ErlangOtpVersion {
             throw "Could not determine Erlang/OTP major version"
         }
 
-        # Try to get full version from OTP_VERSION file if possible
-        $erlDir = [System.IO.Directory]::GetParent($erlBinPath).FullName
+        # Get full version from standard OTP_VERSION file location
+        $erlDir = "C:\Program Files\Erlang OTP"
         $otpVersionFile = Join-Path $erlDir "releases\$majorVersion\OTP_VERSION"
         $fullVersion = $majorVersion
 
         if (Test-Path -LiteralPath $otpVersionFile) {
-            $fullVersion = (Get-Content -LiteralPath $otpVersionFile -ErrorAction SilentlyContinue).Trim()
-        }
-
-        if (-not $fullVersion) {
-            $fullVersion = $majorVersion
+            $fullVersion = (Get-Content `
+                -LiteralPath $otpVersionFile `
+                -ErrorAction SilentlyContinue).Trim()
         }
 
         Write-InfoLog -Scope "ERLANG-CHECK" `
-            -Message "Detected Erlang/OTP major: $majorVersion, full: $fullVersion at $erlBinPath"
+            -Message ("Detected WinGet Erlang/OTP " +
+                "major: $majorVersion, full: $fullVersion")
 
         return [PSCustomObject]@{
             Major   = $majorVersion
@@ -390,32 +343,25 @@ function Get-LatestElixirVersion {
 function Invoke-ElixirInstallation {
     <#
     .SYNOPSIS
-        Downloads and executes the Elixir installer.
+        Downloads and extracts Elixir directly from Hex builds.
 
     .DESCRIPTION
-        Downloads the official Elixir installer batch script from elixir-lang.org
-        and executes it with the specified version. To avoid redundant Erlang
-        installations, it creates a directory junction from an existing Erlang
-        installation (e.g., WinGet) to the installer's expected directory.
+        Downloads the Elixir precompiled zip (compatible with the detected
+        OTP major version) from builds.hex.pm and extracts it to the standard
+        installation directory. This replaces the need for 'install.bat' and
+        prevents redundant Erlang installations.
 
     .PARAMETER ElixirVersion
-        The Elixir version to install (e.g., "1.17.2").
+        The Elixir version to install (e.g., "1.19.5").
 
-    .PARAMETER OtpFullVersion
-        The Erlang/OTP full version to install for (e.g., "28.3.2").
-
-    .PARAMETER ExistingErlangBinPath
-        Optional. The bin path of an existing Erlang installation to use.
+    .PARAMETER OtpMajorVersion
+        The Erlang/OTP major version (e.g., "28").
 
     .OUTPUTS
         None. Throws an error if installation fails.
 
     .EXAMPLE
-        Invoke-ElixirInstallation -ElixirVersion "1.17.2" -OtpFullVersion "28.3.2"
-
-    .NOTES
-        Downloads installer to waste directory and cleans up after execution.
-
+        Invoke-ElixirInstallation -ElixirVersion "1.19.5" -OtpMajorVersion "28"
     #>
     [CmdletBinding()]
     param(
@@ -423,93 +369,41 @@ function Invoke-ElixirInstallation {
         [ValidateNotNullOrEmpty()]
         [string]$ElixirVersion,
 
-        [Parameter(Mandatory = $true, HelpMessage = "OTP full version")]
+        [Parameter(Mandatory = $true, HelpMessage = "OTP major version")]
         [ValidateNotNullOrEmpty()]
-        [string]$OtpFullVersion,
-
-        [Parameter(Mandatory = $false)]
-        [string]$ExistingErlangBinPath
+        [string]$OtpMajorVersion
     )
 
     Write-InfoLog -Scope "ELIXIR-INSTALL" `
-        -Message "Starting Elixir $ElixirVersion installation for OTP $OtpFullVersion"
+        -Message "Installing Elixir $ElixirVersion for OTP $OtpMajorVersion"
 
     try {
+        $installDir = Join-Path $env:USERPROFILE ".elixir-install\installs\elixir\$ElixirVersion-otp-$OtpMajorVersion"
+        $zipUrl = "https://builds.hex.pm/builds/elixir/v$ElixirVersion-otp-$OtpMajorVersion.zip"
+
+        if (Test-Path -LiteralPath (Join-Path $installDir "bin\elixir.bat")) {
+            Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Elixir $ElixirVersion already installed at $installDir"
+            return
+        }
+
         $repositoryRoot = Get-RepositoryRoot
-        $wasteDirectory = [System.IO.Path]::GetFullPath(
-            (Join-Path $repositoryRoot 'waste')
-        )
+        $wasteDirectory = Join-Path $repositoryRoot 'waste'
+        $zipPath = Join-Path $wasteDirectory "elixir-v$ElixirVersion-otp-$OtpMajorVersion.zip"
 
-        if (-not (Test-Path -LiteralPath $wasteDirectory)) {
-            Write-ErrorLog -Scope "ELIXIR-INSTALL" `
-                -Message "Waste directory not found: $wasteDirectory"
+        Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Downloading from $zipUrl"
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -ErrorAction Stop
 
-            throw "Waste directory not found"
-        }
+        Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Extracting to $installDir"
+        $null = New-Item -Path $installDir -ItemType Directory -Force
+        Expand-Archive -Path $zipPath -DestinationPath $installDir -Force
 
-        # Handle redundant Erlang installation avoidance
-        if ($ExistingErlangBinPath) {
-            $existingErlDir = [System.IO.Directory]::GetParent($ExistingErlangBinPath).FullName
-            $targetErlDir = Join-Path $env:USERPROFILE ".elixir-install\installs\otp\$OtpFullVersion"
-
-            Write-DebugLog -Scope "ELIXIR-INSTALL" -Message "Checking for existing OTP at: $targetErlDir"
-
-            if (-not (Test-Path -LiteralPath $targetErlDir)) {
-                Write-InfoLog -Scope "ELIXIR-INSTALL" `
-                    -Message "Linking existing Erlang installation to avoid redundancy"
-
-                # Ensure parent directory exists
-                $null = New-Item -Path (Split-Path $targetErlDir) -ItemType Directory -Force
-
-                # Create junction (requires elevation, which we already have)
-                $null = cmd /c "mklink /j `"$targetErlDir`" `"$existingErlDir`""
-
-                if ($LASTEXITCODE -ne 0) {
-                    Write-WarningLog -Scope "ELIXIR-INSTALL" `
-                        -Message "Failed to create junction. Redundant installation may occur."
-                }
-                else {
-                    Write-InfoLog -Scope "ELIXIR-INSTALL" `
-                        -Message "Successfully linked $existingErlDir to $targetErlDir"
-                }
-            }
-        }
-
-        $installerPath = Join-Path $wasteDirectory 'elixir-install.bat'
-
-        Write-InfoLog -Scope "ELIXIR-INSTALL" `
-            -Message "Downloading installer to: $installerPath"
-
-        $installerUrl = 'https://elixir-lang.org/install.bat'
-
-        Invoke-WebRequest -Uri $installerUrl `
-            -OutFile $installerPath `
-            -ErrorAction Stop
-
-        Write-InfoLog -Scope "ELIXIR-INSTALL" `
-            -Message "Executing installer for version: $ElixirVersion (OTP $OtpFullVersion)"
-
-        & $installerPath "elixir@$ElixirVersion" "otp@$OtpFullVersion"
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "Installer exited with code: $LASTEXITCODE"
-        }
-
-        Write-InfoLog -Scope "ELIXIR-INSTALL" `
-            -Message "Installation completed successfully"
-
-        # Clean up installer
-        if (Test-Path -LiteralPath $installerPath) {
-            Remove-Item -LiteralPath $installerPath -Force
-
-            Write-DebugLog -Scope "ELIXIR-INSTALL" `
-                -Message "Cleaned up installer file"
-        }
+        # Clean up
+        Remove-Item -LiteralPath $zipPath -Force
+        Write-InfoLog -Scope "ELIXIR-INSTALL" -Message "Installation completed successfully"
     }
     catch {
         Write-ErrorLog -Scope "ELIXIR-INSTALL" `
             -Message "Installation failed: $($_.Exception.Message)"
-
         throw
     }
 }
@@ -530,17 +424,14 @@ function Update-EnvironmentPath {
     .PARAMETER OtpMajorVersion
         The Erlang/OTP major version (e.g., "28").
 
-    .PARAMETER OtpFullVersion
-        The Erlang/OTP full version (e.g., "28.3.2").
-
-    .PARAMETER ExistingOtpBinPath
-        Optional. The existing Erlang bin path to use instead of the default.
+    .PARAMETER OtpBinPath
+        The WinGet Erlang bin path.
 
     .OUTPUTS
         None. Updates system-wide and session PATH.
 
     .EXAMPLE
-        Update-EnvironmentPath -ElixirVersion "1.19.5" -OtpMajorVersion "28" -OtpFullVersion "28.3.2"
+        Update-EnvironmentPath -ElixirVersion "1.19.5" -OtpMajorVersion "28" -OtpBinPath "C:\Program Files\Erlang OTP\bin"
     #>
     [CmdletBinding()]
     param(
@@ -552,16 +443,12 @@ function Update-EnvironmentPath {
         [ValidateNotNullOrEmpty()]
         [string]$OtpMajorVersion,
 
-        [Parameter(Mandatory = $true, HelpMessage = "OTP full version")]
-        [ValidateNotNullOrEmpty()]
-        [string]$OtpFullVersion,
-
-        [Parameter(Mandatory = $false)]
-        [string]$ExistingOtpBinPath
+        [Parameter(Mandatory = $true)]
+        [string]$OtpBinPath
     )
 
     Write-DebugLog -Scope "PATH-UPDATE" `
-        -Message "Updating PATH for Elixir $ElixirVersion and OTP $OtpFullVersion"
+        -Message "Updating PATH for Elixir $ElixirVersion and OTP at $OtpBinPath"
 
     try {
         $installsDirectory = Join-Path $env:USERPROFILE `
@@ -570,13 +457,7 @@ function Update-EnvironmentPath {
         $elixirBinDirectory = Join-Path $installsDirectory `
             "elixir\$ElixirVersion-otp-$OtpMajorVersion\bin"
 
-        $otpBinDirectory = $ExistingOtpBinPath
-        if (-not $otpBinDirectory) {
-            $otpBinDirectory = Join-Path $installsDirectory `
-                "otp\$OtpFullVersion\bin"
-        }
-
-        $pathsToUpdate = @($elixirBinDirectory, $otpBinDirectory)
+        $pathsToUpdate = @($elixirBinDirectory, $OtpBinPath)
 
         foreach ($binDir in $pathsToUpdate) {
             if (-not (Test-Path -LiteralPath $binDir)) {
@@ -678,59 +559,6 @@ function Test-ElixirInstallation {
     }
 }
 
-function Install-ErlangViaWinGet {
-    <#
-    .SYNOPSIS
-        Installs Erlang/OTP via WinGet if not already present.
-
-    .DESCRIPTION
-        Checks 'winget-apps.json' for the required Erlang version and attempts
-        to install it using WinGet.
-
-    .OUTPUTS
-        None. Throws an error if installation fails.
-    #>
-    [CmdletBinding()]
-    param()
-
-    Write-InfoLog -Scope "ERLANG-INSTALL" `
-        -Message "Attempting to install Erlang/OTP via WinGet"
-
-    try {
-        $repositoryRoot = Get-RepositoryRoot
-        $wingetAppsPath = Join-Path $repositoryRoot "winget-apps.json"
-
-        if (-not (Test-Path -LiteralPath $wingetAppsPath)) {
-            throw "winget-apps.json not found at repository root"
-        }
-
-        $wingetApps = Get-Content -LiteralPath $wingetAppsPath | ConvertFrom-Json
-        $erlangPackage = $wingetApps.Sources.Packages | Where-Object { $_.PackageIdentifier -eq "Erlang.ErlangOTP" }
-
-        if (-not $erlangPackage) {
-            throw "Erlang.ErlangOTP not found in winget-apps.json"
-        }
-
-        $version = $erlangPackage.Version
-        Write-InfoLog -Scope "ERLANG-INSTALL" `
-            -Message "Installing Erlang.ErlangOTP version $version"
-
-        & winget install --id Erlang.ErlangOTP --version $version --exact --accept-package-agreements --accept-source-agreements
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "WinGet installation failed with code $LASTEXITCODE"
-        }
-
-        Write-InfoLog -Scope "ERLANG-INSTALL" `
-            -Message "Erlang/OTP installation completed"
-    }
-    catch {
-        Write-ErrorLog -Scope "ERLANG-INSTALL" `
-            -Message "WinGet installation failed: $($_.Exception.Message)"
-        throw
-    }
-}
-
 #endregion
 
 #region Main Script Execution
@@ -756,37 +584,22 @@ try {
         throw "Repository root not found"
     }
 
-    # Detect Erlang/OTP version
-    $otpVersion = $null
-    try {
-        $otpVersion = Get-ErlangOtpVersion
-    }
-    catch {
-        Write-WarningLog -Scope "SCRIPT-MAIN" `
-            -Message "Erlang/OTP not found. Attempting installation..."
-
-        Install-ErlangViaWinGet
-
-        $otpVersion = Get-ErlangOtpVersion
-    }
-
+    # Detect WinGet Erlang/OTP version
+    $otpVersion = Get-ErlangOtpVersion
     $otpMajorVersion = $otpVersion.Major
-    $otpFullVersion = $otpVersion.Full
     $otpBinPath = $otpVersion.BinPath
 
     # Query for latest compatible Elixir version
     $elixirVersion = Get-LatestElixirVersion -OtpMajorVersion $otpMajorVersion
 
-    # Download and install Elixir
+    # Download and install Elixir zip
     Invoke-ElixirInstallation -ElixirVersion $elixirVersion `
-        -OtpFullVersion $otpFullVersion `
-        -ExistingErlangBinPath $otpBinPath
+        -OtpMajorVersion $otpMajorVersion
 
     # Update PATH for current session and system-wide
     Update-EnvironmentPath -ElixirVersion $elixirVersion `
         -OtpMajorVersion $otpMajorVersion `
-        -OtpFullVersion $otpFullVersion `
-        -ExistingOtpBinPath $otpBinPath
+        -OtpBinPath $otpBinPath
 
     # Verify installation
     if (-not (Test-ElixirInstallation)) {
