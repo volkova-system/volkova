@@ -75,6 +75,15 @@
 !assets/images/**/*.svg
 !assets/images/**/*.png
 
+!containers/
+!containers/terminusdb/
+!containers/terminusdb/data/
+!containers/terminusdb/*.yml
+!containers/terminusdb/.env*
+
+containers/*/data/**/*.*
+!containers/*/data/**/.gitkeep
+
 !electron/
 !electron/src/
 !electron/src/**/*
