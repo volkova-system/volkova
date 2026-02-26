@@ -36,8 +36,9 @@ exit /b 1
 .EXAMPLE
     # Check container status after starting
     .\scripts\start-terminusdb.ps1
-    docker ps --filter "name=terminusdb-service"
+
     # Starts the container and verifies it's running with docker ps.
+    docker ps --filter "name=terminusdb-service"
 
 .EXIT CODES
     0 - Success (container started or already running)
