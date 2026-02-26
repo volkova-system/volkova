@@ -81,6 +81,73 @@
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
+        },
+        {
+            "label": "Background Production Website",
+            "type": "shell",
+            "command": "npx http-server public -p 9630",
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "owner": "custom",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*)$",
+                        "file": 1,
+                        "message": 1
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*Starting up http-server.*",
+                        "endsPattern": ".*Available on:.*"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Production Website Preview",
+            "type": "shell",
+            "command": "echo ${input:openProductionWebsitePreview}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Open Production Website",
+            "dependsOn": [
+                "Background Production Website",
+                "Production Website Preview"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Terminate Background Production Website",
+            "type": "shell",
+            "command": "echo ${input:terminateBackgroundProductionWebsite}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Close Production Website",
+            "dependsOn": [
+                "Close Storybook Preview",
+                "Terminate Background Production Website"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
         }
     ],
     "inputs": [
@@ -90,10 +157,21 @@
             "command": "workbench.action.debug.start"
         },
         {
+            "id": "openProductionWebsitePreview",
+            "type": "command",
+            "command": "workbench.action.debug.start"
+        },
+        {
             "id": "terminateBackgroundStorybook",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
             "args": "Background Storybook"
+        },
+        {
+            "id": "terminateBackgroundProductionWebsite",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Background Production Website"
         },
         {
             "id": "closeStorybookPreview",
