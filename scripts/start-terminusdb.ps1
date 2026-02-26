@@ -29,14 +29,15 @@ exit /b 1
 .EXAMPLE
     # Run from project root directory
     cd C:\path\to\project
+
+    # Starts the TerminusDB container and displays status messages.
     .\scripts\start-terminusdb.ps1
-    Starts the TerminusDB container and displays status messages.
 
 .EXAMPLE
     # Check container status after starting
-    .\start-terminusdb.ps1
+    .\scripts\start-terminusdb.ps1
     docker ps --filter "name=terminusdb-service"
-    Starts the container and verifies it's running with docker ps.
+    # Starts the container and verifies it's running with docker ps.
 
 .EXIT CODES
     0 - Success (container started or already running)
