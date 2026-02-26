@@ -5,14 +5,45 @@ services:
     restart: unless-stopped
 
     ports:
-      - "6363:6363"
+      - "127.0.0.1:9643:6363"
 
     env_file:
       - path: .env.starter
         required: true
-
       - path: .env
         required: false
 
     volumes:
-      - ./data:/app/terminusdb/data
+      - ./data:/app/terminusdb/data:rw
+
+    security_opt:
+      - no-new-privileges:true
+
+    cap_drop:
+      - ALL
+
+    read_only: true
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    init: true
+
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev
+
+    networks:
+      - terminusdb-net
+
+networks:
+  terminusdb-net:
+    driver: bridge
