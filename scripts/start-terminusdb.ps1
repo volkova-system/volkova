@@ -26,6 +26,18 @@ exit /b 1
     .\start-terminusdb.ps1
     Starts the TerminusDB container if not already running.
 
+.EXAMPLE
+    # Run from project root directory
+    cd C:\path\to\project
+    .\scripts\start-terminusdb.ps1
+    Starts the TerminusDB container and displays status messages.
+
+.EXAMPLE
+    # Check container status after starting
+    .\start-terminusdb.ps1
+    docker ps --filter "name=terminusdb-service"
+    Starts the container and verifies it's running with docker ps.
+
 .EXIT CODES
     0 - Success (container started or already running)
     1 - Failure (with error message)
@@ -75,6 +87,10 @@ function Test-DockerComposeFile {
     .OUTPUTS
         [bool] $true if file exists and readable, $false otherwise.
 
+    .ERRORS
+        Returns $false if file does not exist or is not readable.
+        Does not throw exceptions; errors are handled internally.
+
     .EXAMPLE
         if (Test-DockerComposeFile -Path $composePath) {
             Write-InfoLog -Scope "DOCKER-COMPOSE" -Message "File valid"
@@ -89,14 +105,17 @@ function Test-DockerComposeFile {
     )
 
     try {
+        # Check if file exists as a leaf item (not directory)
         if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
             return $false
         }
 
+        # Attempt to read file content to verify readability
         [void](Get-Content -LiteralPath $Path -ErrorAction Stop)
         return $true
     }
     catch {
+        # File exists but is not readable
         return $false
     }
 }
@@ -113,6 +132,10 @@ function Test-DockerAvailable {
     .OUTPUTS
         [bool] $true if Docker available, $false otherwise.
 
+    .ERRORS
+        Returns $false if Docker is not installed, not in PATH, or
+        daemon is not running. Does not throw exceptions.
+
     .EXAMPLE
         if (Test-DockerAvailable) {
             Write-InfoLog -Scope "DOCKER-CHECK" -Message "Docker ready"
@@ -123,16 +146,19 @@ function Test-DockerAvailable {
     param()
 
     try {
+        # Check if Docker command exists and returns version info
         $version = & docker --version 2>$null
         if ([string]::IsNullOrEmpty($version)) {
             return $false
         }
 
-        # Test daemon connectivity
+        # Test daemon connectivity by listing containers
+        # If daemon not running, docker ps will fail
         & docker ps -q 2>$null | Out-Null
         return $LASTEXITCODE -eq 0
     }
     catch {
+        # Docker command failed or not found
         return $false
     }
 }
@@ -151,6 +177,10 @@ function Test-ContainerRunning {
 
     .OUTPUTS
         [bool] $true if running, $false otherwise.
+
+    .ERRORS
+        Returns $false if container is not running or if docker ps
+        command fails. Does not throw exceptions.
 
     .EXAMPLE
         if (Test-ContainerRunning -ContainerName "terminusdb-service") {
@@ -191,6 +221,10 @@ function Start-Container {
     .OUTPUTS
         [int] Exit code (0 for success, 1 for failure).
 
+    .ERRORS
+        Returns 1 if docker-compose command fails or if an unexpected
+        error occurs. Logs error details before returning.
+
     .EXAMPLE
         $exitCode = Start-Container -ComposePath $composePath
         if ($exitCode -eq 0) {
@@ -208,13 +242,17 @@ function Start-Container {
     $composeDir = Split-Path -Parent $ComposePath
 
     try {
+        # Change to compose directory for docker-compose execution
         Push-Location $composeDir
 
         Write-InfoLog -Scope "CONTAINER-START" `
             -Message "Executing docker-compose up -d"
 
+        # Execute docker-compose up in detached mode
+        # Capture both stdout and stderr for error reporting
         $output = & docker-compose -f $ComposePath up -d 2>&1
 
+        # Check exit code from docker-compose command
         if ($LASTEXITCODE -ne 0) {
             Write-ErrorLog -Scope "CONTAINER-START" `
                 -Message "docker-compose up failed: $output"
@@ -227,11 +265,13 @@ function Start-Container {
         return 0
     }
     catch {
+        # Handle unexpected errors during execution
         Write-ErrorLog -Scope "CONTAINER-START" `
             -Message "Error starting container: $($_.Exception.Message)"
         return 1
     }
     finally {
+        # Always return to original directory
         Pop-Location
     }
 }
@@ -248,13 +288,13 @@ try {
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Starting TerminusDB container"
 
-    # Resolve Docker Compose file path
+    # Resolve Docker Compose file path relative to script location
     $scriptDir = Split-Path -Parent $PSCommandPath
     $projectRoot = Split-Path -Parent $scriptDir
     $composePath = Join-Path $projectRoot `
         "containers/terminusdb/terminusdb.docker-compose.yml"
 
-    # Validate Docker Compose file exists
+    # Validate Docker Compose file exists before proceeding
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Validating Docker Compose file"
 
@@ -264,7 +304,7 @@ try {
         exit 1
     }
 
-    # Verify Docker is available
+    # Verify Docker is available and daemon is running
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Verifying Docker availability"
 
@@ -274,7 +314,8 @@ try {
         exit 1
     }
 
-    # Check if container already running (idempotency)
+    # Check if container already running for idempotency
+    # If already running, exit successfully without restarting
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Checking container state"
 
@@ -284,13 +325,14 @@ try {
         exit 0
     }
 
-    # Start the container
+    # Start the container using docker-compose
     $startResult = Start-Container -ComposePath $composePath
     if ($startResult -ne 0) {
         exit 1
     }
 
-    # Verify container started
+    # Verify container started successfully
+    # Wait briefly for container to fully initialize
     Write-InfoLog -Scope "START-SCRIPT" `
         -Message "Verifying container startup"
 
@@ -309,6 +351,7 @@ try {
     exit 0
 }
 catch {
+    # Handle unexpected errors during script execution
     Write-ErrorLog -Scope "START-SCRIPT" `
         -Message "Unexpected error: $($_.Exception.Message)"
 
