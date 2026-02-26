@@ -201,6 +201,7 @@ function Test-DockerComposeFile {
         if (Test-DockerComposeFile -Path $composePath) {
             Write-InfoLog -Scope "DOCKER-COMPOSE" -Message "File valid"
         }
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
@@ -425,6 +426,7 @@ try {
     if (-not (Test-Path -LiteralPath $starterSettingPath -PathType Leaf)) {
         Write-ErrorLog -Scope "START-SCRIPT" `
             -Message "Required settings file not found: $starterSettingPath"
+
         exit 1
     }
 
@@ -467,10 +469,9 @@ try {
 
     Start-Sleep -Seconds 2
 
-    if (-not (Test-ContainerRunning -ContainerName `
-        "terminusdb-service")) {
+    if (-not (Test-ContainerRunning -ContainerName "terminusdb-service")) {
         Write-ErrorLog -Scope "START-SCRIPT" -Message "Container failed to start"
-        
+
         exit 1
     }
 
@@ -483,6 +484,9 @@ catch {
     # Handle unexpected errors during script execution
     Write-ErrorLog -Scope "START-SCRIPT" `
         -Message "Unexpected error: $($_.Exception.Message)"
+
+    Write-DebugLog -Scope "SCRIPT-MAIN" `
+        -Message "Stack Trace: $($_.ScriptStackTrace)"
 
     exit 1
 }
