@@ -1,0 +1,11 @@
+services:
+  terminusdb-server:
+    image: terminusdb/terminusdb-server:latest
+    container_name: terminusdb-service
+    restart: unless-stopped
+    ports:
+      - "6363:6363"
+    environment:
+      - TERMINUSDB_ADMIN_PASS=root
+    volumes:
+      - ./data:/app/terminusdb/data
