@@ -21,16 +21,16 @@ exit /b 1
     to install application packages.
 
 .NOTES
-    Author: Richeve Bebedor <richeve.bebedor+vs-scripts@gmail.com>
+    Author: Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>
     Version: 0.0.0
     Last Modified: 2026-02-08
     Platform: Windows only
     Requirements: pwsh 7.5.4 (exact), Administrator privileges
 
 .EXAMPLE
-    # Ensures winget is installed, updated, and imports packages
-    # from winget-apps.json.
-    .\setup-winget.ps1
+    # Ensures winget is installed, updated, and imports packages from updated
+    # winget-apps.json.
+    .\scripts\setup-winget.ps1
 
 .EXIT CODES
     0 - Success
@@ -88,6 +88,7 @@ function Test-WingetInstalled {
 
     .NOTES
         This function uses Get-Command to check for winget availability.
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
@@ -116,8 +117,7 @@ function Install-Winget {
 
     .DESCRIPTION
         Downloads and installs the latest version of Windows Package Manager
-        (winget) from the Microsoft Store or GitHub releases. This function
-        requires administrative privileges.
+        (winget) from the Microsoft Store or GitHub releases.
 
     .OUTPUTS
         None. Throws an error if installation fails.
@@ -126,22 +126,13 @@ function Install-Winget {
         # Installs winget on the system.
         Install-Winget
 
-    .NOTES
-        This function requires administrative privileges and internet
-        connectivity.
     #>
     [CmdletBinding()]
     param()
 
-    Write-InfoLog -Scope "WINGET-INSTALL" `
-        -Message "Starting winget installation"
+    Write-InfoLog -Scope "WINGET-INSTALL" -Message "Starting winget installation"
 
     try {
-        # Check if running as administrator
-        if (-not (Test-IsAdministrator)) {
-            throw "Administrative privileges required for installation"
-        }
-
         # Install App Installer package which includes winget
         $packageName = "Microsoft.DesktopAppInstaller"
 
@@ -180,9 +171,6 @@ function Install-Winget {
         Write-ErrorLog -Scope "WINGET-INSTALL" `
             -Message "Failed to install winget: $($_.Exception.Message)"
 
-        Write-DebugLog -Scope "WINGET-INSTALL" `
-            -Message "Stack Trace: $($_.ScriptStackTrace)"
-
         throw
     }
 }
@@ -193,8 +181,7 @@ function Update-Winget {
         Updates Windows Package Manager (winget) to the latest version.
 
     .DESCRIPTION
-        Checks for available updates to winget and applies them if
-        found. This function requires administrative privileges.
+        Checks for available updates to winget and applies them if found.
 
     .OUTPUTS
         None. Throws an error if update fails.
@@ -203,9 +190,6 @@ function Update-Winget {
         # Updates winget to the latest version.
         Update-Winget
 
-    .NOTES
-        This function requires administrative privileges and internet
-        connectivity.
     #>
     [CmdletBinding()]
     param()
@@ -213,11 +197,6 @@ function Update-Winget {
     Write-InfoLog -Scope "WINGET-UPDATE" -Message "Checking for winget updates"
 
     try {
-        # Check if running as administrator
-        if (-not (Test-IsAdministrator)) {
-            throw "Administrative privileges required for update"
-        }
-
         # Update winget using winget itself
         & winget upgrade `
             --id Microsoft.Winget.Source `
@@ -243,9 +222,6 @@ function Update-Winget {
         Write-ErrorLog -Scope "WINGET-UPDATE" `
             -Message "Failed to update winget: $($_.Exception.Message)"
 
-        Write-DebugLog -Scope "WINGET-UPDATE" `
-            -Message "Stack Trace: $($_.ScriptStackTrace)"
-
         throw
     }
 }
@@ -256,8 +232,7 @@ function Get-RepositoryRoot {
         Gets the repository root directory.
 
     .DESCRIPTION
-        Determines the repository root directory by checking for git
-        repository or falling back to the script directory.
+        Determines the repository root directory by checking for git repository.
 
     .OUTPUTS
         System.String. Returns the absolute path to the repository root.
@@ -276,79 +251,36 @@ function Get-RepositoryRoot {
     Write-DebugLog -Scope "REPO-ROOT" `
         -Message "Determining repository root directory"
 
-    $repositoryRoot = $PWD.Path
-
     $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
 
-    if ($gitCommand) {
-        $gitRoot = (& git rev-parse --show-toplevel 2>$null)
+    if (-not $gitCommand) {
+        Write-ErrorLog -Scope "REPO-ROOT" -Message "Git not found in PATH"
 
-        if ($gitRoot -and (Test-Path -LiteralPath $gitRoot)) {
-            $repositoryRoot = $gitRoot
-        }
+        throw "Git is required to determine repository root"
     }
 
-    # Fallback to script root if available
-    if ($PSScriptRoot -and (Test-Path -LiteralPath $PSScriptRoot)) {
-        $parentDirectory = Split-Path -Parent $PSScriptRoot
+    $gitRoot = (& git rev-parse --show-toplevel 2>$null)
 
-        if ($parentDirectory -and (Test-Path -LiteralPath $parentDirectory)) {
-            $repositoryRoot = $parentDirectory
-        }
+    if (-not $gitRoot) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Git repository root could not be determined"
+
+        throw "Git repository root not found"
     }
 
-    Write-InfoLog -Scope "REPO-ROOT" -Message "Repository root: $repositoryRoot"
+    $absoluteRoot = [System.IO.Path]::GetFullPath($gitRoot)
 
-    return $repositoryRoot
-}
+    if (-not (Test-Path -LiteralPath $absoluteRoot)) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Repository root path invalid: $absoluteRoot"
 
-function Assert-WingetAppsJsonExists {
-    <#
-    .SYNOPSIS
-        Validates that winget-apps.json file exists.
-
-    .DESCRIPTION
-        Checks if the winget-apps.json configuration file exists in the
-        repository root. Throws an error if the file is not found.
-
-    .PARAMETER RepositoryRoot
-        The root directory of the repository.
-
-    .OUTPUTS
-        System.String. Returns the absolute path to winget-apps.json.
-
-    .EXAMPLE
-        # Returns the absolute path to winget-apps.json.
-        $jsonPath = Assert-WingetAppsJsonExists -RepositoryRoot $PWD.Path
-
-    .NOTES
-        This function throws an error if the file is not found.
-    #>
-    [CmdletBinding()]
-    [OutputType([string])]
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$RepositoryRoot
-    )
-
-    Write-DebugLog -Scope "JSON-VALIDATE" `
-        -Message "Validating winget-apps.json existence"
-
-    $jsonPath = Join-Path $RepositoryRoot 'winget-apps.json'
-    $absoluteJsonPath = [System.IO.Path]::GetFullPath($jsonPath)
-
-    if (-not (Test-Path -LiteralPath $absoluteJsonPath)) {
-        Write-ErrorLog -Scope "JSON-VALIDATE" `
-            -Message "File not found: $absoluteJsonPath"
-
-        throw "Required file not found: winget-apps.json"
+        throw "Invalid repository root path"
     }
 
-    Write-InfoLog -Scope "JSON-VALIDATE" `
-        -Message "Found winget-apps.json at: $absoluteJsonPath"
+    Write-InfoLog -Scope "REPO-ROOT" `
+        -Message "Repository root: $absoluteRoot"
 
-    return $absoluteJsonPath
+    return $absoluteRoot
 }
 
 function Get-WingetAppsJsonPath {
@@ -359,7 +291,7 @@ function Get-WingetAppsJsonPath {
     .DESCRIPTION
         Resolves the repository root using Get-RepositoryRoot and constructs
         the absolute file path to winget-apps.json. This function does not
-        validate file existence; use Assert-WingetAppsJsonExists to verify.
+        validate file existence; use Test-WingetAppsJsonExists to verify.
 
     .OUTPUTS
         System.String. Returns the absolute path to winget-apps.json.
@@ -368,8 +300,6 @@ function Get-WingetAppsJsonPath {
         $jsonPath = Get-WingetAppsJsonPath
         Retrieves the absolute path to winget-apps.json.
 
-    .NOTES
-        Utility function; does not require administrative privileges.
     #>
     [CmdletBinding()]
     [OutputType([string])]
@@ -388,57 +318,205 @@ function Get-WingetAppsJsonPath {
     return $wingetAppsJsonPath
 }
 
+function Test-WingetAppsJsonExists {
+    <#
+    .SYNOPSIS
+        Tests if winget-apps.json exists at the resolved absolute path.
+
+    .DESCRIPTION
+        Resolves the absolute path to winget-apps.json using
+        Get-WingetAppsJsonPath and tests whether the file exists. Returns
+        true if the file exists, false otherwise.
+
+    .OUTPUTS
+        System.Boolean. Returns $true if winget-apps.json exists, $false otherwise.
+
+    .EXAMPLE
+        if (Test-WingetAppsJsonExists) {
+            Write-InfoLog -Scope "JSON-VALIDATE" -Message "winget-apps.json found"
+        }
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    Write-DebugLog -Scope "JSON-VALIDATE" `
+        -Message "Validating winget-apps.json existence"
+
+    try {
+        $repositoryRoot = Get-RepositoryRoot
+        $wingetAppsJsonPath = Join-Path $repositoryRoot 'winget-apps.json'
+        $wingetAppsJsonPath = [System.IO.Path]::GetFullPath($wingetAppsJsonPath)
+
+        return (Test-Path -LiteralPath $wingetAppsJsonPath -PathType Leaf)
+    }
+    catch {
+        Write-ErrorLog -Scope "JSON-VALIDATE" `
+            -Message "winget-apps.json check failed: $($_.Exception.Message)"
+
+        return $false
+    }
+}
+
+function Update-WingetAppsJsonVersions {
+    <#
+    .SYNOPSIS
+        Updates package Version fields in winget-apps.json to latest available.
+
+    .DESCRIPTION
+        Reads the winget-apps.json configuration, queries winget for the latest
+        available version for each PackageIdentifier, and updates the Version
+        field accordingly. Writes changes back to the original JSON file.
+
+    .OUTPUTS
+        None. Throws an error if update fails.
+
+    .NOTES
+        This function reads and writes to the configuration file path provided.
+
+    .EXAMPLE
+        # Updates the JSON file with latest package versions.
+        Update-WingetAppsJsonVersions
+
+    #>
+    [CmdletBinding()]
+    param()
+
+    Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating package versions"
+
+    try {
+
+        $wingetAppsJsonPath = Get-WingetAppsJsonPath
+        $wingetAppsJsonContent = Get-Content -LiteralPath $wingetAppsJsonPath -Raw
+        $configuration = $wingetAppsJsonContent | ConvertFrom-Json
+
+        if (-not $configuration) {
+            throw "Invalid JSON format in $wingetAppsJsonPath"
+        }
+
+        if(-not $configuration.Sources -or $configuration.Sources.Count -eq 0) {
+            throw "No sources defined in $wingetAppsJsonPath"
+        }
+
+        foreach ($packageSource in $configuration.Sources) {
+            $packages = $packageSource.Packages
+
+            if (-not $packages -or $packages.Count -eq 0) {
+                Write-WarningLog -Scope "JSON-UPDATE" `
+                    -Message "No packages defined; skipping version update"
+
+                return
+            }
+
+            foreach ($package in $packages) {
+                $packageIdentifier = $package.PackageIdentifier
+
+                if (-not $packageIdentifier) {
+                    Write-ErrorLog -Scope "JSON-UPDATE" `
+                        -Message "Package entry missing PackageIdentifier"
+
+                    throw "Invalid package entry: missing PackageIdentifier"
+                }
+
+                $latestVersion = $null
+
+                try {
+                    $showOutput = & winget show `
+                        --id $packageIdentifier `
+                        -e `
+                        --source winget `
+                        --output json `
+                        --disable-interactivity
+
+                    if ($LASTEXITCODE -eq 0 -and $showOutput) {
+                        $showData = $showOutput | ConvertFrom-Json
+
+                        if ($showData.Version) {
+                            $latestVersion = $showData.Version
+                        }
+                        else {
+                            Write-WarningLog -Scope "JSON-UPDATE" `
+                                -Message ("Stable version not reported for "
+                                    + "$($packageIdentifier)")
+                        }
+                    } else {
+                        Write-WarningLog -Scope "JSON-UPDATE" `
+                            -Message ("Get stable version failed for "
+                                + "$($packageIdentifier) (exit $LASTEXITCODE)")
+                    }
+                }
+                catch {
+                    Write-WarningLog -Scope "JSON-UPDATE" `
+                        -Message ("Get stable version failed for "
+                            + "$($packageIdentifier): $($_.Exception.Message)")
+                }
+
+                if ($latestVersion) {
+                    if ($package.Version -ne $latestVersion) {
+                        Write-InfoLog -Scope "JSON-UPDATE" `
+                            -Message ("Updating $packageIdentifier "
+                                + "$($package.Version) -> $latestVersion")
+
+                        $package.Version = $latestVersion
+                    }
+                    else {
+                        Write-InfoLog -Scope "JSON-UPDATE" `
+                            -Message "No change for $packageIdentifier"
+                    }
+                }
+                else {
+                    Write-WarningLog -Scope "JSON-UPDATE" `
+                        -Message "Version unresolved for $packageIdentifier"
+                }
+            }
+        }
+
+        $updatedJson = $configuration | ConvertTo-Json -Depth 10
+        Set-Content -LiteralPath $JsonPath -Value $updatedJson -Encoding UTF8
+
+        Write-InfoLog -Scope "JSON-UPDATE" `
+            -Message "Update completed: $($packages.Count) packages resolved"
+    }
+    catch {
+        Write-ErrorLog -Scope "JSON-UPDATE" `
+            -Message "Update failed: $($_.Exception.Message)"
+
+        throw
+    }
+}
+
 function Invoke-WingetImport {
     <#
     .SYNOPSIS
         Imports application packages from winget-apps.json.
 
     .DESCRIPTION
-        Uses winget to import and install application packages defined
-        in the winget-apps.json configuration file. This function
-        requires administrative privileges.
-
-    .PARAMETER JsonPath
-        The absolute path to the winget-apps.json file.
+        Uses winget to import, install and update application packages defined in
+        the winget-apps.json configuration file.
 
     .OUTPUTS
         None. Throws an error if import fails.
 
     .EXAMPLE
         # Imports packages from the specified JSON file.
-        Invoke-WingetImport -JsonPath "C:\repo\winget-apps.json"
+        Invoke-WingetImport
 
-    .NOTES
-        This function requires administrative privileges and internet
-        connectivity.
     #>
     [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$JsonPath
-    )
+    param()
 
     Write-InfoLog -Scope "WINGET-IMPORT" `
         -Message "Starting package import from: $JsonPath"
 
     try {
-        # Check if running as administrator
-        if (-not (Test-IsAdministrator)) {
-            throw "Administrative privileges required for package import"
-        }
-
-        # Validate JSON path
-        if (-not (Test-Path -LiteralPath $JsonPath)) {
-            throw "JSON file not found: $JsonPath"
-        }
+        $wingetAppsJsonPath = Get-WingetAppsJsonPath
 
         # Import packages using winget
         Write-InfoLog -Scope "WINGET-IMPORT" `
             -Message "Executing winget import command"
 
         & winget import `
-            -i $JsonPath `
+            -i $wingetAppsJsonPath `
             --accept-source-agreements `
             --accept-package-agreements `
             --disable-interactivity
@@ -458,146 +536,6 @@ function Invoke-WingetImport {
         Write-ErrorLog -Scope "WINGET-IMPORT" `
             -Message "Failed to import packages: $($_.Exception.Message)"
 
-        Write-DebugLog -Scope "WINGET-IMPORT" `
-            -Message "Stack Trace: $($_.ScriptStackTrace)"
-
-        throw
-    }
-}
-
-
-
-#endregion
-
-#region Version Update
-
-function Update-WingetAppsJsonVersions {
-    <#
-    .SYNOPSIS
-        Updates package Version fields in winget-apps.json to latest available.
-
-    .DESCRIPTION
-        Reads the winget-apps.json configuration, queries winget for the latest
-        available version for each PackageIdentifier, and updates the Version
-        field accordingly. Requires administrative privileges. Writes changes
-        back to the original JSON file.
-
-    .NOTES
-        This function reads and writes to the configuration file path provided.
-        Internet connectivity is required to query package metadata.
-
-    .EXAMPLE
-        Update-WingetAppsJsonVersions -JsonPath "C:\repo\winget-apps.json"
-        Updates the JSON file with latest package versions.
-    #>
-    [CmdletBinding()]
-    [OutputType([int])]
-    param(
-        [Parameter(Mandatory = $true,
-            HelpMessage = "Absolute path to winget-apps.json")]
-        [ValidateNotNullOrEmpty()]
-        [ValidateScript({ Test-Path -LiteralPath $_ })]
-        [string]$JsonPath
-    )
-
-    Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating package versions"
-
-    try {
-        if (-not (Test-IsAdministrator)) {
-            throw "Administrative privileges required"
-        }
-
-        if (-not (Test-Path -LiteralPath $JsonPath)) {
-            throw "JSON file not found: $JsonPath"
-        }
-
-        $jsonContent = Get-Content -LiteralPath $JsonPath -Raw
-        $configuration = $jsonContent | ConvertFrom-Json
-
-        if (-not $configuration) {
-            throw "Invalid JSON"
-        }
-
-        $updatedCount = 0
-
-        foreach ($packageSource in $configuration.Sources) {
-            $packages = $packageSource.Packages
-            if (-not $packages) { continue }
-
-            foreach ($package in $packages) {
-                $packageIdentifier = $package.PackageIdentifier
-                if (-not $packageIdentifier) { continue }
-
-                $latestVersion = $null
-
-                try {
-                    $searchOutput = & winget search --id $packageIdentifier -e --source winget --output json --disable-interactivity
-                    if ($LASTEXITCODE -eq 0 -and $searchOutput) {
-                        $searchData = $searchOutput | ConvertFrom-Json
-                        if ($searchData.data -and $searchData.data.Count -gt 0) {
-                            $latestVersion = $searchData.data[0].Version
-                        }
-                        elseif ($searchData -and $searchData.Count -gt 0 -and $searchData[0].Version) {
-                            $latestVersion = $searchData[0].Version
-                        }
-                        elseif ($searchData.Version) {
-                            $latestVersion = $searchData.Version
-                        }
-                    }
-                }
-                catch {
-                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Search failed for $($packageIdentifier): $($_.Exception.Message)"
-                }
-
-                if (-not $latestVersion) {
-                    try {
-                        $showOutput = & winget show --id $packageIdentifier -e --source winget --output json --disable-interactivity
-                        if ($LASTEXITCODE -eq 0 -and $showOutput) {
-                            $showData = $showOutput | ConvertFrom-Json
-                            if ($showData.Versions -and $showData.Versions.Count -gt 0) {
-                                $firstVersionEntry = $showData.Versions[0]
-                                if ($firstVersionEntry -is [object] -and $firstVersionEntry.PSObject.Properties.Match('Version').Count -gt 0) {
-                                    $latestVersion = $firstVersionEntry.Version
-                                }
-                                else {
-                                    $latestVersion = $firstVersionEntry
-                                }
-                            }
-                            elseif ($showData.Version) {
-                                $latestVersion = $showData.Version
-                            }
-                        }
-                    }
-                    catch {
-                        Write-WarningLog -Scope "JSON-UPDATE" -Message "Show failed for $($packageIdentifier): $($_.Exception.Message)"
-                    }
-                }
-
-                if ($latestVersion) {
-                    if ($package.Version -ne $latestVersion) {
-                        Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating $packageIdentifier $($package.Version) -> $latestVersion"
-                        $package.Version = $latestVersion
-                        $updatedCount++
-                    }
-                    else {
-                        Write-DebugLog -Scope "JSON-UPDATE" -Message "No change for $id"
-                    }
-                }
-                else {
-                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Version unresolved for $packageIdentifier"
-                }
-            }
-        }
-
-        $updatedJson = $configuration | ConvertTo-Json -Depth 10
-        Set-Content -LiteralPath $JsonPath -Value $updatedJson -Encoding UTF8
-
-        Write-InfoLog -Scope "JSON-UPDATE" -Message "Update completed: $updatedCount package version changes"
-        return $updatedCount
-    }
-    catch {
-        Write-ErrorLog -Scope "JSON-UPDATE" -Message "Update failed: $($_.Exception.Message)"
-        Write-DebugLog -Scope "JSON-UPDATE" -Message "Stack Trace: $($_.ScriptStackTrace)"
         throw
     }
 }
@@ -624,19 +562,13 @@ try {
     # Get repository root
     $repositoryRoot = Get-RepositoryRoot
 
-    # Check if winget is installed
-    $isWingetInstalled = Test-WingetInstalled
-
-    if (-not $isWingetInstalled) {
+    if (-not Test-WingetInstalled) {
         Write-InfoLog -Scope "SCRIPT-MAIN" `
             -Message "Winget not found, installing"
 
         Install-Winget
 
-        # Verify installation
-        $isWingetInstalled = Test-WingetInstalled
-
-        if (-not $isWingetInstalled) {
+        if (-not Test-WingetInstalled) {
             throw "Winget installation verification failed"
         }
     }
@@ -648,11 +580,15 @@ try {
     }
 
     # Validate winget-apps.json exists
-    $jsonPath = Assert-WingetAppsJsonExists `
-        -RepositoryRoot $repositoryRoot
+    if (-not Test-WingetAppsJsonExists) {
+        throw "Required file not found: winget-apps.json"
+    }
+
+    # Update package versions in winget-apps.json
+    Update-WingetAppsJsonVersions
 
     # Import packages from winget-apps.json
-    Invoke-WingetImport -JsonPath $jsonPath
+    Invoke-WingetImport
 
     Write-InfoLog -Scope "SCRIPT-MAIN" `
         -Message "Success: Winget setup completed successfully"
