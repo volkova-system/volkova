@@ -250,6 +250,58 @@ function Update-Winget {
     }
 }
 
+function Get-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Gets the repository root directory.
+
+    .DESCRIPTION
+        Determines the repository root directory by checking for git
+        repository or falling back to the script directory.
+
+    .OUTPUTS
+        System.String. Returns the absolute path to the repository root.
+
+    .EXAMPLE
+        # Returns the repository root directory path.
+        $repoRoot = Get-RepositoryRoot
+
+    .NOTES
+        This function attempts to use git to find the repository root.
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    param()
+
+    Write-DebugLog -Scope "REPO-ROOT" `
+        -Message "Determining repository root directory"
+
+    $repositoryRoot = $PWD.Path
+
+    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
+
+    if ($gitCommand) {
+        $gitRoot = (& git rev-parse --show-toplevel 2>$null)
+
+        if ($gitRoot -and (Test-Path -LiteralPath $gitRoot)) {
+            $repositoryRoot = $gitRoot
+        }
+    }
+
+    # Fallback to script root if available
+    if ($PSScriptRoot -and (Test-Path -LiteralPath $PSScriptRoot)) {
+        $parentDirectory = Split-Path -Parent $PSScriptRoot
+
+        if ($parentDirectory -and (Test-Path -LiteralPath $parentDirectory)) {
+            $repositoryRoot = $parentDirectory
+        }
+    }
+
+    Write-InfoLog -Scope "REPO-ROOT" -Message "Repository root: $repositoryRoot"
+
+    return $repositoryRoot
+}
+
 function Assert-WingetAppsJsonExists {
     <#
     .SYNOPSIS
@@ -297,6 +349,43 @@ function Assert-WingetAppsJsonExists {
         -Message "Found winget-apps.json at: $absoluteJsonPath"
 
     return $absoluteJsonPath
+}
+
+function Get-WingetAppsJsonPath {
+    <#
+    .SYNOPSIS
+        Returns the absolute path to winget-apps.json.
+
+    .DESCRIPTION
+        Resolves the repository root using Get-RepositoryRoot and constructs
+        the absolute file path to winget-apps.json. This function does not
+        validate file existence; use Assert-WingetAppsJsonExists to verify.
+
+    .OUTPUTS
+        System.String. Returns the absolute path to winget-apps.json.
+
+    .EXAMPLE
+        $jsonPath = Get-WingetAppsJsonPath
+        Retrieves the absolute path to winget-apps.json.
+
+    .NOTES
+        Utility function; does not require administrative privileges.
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    param()
+
+    Write-DebugLog -Scope "JSON-PATH" `
+        -Message "Resolving winget-apps.json absolute path"
+
+    $repositoryRoot = Get-RepositoryRoot
+    $wingetAppsJsonPath = Join-Path $repositoryRoot 'winget-apps.json'
+    $wingetAppsJsonPath = [System.IO.Path]::GetFullPath($wingetAppsJsonPath)
+
+    Write-InfoLog -Scope "JSON-PATH" `
+        -Message "winget-apps.json path: $wingetAppsJsonPath"
+
+    return $wingetAppsJsonPath
 }
 
 function Invoke-WingetImport {
@@ -376,57 +465,7 @@ function Invoke-WingetImport {
     }
 }
 
-function Get-RepositoryRoot {
-    <#
-    .SYNOPSIS
-        Gets the repository root directory.
 
-    .DESCRIPTION
-        Determines the repository root directory by checking for git
-        repository or falling back to the script directory.
-
-    .OUTPUTS
-        System.String. Returns the absolute path to the repository root.
-
-    .EXAMPLE
-        # Returns the repository root directory path.
-        $repoRoot = Get-RepositoryRoot
-
-    .NOTES
-        This function attempts to use git to find the repository root.
-    #>
-    [CmdletBinding()]
-    [OutputType([string])]
-    param()
-
-    Write-DebugLog -Scope "REPO-ROOT" `
-        -Message "Determining repository root directory"
-
-    $repositoryRoot = $PWD.Path
-
-    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
-
-    if ($gitCommand) {
-        $gitRoot = (& git rev-parse --show-toplevel 2>$null)
-
-        if ($gitRoot -and (Test-Path -LiteralPath $gitRoot)) {
-            $repositoryRoot = $gitRoot
-        }
-    }
-
-    # Fallback to script root if available
-    if ($PSScriptRoot -and (Test-Path -LiteralPath $PSScriptRoot)) {
-        $parentDirectory = Split-Path -Parent $PSScriptRoot
-
-        if ($parentDirectory -and (Test-Path -LiteralPath $parentDirectory)) {
-            $repositoryRoot = $parentDirectory
-        }
-    }
-
-    Write-InfoLog -Scope "REPO-ROOT" -Message "Repository root: $repositoryRoot"
-
-    return $repositoryRoot
-}
 
 #endregion
 
@@ -454,7 +493,8 @@ function Update-WingetAppsJsonVersions {
     [CmdletBinding()]
     [OutputType([int])]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "Absolute path to winget-apps.json")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "Absolute path to winget-apps.json")]
         [ValidateNotNullOrEmpty()]
         [ValidateScript({ Test-Path -LiteralPath $_ })]
         [string]$JsonPath
@@ -506,7 +546,7 @@ function Update-WingetAppsJsonVersions {
                     }
                 }
                 catch {
-                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Search failed for $packageIdentifier: $($_.Exception.Message)"
+                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Search failed for $($packageIdentifier): $($_.Exception.Message)"
                 }
 
                 if (-not $latestVersion) {
@@ -529,7 +569,7 @@ function Update-WingetAppsJsonVersions {
                         }
                     }
                     catch {
-                        Write-WarningLog -Scope "JSON-UPDATE" -Message "Show failed for $packageIdentifier: $($_.Exception.Message)"
+                        Write-WarningLog -Scope "JSON-UPDATE" -Message "Show failed for $($packageIdentifier): $($_.Exception.Message)"
                     }
                 }
 
