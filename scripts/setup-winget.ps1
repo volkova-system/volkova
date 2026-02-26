@@ -559,12 +559,8 @@ try {
     Write-InfoLog -Scope "SCRIPT-MAIN" `
         -Message "Starting winget setup process"
 
-    # Get repository root
-    $repositoryRoot = Get-RepositoryRoot
-
     if (-not Test-WingetInstalled) {
-        Write-InfoLog -Scope "SCRIPT-MAIN" `
-            -Message "Winget not found, installing"
+        Write-InfoLog -Scope "SCRIPT-MAIN" -Message "Winget not found, installing"
 
         Install-Winget
 
