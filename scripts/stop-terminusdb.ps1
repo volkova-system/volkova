@@ -183,8 +183,8 @@ function Test-DockerComposeFile {
         Validates Docker Compose file exists and is readable.
 
     .DESCRIPTION
-        Checks if the Docker Compose file exists at the expected path
-        and is readable. Returns boolean result.
+        Checks if the Docker Compose file exists at the expected path and is
+        readable. Returns boolean result.
 
     .PARAMETER Path
         Full path to the Docker Compose file.
@@ -437,18 +437,18 @@ Assert-WindowsPlatform
 Assert-PowerShellVersionStrict
 
 try {
-    Write-InfoLog -Scope "STOP-SCRIPT" `
-        -Message "Stopping TerminusDB container"
+    Write-InfoLog -Scope "STOP-SCRIPT" -Message "Stopping TerminusDB container"
 
     # Resolve repository root and Docker Compose file path
     $projectRoot = Get-RepositoryRoot
 
-    $composePath = [System.IO.Path]::GetFullPath((Join-Path $projectRoot `
-        "containers/terminusdb/terminusdb.docker-compose.yml"))
+    $composePath = [System.IO.Path]::GetFullPath(
+        (Join-Path $projectRoot `
+            "containers/terminusdb/terminusdb.docker-compose.yml")
+    )
 
     # Validate Docker Compose file exists before proceeding
-    Write-InfoLog -Scope "STOP-SCRIPT" `
-        -Message "Validating Docker Compose file"
+    Write-InfoLog -Scope "STOP-SCRIPT" -Message "Validating Docker Compose file"
 
     if (-not (Test-DockerComposeFile -Path $composePath)) {
         Write-ErrorLog -Scope "STOP-SCRIPT" `
@@ -458,8 +458,7 @@ try {
     }
 
     # Verify Docker is available and daemon is running
-    Write-InfoLog -Scope "STOP-SCRIPT" `
-        -Message "Verifying Docker availability"
+    Write-InfoLog -Scope "STOP-SCRIPT" -Message "Verifying Docker availability"
 
     if (-not (Test-DockerAvailable)) {
         Write-ErrorLog -Scope "STOP-SCRIPT" `
@@ -470,8 +469,7 @@ try {
 
     # Check if container is running
     # If not running, exit successfully without attempting stop
-    Write-InfoLog -Scope "STOP-SCRIPT" `
-        -Message "Checking container state"
+    Write-InfoLog -Scope "STOP-SCRIPT" -Message "Checking container state"
 
     if (-not (Test-ContainerRunning -ContainerName "terminusdb-service")) {
         Write-InfoLog -Scope "STOP-SCRIPT" -Message "Container not running"
@@ -495,7 +493,7 @@ catch {
     Write-ErrorLog -Scope "STOP-SCRIPT" `
         -Message "Unexpected error: $($_.Exception.Message)"
 
-    Write-DebugLog -Scope "START-SCRIPT" `
+    Write-DebugLog -Scope "STOP-SCRIPT" `
         -Message "Stack Trace: $($_.ScriptStackTrace)"
 
     exit 1
