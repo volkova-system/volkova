@@ -44,6 +44,11 @@
                     "PackageIdentifier": "ImageMagick.ImageMagick",
                     "Version": "7.1.2.15",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "Docker.DockerDesktop",
+                    "Version": "4.60.1",
+                    "Source": "winget"
                 }
             ]
         }
