@@ -12,7 +12,7 @@
     email = richeve.bebedor963+vs@proton.me
 
 [remote "origin"]
-    url = git@github.com:volkovasystem/volkova.git
+    url = git@github.com:volkova-system/volkova.git
     fetch = +refs/heads/*:refs/remotes/origin/*
-    pushurl = git@github.com:volkovasystem/volkova.git
-    pushurl = git@github.com:volkovasystem/volkova.github.io.git
+    pushurl = git@github.com:volkova-system/volkova.git
+    pushurl = git@github.com:volkova-system/volkova-system.github.io.git
