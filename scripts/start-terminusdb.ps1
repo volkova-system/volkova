@@ -74,6 +74,110 @@ Import-Module -Name $coreModulePath -Force -ErrorAction Stop
 
 #region Helper Functions
 
+function Get-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Gets the repository root directory.
+
+    .DESCRIPTION
+        Determines the repository root directory by checking for git repository.
+
+    .OUTPUTS
+        System.String. Returns the absolute path to the repository root.
+
+    .EXAMPLE
+        # Returns the repository root directory path.
+        $repoRoot = Get-RepositoryRoot
+
+    .NOTES
+        This function attempts to use git to find the repository root.
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    param()
+
+    Write-DebugLog -Scope "REPO-ROOT" `
+        -Message "Determining repository root directory"
+
+    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
+
+    if (-not $gitCommand) {
+        Write-ErrorLog -Scope "REPO-ROOT" -Message "Git not found in PATH"
+
+        throw "Git is required to determine repository root"
+    }
+
+    $gitRoot = (& git rev-parse --show-toplevel 2>$null)
+
+    if (-not $gitRoot) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Git repository root could not be determined"
+
+        throw "Git repository root not found"
+    }
+
+    $absoluteRoot = [System.IO.Path]::GetFullPath($gitRoot)
+
+    if (-not (Test-Path -LiteralPath $absoluteRoot)) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Repository root path invalid: $absoluteRoot"
+
+        throw "Invalid repository root path"
+    }
+
+    Write-InfoLog -Scope "REPO-ROOT" `
+        -Message "Repository root: $absoluteRoot"
+
+    return $absoluteRoot
+}
+
+function Test-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Tests if the repository root directory exists.
+
+    .DESCRIPTION
+        Determines the repository root directory by calling Get-RepositoryRoot and
+        verifies its existence on the filesystem. Returns true if the repository
+        root is determined and exists, false otherwise.
+
+    .OUTPUTS
+        System.Boolean. Returns $true if the repository root exists, $false
+        otherwise.
+
+    .EXAMPLE
+        if (Test-RepositoryRoot) {
+            Write-InfoLog -Scope "REPO-TEST" -Message "Repository root is valid"
+        }
+
+    .NOTES
+        This function handles exceptions from Get-RepositoryRoot by logging the
+        error and returning $false.
+
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    Write-DebugLog -Scope "REPO-TEST" -Message "Testing repository root existence"
+
+    try {
+        $repositoryRoot = Get-RepositoryRoot
+
+        if (Test-Path -LiteralPath $repositoryRoot -PathType Container) {
+            return $true
+        }
+
+        return $false
+    }
+    catch {
+        Write-ErrorLog -Scope "REPO-TEST" `
+            -Message "Failed to test repository root: $($_.Exception.Message)"
+
+        return $false
+    }
+}
+
 function Test-DockerComposeFile {
     <#
     .SYNOPSIS
@@ -293,8 +397,11 @@ try {
     # Resolve Docker Compose file path relative to script location
     $scriptDir = Split-Path -Parent $PSCommandPath
     $projectRoot = Split-Path -Parent $scriptDir
+    $projectRoot = [System.IO.Path]::GetFullPath($projectRoot)
     $composePath = Join-Path $projectRoot `
         "containers/terminusdb/terminusdb.docker-compose.yml"
+    $starterSettingPath = Join-Path $projectRoot `
+        "settings/terminusdb.docker-starter.setting"
 
     # Validate Docker Compose file exists before proceeding
     Write-InfoLog -Scope "START-SCRIPT" `
@@ -305,6 +412,19 @@ try {
             -Message "Docker Compose file not found: $composePath"
         exit 1
     }
+
+    # Validate required settings file exists before proceeding
+    Write-InfoLog -Scope "START-SCRIPT" `
+        -Message "Validating required settings file"
+
+    if (-not (Test-Path -LiteralPath $starterSettingPath -PathType Leaf)) {
+        Write-ErrorLog -Scope "START-SCRIPT" `
+            -Message "Required settings file not found: $starterSettingPath"
+        exit 1
+    }
+
+    # Set PROJECT_ROOT environment variable for docker-compose
+    $env:PROJECT_ROOT = $projectRoot
 
     # Verify Docker is available and daemon is running
     Write-InfoLog -Scope "START-SCRIPT" `
