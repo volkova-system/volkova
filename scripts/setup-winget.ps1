@@ -430,6 +430,140 @@ function Get-RepositoryRoot {
 
 #endregion
 
+#region Version Update
+
+function Update-WingetAppsJsonVersions {
+    <#
+    .SYNOPSIS
+        Updates package Version fields in winget-apps.json to latest available.
+
+    .DESCRIPTION
+        Reads the winget-apps.json configuration, queries winget for the latest
+        available version for each PackageIdentifier, and updates the Version
+        field accordingly. Requires administrative privileges. Writes changes
+        back to the original JSON file.
+
+    .NOTES
+        This function reads and writes to the configuration file path provided.
+        Internet connectivity is required to query package metadata.
+
+    .EXAMPLE
+        Update-WingetAppsJsonVersions -JsonPath "C:\repo\winget-apps.json"
+        Updates the JSON file with latest package versions.
+    #>
+    [CmdletBinding()]
+    [OutputType([int])]
+    param(
+        [Parameter(Mandatory = $true, HelpMessage = "Absolute path to winget-apps.json")]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript({ Test-Path -LiteralPath $_ })]
+        [string]$JsonPath
+    )
+
+    Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating package versions"
+
+    try {
+        if (-not (Test-IsAdministrator)) {
+            throw "Administrative privileges required"
+        }
+
+        if (-not (Test-Path -LiteralPath $JsonPath)) {
+            throw "JSON file not found: $JsonPath"
+        }
+
+        $jsonContent = Get-Content -LiteralPath $JsonPath -Raw
+        $configuration = $jsonContent | ConvertFrom-Json
+
+        if (-not $configuration) {
+            throw "Invalid JSON"
+        }
+
+        $updatedCount = 0
+
+        foreach ($packageSource in $configuration.Sources) {
+            $packages = $packageSource.Packages
+            if (-not $packages) { continue }
+
+            foreach ($package in $packages) {
+                $packageIdentifier = $package.PackageIdentifier
+                if (-not $packageIdentifier) { continue }
+
+                $latestVersion = $null
+
+                try {
+                    $searchOutput = & winget search --id $packageIdentifier -e --source winget --output json --disable-interactivity
+                    if ($LASTEXITCODE -eq 0 -and $searchOutput) {
+                        $searchData = $searchOutput | ConvertFrom-Json
+                        if ($searchData.data -and $searchData.data.Count -gt 0) {
+                            $latestVersion = $searchData.data[0].Version
+                        }
+                        elseif ($searchData -and $searchData.Count -gt 0 -and $searchData[0].Version) {
+                            $latestVersion = $searchData[0].Version
+                        }
+                        elseif ($searchData.Version) {
+                            $latestVersion = $searchData.Version
+                        }
+                    }
+                }
+                catch {
+                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Search failed for $packageIdentifier: $($_.Exception.Message)"
+                }
+
+                if (-not $latestVersion) {
+                    try {
+                        $showOutput = & winget show --id $packageIdentifier -e --source winget --output json --disable-interactivity
+                        if ($LASTEXITCODE -eq 0 -and $showOutput) {
+                            $showData = $showOutput | ConvertFrom-Json
+                            if ($showData.Versions -and $showData.Versions.Count -gt 0) {
+                                $firstVersionEntry = $showData.Versions[0]
+                                if ($firstVersionEntry -is [object] -and $firstVersionEntry.PSObject.Properties.Match('Version').Count -gt 0) {
+                                    $latestVersion = $firstVersionEntry.Version
+                                }
+                                else {
+                                    $latestVersion = $firstVersionEntry
+                                }
+                            }
+                            elseif ($showData.Version) {
+                                $latestVersion = $showData.Version
+                            }
+                        }
+                    }
+                    catch {
+                        Write-WarningLog -Scope "JSON-UPDATE" -Message "Show failed for $packageIdentifier: $($_.Exception.Message)"
+                    }
+                }
+
+                if ($latestVersion) {
+                    if ($package.Version -ne $latestVersion) {
+                        Write-InfoLog -Scope "JSON-UPDATE" -Message "Updating $packageIdentifier $($package.Version) -> $latestVersion"
+                        $package.Version = $latestVersion
+                        $updatedCount++
+                    }
+                    else {
+                        Write-DebugLog -Scope "JSON-UPDATE" -Message "No change for $id"
+                    }
+                }
+                else {
+                    Write-WarningLog -Scope "JSON-UPDATE" -Message "Version unresolved for $packageIdentifier"
+                }
+            }
+        }
+
+        $updatedJson = $configuration | ConvertTo-Json -Depth 10
+        Set-Content -LiteralPath $JsonPath -Value $updatedJson -Encoding UTF8
+
+        Write-InfoLog -Scope "JSON-UPDATE" -Message "Update completed: $updatedCount package version changes"
+        return $updatedCount
+    }
+    catch {
+        Write-ErrorLog -Scope "JSON-UPDATE" -Message "Update failed: $($_.Exception.Message)"
+        Write-DebugLog -Scope "JSON-UPDATE" -Message "Stack Trace: $($_.ScriptStackTrace)"
+        throw
+    }
+}
+
+#endregion
+
 #region Main Script Execution
 
 Initialize-ScriptEnvironment
