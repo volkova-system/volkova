@@ -23,7 +23,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
 
     This document defines the restriction fields available in
     settings/setup.setting files and how they are enforced by the
-    setup-concise-repository script. It provides examples and
+    scripts/setup.ps1 script. It provides examples and
     guidelines for configuring platform, interpreter, and version
     restrictions.
 
