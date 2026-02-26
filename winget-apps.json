@@ -49,6 +49,11 @@
                     "PackageIdentifier": "Docker.DockerDesktop",
                     "Version": "4.60.1",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "Erlang.ErlangOTP",
+                    "Version": "28.3.2",
+                    "Source": "winget"
                 }
             ]
         }
