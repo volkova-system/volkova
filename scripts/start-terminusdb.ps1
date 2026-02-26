@@ -488,7 +488,7 @@ catch {
     Write-ErrorLog -Scope "START-SCRIPT" `
         -Message "Unexpected error: $($_.Exception.Message)"
 
-    Write-DebugLog -Scope "SCRIPT-MAIN" `
+    Write-DebugLog -Scope "START-SCRIPT" `
         -Message "Stack Trace: $($_.ScriptStackTrace)"
 
     exit 1
