@@ -2,6 +2,7 @@
 @commitlint/config-conventional --save-dev
 husky --save-dev
 lint-staged --save-dev
+http-server --save-dev
 
 @picocss/pico --save
 htmx.org --save
