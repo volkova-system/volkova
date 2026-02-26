@@ -381,6 +381,7 @@ function Invoke-ElixirInstallation {
     try {
         $installDir = Join-Path $env:USERPROFILE `
             ".elixir-install\installs\elixir\$ElixirVersion-otp-$OtpMajorVersion"
+
         $zipUrl = ("https://builds.hex.pm/builds/elixir/" +
             "v$ElixirVersion-otp-$OtpMajorVersion.zip")
 
@@ -439,7 +440,8 @@ function Update-EnvironmentPath {
         None. Updates system-wide and session PATH.
 
     .EXAMPLE
-        Update-EnvironmentPath -ElixirVersion "1.19.5" -OtpMajorVersion "28" -OtpBinPath "C:\Program Files\Erlang OTP\bin"
+        Update-EnvironmentPath -ElixirVersion "1.19.5" -OtpMajorVersion "28" `
+            -OtpBinPath "C:\Program Files\Erlang OTP\bin"
     #>
     [CmdletBinding()]
     param(
