@@ -11,25 +11,27 @@ exit /b 1
     Ensures winget is installed and imports application packages.
 
 .DESCRIPTION
-    This script validates that the Windows Package Manager (winget) is installed
-    on the system. If winget is not installed, the script installs it. If winget
-    is already installed, the script checks for updates and applies them. After
-    ensuring winget is available and up-to-date, the script imports application
-    packages from the winget-apps.json configuration file.
+    Ensures winget is installed and up-to-date.
 
-    This script requires administrative privileges to install or update winget and
-    to install application packages.
+    If missing, installs App Installer (winget); otherwise applies updates.
+
+    Validates winget-apps.json, updates package versions to the latest, and imports
+    packages non-interactively with required agreements.
+
+    Requires administrative privileges.
+
+    See helps/powershell-core-module-format.help for core function specifications.
 
 .NOTES
     Author: Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>
     Version: 0.0.0
-    Last Modified: 2026-02-08
+    Last Modified: 2026-02-26
     Platform: Windows only
     Requirements: pwsh 7.5.4 (exact), Administrator privileges
 
 .EXAMPLE
-    # Ensures winget is installed, updated, and imports packages from updated
-    # winget-apps.json.
+    # Ensures winget is installed, updates versions in winget-apps.json, and
+    # imports packages.
     .\scripts\setup-winget.ps1
 
 .EXIT CODES
@@ -116,16 +118,19 @@ function Install-Winget {
         Installs Windows Package Manager (winget).
 
     .DESCRIPTION
-        Downloads and installs the latest version of Windows Package Manager
-        (winget) from the Microsoft Store or GitHub releases.
+        Downloads and installs App Installer (which includes winget) using the
+        Microsoft Store distribution (aka.ms/getwinget). Requires administrative
+        privileges.
 
     .OUTPUTS
         None. Throws an error if installation fails.
 
     .EXAMPLE
-        # Installs winget on the system.
         Install-Winget
 
+    .NOTES
+        Downloads to a temporary path, installs via Add-AppxPackage, and removes
+        the installer file after installation.
     #>
     [CmdletBinding()]
     param()
@@ -181,15 +186,18 @@ function Update-Winget {
         Updates Windows Package Manager (winget) to the latest version.
 
     .DESCRIPTION
-        Checks for available updates to winget and applies them if found.
+        Checks for available updates and applies them using winget upgrade with
+        non-interactive and agreement flags. Handles benign exit codes when no
+        update is required.
 
     .OUTPUTS
         None. Throws an error if update fails.
 
     .EXAMPLE
-        # Updates winget to the latest version.
         Update-Winget
 
+    .NOTES
+        Requires winget to be installed.
     #>
     [CmdletBinding()]
     param()
@@ -300,6 +308,9 @@ function Get-WingetAppsJsonPath {
         $jsonPath = Get-WingetAppsJsonPath
         Retrieves the absolute path to winget-apps.json.
 
+    .NOTES
+        winget-apps.json is expected to reside at the repository root.
+
     #>
     [CmdletBinding()]
     [OutputType([string])]
@@ -335,6 +346,10 @@ function Test-WingetAppsJsonExists {
         if (Test-WingetAppsJsonExists) {
             Write-InfoLog -Scope "JSON-VALIDATE" -Message "winget-apps.json found"
         }
+
+    .NOTES
+        Use before updating versions or importing packages.
+
     #>
     [CmdletBinding()]
     [OutputType([bool])]
@@ -366,13 +381,13 @@ function Update-WingetAppsJsonVersions {
     .DESCRIPTION
         Reads the winget-apps.json configuration, queries winget for the latest
         available version for each PackageIdentifier, and updates the Version
-        field accordingly. Writes changes back to the original JSON file.
+        field accordingly. Writes changes back to the same JSON file.
 
     .OUTPUTS
         None. Throws an error if update fails.
 
     .NOTES
-        This function reads and writes to the configuration file path provided.
+        Resolves the file path via Get-WingetAppsJsonPath.
 
     .EXAMPLE
         # Updates the JSON file with latest package versions.
@@ -497,16 +512,19 @@ function Invoke-WingetImport {
         Imports application packages from winget-apps.json.
 
     .DESCRIPTION
-        Uses winget to import, install and update application packages defined in
-        the winget-apps.json configuration file.
+        Uses winget to import, install, and update application packages defined in
+        winget-apps.json. Automatically resolves the file path via
+        Get-WingetAppsJsonPath.
 
     .OUTPUTS
         None. Throws an error if import fails.
 
     .EXAMPLE
-        # Imports packages from the specified JSON file.
         Invoke-WingetImport
 
+    .NOTES
+        Uses agreement and non-interactive flags; requires administrative
+        privileges.
     #>
     [CmdletBinding()]
     param()
