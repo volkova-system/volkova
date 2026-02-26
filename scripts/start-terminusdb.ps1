@@ -23,8 +23,8 @@ exit /b 1
     Requirements: pwsh 7.5.4, Docker, docker-compose
 
 .EXAMPLE
+    # Starts the TerminusDB container if not already running.
     .\start-terminusdb.ps1
-    Starts the TerminusDB container if not already running.
 
 .EXAMPLE
     # Run from project root directory
