@@ -459,6 +459,13 @@ function Invoke-ServiceGeneration {
 
     $serviceDirectory = Join-Path $servicesDirectory $ServiceName
 
+    $serviceAppName = $ServiceName -replace "-", "_"
+    $serviceModuleName = (
+        $ServiceName -split '[-_\s]+' |
+        Where-Object { $_.Length -gt 0 } |
+        ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1).ToLower() }
+    ) -join ''
+
     # Construct Mix command with required flags
     $mixCommand = "mix"
     $mixArguments = @(
@@ -471,6 +478,9 @@ function Invoke-ServiceGeneration {
         "--no-dashboard"
         "--no-gettext"
         "--no-ecto"
+        "--app $serviceAppName"
+        "--module $serviceModuleName"
+        "--install"
     )
 
     Write-InfoLog -Scope "SETUP-GEN" `
@@ -479,7 +489,7 @@ function Invoke-ServiceGeneration {
     # Execute Mix command in services directory
     try {
         # Execute Mix command and capture output
-        $output = & $mixCommand $mixArguments 2>&1
+        $output = & $mixCommand $mixArguments
 
         # Check exit code
         if ($LASTEXITCODE -ne 0) {
