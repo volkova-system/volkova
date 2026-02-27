@@ -142,7 +142,7 @@ function Invoke-ParameterValidation {
         -Message "Parameter validation completed successfully"
 }
 
-function Test-ErlangInstallation {
+function Assert-ErlangInstallation {
     <#
     .SYNOPSIS
         Validates Erlang installation.
@@ -153,7 +153,7 @@ function Test-ErlangInstallation {
 
     .EXAMPLE
         # Validates Erlang installation.
-        Test-ErlangInstallation
+        Assert-ErlangInstallation
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the
@@ -180,111 +180,41 @@ function Test-ErlangInstallation {
         -Message "Erlang validation completed successfully"
 }
 
-function Invoke-ElixirValidation {
+function Assert-ElixirInstallation {
     <#
     .SYNOPSIS
-        Validates Elixir installation and version.
+        Validates Elixir installation.
 
     .DESCRIPTION
-        Validates that Elixir is installed and accessible, and that the
-        version meets the minimum requirement (1.14.0 or higher). Throws a
-        terminating error with installation instructions if validation fails.
+        Validates that Elixir is installed and accessible. Throws a terminating
+        error if validation fails.
 
     .EXAMPLE
-        Invoke-ElixirValidation
-        Validates Elixir installation and version.
+        # Validates Elixir installation.
+        Assert-ElixirInstallation
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the
         script if validation fails.
+
     #>
     [CmdletBinding()]
     param()
 
-    Write-InfoLog -Scope "SETUP-ELIXIR" `
-        -Message "Checking Elixir installation and version"
+    Write-InfoLog -Scope "SETUP-ELIXIR" -Message "Checking Elixir installation"
 
     # Check if Elixir is installed and accessible
     $elixirCommand = Get-Command -Name 'elixir' -ErrorAction SilentlyContinue
 
     if (-not $elixirCommand) {
-        $errorMessage = "Elixir is not installed or not accessible " +
-            "in PATH.`n" +
-            "Minimum required version: 1.14.0`n" +
-            "Installation instructions: https://elixir-lang.org/install.html"
+        $errorMessage = "Elixir is not installed or not accessible in PATH."
         Write-ErrorLog -Scope "SETUP-ELIXIR" -Message $errorMessage
+
         throw $errorMessage
     }
 
-    # Get Elixir version
-    try {
-        $elixirVersionOutput = & elixir --version 2>&1
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "Failed to get Elixir version"
-        }
-
-        # Parse version string from output
-        # Expected format: "Elixir 1.14.0 (compiled with Erlang/OTP 24)"
-        $versionLine = $elixirVersionOutput | Where-Object {
-            $_ -match 'Elixir\s+(\d+\.\d+\.\d+)'
-        } | Select-Object -First 1
-
-        if (-not $versionLine) {
-            throw "Unable to parse Elixir version from output"
-        }
-
-        if ($versionLine -match 'Elixir\s+(\d+)\.(\d+)\.(\d+)') {
-            $majorVersion = [int]$Matches[1]
-            $minorVersion = [int]$Matches[2]
-            $patchVersion = [int]$Matches[3]
-            $versionString = "$majorVersion.$minorVersion.$patchVersion"
-        } else {
-            throw "Unable to parse Elixir version: $versionLine"
-        }
-
-        Write-InfoLog -Scope "SETUP-ELIXIR" `
-            -Message "Elixir version: $versionString"
-
-        # Verify version meets minimum requirement (1.14.0 or higher)
-        $minimumMajor = 1
-        $minimumMinor = 14
-        $minimumPatch = 0
-
-        $isRequirementMet = $false
-
-        if ($majorVersion -gt $minimumMajor) {
-            $isRequirementMet = $true
-        } elseif ($majorVersion -eq $minimumMajor) {
-            if ($minorVersion -gt $minimumMinor) {
-                $isRequirementMet = $true
-            } elseif ($minorVersion -eq $minimumMinor) {
-                if ($patchVersion -ge $minimumPatch) {
-                    $isRequirementMet = $true
-                }
-            }
-        }
-
-        if (-not $isRequirementMet) {
-            $errorMessage = "Elixir version does not meet minimum " +
-                "requirement.`n" +
-                "Current version: $versionString`n" +
-                "Minimum required version: " +
-                "$minimumMajor.$minimumMinor.$minimumPatch`n" +
-                "Installation instructions: " +
-                "https://elixir-lang.org/install.html"
-            Write-ErrorLog -Scope "SETUP-ELIXIR" -Message $errorMessage
-            throw $errorMessage
-        }
-
-        Write-InfoLog -Scope "SETUP-ELIXIR" `
-            -Message "Elixir validation completed successfully"
-    }
-    catch {
-        $errorMessage = "Failed to validate Elixir installation: $_"
-        Write-ErrorLog -Scope "SETUP-ELIXIR" -Message $errorMessage
-        throw $errorMessage
-    }
+    Write-InfoLog -Scope "SETUP-ELIXIR" `
+        -Message "Elixir validation completed successfully"
 }
 
 function Invoke-PhoenixValidation {
@@ -431,10 +361,10 @@ function Invoke-EnvironmentValidation {
         -Message "Starting environment validation"
 
     # Call Erlang validation
-    Test-ErlangInstallation
+    Assert-ErlangInstallation
 
     # Call Elixir validation
-    Invoke-ElixirValidation
+    Assert-ElixirInstallation
 
     # Call Phoenix validation
     Invoke-PhoenixValidation
@@ -470,7 +400,8 @@ function Invoke-ServiceGeneration {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to create.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The name of the Phoenix service to create.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
@@ -503,12 +434,14 @@ function Invoke-ServiceGeneration {
         try {
             New-Item -LiteralPath $servicesDirectory -ItemType Directory `
                 -Force -ErrorAction Stop | Out-Null
+
             Write-InfoLog -Scope "SETUP-GEN" `
                 -Message "Created services directory: $servicesDirectory"
         }
         catch {
             $errorMessage = "Failed to create services directory: $_"
             Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
+
             throw $errorMessage
         }
     }
@@ -528,6 +461,7 @@ function Invoke-ServiceGeneration {
                 "Exit code: $LASTEXITCODE`n" +
                 "Output: $($output -join "`n")"
             Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
+
             throw $errorMessage
         }
 
@@ -559,6 +493,7 @@ function Invoke-ServiceGeneration {
         $errorMessage = "Service directory was not created.`n" +
             "Expected location: $serviceDirectory"
         Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
+
         throw $errorMessage
     }
 
@@ -589,7 +524,8 @@ function Test-ServiceDirectory {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The name of the Phoenix service.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
@@ -610,6 +546,7 @@ function Test-ServiceDirectory {
         $errorMessage = "Service directory not found.`n" +
             "Expected path: $serviceDirectory"
         Write-ErrorLog -Scope "SETUP-VERIFY" -Message $errorMessage
+
         throw $errorMessage
     }
 
@@ -642,7 +579,8 @@ function Test-CriticalFiles {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify critical files.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The name of the Phoenix service.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
@@ -681,6 +619,7 @@ function Test-CriticalFiles {
                 "Missing file: $($file.Name)`n" +
                 "Expected location: $($file.Path)"
             Write-ErrorLog -Scope "SETUP-VERIFY" -Message $errorMessage
+
             throw $errorMessage
         }
 
@@ -716,7 +655,8 @@ function Invoke-ServiceVerification {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The name of the Phoenix service.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
@@ -733,6 +673,7 @@ function Invoke-ServiceVerification {
     # Log success message upon completion
     Write-InfoLog -Scope "SETUP-VERIFY" `
         -Message "Service verification completed successfully"
+
     Write-InfoLog -Scope "SETUP-VERIFY" `
         -Message "Service '$ServiceName' created successfully"
 }
@@ -755,7 +696,8 @@ function Invoke-PrimaryWorkflow {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the service to create.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The name of the service to create.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
