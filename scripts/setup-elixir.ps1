@@ -42,22 +42,22 @@ param()
 
 #region Module Import
 
-# Import required modules
 $scriptPath = $PSScriptRoot
 $conciseLogPath = Join-Path $scriptPath 'concise-log.psm1'
 $coreModulePath = Join-Path $scriptPath 'powershell-core.psm1'
 
-# Convert to absolute paths (REQUIRED)
 $conciseLogPath = [System.IO.Path]::GetFullPath($conciseLogPath)
 $coreModulePath = [System.IO.Path]::GetFullPath($coreModulePath)
 
 if (-not (Test-Path -LiteralPath $conciseLogPath)) {
     Write-Error 'Required module not found: concise-log.psm1'
+
     exit 1
 }
 
 if (-not (Test-Path -LiteralPath $coreModulePath)) {
     Write-Error 'Required module not found: powershell-core.psm1'
+
     exit 1
 }
 
@@ -178,9 +178,9 @@ function Get-ErlangOtpVersion {
         Retrieves the WinGet-installed Erlang/OTP major and full versions.
 
     .DESCRIPTION
-        Directly checks the standard WinGet installation path for Erlang/OTP
-        (C:\Program Files\Erlang OTP). If found, it updates the session PATH
-        and returns an object containing major, full, and bin versions.
+        Detects the Erlang/OTP installation path using WinGet.
+        If found, it updates the session PATH and returns an object
+        containing major, full, and bin versions.
 
     .OUTPUTS
         PSCustomObject. Returns an object with 'Major', 'Full', and 'BinPath'
@@ -192,7 +192,7 @@ function Get-ErlangOtpVersion {
             -Message "OTP: $($otp.Full) (Major: $($otp.Major))"
 
     .NOTES
-        Throws an error if Erlang/OTP is not found at the expected WinGet path.
+        Throws an error if Erlang/OTP is not found via WinGet.
 
     #>
     [CmdletBinding()]
@@ -200,16 +200,32 @@ function Get-ErlangOtpVersion {
     param()
 
     Write-DebugLog -Scope "ERLANG-CHECK" `
-        -Message "Detecting WinGet-installed Erlang/OTP"
+        -Message "Detecting Erlang/OTP installation via WinGet"
 
-    $erlBinPath = "C:\Program Files\Erlang OTP\bin"
-    $erlExe = Join-Path $erlBinPath "erl.exe"
+    $erlBinPath = ""
+    $erlDirectory = ""
 
-    if (-not (Test-Path -LiteralPath $erlExe)) {
+    # Get install location directly from WinGet
+    $wingetShow = winget show --id Erlang.ErlangOTP --exact 2>$null
+    if ($wingetShow) {
+        $pathLine = $wingetShow | Select-String -Pattern "Install Location:"
+
+        if ($pathLine) {
+            $erlDirectory = ($pathLine -split "Location:")[1].Trim()
+            $erlDirectory = [System.IO.Path]::GetFullPath($erlDirectory)
+
+            if ($erlDirectory -and
+                (Test-Path -LiteralPath (Join-Path $erlDirectory "bin\erl.exe"))) {
+                $erlBinPath = Join-Path $erlDirectory "bin"
+            }
+        }
+    }
+
+    if (-not $erlBinPath) {
         Write-ErrorLog -Scope "ERLANG-CHECK" `
-            -Message "Erlang/OTP not found at WinGet path: $erlBinPath"
+            -Message "Erlang/OTP not found via WinGet"
 
-        throw "Erlang/OTP must be installed via 'setup-winget.ps1' first"
+        throw "Erlang/OTP not found via WinGet"
     }
 
     # Update session PATH immediately to use this specific Erlang
@@ -227,8 +243,9 @@ function Get-ErlangOtpVersion {
         }
 
         # Get full version from standard OTP_VERSION file location
-        $erlDir = "C:\Program Files\Erlang OTP"
-        $otpVersionFile = Join-Path $erlDir "releases\$majorVersion\OTP_VERSION"
+        $otpVersionFile = (
+            Join-Path $erlDirectory "releases\$majorVersion\OTP_VERSION"
+        )
         $fullVersion = $majorVersion
 
         if (Test-Path -LiteralPath $otpVersionFile) {
@@ -297,7 +314,8 @@ function Get-LatestElixirVersion {
         Write-InfoLog -Scope "ELIXIR-QUERY" `
             -Message "Fetching builds list from: $buildsUrl"
 
-        $buildsContent = (Invoke-WebRequest -Uri $buildsUrl `
+        $buildsContent = (Invoke-WebRequest `
+            -Uri $buildsUrl `
             -ErrorAction Stop).Content
 
         $buildLines = $buildsContent -split "`n"
@@ -305,15 +323,21 @@ function Get-LatestElixirVersion {
         Write-DebugLog -Scope "ELIXIR-QUERY" `
             -Message "Processing $($buildLines.Count) build entries"
 
-        $pattern = "^v\d+\.\d+\.\d+-otp-$([regex]::Escape($OtpMajorVersion))\b"
+        $otpMajorVersionPattern = (
+            "^v\d+\.\d+\.\d+-otp-$([regex]::Escape($OtpMajorVersion))\b"
+        )
+
+        $majorVersionPattern = (
+            '^v(?<version>\d+\.\d+\.\d+)-otp-(?<otp>\d+)'
+        )
 
         $compatibleBuilds = $buildLines |
             Where-Object {
-                $_ -match $pattern
+                $_ -match $otpMajorVersionPattern
             } |
             ForEach-Object {
-                if ($_ -match '^v(?<ver>\d+\.\d+\.\d+)-otp-(?<otp>\d+)') {
-                    [PSCustomObject]@{ Version = [version]$Matches.ver }
+                if ($_ -match $majorVersionPattern) {
+                    [PSCustomObject]@{ Version = [version]$Matches.version }
                 }
             } |
             Sort-Object Version -Descending
@@ -473,6 +497,7 @@ function Update-EnvironmentPath {
             if (-not (Test-Path -LiteralPath $binDir)) {
                 Write-WarningLog -Scope "PATH-UPDATE" `
                     -Message "Directory not found, skipping PATH update: $binDir"
+
                 continue
             }
 
@@ -585,8 +610,7 @@ if (-not (Test-IsAdministrator)) {
 }
 
 try {
-    Write-InfoLog -Scope "SCRIPT-MAIN" `
-        -Message "Starting Elixir setup process"
+    Write-InfoLog -Scope "SCRIPT-MAIN" -Message "Starting Elixir setup process"
 
     if (-not $(Test-RepositoryRoot)) {
         Write-ErrorLog -Scope "REPO-TEST" -Message "Repository root not found"
@@ -603,11 +627,13 @@ try {
     $elixirVersion = Get-LatestElixirVersion -OtpMajorVersion $otpMajorVersion
 
     # Download and install Elixir zip
-    Invoke-ElixirInstallation -ElixirVersion $elixirVersion `
+    Invoke-ElixirInstallation `
+        -ElixirVersion $elixirVersion `
         -OtpMajorVersion $otpMajorVersion
 
     # Update PATH for current session and system-wide
-    Update-EnvironmentPath -ElixirVersion $elixirVersion `
+    Update-EnvironmentPath `
+        -ElixirVersion $elixirVersion `
         -OtpMajorVersion $otpMajorVersion `
         -OtpBinPath $otpBinPath
 
