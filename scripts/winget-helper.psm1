@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Searches Windows Registry for a specified package and returns its
-    installation path. Searches HKLM 64-bit and HKLM 32-bit registry
+    installation path. Searches HKLM 64-bit, HKLM 32-bit, and HKCU
     locations in order. Uses InstallLocation when available.
 
 .NOTES
@@ -13,6 +13,7 @@
     Last Modified: 2026-02-27
     Platform: Windows only
     Requirements: pwsh 7.5.4
+    Dependencies: concise-log.psm1
 
 .EXIT CODES
     0 - Success
@@ -34,7 +35,7 @@ function Get-WingetInstallPath {
 
     .DESCRIPTION
         Searches Windows Registry for a specified package and returns its
-        installation path. Searches HKLM 64-bit and HKLM 32-bit registry
+        installation path. Searches HKLM 64-bit, HKLM 32-bit, and HKCU
         locations in order. Uses InstallLocation when available.
 
     .PARAMETER PackageName
@@ -74,96 +75,140 @@ function Get-WingetInstallPath {
 
     try {
         foreach ($registryPath in $registryPaths) {
-            $subkeys = Get-ChildItem -LiteralPath $registryPath `
+            $registrySubkeys = Get-ChildItem `
+                -LiteralPath $registryPath `
                 -ErrorAction SilentlyContinue
 
-            if ($null -eq $subkeys) {
+            if ($null -eq $registrySubkeys) {
                 continue
             }
 
-            foreach ($subkey in $subkeys) {
-                $entry = Get-ItemProperty -LiteralPath $subkey.PSPath `
+            foreach ($registrySubkey in $registrySubkeys) {
+                $registryEntry = Get-ItemProperty `
+                    -LiteralPath $registrySubkey.PSPath `
                     -ErrorAction SilentlyContinue
 
-                if ($null -eq $entry) {
+                if ($null -eq $registryEntry) {
                     continue
                 }
 
-                if (-not ($entry.PSObject.Properties.Name -contains 'DisplayName')) {
+                if (-not ($registryEntry.PSObject.Properties.Name `
+                    -contains 'DisplayName')) {
                     continue
                 }
-                $displayName = $entry.DisplayName
+                $displayName = $registryEntry.DisplayName
 
                 if ($displayName -like "*$PackageName*") {
-                    $candidates = @()
+                    $pathCandidates = @()
 
-                    if ($entry.PSObject.Properties.Name -contains 'InstallLocation') {
-                        $candidates += $entry.InstallLocation
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'InstallLocation') {
+                        $pathCandidates += $registryEntry.InstallLocation
                     }
-                    if ($entry.PSObject.Properties.Name -contains 'InstallDir') {
-                        $candidates += $entry.InstallDir
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'InstallDir') {
+                        $pathCandidates += $registryEntry.InstallDir
                     }
-                    if ($entry.PSObject.Properties.Name -contains 'InstallPath') {
-                        $candidates += $entry.InstallPath
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'InstallPath') {
+                        $pathCandidates += $registryEntry.InstallPath
                     }
-                    if ($entry.PSObject.Properties.Name -contains 'InstallFolder') {
-                        $candidates += $entry.InstallFolder
-                    }
-
-                    if ($entry.PSObject.Properties.Name -contains 'DisplayIcon') {
-                        $displayIcon = $entry.DisplayIcon
-                        $iconStr = $displayIcon.ToString().Trim()
-                        $iconPath = $iconStr
-                        if ($iconStr.StartsWith('"')) {
-                            $m = [regex]::Match($iconStr, '^"([^"]+)"')
-                            if ($m.Success) { $iconPath = $m.Groups[1].Value }
-                        }
-                        else {
-                            $iconPath = ($iconStr -split '\s+')[0]
-                        }
-                        $iconPath = ($iconPath -split ',')[0]
-                        if ($iconPath) {
-                            $candidates += $iconPath
-                        }
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'InstallFolder') {
+                        $pathCandidates += $registryEntry.InstallFolder
                     }
 
-                    if ($entry.PSObject.Properties.Name -contains 'UninstallString') {
-                        $uninstallString = $entry.UninstallString
-                        $uStr = $uninstallString.ToString().Trim()
-                        if ($uStr -and ($uStr -notmatch '(?i)\\msiexec(\.exe)?\b')) {
-                            $exePath = $uStr
-                            if ($uStr.StartsWith('"')) {
-                                $m = [regex]::Match($uStr, '^"([^"]+)"')
-                                if ($m.Success) { $exePath = $m.Groups[1].Value }
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'DisplayIcon') {
+                        $displayIcon = $registryEntry.DisplayIcon
+                        $displayIconString = $displayIcon.ToString().Trim()
+                        $displayIconPath = $displayIconString
+
+                        if ($displayIconString.StartsWith('"')) {
+                            $matchResult = [regex]::Match(
+                                $displayIconString, '^"([^"]+)"'
+                            )
+                            if ($matchResult.Success) {
+                                $displayIconPath = $matchResult.Groups[1].Value
                             }
-                            else {
-                                $exePath = ($uStr -split '\s+')[0]
-                            }
-                            $exePath = ($exePath -split ',')[0]
-                            if ($exePath) {
-                                $candidates += $exePath
-                            }
+                        } else {
+                            $displayIconPath = ($displayIconString -split '\s+')[0]
+                        }
+
+                        $displayIconPath = ($displayIconPath -split ',')[0]
+
+                        if ($displayIconPath) {
+                            $pathCandidates += $displayIconPath
                         }
                     }
 
-                    foreach ($candidate in $candidates) {
-                        if ($null -eq $candidate) { continue }
-                        $cand = $candidate.ToString().Trim()
-                        if (-not $cand) { continue }
+                    if ($registryEntry.PSObject.Properties.Name `
+                        -contains 'UninstallString') {
+                        $uninstallString = $registryEntry.UninstallString
+                        $uninstallStringValue = $uninstallString.ToString().Trim()
+                        if ($uninstallStringValue -and ($uninstallStringValue `
+                            -notmatch '(?i)\\msiexec(\.exe)?\b')) {
+                            $executablePath = $uninstallStringValue
 
-                        if (Test-Path -LiteralPath $cand) {
-                            $item = $null
-                            try { $item = Get-Item -LiteralPath $cand -ErrorAction SilentlyContinue } catch {}
-                            $dir = $cand
-                            if ($item -and -not $item.PSIsContainer) {
-                                $dir = [System.IO.Path]::GetDirectoryName($cand)
+                            if ($uninstallStringValue.StartsWith('"')) {
+                                $matchResult = [regex]::Match(
+                                    $uninstallStringValue, '^"([^"]+)"'
+                                )
+                                if ($matchResult.Success) {
+                                    $executablePath = $matchResult.Groups[1].Value
+                                }
+                            } else {
+                                $executablePath = (
+                                    $uninstallStringValue -split '\s+'
+                                )[0]
                             }
-                            if ($dir -and (Test-Path -LiteralPath $dir -PathType Container)) {
-                                $absolutePath = [System.IO.Path]::GetFullPath($dir)
+
+                            $executablePath = ($executablePath -split ',')[0]
+                            if ($executablePath) {
+                                $pathCandidates += $executablePath
+                            }
+                        }
+                    }
+
+                    foreach ($candidatePath in $pathCandidates) {
+                        if ($null -eq $candidatePath) { continue }
+                        $candidatePathTrimmed = $candidatePath.ToString().Trim()
+
+                        if (-not $candidatePathTrimmed) { continue }
+
+                        if (Test-Path -LiteralPath $candidatePathTrimmed) {
+                            $resolvedItem = $null
+                            try {
+                                $resolvedItem = (
+                                    Get-Item `
+                                        -LiteralPath $candidatePathTrimmed `
+                                        -ErrorAction SilentlyContinue
+                                )
+                            } catch {}
+
+                            $resolvedDirectory = $candidatePathTrimmed
+                            if ($resolvedItem -and `
+                                -not $resolvedItem.PSIsContainer) {
+                                $resolvedDirectory = (
+                                    [System.IO.Path]::GetDirectoryName(
+                                        $candidatePathTrimmed
+                                    )
+                                )
+                            }
+                            if ($resolvedDirectory -and (
+                                Test-Path -LiteralPath $resolvedDirectory `
+                                -PathType Container
+                            )) {
+                                $absolutePath = (
+                                    [System.IO.Path]::GetFullPath(
+                                        $resolvedDirectory
+                                    )
+                                )
                                 Write-InfoLog `
                                     -Scope $logScope `
                                     -Message ("Package '$PackageName' found at " +
                                         "'$absolutePath'")
+
                                 return $absolutePath
                             }
                         }
