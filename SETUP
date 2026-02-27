@@ -11,3 +11,4 @@ scripts/setup-feather-icons.ps1 -DestinationDirectory storybook\public\assets\im
 scripts/setup-fira-code.ps1 -DestinationDirectory storybook\public\assets\fonts
 
 scripts/setup-elixir.ps1
+scripts/setup-phoenix.ps1
