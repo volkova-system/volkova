@@ -217,121 +217,55 @@ function Assert-ElixirInstallation {
         -Message "Elixir validation completed successfully"
 }
 
-function Invoke-PhoenixValidation {
+function Assert-PhoenixInstallation {
     <#
     .SYNOPSIS
-        Validates Phoenix installation and version.
+        Validates Phoenix installation presence.
 
     .DESCRIPTION
-        Validates that Phoenix is installed via Mix and accessible, and that
-        the version meets the minimum requirement (1.7.0 or higher). Throws a
+        Validates that Phoenix is installed via Mix and accessible. Executes
+        "mix phx.new --version" to confirm the installer is available. Throws a
         terminating error with installation instructions if validation fails.
 
     .EXAMPLE
-        Invoke-PhoenixValidation
-        Validates Phoenix installation and version.
+        Assert-PhoenixInstallation
+        Validates Phoenix installation presence.
 
     .NOTES
-        This function enforces fail-loud behavior and will terminate the
-        script if validation fails.
+        This function enforces fail-loud behavior and will terminate the script if
+        validation fails.
+
     #>
     [CmdletBinding()]
     param()
 
     Write-InfoLog -Scope "SETUP-PHOENIX" `
-        -Message "Checking Phoenix installation and version"
+        -Message "Checking Phoenix installation"
 
-    # Check if Mix is installed and accessible
     $mixCommand = Get-Command -Name 'mix' -ErrorAction SilentlyContinue
 
     if (-not $mixCommand) {
-        $errorMessage = "Mix is not installed or not accessible in PATH.`n" +
-            "Mix is required to check Phoenix installation.`n" +
-            "Please ensure Elixir is properly installed."
+        $errorMessage = "Mix is not installed or not accessible in PATH."
         Write-ErrorLog -Scope "SETUP-PHOENIX" -Message $errorMessage
+
         throw $errorMessage
     }
 
-    # Get Phoenix version via Mix
     try {
-        $phoenixVersionOutput = & mix phx.new --version 2>&1
+        & mix phx.new --version 2>&1
 
         if ($LASTEXITCODE -ne 0) {
-            $errorMessage = "Phoenix is not installed or not accessible " +
-                "via Mix.`n" +
-                "Minimum required version: 1.7.0`n" +
-                "Installation instructions: " +
-                "mix archive.install hex phx_new"
+            $errorMessage = "Phoenix is not installed or not accessible via Mix."
             Write-ErrorLog -Scope "SETUP-PHOENIX" -Message $errorMessage
-            throw $errorMessage
-        }
 
-        # Parse version string from output
-        # Expected format: "Phoenix installer v1.7.0"
-        $versionLine = $phoenixVersionOutput | Where-Object {
-            $_ -match 'Phoenix\s+(?:installer\s+)?v?(\d+\.\d+\.\d+)'
-        } | Select-Object -First 1
-
-        if (-not $versionLine) {
-            throw "Unable to parse Phoenix version from output"
-        }
-
-        $phoenixPattern = 'Phoenix\s+(?:installer\s+)?v?(\d+)\.(\d+)\.(\d+)'
-        if ($versionLine -match $phoenixPattern) {
-            $majorVersion = [int]$Matches[1]
-            $minorVersion = [int]$Matches[2]
-            $patchVersion = [int]$Matches[3]
-            $versionString = "$majorVersion.$minorVersion.$patchVersion"
-        } else {
-            throw "Unable to parse Phoenix version: $versionLine"
-        }
-
-        Write-InfoLog -Scope "SETUP-PHOENIX" `
-            -Message "Phoenix version: $versionString"
-
-        # Verify version meets minimum requirement (1.7.0 or higher)
-        $minimumMajor = 1
-        $minimumMinor = 7
-        $minimumPatch = 0
-
-        $isRequirementMet = $false
-
-        if ($majorVersion -gt $minimumMajor) {
-            $isRequirementMet = $true
-        } elseif ($majorVersion -eq $minimumMajor) {
-            if ($minorVersion -gt $minimumMinor) {
-                $isRequirementMet = $true
-            } elseif ($minorVersion -eq $minimumMinor) {
-                if ($patchVersion -ge $minimumPatch) {
-                    $isRequirementMet = $true
-                }
-            }
-        }
-
-        if (-not $isRequirementMet) {
-            $errorMessage = "Phoenix version does not meet minimum " +
-                "requirement.`n" +
-                "Current version: $versionString`n" +
-                "Minimum required version: " +
-                "$minimumMajor.$minimumMinor.$minimumPatch`n" +
-                "Installation instructions: " +
-                "mix archive.install hex phx_new"
-            Write-ErrorLog -Scope "SETUP-PHOENIX" -Message $errorMessage
             throw $errorMessage
         }
 
         Write-InfoLog -Scope "SETUP-PHOENIX" `
-            -Message "Phoenix validation completed successfully"
+            -Message "Phoenix installation validated successfully"
     }
     catch {
-        # Check if this is already a Phoenix not installed error
-        if ($_.Exception.Message -match "Phoenix is not installed") {
-            throw
-        }
-
-        $errorMessage = "Failed to validate Phoenix installation: $_"
-        Write-ErrorLog -Scope "SETUP-PHOENIX" -Message $errorMessage
-        throw $errorMessage
+        throw
     }
 }
 
@@ -341,18 +275,19 @@ function Invoke-EnvironmentValidation {
         Orchestrates all environment validations.
 
     .DESCRIPTION
-        Orchestrates the validation of Erlang, Elixir, and Phoenix
-        installations by calling each validation function in sequence.
-        Throws a terminating error if any validation fails.
+        Orchestrates the validation of Erlang, Elixir, and Phoenix installations by
+        calling each validation function in sequence. Throws a terminating error if
+        any validation fails.
 
     .EXAMPLE
+        # Validates all required environment components.
         Invoke-EnvironmentValidation
-        Validates all required environment components.
 
     .NOTES
-        This function enforces fail-loud behavior and will terminate the
-        script if any validation fails. All errors from individual
-        validation functions propagate as terminating errors.
+        This function enforces fail-loud behavior and will terminate the script if
+        any validation fails. All errors from individual validation functions
+        propagate as terminating errors.
+
     #>
     [CmdletBinding()]
     param()
@@ -367,7 +302,7 @@ function Invoke-EnvironmentValidation {
     Assert-ElixirInstallation
 
     # Call Phoenix validation
-    Invoke-PhoenixValidation
+    Assert-PhoenixInstallation
 
     Write-InfoLog -Scope "SETUP-ENV" `
         -Message "Environment validation completed successfully"
@@ -389,14 +324,15 @@ function Invoke-ServiceGeneration {
         The name of the Phoenix service to create.
 
     .EXAMPLE
+        # Creates a new Phoenix service named 'my-service' in the
+        # services/my-service directory.
         Invoke-ServiceGeneration -ServiceName 'my-service'
-        Creates a new Phoenix service named 'my-service' in the
-        services/my-service directory.
 
     .NOTES
-        This function enforces fail-loud behavior and will terminate the
-        script if the Mix command fails. The function uses the powershell-core
-        module for command execution.
+        This function enforces fail-loud behavior and will terminate the script if
+        the Mix command fails. The function uses the powershell-core module for
+        command execution.
+
     #>
     [CmdletBinding()]
     param(
@@ -456,10 +392,7 @@ function Invoke-ServiceGeneration {
 
         # Check exit code
         if ($LASTEXITCODE -ne 0) {
-            $errorMessage = "Failed to generate Phoenix service.`n" +
-                "Command: $mixCommand $($mixArguments -join ' ')`n" +
-                "Exit code: $LASTEXITCODE`n" +
-                "Output: $($output -join "`n")"
+            $errorMessage = "Failed to generate Phoenix service."
             Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
 
             throw $errorMessage
@@ -473,14 +406,7 @@ function Invoke-ServiceGeneration {
             -Message "Service generation completed successfully"
     }
     catch {
-        # Check if this is already a formatted error
-        if ($_.Exception.Message -match "Failed to generate Phoenix service") {
-            throw
-        }
-
-        $errorMessage = "Failed to execute Mix command: $_"
-        Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
-        throw $errorMessage
+        throw
     }
     finally {
         # Restore original location
