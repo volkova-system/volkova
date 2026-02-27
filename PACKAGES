@@ -12,3 +12,6 @@ storybook --save-dev --prefix ./storybook
 @storybook/html-vite --save-dev --prefix ./storybook
 typescript --save-dev --prefix ./storybook
 vite --save-dev --prefix ./storybook
+@storybook/addon-vitest --save-dev --prefix ./storybook
+@storybook/addon-a11y --save-dev --prefix ./storybook
+@chromatic-com/storybook --save-dev --prefix ./storybook
