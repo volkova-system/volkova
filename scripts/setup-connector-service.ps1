@@ -29,8 +29,8 @@ exit /b 1
     Requirements: pwsh 7.5.4
 
 .EXAMPLE
+    # Creates a new Phoenix service named 'my-service'.
     .\scripts\setup-connector-service.ps1 -ServiceName 'my-service'
-    Creates a new Phoenix service named 'my-service'.
 
 .EXIT CODES
     0 - Success
@@ -46,6 +46,8 @@ param(
 )
 
 Set-StrictMode -Version Latest
+
+#region Module Import
 
 # Import required modules
 $scriptPath = $PSScriptRoot
@@ -71,6 +73,7 @@ if (-not (Test-Path -LiteralPath $coreModulePath)) {
 Import-Module -Name $conciseLogPath -Force -ErrorAction Stop
 Import-Module -Name $coreModulePath -Force -ErrorAction Stop
 
+#endregion
 
 #region Primary Functions
 
@@ -81,23 +84,25 @@ function Invoke-ParameterValidation {
 
     .DESCRIPTION
         Validates that the ServiceName parameter is not null, empty, or
-        whitespace-only, and contains no invalid directory characters.
-        Throws a terminating error if validation fails.
+        whitespace-only, and contains no invalid directory characters. Throws a
+        terminating error if validation fails.
 
     .PARAMETER ServiceName
         The service name to validate.
 
     .EXAMPLE
+        # Validates the service name 'my-service'.
         Invoke-ParameterValidation -ServiceName 'my-service'
-        Validates the service name 'my-service'.
 
     .NOTES
-        This function enforces fail-loud behavior and will terminate the
-        script if validation fails.
+        This function enforces fail-loud behavior and will terminate the script if
+        validation fails.
+
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The service name to validate.")]
+        [Parameter(Mandatory = $true,
+            HelpMessage = "The service name to validate.")]
         [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
@@ -106,11 +111,12 @@ function Invoke-ParameterValidation {
 
     # Validate ServiceName is not null, empty, or whitespace-only
     if ([string]::IsNullOrWhiteSpace($ServiceName)) {
-        $errorMessage = "ServiceName parameter is required and cannot " +
-            "be empty or whitespace-only.`n" +
-            "Usage: .\setup-connector-service.ps1 " +
-            "-ServiceName <service-name>"
+        $errorMessage = (
+            "ServiceName parameter is required and " +
+            "cannot be empty or whitespace-only."
+        )
         Write-ErrorLog -Scope "SETUP-PARAM" -Message $errorMessage
+
         throw $errorMessage
     }
 
@@ -120,17 +126,15 @@ function Invoke-ParameterValidation {
     foreach ($invalidCharacter in $invalidCharacters) {
         if ($ServiceName.Contains($invalidCharacter)) {
             $hasInvalidCharacters = $true
+
             break
         }
     }
 
     if ($hasInvalidCharacters) {
-        $errorMessage = "ServiceName contains invalid directory " +
-            "characters.`n" +
-            "ServiceName: '$ServiceName'`n" +
-            "Invalid characters include: " +
-            "\ / : * ? `" < > |"
+        $errorMessage = "ServiceName contains invalid directory characters."
         Write-ErrorLog -Scope "SETUP-PARAM" -Message $errorMessage
+
         throw $errorMessage
     }
 
@@ -138,91 +142,42 @@ function Invoke-ParameterValidation {
         -Message "Parameter validation completed successfully"
 }
 
-function Invoke-ErlangValidation {
+function Test-ErlangInstallation {
     <#
     .SYNOPSIS
-        Validates Erlang installation and version.
+        Validates Erlang installation.
 
     .DESCRIPTION
-        Validates that Erlang is installed and accessible, and that the
-        version meets the minimum requirement (24.0 or higher). Throws a
+        Validates that Erlang is installed and accessible. Throws a
         terminating error with installation instructions if validation fails.
 
     .EXAMPLE
-        Invoke-ErlangValidation
-        Validates Erlang installation and version.
+        # Validates Erlang installation.
+        Test-ErlangInstallation
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the
         script if validation fails.
+
     #>
     [CmdletBinding()]
     param()
 
     Write-InfoLog -Scope "SETUP-ERLANG" `
-        -Message "Checking Erlang installation and version"
+        -Message "Checking Erlang installation"
 
     # Check if Erlang is installed and accessible
     $erlangCommand = Get-Command -Name 'erl' -ErrorAction SilentlyContinue
 
     if (-not $erlangCommand) {
-        $errorMessage = "Erlang is not installed or not accessible " +
-            "in PATH.`n" +
-            "Minimum required version: 24.0`n" +
-            "Installation instructions: https://www.erlang.org/downloads"
+        $errorMessage = "Erlang is not installed or not accessible in PATH."
         Write-ErrorLog -Scope "SETUP-ERLANG" -Message $errorMessage
+
         throw $errorMessage
     }
 
-    # Get Erlang version
-    try {
-        $erlangEvalCommand = '{ok, Version} = file:read_file(' +
-            'filename:join([code:root_dir(), "releases", ' +
-            'erlang:system_info(otp_release), "OTP_VERSION"])), ' +
-            'io:fwrite(Version), halt().'
-
-        $erlangVersionOutput = & erl -eval $erlangEvalCommand `
-            -noshell 2>&1
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "Failed to get Erlang version"
-        }
-
-        # Parse version string
-        $versionString = $erlangVersionOutput -replace '\s+', ''
-
-        # Extract major version number
-        if ($versionString -match '^(\d+)') {
-            $majorVersion = [int]$Matches[1]
-        } else {
-            throw "Unable to parse Erlang version: $versionString"
-        }
-
-        Write-InfoLog -Scope "SETUP-ERLANG" `
-            -Message "Erlang version: $versionString"
-
-        # Verify version meets minimum requirement (24.0 or higher)
-        $minimumVersion = 24
-
-        if ($majorVersion -lt $minimumVersion) {
-            $errorMessage = "Erlang version does not meet minimum " +
-                "requirement.`n" +
-                "Current version: $versionString`n" +
-                "Minimum required version: $minimumVersion.0`n" +
-                "Installation instructions: " +
-                "https://www.erlang.org/downloads"
-            Write-ErrorLog -Scope "SETUP-ERLANG" -Message $errorMessage
-            throw $errorMessage
-        }
-
-        Write-InfoLog -Scope "SETUP-ERLANG" `
-            -Message "Erlang validation completed successfully"
-    }
-    catch {
-        $errorMessage = "Failed to validate Erlang installation: $_"
-        Write-ErrorLog -Scope "SETUP-ERLANG" -Message $errorMessage
-        throw $errorMessage
-    }
+    Write-InfoLog -Scope "SETUP-ERLANG" `
+        -Message "Erlang validation completed successfully"
 }
 
 function Invoke-ElixirValidation {
@@ -476,7 +431,7 @@ function Invoke-EnvironmentValidation {
         -Message "Starting environment validation"
 
     # Call Erlang validation
-    Invoke-ErlangValidation
+    Test-ErlangInstallation
 
     # Call Elixir validation
     Invoke-ElixirValidation
