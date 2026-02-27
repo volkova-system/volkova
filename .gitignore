@@ -92,11 +92,6 @@ containers/*/data/**/*.*
 !formats/
 !formats/**/*.format
 
-!go/
-!go/service/
-!go/service/**/*.go
-!go/service/**/*.mod
-
 !helps/
 !helps/**/*.help
 
@@ -116,6 +111,10 @@ containers/*/data/**/*.*
 !scripts/**/*.bash
 !scripts/**/*.zig
 !scripts/**/*.py
+
+!services/
+!services/**/*.exs
+!services/**/*.ex
 
 !settings/
 !settings/**/*.setting
