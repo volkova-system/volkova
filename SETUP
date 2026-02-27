@@ -12,6 +12,6 @@ scripts/setup-fira-code.ps1 -DestinationDirectory storybook\public\assets\fonts
 
 scripts/setup-elixir.ps1
 
-npm --prefix storybook exec -- storybook add @storybook/addon-vitest --config-dir "storybook/.storybook"
-npm --prefix storybook exec -- storybook add @storybook/addon-a11y --config-dir "storybook/.storybook"
-npm --prefix storybook exec -- storybook add @chromatic-com/storybook --config-dir "storybook/.storybook"
+npm --prefix storybook exec -- storybook add @storybook/addon-vitest --config-dir "storybook/.storybook" --skip-postinstall
+npm --prefix storybook exec -- storybook add @storybook/addon-a11y --config-dir "storybook/.storybook" --skip-postinstall
+npm --prefix storybook exec -- storybook add @chromatic-com/storybook --config-dir "storybook/.storybook" --skip-postinstall
