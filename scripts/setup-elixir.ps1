@@ -45,9 +45,11 @@ param()
 $scriptPath = $PSScriptRoot
 $conciseLogPath = Join-Path $scriptPath 'concise-log.psm1'
 $coreModulePath = Join-Path $scriptPath 'powershell-core.psm1'
+$wingetHelperPath = Join-Path $scriptPath 'winget-helper.psm1'
 
 $conciseLogPath = [System.IO.Path]::GetFullPath($conciseLogPath)
 $coreModulePath = [System.IO.Path]::GetFullPath($coreModulePath)
+$wingetHelperPath = [System.IO.Path]::GetFullPath($wingetHelperPath)
 
 if (-not (Test-Path -LiteralPath $conciseLogPath)) {
     Write-Error 'Required module not found: concise-log.psm1'
@@ -61,8 +63,15 @@ if (-not (Test-Path -LiteralPath $coreModulePath)) {
     exit 1
 }
 
+if (-not (Test-Path -LiteralPath $wingetHelperPath)) {
+    Write-Error 'Required module not found: winget-helper.psm1'
+
+    exit 1
+}
+
 Import-Module -Name $conciseLogPath -Force -ErrorAction Stop
 Import-Module -Name $coreModulePath -Force -ErrorAction Stop
+Import-Module -Name $wingetHelperPath -Force -ErrorAction Stop
 
 #endregion
 
@@ -205,19 +214,11 @@ function Get-ErlangOtpVersion {
     $erlBinPath = ""
     $erlDirectory = ""
 
-    # Get install location directly from WinGet
-    $wingetShow = winget show --id Erlang.ErlangOTP --exact 2>$null
-    if ($wingetShow) {
-        $pathLine = $wingetShow | Select-String -Pattern "Install Location:"
-
-        if ($pathLine) {
-            $erlDirectory = ($pathLine -split "Location:")[1].Trim()
-            $erlDirectory = [System.IO.Path]::GetFullPath($erlDirectory)
-
-            if ($erlDirectory -and
-                (Test-Path -LiteralPath (Join-Path $erlDirectory "bin\erl.exe"))) {
-                $erlBinPath = Join-Path $erlDirectory "bin"
-            }
+    $erlDirectory = Get-WingetInstallPath -PackageName 'Erlang OTP'
+    if ($null -ne $erlDirectory) {
+        $erlDirectory = [System.IO.Path]::GetFullPath($erlDirectory)
+        if (Test-Path -LiteralPath (Join-Path $erlDirectory "bin\erl.exe")) {
+            $erlBinPath = Join-Path $erlDirectory "bin"
         }
     }
 
