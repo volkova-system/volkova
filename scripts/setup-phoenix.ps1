@@ -43,8 +43,8 @@ Set-StrictMode -Version Latest
 
 # Import required modules
 $scriptPath = $PSScriptRoot
-$conciseLogPath = Join-Path $scriptPath '../modules/concise-log.psm1'
-$coreModulePath = Join-Path $scriptPath '../modules/powershell-core.psm1'
+$conciseLogPath = Join-Path $scriptPath 'concise-log.psm1'
+$coreModulePath = Join-Path $scriptPath 'powershell-core.psm1'
 
 # Convert to absolute paths (REQUIRED)
 $conciseLogPath = [System.IO.Path]::GetFullPath($conciseLogPath)
@@ -191,7 +191,7 @@ function Invoke-PhoenixInstallation {
         Write-DebugLog -Scope "PHOENIX-INSTALL" `
             -Message "Executing: mix archive.install hex phx_new"
 
-        & mix archive.install hex phx_new
+        & mix archive.install hex phx_new --force
 
         if ($LASTEXITCODE -ne 0) {
             Write-ErrorLog -Scope "PHOENIX-INSTALL" `
