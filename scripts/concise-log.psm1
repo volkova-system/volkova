@@ -152,7 +152,7 @@ function Write-Log {
 
     .NOTES
         This function applies line wrapping to ensure log entries do
-        not exceed 83 characters per line.
+        not exceed 63 characters per line.
     #>
     [CmdletBinding()]
     param(
@@ -193,54 +193,37 @@ function Write-Log {
     $formattedLog = "# $timestamp $Level $Scope $Message $reference"
     $messageChunks = $null
 
-    # Apply line wrapping if the log entry exceeds 83 characters
-    if ($formattedLog.Length -gt 83) {
-        # Split the log entry into lines, preserving the header
-        $header = "# $timestamp $Level $Scope"
-        $remainingMessage = " $Message $reference"
-
-        # Calculate available space for the message after the header
-        $headerLength = $header.Length + 1
-        $availableSpace = 83 - $headerLength
-
-        # Split the remaining message into chunks that fit within the
-        # available space. Break at word boundaries (spaces) instead of
-        # cutting words.
+    $header = "# $timestamp $Level $Scope"
+    if ($Message.Length -gt 63) {
+        $availableSpace = 63
         $messageChunks = @()
-        $remainingText = $remainingMessage.TrimStart()
-
+        $remainingText = $Message
         while ($remainingText.Length -gt 0) {
             if ($remainingText.Length -le $availableSpace) {
                 $messageChunks += $remainingText
                 $remainingText = ""
             } else {
-                # Find the last space within the available space
                 $chunk = $remainingText.Substring(0, $availableSpace)
                 $lastSpaceIndex = $chunk.LastIndexOf(' ')
-
                 if ($lastSpaceIndex -gt 0) {
-                    # Break at the last space
                     $chunk = $chunk.Substring(0, $lastSpaceIndex)
                     $messageChunks += $chunk
-                    $remainingText = $remainingText.Substring(
-                        $lastSpaceIndex + 1
-                    )
+                    $remainingText = $remainingText.Substring($lastSpaceIndex + 1)
                 } else {
-                    # No space found, break at available space
                     $messageChunks += $chunk
-                    $remainingText = $remainingText.Substring(
-                        $availableSpace
-                    )
+                    $remainingText = $remainingText.Substring($availableSpace)
                 }
             }
         }
-
-        # Construct the formatted log with line wrapping
+        $messageChunks[$messageChunks.Length - 1] = (
+            $messageChunks[$messageChunks.Length - 1] + " " + $reference
+        )
         $formattedLog = $header + " " + $messageChunks[0]
         for ($index = 1; $index -lt $messageChunks.Length; $index++) {
-            $formattedLog += "`n" + $header + " " + `
-                $messageChunks[$index]
+            $formattedLog += "`n" + $header + " " + $messageChunks[$index]
         }
+    } else {
+        $formattedLog = $header + " " + $Message + " " + $reference
     }
 
     # Output based on log level and verbose mode
