@@ -8,7 +8,11 @@ const config: StorybookConfig = {
         name: "@storybook/html-vite",
         options: {}
     },
-    addons: ["@storybook/addon-vitest"],
+    addons: [
+        "@storybook/addon-vitest",
+        "@storybook/addon-a11y",
+        "@chromatic-com/storybook"
+    ],
     staticDirs: [
         "../public"
     ],
