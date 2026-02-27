@@ -21,15 +21,20 @@ exit /b 1
     The name of the Phoenix service to create. This will be used as the directory
     name and service identifier.
 
-.EXAMPLE
-    # Creates a new Phoenix service named 'my-service'.
-    .\scripts\setup-connector-service.ps1 -ServiceName 'my-service'
-
 .NOTES
     Author: Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>
     Version: 0.0.0
+    Last Modified: 2026-02-28
     Platform: Windows only
     Requirements: pwsh 7.5.4
+
+.EXAMPLE
+    .\scripts\setup-connector-service.ps1 -ServiceName 'my-service'
+    Creates a new Phoenix service named 'my-service'.
+
+.EXIT CODES
+    0 - Success
+    1 - Failure (with error message)
 #>
 
 [CmdletBinding()]
@@ -92,7 +97,8 @@ function Invoke-ParameterValidation {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The service name to validate.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -109,16 +115,16 @@ function Invoke-ParameterValidation {
     }
 
     # Validate ServiceName contains no invalid directory characters
-    $invalidChars = [System.IO.Path]::GetInvalidFileNameChars()
-    $hasInvalidChars = $false
-    foreach ($char in $invalidChars) {
-        if ($ServiceName.Contains($char)) {
-            $hasInvalidChars = $true
+    $invalidCharacters = [System.IO.Path]::GetInvalidFileNameChars()
+    $hasInvalidCharacters = $false
+    foreach ($invalidCharacter in $invalidCharacters) {
+        if ($ServiceName.Contains($invalidCharacter)) {
+            $hasInvalidCharacters = $true
             break
         }
     }
 
-    if ($hasInvalidChars) {
+    if ($hasInvalidCharacters) {
         $errorMessage = "ServiceName contains invalid directory " +
             "characters.`n" +
             "ServiceName: '$ServiceName'`n" +
@@ -290,21 +296,21 @@ function Invoke-ElixirValidation {
         $minimumMinor = 14
         $minimumPatch = 0
 
-        $meetsRequirement = $false
+        $isRequirementMet = $false
 
         if ($majorVersion -gt $minimumMajor) {
-            $meetsRequirement = $true
+            $isRequirementMet = $true
         } elseif ($majorVersion -eq $minimumMajor) {
             if ($minorVersion -gt $minimumMinor) {
-                $meetsRequirement = $true
+                $isRequirementMet = $true
             } elseif ($minorVersion -eq $minimumMinor) {
                 if ($patchVersion -ge $minimumPatch) {
-                    $meetsRequirement = $true
+                    $isRequirementMet = $true
                 }
             }
         }
 
-        if (-not $meetsRequirement) {
+        if (-not $isRequirementMet) {
             $errorMessage = "Elixir version does not meet minimum " +
                 "requirement.`n" +
                 "Current version: $versionString`n" +
@@ -403,21 +409,21 @@ function Invoke-PhoenixValidation {
         $minimumMinor = 7
         $minimumPatch = 0
 
-        $meetsRequirement = $false
+        $isRequirementMet = $false
 
         if ($majorVersion -gt $minimumMajor) {
-            $meetsRequirement = $true
+            $isRequirementMet = $true
         } elseif ($majorVersion -eq $minimumMajor) {
             if ($minorVersion -gt $minimumMinor) {
-                $meetsRequirement = $true
+                $isRequirementMet = $true
             } elseif ($minorVersion -eq $minimumMinor) {
                 if ($patchVersion -ge $minimumPatch) {
-                    $meetsRequirement = $true
+                    $isRequirementMet = $true
                 }
             }
         }
 
-        if (-not $meetsRequirement) {
+        if (-not $isRequirementMet) {
             $errorMessage = "Phoenix version does not meet minimum " +
                 "requirement.`n" +
                 "Current version: $versionString`n" +
@@ -509,7 +515,8 @@ function Invoke-ServiceGeneration {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to create.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -537,9 +544,9 @@ function Invoke-ServiceGeneration {
     $servicesDirectory = Join-Path $PSScriptRoot ".." "services"
     $servicesDirectory = [System.IO.Path]::GetFullPath($servicesDirectory)
 
-    if (-not (Test-Path -LiteralPath $servicesDirectory)) {
+    if (-not (Test-Path -LiteralPath $servicesDirectory -PathType Container)) {
         try {
-            New-Item -Path $servicesDirectory -ItemType Directory `
+            New-Item -LiteralPath $servicesDirectory -ItemType Directory `
                 -Force -ErrorAction Stop | Out-Null
             Write-InfoLog -Scope "SETUP-GEN" `
                 -Message "Created services directory: $servicesDirectory"
@@ -593,7 +600,7 @@ function Invoke-ServiceGeneration {
 
     # Verify service directory was created
     $serviceDirectory = Join-Path $servicesDirectory $ServiceName
-    if (-not (Test-Path -LiteralPath $serviceDirectory)) {
+    if (-not (Test-Path -LiteralPath $serviceDirectory -PathType Container)) {
         $errorMessage = "Service directory was not created.`n" +
             "Expected location: $serviceDirectory"
         Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
@@ -627,7 +634,8 @@ function Test-ServiceDirectory {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -679,7 +687,8 @@ function Test-CriticalFiles {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify critical files.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -752,7 +761,8 @@ function Invoke-ServiceVerification {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the Phoenix service to verify.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -790,7 +800,8 @@ function Invoke-PrimaryWorkflow {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the service to create.")]
+        [ValidateNotNullOrEmpty()]
         [string]$ServiceName
     )
 
@@ -816,6 +827,12 @@ function Invoke-PrimaryWorkflow {
 #endregion
 
 #region Main Script Execution
+
+Initialize-ScriptEnvironment
+Assert-WindowsPlatform
+Test-IsInteractivePowerShell
+Invoke-PowerShellCoreTransition
+Assert-PowerShellVersionStrict
 
 try {
     # Call the primary workflow
