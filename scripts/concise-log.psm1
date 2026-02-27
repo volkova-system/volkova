@@ -78,10 +78,46 @@ function Get-LogHash {
         $sha256.Dispose()
     }
 
-    $hash = [System.BitConverter]::ToString($hashBytes)
-        .Replace("-", "").ToLower()
+    $hash = ([System.BitConverter]::ToString($hashBytes)).Replace(
+        "-", ""
+    ).ToLower()
 
     return $hash.Substring(0, 5)
+}
+
+function Get-LevelColor {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateSet('D', 'I', 'W', 'E', 'X')]
+        [string]$Level
+    )
+    switch ($Level) {
+        'I' { 'DarkGreen' }
+        'W' { 'DarkYellow' }
+        'E' { 'Red' }
+        'X' { 'DarkRed' }
+        default { $null }
+    }
+}
+
+function Write-LogLineWithColoredLevel {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Timestamp,
+        [Parameter(Mandatory = $true)]
+        [string]$Level,
+        [Parameter(Mandatory = $true)]
+        [string]$Scope,
+        [Parameter(Mandatory = $true)]
+        [string]$TextChunk,
+        [Parameter(Mandatory = $true)]
+        [string]$Color
+    )
+    Write-Host "# $Timestamp " -NoNewline
+    Write-Host $Level -ForegroundColor $Color -NoNewline
+    Write-Host " $Scope $TextChunk"
 }
 
 function Write-Log {
@@ -155,6 +191,7 @@ function Write-Log {
 
     # Format the log entry
     $formattedLog = "# $timestamp $Level $Scope $Message $reference"
+    $messageChunks = $null
 
     # Apply line wrapping if the log entry exceeds 83 characters
     if ($formattedLog.Length -gt 83) {
@@ -219,7 +256,25 @@ function Write-Log {
                 if ($script:DisableLogColors) {
                     Write-Host $formattedLog
                 } else {
-                    Write-Host $formattedLog -ForegroundColor DarkGreen
+                    $color = Get-LevelColor -Level $Level
+                    if ($messageChunks) {
+                        for ($index = 0; $index -lt $messageChunks.Length;
+                            $index++) {
+                            Write-LogLineWithColoredLevel `
+                                -Timestamp $timestamp `
+                                -Level $Level `
+                                -Scope $Scope `
+                                -TextChunk $messageChunks[$index] `
+                                -Color $color
+                        }
+                    } else {
+                        Write-LogLineWithColoredLevel `
+                            -Timestamp $timestamp `
+                            -Level $Level `
+                            -Scope $Scope `
+                            -TextChunk "$Message $reference" `
+                            -Color $color
+                    }
                 }
             }
         }
@@ -230,7 +285,25 @@ function Write-Log {
                 if ($script:DisableLogColors) {
                     Write-Host $formattedLog
                 } else {
-                    Write-Host $formattedLog -ForegroundColor DarkYellow
+                    $color = Get-LevelColor -Level $Level
+                    if ($messageChunks) {
+                        for ($index = 0; $index -lt $messageChunks.Length;
+                            $index++) {
+                            Write-LogLineWithColoredLevel `
+                                -Timestamp $timestamp `
+                                -Level $Level `
+                                -Scope $Scope `
+                                -TextChunk $messageChunks[$index] `
+                                -Color $color
+                        }
+                    } else {
+                        Write-LogLineWithColoredLevel `
+                            -Timestamp $timestamp `
+                            -Level $Level `
+                            -Scope $Scope `
+                            -TextChunk "$Message $reference" `
+                            -Color $color
+                    }
                 }
             }
         }
@@ -241,7 +314,25 @@ function Write-Log {
                 if ($script:DisableLogColors) {
                     Write-Host $formattedLog
                 } else {
-                    Write-Host $formattedLog -ForegroundColor Red
+                    $color = Get-LevelColor -Level $Level
+                    if ($messageChunks) {
+                        for ($index = 0; $index -lt $messageChunks.Length;
+                            $index++) {
+                            Write-LogLineWithColoredLevel `
+                                -Timestamp $timestamp `
+                                -Level $Level `
+                                -Scope $Scope `
+                                -TextChunk $messageChunks[$index] `
+                                -Color $color
+                        }
+                    } else {
+                        Write-LogLineWithColoredLevel `
+                            -Timestamp $timestamp `
+                            -Level $Level `
+                            -Scope $Scope `
+                            -TextChunk "$Message $reference" `
+                            -Color $color
+                    }
                 }
             }
         }
@@ -252,7 +343,25 @@ function Write-Log {
                 if ($script:DisableLogColors) {
                     Write-Host $formattedLog
                 } else {
-                    Write-Host $formattedLog -ForegroundColor DarkRed
+                    $color = Get-LevelColor -Level $Level
+                    if ($messageChunks) {
+                        for ($index = 0; $index -lt $messageChunks.Length;
+                            $index++) {
+                            Write-LogLineWithColoredLevel `
+                                -Timestamp $timestamp `
+                                -Level $Level `
+                                -Scope $Scope `
+                                -TextChunk $messageChunks[$index] `
+                                -Color $color
+                        }
+                    } else {
+                        Write-LogLineWithColoredLevel `
+                            -Timestamp $timestamp `
+                            -Level $Level `
+                            -Scope $Scope `
+                            -TextChunk "$Message $reference" `
+                            -Color $color
+                    }
                 }
             }
         }
