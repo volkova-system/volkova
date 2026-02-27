@@ -1,20 +1,29 @@
 @{
     RootModule           = 'winget-helper.psm1'
-    ModuleVersion        = '1.0.0'
-    GUID                 = '12345678-1234-1234-1234-123456789012'
-    Author               = 'WinGet Helper Team <winget-helper@example.com>'
-    CompanyName          = 'WinGet Helper'
-    Copyright            = '(c) 2026 WinGet Helper Team. All rights reserved.'
-    Description          = 'Locates installation paths for WinGet packages'
+    ModuleVersion        = '0.0.0'
+    GUID                 = '00000000-0000-0000-0000-000000000000'
+    Author               = 'Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>'
+    CompanyName          = 'vs-scripts'
+    Copyright            = '(c) 2026 Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>. All rights reserved.'
+    Description          = 'Collection of winget helper functions.'
     PowerShellVersion    = '7.5.4'
-    FunctionsToExport    = @('Get-WingetInstallPath')
-    RequiredModules      = @('concise-log')
+    FunctionsToExport    = @(
+        'Get-WingetInstallPath'
+    )
+    RequiredModules      = @(
+        'concise-log'
+    )
     PrivateData          = @{
         PSData           = @{
-            Tags         = @('winget', 'package-management', 'windows')
-            LicenseUri   = 'https://example.com/license'
-            ProjectUri   = 'https://example.com/project'
-            ReleaseNotes = 'Initial release'
+            Tags         = @(
+                'winget',
+                'package-management',
+                'windows',
+                'winget-helper'
+            )
+            ProjectUri   = 'https://github.com/vs-scripts/winget-helper'
+            LicenseUri   = 'https://github.com/vs-scripts/winget-helper/LICENSE'
+            ReleaseNotes = 'Work in progress'
         }
     }
 }
