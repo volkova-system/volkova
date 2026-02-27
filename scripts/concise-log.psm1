@@ -23,6 +23,7 @@
 .EXIT CODES
     0 - Success
     1 - Failure (with error message)
+
 #>
 
 Set-StrictMode -Version Latest
@@ -35,7 +36,53 @@ $script:EnableVerboseMode = $false
 
 #endregion
 
-#region Public Functions
+#region Private Functions
+
+function Get-LogHash {
+    <#
+    .SYNOPSIS
+        Generates a hash for the log entry.
+
+    .DESCRIPTION
+        Computes a 5-character alphanumeric hash of the log entry for use as a
+        reference.
+
+    .PARAMETER LogEntry
+        The log entry to hash.
+
+    .OUTPUTS
+        [string] A 5-character alphanumeric hash.
+
+    .EXAMPLE
+        # Returns a 5-character hash.
+        $hash = Get-LogHash -LogEntry `
+            "# 2024-01-15T05:55:00.00Z I DATA-ACCOUNTS Cannot add"
+
+    .NOTES
+        This is a private function and is not exported.
+
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$LogEntry
+    )
+
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($LogEntry)
+
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $hashBytes = $sha256.ComputeHash($bytes)
+    } finally {
+        $sha256.Dispose()
+    }
+
+    $hash = [System.BitConverter]::ToString($hashBytes)
+        .Replace("-", "").ToLower()
+
+    return $hash.Substring(0, 5)
+}
 
 function Write-Log {
     <#
@@ -43,10 +90,9 @@ function Write-Log {
         Writes a log entry in the concise log format.
 
     .DESCRIPTION
-        Generates a log entry following the concise log format
-        specification. The log entry includes a timestamp, log level,
-        scope, message, and reference. Output method depends on log
-        level and verbose mode setting.
+        Generates a log entry following the concise log format specification.
+        The log entry includes a timestamp, log level, scope, message, and
+        reference. Output method depends on log level and verbose mode setting.
 
     .PARAMETER Level
         The log level (D, I, W, E, X).
@@ -100,6 +146,7 @@ function Write-Log {
     # Validate PARENT-CHILD format
     if ($scopeParts.Length -lt 2) {
         Write-Warning "Scope '$Scope' should be in PARENT-CHILD format"
+
         $scopeParts = @($Scope, 'GENERAL')
     }
 
@@ -216,6 +263,10 @@ function Write-Log {
     }
 }
 
+#endregion
+
+#region Public Functions
+
 function Write-DebugLog {
     <#
     .SYNOPSIS
@@ -239,6 +290,7 @@ function Write-DebugLog {
     .EXAMPLE
         # Writes a debug log entry.
         Write-DebugLog -Scope "DATA-ACCOUNTS" -Message "Debugging account data"
+
     #>
     [CmdletBinding()]
     param(
@@ -327,6 +379,7 @@ function Write-WarningLog {
         # Writes a warning log entry.
         Write-WarningLog -Scope "DATA-ACCOUNTS" `
             -Message "Account data may be incomplete"
+
     #>
     [CmdletBinding()]
     param(
@@ -373,6 +426,7 @@ function Write-ErrorLog {
         # Writes an error log entry.
         Write-ErrorLog -Scope "DATA-ACCOUNTS" `
             -Message "Failed to add account data"
+
     #>
     [CmdletBinding()]
     param(
@@ -419,6 +473,7 @@ function Write-ExceptionLog {
         # Writes an exception log entry.
         Write-ExceptionLog -Scope "DATA-ACCOUNTS" `
             -Message "Unexpected error in account data"
+
     #>
     [CmdletBinding()]
     param(
@@ -443,59 +498,8 @@ function Write-ExceptionLog {
 
 #endregion
 
-#region Private Functions
-
-function Get-LogHash {
-    <#
-    .SYNOPSIS
-        Generates a hash for the log entry.
-
-    .DESCRIPTION
-        Computes a 5-character alphanumeric hash of the log entry for
-        use as a reference.
-
-    .PARAMETER LogEntry
-        The log entry to hash.
-
-    .OUTPUTS
-        [string] A 5-character alphanumeric hash.
-
-    .EXAMPLE
-        # Returns a 5-character hash.
-        $hash = Get-LogHash -LogEntry `
-            "# 2024-01-15T05:55:00.00Z I DATA-ACCOUNTS Cannot add"
-
-    .NOTES
-        This is a private function and is not exported.
-    #>
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$LogEntry
-    )
-
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes($LogEntry)
-
-    $sha256 = [System.Security.Cryptography.SHA256]::Create()
-    try {
-        $hashBytes = $sha256.ComputeHash($bytes)
-    } finally {
-        $sha256.Dispose()
-    }
-
-    $hash = [System.BitConverter]::ToString($hashBytes).Replace(
-        "-", ""
-    ).ToLower()
-
-    return $hash.Substring(0, 5)
-}
-
-#endregion
-
 # Export public functions
 Export-ModuleMember -Function @(
-    'Write-Log'
     'Write-DebugLog'
     'Write-InfoLog'
     'Write-WarningLog'
