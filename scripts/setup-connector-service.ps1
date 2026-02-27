@@ -29,8 +29,8 @@ exit /b 1
     Requirements: pwsh 7.5.4
 
 .EXAMPLE
-    # Creates a new Phoenix service named 'my-service'.
-    .\scripts\setup-connector-service.ps1 -ServiceName 'my-service'
+    # Creates a new Phoenix service named 'setting-service'.
+    .\scripts\setup-connector-service.ps1 -ServiceName 'setting-service'
 
 .EXIT CODES
     0 - Success
@@ -77,6 +77,110 @@ Import-Module -Name $coreModulePath -Force -ErrorAction Stop
 
 #region Primary Functions
 
+function Get-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Gets the repository root directory.
+
+    .DESCRIPTION
+        Determines the repository root directory by checking for git
+        repository. Returns the absolute path to the repository root.
+
+    .OUTPUTS
+        System.String. Returns the absolute path to the repository root.
+
+    .EXAMPLE
+        $repoRoot = Get-RepositoryRoot
+
+    .NOTES
+        This function attempts to use git to find the repository root.
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    param()
+
+    Write-DebugLog -Scope "REPO-ROOT" `
+        -Message "Determining repository root directory"
+
+    $gitCommand = Get-Command -Name 'git' -ErrorAction SilentlyContinue
+
+    if (-not $gitCommand) {
+        Write-ErrorLog -Scope "REPO-ROOT" -Message "Git not found in PATH"
+
+        throw "Git is required to determine repository root"
+    }
+
+    $gitRoot = (& git rev-parse --show-toplevel 2>$null)
+
+    if (-not $gitRoot) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Git repository root could not be determined"
+
+        throw "Git repository root not found"
+    }
+
+    $absoluteRoot = [System.IO.Path]::GetFullPath($gitRoot)
+
+    if (-not (Test-Path -LiteralPath $absoluteRoot)) {
+        Write-ErrorLog -Scope "REPO-ROOT" `
+            -Message "Repository root path invalid: $absoluteRoot"
+
+        throw "Invalid repository root path"
+    }
+
+    Write-InfoLog -Scope "REPO-ROOT" `
+        -Message "Repository root: $absoluteRoot"
+
+    return $absoluteRoot
+}
+
+function Test-RepositoryRoot {
+    <#
+    .SYNOPSIS
+        Tests if the repository root directory exists.
+
+    .DESCRIPTION
+        Determines the repository root directory by calling Get-RepositoryRoot and
+        verifies its existence on the filesystem. Returns true if the repository
+        root is determined and exists, false otherwise.
+
+    .OUTPUTS
+        System.Boolean. Returns $true if the repository root exists, $false
+        otherwise.
+
+    .EXAMPLE
+        if (Test-RepositoryRoot) {
+            Write-InfoLog -Scope "REPO-TEST" -Message "Repository root is valid"
+        }
+
+    .NOTES
+        This function handles exceptions from Get-RepositoryRoot by logging the
+        error and returning $false.
+
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    Write-DebugLog -Scope "REPO-TEST" -Message "Testing repository root existence"
+
+    try {
+        $repositoryRoot = Get-RepositoryRoot
+
+        if (Test-Path -LiteralPath $repositoryRoot -PathType Container) {
+            return $true
+        }
+
+        return $false
+    }
+    catch {
+        Write-ErrorLog -Scope "REPO-TEST" `
+            -Message "Failed to test repository root: $($_.Exception.Message)"
+
+        return $false
+    }
+}
+
 function Invoke-ParameterValidation {
     <#
     .SYNOPSIS
@@ -84,15 +188,14 @@ function Invoke-ParameterValidation {
 
     .DESCRIPTION
         Validates that the ServiceName parameter is not null, empty, or
-        whitespace-only, and contains no invalid directory characters. Throws a
-        terminating error if validation fails.
+        whitespace-only. Throws a terminating error if validation fails.
 
     .PARAMETER ServiceName
         The service name to validate.
 
     .EXAMPLE
-        # Validates the service name 'my-service'.
-        Invoke-ParameterValidation -ServiceName 'my-service'
+        # Validates the service name 'setting-service'.
+        Invoke-ParameterValidation -ServiceName 'setting-service'
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the script if
@@ -120,19 +223,9 @@ function Invoke-ParameterValidation {
         throw $errorMessage
     }
 
-    # Validate ServiceName contains no invalid directory characters
-    $invalidCharacters = [System.IO.Path]::GetInvalidFileNameChars()
-    $hasInvalidCharacters = $false
-    foreach ($invalidCharacter in $invalidCharacters) {
-        if ($ServiceName.Contains($invalidCharacter)) {
-            $hasInvalidCharacters = $true
-
-            break
-        }
-    }
-
-    if ($hasInvalidCharacters) {
-        $errorMessage = "ServiceName contains invalid directory characters."
+    $serviceDirectory = Join-Path (Get-RepositoryRoot) "services" $ServiceName
+    if ((Test-Path -LiteralPath $serviceDirectory -PathType Container)) {
+        $errorMessage = "ServiceName path exist: $serviceDirectory"
         Write-ErrorLog -Scope "SETUP-PARAM" -Message $errorMessage
 
         throw $errorMessage
@@ -324,9 +417,9 @@ function Invoke-ServiceGeneration {
         The name of the Phoenix service to create.
 
     .EXAMPLE
-        # Creates a new Phoenix service named 'my-service' in the
-        # services/my-service directory.
-        Invoke-ServiceGeneration -ServiceName 'my-service'
+        # Creates a new Phoenix service named 'setting-service' in the
+        # services/setting-service directory.
+        Invoke-ServiceGeneration -ServiceName 'setting-service'
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the script if
@@ -345,26 +438,8 @@ function Invoke-ServiceGeneration {
     Write-InfoLog -Scope "SETUP-GEN" `
         -Message "Starting service generation for '$ServiceName'"
 
-    # Construct Mix command with required flags
-    $mixCommand = "mix"
-    $mixArguments = @(
-        "phx.new"
-        $ServiceName
-        "--no-html"
-        "--no-assets"
-        "--no-live"
-        "--no-mailer"
-        "--no-dashboard"
-        "--no-gettext"
-        "--no-ecto"
-    )
-
-    Write-InfoLog -Scope "SETUP-GEN" `
-        -Message "Executing Mix command: $mixCommand $($mixArguments -join ' ')"
-
     # Ensure services directory exists
-    $servicesDirectory = Join-Path $PSScriptRoot ".." "services"
-    $servicesDirectory = [System.IO.Path]::GetFullPath($servicesDirectory)
+    $servicesDirectory = Join-Path (Get-RepositoryRoot) "services"
 
     if (-not (Test-Path -LiteralPath $servicesDirectory -PathType Container)) {
         try {
@@ -382,11 +457,27 @@ function Invoke-ServiceGeneration {
         }
     }
 
+    $serviceDirectory = Join-Path $servicesDirectory $ServiceName
+
+    # Construct Mix command with required flags
+    $mixCommand = "mix"
+    $mixArguments = @(
+        "phx.new"
+        $serviceDirectory
+        "--no-html"
+        "--no-assets"
+        "--no-live"
+        "--no-mailer"
+        "--no-dashboard"
+        "--no-gettext"
+        "--no-ecto"
+    )
+
+    Write-InfoLog -Scope "SETUP-GEN" `
+        -Message "Executing Mix command: $mixCommand $($mixArguments -join ' ')"
+
     # Execute Mix command in services directory
     try {
-        $originalLocation = Get-Location
-        Set-Location -LiteralPath $servicesDirectory
-
         # Execute Mix command and capture output
         $output = & $mixCommand $mixArguments 2>&1
 
@@ -406,25 +497,10 @@ function Invoke-ServiceGeneration {
             -Message "Service generation completed successfully"
     }
     catch {
+        Write-ErrorLog -Scope "SETUP-GEN" -Message $_
+
         throw
     }
-    finally {
-        # Restore original location
-        Set-Location -LiteralPath $originalLocation
-    }
-
-    # Verify service directory was created
-    $serviceDirectory = Join-Path $servicesDirectory $ServiceName
-    if (-not (Test-Path -LiteralPath $serviceDirectory -PathType Container)) {
-        $errorMessage = "Service directory was not created.`n" +
-            "Expected location: $serviceDirectory"
-        Write-ErrorLog -Scope "SETUP-GEN" -Message $errorMessage
-
-        throw $errorMessage
-    }
-
-    Write-InfoLog -Scope "SETUP-GEN" `
-        -Message "Service created in: $serviceDirectory"
 }
 
 function Test-ServiceDirectory {
@@ -433,20 +509,21 @@ function Test-ServiceDirectory {
         Verifies that the service directory exists.
 
     .DESCRIPTION
-        Verifies that the services/<service-name> directory exists after
-        service generation. Throws a terminating error with the expected
-        path if the directory is not found.
+        Verifies that the services/<service-name> directory exists after service
+        generation. Throws a terminating error with the expected path if the
+        directory is not found.
 
     .PARAMETER ServiceName
         The name of the Phoenix service to verify.
 
     .EXAMPLE
-        Test-ServiceDirectory -ServiceName 'my-service'
-        Verifies that the services/my-service directory exists.
+        # Verifies that the services/setting-service directory exists.
+        Test-ServiceDirectory -ServiceName 'setting-service'
 
     .NOTES
-        This function enforces fail-loud behavior and will terminate the
-        script if the directory is not found.
+        This function enforces fail-loud behavior and will terminate the script if
+        the directory is not found.
+
     #>
     [CmdletBinding()]
     param(
@@ -460,9 +537,7 @@ function Test-ServiceDirectory {
         -Message "Checking service directory for '$ServiceName'"
 
     # Construct expected service directory path
-    $servicesDirectory = Join-Path $PSScriptRoot ".." "services"
-    $servicesDirectory = [System.IO.Path]::GetFullPath($servicesDirectory)
-    $serviceDirectory = Join-Path $servicesDirectory $ServiceName
+    $serviceDirectory = Join-Path (Get-RepositoryRoot) "services" $ServiceName
 
     Write-InfoLog -Scope "SETUP-VERIFY" `
         -Message "Expected directory: $serviceDirectory"
@@ -495,13 +570,14 @@ function Test-CriticalFiles {
         The name of the Phoenix service to verify.
 
     .EXAMPLE
-        Test-CriticalFiles -ServiceName 'my-service'
-        Verifies that all critical files exist in the services/my-service
-        directory.
+        # Verifies that all critical files exist in the services/setting-service
+        # directory.
+        Test-CriticalFiles -ServiceName 'setting-service'
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the
         script if any critical file is missing.
+
     #>
     [CmdletBinding()]
     param(
@@ -515,9 +591,7 @@ function Test-CriticalFiles {
         -Message "Checking critical files for '$ServiceName'"
 
     # Construct service directory path
-    $servicesDirectory = Join-Path $PSScriptRoot ".." "services"
-    $servicesDirectory = [System.IO.Path]::GetFullPath($servicesDirectory)
-    $serviceDirectory = Join-Path $servicesDirectory $ServiceName
+    $serviceDirectory = Join-Path (Get-RepositoryRoot) "services" $ServiceName
 
     # Define critical files to check
     $criticalFiles = @(
@@ -571,8 +645,8 @@ function Invoke-ServiceVerification {
         The name of the Phoenix service to verify.
 
     .EXAMPLE
-        Invoke-ServiceVerification -ServiceName 'my-service'
-        Verifies the service structure for 'my-service'.
+        Invoke-ServiceVerification -ServiceName 'setting-service'
+        Verifies the service structure for 'setting-service'.
 
     .NOTES
         This function enforces fail-loud behavior and will terminate the
@@ -630,6 +704,13 @@ function Invoke-PrimaryWorkflow {
 
     Write-InfoLog -Scope "SETUP-MAIN" `
         -Message "Starting setup-connector-service workflow"
+
+    if (-not (Test-RepositoryRoot)) {
+        Write-ErrorLog -Scope "SETUP-MAIN" `
+            -Message "Repository root directory not found."
+
+        throw "Repository root directory not found."
+    }
 
     # Call Invoke-ParameterValidation with ServiceName
     Invoke-ParameterValidation -ServiceName $ServiceName
