@@ -113,8 +113,7 @@ containers/*/data/**/*.*
 !scripts/**/*.py
 
 !services/
-!services/**/*.exs
-!services/**/*.ex
+!services/**/*
 
 !settings/
 !settings/**/*.setting
