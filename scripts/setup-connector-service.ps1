@@ -478,8 +478,10 @@ function Invoke-ServiceGeneration {
         "--no-dashboard"
         "--no-gettext"
         "--no-ecto"
-        "--app $serviceAppName"
-        "--module $serviceModuleName"
+        "--app"
+        $serviceAppName
+        "--module"
+        $serviceModuleName
         "--install"
     )
 
@@ -489,7 +491,19 @@ function Invoke-ServiceGeneration {
     # Execute Mix command in services directory
     try {
         # Execute Mix command and capture output
-        $output = & $mixCommand $mixArguments
+        & $mixCommand `
+            "phx.new" `
+            $serviceDirectory `
+            "--no-html" `
+            "--no-assets" `
+            "--no-live" `
+            "--no-mailer" `
+            "--no-dashboard" `
+            "--no-gettext" `
+            "--no-ecto" `
+            "--app" $serviceAppName `
+            "--module" $serviceModuleName `
+            "--install"
 
         # Check exit code
         if ($LASTEXITCODE -ne 0) {
@@ -498,10 +512,6 @@ function Invoke-ServiceGeneration {
 
             throw $errorMessage
         }
-
-        # Log command output
-        Write-InfoLog -Scope "SETUP-GEN" `
-            -Message "Mix command output: $($output -join "`n")"
 
         Write-InfoLog -Scope "SETUP-GEN" `
             -Message "Service generation completed successfully"
@@ -603,6 +613,9 @@ function Test-CriticalFiles {
     # Construct service directory path
     $serviceDirectory = Join-Path (Get-RepositoryRoot) "services" $ServiceName
 
+    # Derive app name (snake_case) for critical file checks
+    $serviceAppName = $ServiceName -replace "-", "_"
+
     # Define critical files to check
     $criticalFiles = @(
         @{
@@ -610,8 +623,8 @@ function Test-CriticalFiles {
             Path = Join-Path $serviceDirectory "mix.exs"
         },
         @{
-            Name = "lib/$ServiceName/application.ex"
-            Path = Join-Path $serviceDirectory "lib" $ServiceName "application.ex"
+            Name = "lib/$serviceAppName/application.ex"
+            Path = Join-Path $serviceDirectory "lib" $serviceAppName "application.ex"
         },
         @{
             Name = "config/config.exs"
