@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/html";
 
-const meta: Meta = { title: "Concise Components/Link" };
+const meta: Meta = { title: "Concise/Basic/Link" };
 export default meta;
 
 type Story = StoryObj;
