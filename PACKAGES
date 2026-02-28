@@ -8,10 +8,10 @@ http-server --save-dev
 htmx.org --save
 feather-icons --save
 
-storybook --save-dev --prefix ./storybook
-@storybook/html-vite --save-dev --prefix ./storybook
-typescript --save-dev --prefix ./storybook
-vite --save-dev --prefix ./storybook
-@storybook/addon-vitest --save-dev --prefix ./storybook
-@storybook/addon-a11y --save-dev --prefix ./storybook
-@chromatic-com/storybook --save-dev --prefix ./storybook
+storybook --save-dev --prefix ./prototype
+@storybook/html-vite --save-dev --prefix ./prototype
+typescript --save-dev --prefix ./prototype
+vite --save-dev --prefix ./prototype
+@storybook/addon-vitest --save-dev --prefix ./prototype
+@storybook/addon-a11y --save-dev --prefix ./prototype
+@chromatic-com/storybook --save-dev --prefix ./prototype

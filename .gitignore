@@ -98,6 +98,17 @@ containers/*/data/**/*.*
 !prompts/
 !prompts/**/*.prompt
 
+!prototype/
+!prototype/.storybook/
+!prototype/public/
+!prototype/stories/
+!prototype/.storybook/**/*
+!prototype/public/**/*
+!prototype/stories/**/*
+!prototype/.npmrc
+!prototype/package.json
+!prototype/tsconfig.json
+
 !public/
 !public/**/*
 
@@ -117,17 +128,6 @@ containers/*/data/**/*.*
 
 !settings/
 !settings/**/*.setting
-
-!storybook/
-!storybook/.storybook/
-!storybook/public/
-!storybook/stories/
-!storybook/.storybook/**/*
-!storybook/public/**/*
-!storybook/stories/**/*
-!storybook/.npmrc
-!storybook/package.json
-!storybook/tsconfig.json
 
 !templates/
 !templates/**/*.template

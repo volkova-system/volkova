@@ -52,7 +52,7 @@
                 },
                 {
                     "PackageIdentifier": "Erlang.ErlangOTP",
-                    "Version": "28.3.2",
+                    "Version": "28.3.3",
                     "Source": "winget"
                 }
             ]
