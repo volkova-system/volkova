@@ -12,6 +12,8 @@
         "tamasfe.even-better-toml",
         "arniu.vscode-abnf",
         "ms-edgedevtools.vscode-edge-devtools",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "ExpertLSP.expert",
+        "erlang-ls.erlang-ls"
     ]
 }
