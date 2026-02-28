@@ -10,5 +10,6 @@ scripts/setup-pico-css.ps1 -DestinationDirectory storybook\public\styles
 scripts/setup-feather-icons.ps1 -DestinationDirectory storybook\public\assets\images
 scripts/setup-fira-code.ps1 -DestinationDirectory storybook\public\assets\fonts
 
-scripts/setup-elixir.ps1
-scripts/setup-phoenix.ps1
+# Enable this if we're going to use Phoenix
+# scripts/setup-elixir.ps1
+# scripts/setup-phoenix.ps1
