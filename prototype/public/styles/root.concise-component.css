@@ -135,12 +135,26 @@
     --concise-support-text-color: var(--concise-color-white-light);
     --concise-specific-text-color: var(--concise-color-white-dark);
 
-    --concise-focus-background-color: var(--concise-color-orange-base);
-    --concise-focus-color: var(--concise-color-white-lighter);
-    --concise-focus-hover-background-color: var(--concise-color-orange-light);
-    --concise-focus-hover-color: var(--concise-color-black-base);
-    --concise-focus-active-background-color: var(--concise-color-orange-base);
-    --concise-focus-active-color: var(--concise-color-black-base);
+    --concise-action-focus-color: var(--concise-color-white-lighter);
+    --concise-action-focus-background-color: var(--concise-color-orange-base);
+    --concise-action-focus-hover-color: var(--concise-color-black-base);
+    --concise-action-focus-hover-background-color: var(--concise-color-orange-light);
+    --concise-action-focus-active-color: var(--concise-color-black-base);
+    --concise-action-focus-active-background-color: var(--concise-color-orange-base);
+
+    --concise-action-support-color: var(--concise-color-white-light);
+    --concise-action-support-background-color: var(--concise-color-black-light);
+    --concise-action-support-hover-color: var(--concise-color-white-light);
+    --concise-action-support-hover-background-color: var(--concise-color-black-lighter);
+    --concise-action-support-active-color: var(--concise-color-white-light);
+    --concise-action-support-active-background-color: var(--concise-color-black-dark);
+
+    --concise-action-other-color: var(--concise-color-white-dark);
+    --concise-action-other-background-color: var(--concise-color-black-base);
+    --concise-action-other-hover-color: var(--concise-color-white-dark);
+    --concise-action-other-hover-background-color: var(--concise-color-black-light);
+    --concise-action-other-active-color: var(--concise-color-white-dark);
+    --concise-action-other-active-background-color: var(--concise-color-black-darker);
 }
 
 @media (max-width: 331px) {
