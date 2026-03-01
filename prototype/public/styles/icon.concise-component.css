@@ -15,6 +15,7 @@
     fill: none;
 }
 
+.concise-component a.icon,
 .concise-component span.icon {
     height: var(--concise-unit-base);
     min-height: var(--concise-unit-base);
@@ -31,18 +32,22 @@
     overflow: hidden;
 }
 
+.concise-component a.letter-icon.icon,
 .concise-component span.letter-icon.icon {
     font-size: var(--concise-letter-icon-size);
 }
 
+.concise-component a.color-icon.icon,
 .concise-component span.color-icon.icon {
     background-color: var(--concise-color-orange-base);
 }
 
+.concise-component a.round-icon.shape-icon.icon,
 .concise-component span.round-icon.shape-icon.icon {
     clip-path: circle(calc(50% - var(--concise-base-spacing)) at 50% 50%);
 }
 
+.concise-component a.square-icon.shape-icon.icon,
 .concise-component span.square-icon.shape-icon.icon {
     clip-path: inset(var(--concise-base-spacing));
 }
