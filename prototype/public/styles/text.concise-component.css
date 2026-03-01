@@ -1,0 +1,41 @@
+.concise-component h1 {
+    font-size: var(--concise-text-heading-1);
+    line-height: var(--concise-text-heading-1-line-height);
+    font-weight: normal;
+}
+
+.concise-component h2 {
+    font-size: var(--concise-text-heading-2);
+    line-height: var(--concise-text-heading-2-line-height);
+    font-weight: normal;
+}
+
+.concise-component h3 {
+    font-size: var(--concise-text-heading-3);
+    line-height: var(--concise-text-heading-3-line-height);
+    font-weight: normal;
+}
+
+.concise-component h4 {
+    font-size: var(--concise-text-heading-4);
+    line-height: var(--concise-text-heading-4-line-height);
+    font-weight: normal;
+}
+
+.concise-component h5 {
+    font-size: var(--concise-text-heading-5);
+    line-height: var(--concise-text-heading-5-line-height);
+    font-weight: normal;
+}
+
+.concise-component h6 {
+    font-size: var(--concise-text-heading-6);
+    line-height: var(--concise-text-heading-6-line-height);
+    font-weight: normal;
+}
+
+.concise-component p {
+    font-size: var(--concise-text-size-base);
+    line-height: var(--concise-text-line-height);
+    font-weight: normal;
+}
