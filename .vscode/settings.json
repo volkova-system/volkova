@@ -25,6 +25,7 @@
         "*.setting": "toml",
         "*.template": "text",
         "*.todo": "text",
+        "*.waste": "text",
         "*[ BEGIN-CRFCF ]*": "text",
         "*[ ENDED-CRFCF ]*": "text",
         "5LAWS": "text",
