@@ -24,10 +24,10 @@
     overflow: hidden;
 }
 
-.concise-component .inverted-logo {
+.concise-component svg.inverted-logo.logo {
     transform: rotate(180deg) scaleX(-1);
 }
 
-.concise-component .grayscale-logo {
+.concise-component svg.grayscale-logo.logo {
     filter: grayscale(100%);
 }
