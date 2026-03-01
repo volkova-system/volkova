@@ -1,15 +1,22 @@
-.concise-component main.content-tree.list {
+.concise-component aside.content-tree.list
+.concise-component main.content-tree.list
+{
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
 
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
 
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+
 }
 
-.concise-component main.content-tree > ol.content-tree-list.list {
+.concise-component aside.content-tree > ul.content-tree-list.list,
+.concise-component main.content-tree > ul.content-tree-list.list
+.concise-component aside.content-tree > ol.content-tree-list.list,
+.concise-component main.content-tree > ol.content-tree-list.list
+{
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
@@ -36,13 +43,13 @@
     padding-right: var(--concise-base-spacing);
 }
 
-.concise-component main.content-tree .main-content.content {
+.concise-component .content-tree .main-content.content {
     justify-content: center;
 
     color: var(--concise-main-text-color);
 }
 
-.concise-component main.content-tree .support-content.content {
+.concise-component .content-tree .support-content.content {
     justify-content: center;
 
     color: var(--concise-support-text-color);
