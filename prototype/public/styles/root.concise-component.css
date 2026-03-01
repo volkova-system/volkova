@@ -8,10 +8,10 @@
 
 :root,
 :host {
-    --concise-font-family: 'Fira Code', monospace;
+    --concise-text-font-family: 'Fira Code', monospace;
 
-    --concise-base-unit:        47px;
-    --concise-logo-icon-size:   41px;
+    --concise-unit-base:        47px;
+    --concise-logo-size-base:   41px;
     --concise-text-heading-1:   37px;
     --concise-text-heading-2:   31px;
     --concise-text-heading-3:   29px;
@@ -20,7 +20,7 @@
     --concise-icon-size:        19px;
     --concise-text-heading-5:   19px;
     --concise-text-heading-6:   17px;
-    --concise-text-base:        17px;
+    --concise-text-size-base:        17px;
 
     --concise-text-heading-1-line-height:   47px;
     --concise-text-heading-2-line-height:   43px;
@@ -40,39 +40,39 @@
     --concise-text-specific-section-description: var(--concise-text-heading-6);
 
     --concise-equilateral-ratio: 0.8660254;
-    --concise-base-division: calc(var(--concise-base-unit) / 5);
+    --concise-base-division: calc(var(--concise-unit-base) / 5);
     --concise-base-spacing: calc(var(--concise-base-division) / 2);
 
-    --concise-level-1: calc(var(--concise-base-unit) * 1);
-    --concise-level-2: calc(var(--concise-base-unit) * 2);
-    --concise-level-3: calc(var(--concise-base-unit) * 3);
-    --concise-level-4: calc(var(--concise-base-unit) * 4);
-    --concise-level-5: calc(var(--concise-base-unit) * 5);
+    --concise-level-1: calc(var(--concise-unit-base) * 1);
+    --concise-level-2: calc(var(--concise-unit-base) * 2);
+    --concise-level-3: calc(var(--concise-unit-base) * 3);
+    --concise-level-4: calc(var(--concise-unit-base) * 4);
+    --concise-level-5: calc(var(--concise-unit-base) * 5);
 
     --concise-list-item-unit: 7;
     --concise-list-item-content-unit: 5;
 
-    --concise-list-height: var(--concise-base-unit);
+    --concise-list-height: var(--concise-unit-base);
     --concise-list-width: calc(
-        var(--concise-base-unit) * var(--concise-list-item-unit)
+        var(--concise-unit-base) * var(--concise-list-item-unit)
     );
 
-    --concise-list-item-height: var(--concise-base-unit);
+    --concise-list-item-height: var(--concise-unit-base);
     --concise-list-item-width: calc(
-        var(--concise-base-unit) * var(--concise-list-item-unit)
+        var(--concise-unit-base) * var(--concise-list-item-unit)
     );
 
     --concise-list-item-content-height: var(--concise-list-item-height);
     --concise-list-item-content-width: calc(
-        var(--concise-base-unit) * var(--concise-list-item-content-unit)
+        var(--concise-unit-base) * var(--concise-list-item-content-unit)
     );
 
-    --concise-control-height: var(--concise-base-unit);
+    --concise-control-height: var(--concise-unit-base);
     --concise-control-width: calc(
-        var(--concise-base-unit) * var(--concise-list-item-unit)
+        var(--concise-unit-base) * var(--concise-list-item-unit)
     );
-    --concise-icon-control-height: var(--concise-base-unit);
-    --concise-icon-control-width: var(--concise-base-unit);
+    --concise-icon-control-height: var(--concise-unit-base);
+    --concise-icon-control-width: var(--concise-unit-base);
 
     --concise-color-white-darker:   rgba(139, 127, 109, 1);
     --concise-color-white-dark:     rgba(173, 137, 113, 1);
@@ -129,7 +129,7 @@
     --concise-color-black-lighter:  rgba(79, 79, 79, 1);
 
     --concise-base-background-color: var(--concise-color-black-base);
-    --concise-base-text-color: var(--concise-color-white-base);
+    --concise-text-color-base: var(--concise-color-white-base);
 
     --concise-main-text-color: var(--concise-color-white-lighter);
     --concise-support-text-color: var(--concise-color-white-light);
@@ -160,8 +160,8 @@
 @media (max-width: 331px) {
     :root,
     :host {
-        --concise-base-unit:        43px;
-        --concise-logo-icon-size:   37px;
+        --concise-unit-base:        43px;
+        --concise-logo-size-base:   37px;
         --concise-text-heading-1:   31px;
         --concise-text-heading-2:   29px;
         --concise-text-heading-3:   23px;
@@ -169,7 +169,7 @@
         --concise-icon-size:        17px;
         --concise-text-heading-5:   17px;
         --concise-text-heading-6:   13px;
-        --concise-text-base:        13px;
+        --concise-text-size-base:        13px;
 
         --concise-text-heading-1-line-height:   41px;
         --concise-text-heading-2-line-height:   37px;
@@ -202,11 +202,11 @@ body:has(.concise-component),
 .concise-component ul.list,
 .concise-component,
 .concise-component * {
-    color: var(--concise-base-text-color);
-    font-family: var(--concise-font-family);
+    color: var(--concise-text-color-base);
+    font-family: var(--concise-text-font-family);
     font-variant-ligatures: contextual;
     font-weight: normal;
-    font-size: var(--concise-text-base);
+    font-size: var(--concise-text-size-base);
     line-height: var(--concise-text-line-height);
     text-decoration: none;
 
@@ -227,31 +227,37 @@ body:has(.concise-component),
 .concise-component h1 {
     font-size: var(--concise-text-heading-1);
     line-height: var(--concise-text-heading-1-line-height);
+    font-weight: unset;
 }
 
 .concise-component h2 {
     font-size: var(--concise-text-heading-2);
     line-height: var(--concise-text-heading-2-line-height);
+    font-weight: unset;
 }
 
 .concise-component h3 {
     font-size: var(--concise-text-heading-3);
     line-height: var(--concise-text-heading-3-line-height);
+    font-weight: unset;
 }
 
 .concise-component h4 {
     font-size: var(--concise-text-heading-4);
     line-height: var(--concise-text-heading-4-line-height);
+    font-weight: unset;
 }
 
 .concise-component h5 {
     font-size: var(--concise-text-heading-5);
     line-height: var(--concise-text-heading-5-line-height);
+    font-weight: unset;
 }
 
 .concise-component h6 {
     font-size: var(--concise-text-heading-6);
     line-height: var(--concise-text-heading-6-line-height);
+    font-weight: unset;
 }
 
 .concise-component .hidden {
