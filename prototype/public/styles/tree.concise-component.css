@@ -1,0 +1,11 @@
+.concise-component .tree > .list {
+    scrollbar-color: rgba(13, 13, 13, 0.3) transparent;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
