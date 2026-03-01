@@ -1,0 +1,499 @@
+:root,
+:host
+{
+    --concise-color-white-darker:   rgba(139, 127, 109, 1);
+    --concise-color-white-dark:     rgba(173, 137, 113, 1);
+    --concise-color-white-base:     rgba(211, 173, 149, 1);
+    --concise-color-white-light:    rgba(241, 223, 199, 1);
+    --concise-color-white-lighter:  rgba(251, 247, 241, 1);
+
+    --concise-color-red-darker:     rgba(127, 11, 31, 1);
+    --concise-color-red-dark:       rgba(149, 13, 37, 1);
+    --concise-color-red-base:       rgba(173, 19, 43, 1);
+    --concise-color-red-light:      rgba(223, 37, 61, 1);
+    --concise-color-red-lighter:    rgba(239, 53, 79, 1);
+
+    --concise-color-orange-darker:  rgba(151, 71, 17, 1);
+    --concise-color-orange-dark:    rgba(181, 89, 19, 1);
+    --concise-color-orange-base:    rgba(227, 101, 29, 1);
+    --concise-color-orange-light:   rgba(239, 127, 37, 1);
+    --concise-color-orange-lighter: rgba(251, 149, 53, 1);
+
+    --concise-color-yellow-darker:  rgba(173, 131, 11, 1);
+    --concise-color-yellow-dark:    rgba(197, 157, 13, 1);
+    --concise-color-yellow-base:    rgba(223, 193, 17, 1);
+    --concise-color-yellow-light:   rgba(239, 211, 29, 1);
+    --concise-color-yellow-lighter: rgba(251, 227, 53, 1);
+
+    --concise-color-green-darker:   rgba(13, 113, 41, 1);
+    --concise-color-green-dark:     rgba(19, 137, 53, 1);
+    --concise-color-green-base:     rgba(29, 163, 71, 1);
+    --concise-color-green-light:    rgba(47, 199, 89, 1);
+    --concise-color-green-lighter:  rgba(53, 197, 97, 1);
+
+    --concise-color-blue-darker:    rgba(13, 71, 149, 1);
+    --concise-color-blue-dark:      rgba(19, 97, 173, 1);
+    --concise-color-blue-base:      rgba(29, 113, 197, 1);
+    --concise-color-blue-light:     rgba(53, 149, 223, 1);
+    --concise-color-blue-lighter:   rgba(67, 157, 215, 1);
+
+    --concise-color-indigo-darker:  rgba(37, 13, 131, 1);
+    --concise-color-indigo-dark:    rgba(47, 19, 149, 1);
+    --concise-color-indigo-base:    rgba(59, 29, 173, 1);
+    --concise-color-indigo-light:   rgba(89, 53, 211, 1);
+    --concise-color-indigo-lighter: rgba(113, 79, 239, 1);
+
+    --concise-color-violet-darker:  rgba(97, 13, 151, 1);
+    --concise-color-violet-dark:    rgba(127, 19, 181, 1);
+    --concise-color-violet-base:    rgba(149, 29, 211, 1);
+    --concise-color-violet-light:   rgba(173, 53, 239, 1);
+    --concise-color-violet-lighter: rgba(197, 79, 251, 1);
+
+    --concise-color-black-darker:   rgba(2, 2, 2, 1);
+    --concise-color-black-dark:     rgba(13, 13, 13, 1);
+    --concise-color-black-base:     rgba(29, 29, 29, 1);
+    --concise-color-black-light:    rgba(53, 53, 53, 1);
+    --concise-color-black-lighter:  rgba(79, 79, 79, 1);
+
+    --concise-base-background-color: var(--concise-color-black-base);
+    --concise-text-color-base: var(--concise-color-white-base);
+
+    --concise-main-text-color: var(--concise-color-white-lighter);
+    --concise-support-text-color: var(--concise-color-white-light);
+    --concise-specific-text-color: var(--concise-color-white-dark);
+
+    --concise-action-focus-color: var(--concise-color-white-lighter);
+    --concise-action-focus-background-color: var(--concise-color-orange-base);
+    --concise-action-focus-hover-color: var(--concise-color-black-base);
+    --concise-action-focus-hover-background-color: var(--concise-color-orange-light);
+    --concise-action-focus-active-color: var(--concise-color-black-base);
+    --concise-action-focus-active-background-color: var(--concise-color-orange-base);
+
+    --concise-action-support-color: var(--concise-color-white-light);
+    --concise-action-support-background-color: var(--concise-color-black-light);
+    --concise-action-support-hover-color: var(--concise-color-white-light);
+    --concise-action-support-hover-background-color: var(--concise-color-black-lighter);
+    --concise-action-support-active-color: var(--concise-color-white-light);
+    --concise-action-support-active-background-color: var(--concise-color-black-dark);
+
+    --concise-action-other-color: var(--concise-color-white-dark);
+    --concise-action-other-background-color: var(--concise-color-black-base);
+    --concise-action-other-hover-color: var(--concise-color-white-dark);
+    --concise-action-other-hover-background-color: var(--concise-color-black-light);
+    --concise-action-other-active-color: var(--concise-color-white-dark);
+    --concise-action-other-active-background-color: var(--concise-color-black-darker);
+}
+
+.concise-component .color-red-base {
+    color: var(--concise-color-red-base);
+}
+
+.concise-component span.color-icon.background-red-base,
+.concise-component .background-red-base
+{
+    background-color: var(--concise-color-red-base);
+}
+
+.concise-component .color-red-light {
+    color: var(--concise-color-red-light);
+}
+
+.concise-component span.color-icon.background-red-light,
+.concise-component .background-red-light {
+    background-color: var(--concise-color-red-light);
+}
+
+.concise-component .color-red-lighter {
+    color: var(--concise-color-red-lighter);
+}
+
+.concise-component span.color-icon.background-red-lighter,
+.concise-component .background-red-lighter {
+    background-color: var(--concise-color-red-lighter);
+}
+
+.concise-component .color-red-dark {
+    color: var(--concise-color-red-dark);
+}
+
+.concise-component span.color-icon.background-red-dark,
+.concise-component .background-red-dark {
+    background-color: var(--concise-color-red-dark);
+}
+
+.concise-component .color-red-darker {
+    color: var(--concise-color-red-darker);
+}
+
+.concise-component span.color-icon.background-red-darker,
+.concise-component .background-red-darker {
+    background-color: var(--concise-color-red-darker);
+}
+
+.concise-component .color-orange-base {
+    color: var(--concise-color-orange-base);
+}
+
+.concise-component span.color-icon.background-orange-base,
+.concise-component .background-orange-base
+{
+    background-color: var(--concise-color-orange-base);
+}
+
+.concise-component .color-orange-light {
+    color: var(--concise-color-orange-light);
+}
+
+.concise-component span.color-icon.background-orange-light,
+.concise-component .background-orange-light {
+    background-color: var(--concise-color-orange-light);
+}
+
+.concise-component .color-orange-lighter {
+    color: var(--concise-color-orange-lighter);
+}
+
+.concise-component span.color-icon.background-orange-lighter,
+.concise-component .background-orange-lighter {
+    background-color: var(--concise-color-orange-lighter);
+}
+
+.concise-component .color-orange-dark {
+    color: var(--concise-color-orange-dark);
+}
+
+.concise-component span.color-icon.background-orange-dark,
+.concise-component .background-orange-dark {
+    background-color: var(--concise-color-orange-dark);
+}
+
+.concise-component .color-orange-darker {
+    color: var(--concise-color-orange-darker);
+}
+
+.concise-component span.color-icon.background-orange-darker,
+.concise-component .background-orange-darker {
+    background-color: var(--concise-color-orange-darker);
+}
+
+.concise-component .color-yellow-base {
+    color: var(--concise-color-yellow-base);
+}
+
+.concise-component span.color-icon.background-yellow-base,
+.concise-component .background-yellow-base
+{
+    background-color: var(--concise-color-yellow-base);
+}
+
+.concise-component .color-yellow-light {
+    color: var(--concise-color-yellow-light);
+}
+
+.concise-component span.color-icon.background-yellow-light,
+.concise-component .background-yellow-light {
+    background-color: var(--concise-color-yellow-light);
+}
+
+.concise-component .color-yellow-lighter {
+    color: var(--concise-color-yellow-lighter);
+}
+
+.concise-component span.color-icon.background-yellow-lighter,
+.concise-component .background-yellow-lighter {
+    background-color: var(--concise-color-yellow-lighter);
+}
+
+.concise-component .color-yellow-dark {
+    color: var(--concise-color-yellow-dark);
+}
+
+.concise-component span.color-icon.background-yellow-dark,
+.concise-component .background-yellow-dark {
+    background-color: var(--concise-color-yellow-dark);
+}
+
+.concise-component .color-yellow-darker {
+    color: var(--concise-color-yellow-darker);
+}
+
+.concise-component span.color-icon.background-yellow-darker,
+.concise-component .background-yellow-darker {
+    background-color: var(--concise-color-yellow-darker);
+}
+
+.concise-component .color-green-base {
+    color: var(--concise-color-green-base);
+}
+
+.concise-component span.color-icon.background-green-base,
+.concise-component .background-green-base
+{
+    background-color: var(--concise-color-green-base);
+}
+
+.concise-component .color-green-light {
+    color: var(--concise-color-green-light);
+}
+
+.concise-component span.color-icon.background-green-light,
+.concise-component .background-green-light {
+    background-color: var(--concise-color-green-light);
+}
+
+.concise-component .color-green-lighter {
+    color: var(--concise-color-green-lighter);
+}
+
+.concise-component span.color-icon.background-green-lighter,
+.concise-component .background-green-lighter {
+    background-color: var(--concise-color-green-lighter);
+}
+
+.concise-component .color-green-dark {
+    color: var(--concise-color-green-dark);
+}
+
+.concise-component span.color-icon.background-green-dark,
+.concise-component .background-green-dark {
+    background-color: var(--concise-color-green-dark);
+}
+
+.concise-component .color-green-darker {
+    color: var(--concise-color-green-darker);
+}
+
+.concise-component span.color-icon.background-green-darker,
+.concise-component .background-green-darker {
+    background-color: var(--concise-color-green-darker);
+}
+
+.concise-component .color-blue-base {
+    color: var(--concise-color-blue-base);
+}
+
+.concise-component span.color-icon.background-blue-base,
+.concise-component .background-blue-base
+{
+    background-color: var(--concise-color-blue-base);
+}
+
+.concise-component .color-blue-light {
+    color: var(--concise-color-blue-light);
+}
+
+.concise-component span.color-icon.background-blue-light,
+.concise-component .background-blue-light {
+    background-color: var(--concise-color-blue-light);
+}
+
+.concise-component .color-blue-lighter {
+    color: var(--concise-color-blue-lighter);
+}
+
+.concise-component span.color-icon.background-blue-lighter,
+.concise-component .background-blue-lighter {
+    background-color: var(--concise-color-blue-lighter);
+}
+
+.concise-component .color-blue-dark {
+    color: var(--concise-color-blue-dark);
+}
+
+.concise-component span.color-icon.background-blue-dark,
+.concise-component .background-blue-dark {
+    background-color: var(--concise-color-blue-dark);
+}
+
+.concise-component .color-blue-darker {
+    color: var(--concise-color-blue-darker);
+}
+
+.concise-component span.color-icon.background-blue-darker,
+.concise-component .background-blue-darker {
+    background-color: var(--concise-color-blue-darker);
+}
+
+.concise-component .color-indigo-base {
+    color: var(--concise-color-indigo-base);
+}
+
+.concise-component span.color-icon.background-indigo-base,
+.concise-component .background-indigo-base
+{
+    background-color: var(--concise-color-indigo-base);
+}
+
+.concise-component .color-indigo-light {
+    color: var(--concise-color-indigo-light);
+}
+
+.concise-component span.color-icon.background-indigo-light,
+.concise-component .background-indigo-light {
+    background-color: var(--concise-color-indigo-light);
+}
+
+.concise-component .color-indigo-lighter {
+    color: var(--concise-color-indigo-lighter);
+}
+
+.concise-component span.color-icon.background-indigo-lighter,
+.concise-component .background-indigo-lighter {
+    background-color: var(--concise-color-indigo-lighter);
+}
+
+.concise-component .color-indigo-dark {
+    color: var(--concise-color-indigo-dark);
+}
+
+.concise-component span.color-icon.background-indigo-dark,
+.concise-component .background-indigo-dark {
+    background-color: var(--concise-color-indigo-dark);
+}
+
+.concise-component .color-indigo-darker {
+    color: var(--concise-color-indigo-darker);
+}
+
+.concise-component span.color-icon.background-indigo-darker,
+.concise-component .background-indigo-darker {
+    background-color: var(--concise-color-indigo-darker);
+}
+
+.concise-component .color-violet-base {
+    color: var(--concise-color-violet-base);
+}
+
+.concise-component span.color-icon.background-violet-base,
+.concise-component .background-violet-base
+{
+    background-color: var(--concise-color-violet-base);
+}
+
+.concise-component .color-violet-light {
+    color: var(--concise-color-violet-light);
+}
+
+.concise-component span.color-icon.background-violet-light,
+.concise-component .background-violet-light {
+    background-color: var(--concise-color-violet-light);
+}
+
+.concise-component .color-violet-lighter {
+    color: var(--concise-color-violet-lighter);
+}
+
+.concise-component span.color-icon.background-violet-lighter,
+.concise-component .background-violet-lighter {
+    background-color: var(--concise-color-violet-lighter);
+}
+
+.concise-component .color-violet-dark {
+    color: var(--concise-color-violet-dark);
+}
+
+.concise-component span.color-icon.background-violet-dark,
+.concise-component .background-violet-dark {
+    background-color: var(--concise-color-violet-dark);
+}
+
+.concise-component .color-violet-darker {
+    color: var(--concise-color-violet-darker);
+}
+
+.concise-component span.color-icon.background-violet-darker,
+.concise-component .background-violet-darker {
+    background-color: var(--concise-color-violet-darker);
+}
+
+.concise-component .color-white-base {
+    color: var(--concise-color-white-base);
+}
+
+.concise-component span.color-icon.background-white-base,
+.concise-component .background-white-base
+{
+    background-color: var(--concise-color-white-base);
+}
+
+.concise-component .color-white-light {
+    color: var(--concise-color-white-light);
+}
+
+.concise-component span.color-icon.background-white-light,
+.concise-component .background-white-light {
+    background-color: var(--concise-color-white-light);
+}
+
+.concise-component .color-white-lighter {
+    color: var(--concise-color-white-lighter);
+}
+
+.concise-component span.color-icon.background-white-lighter,
+.concise-component .background-white-lighter {
+    background-color: var(--concise-color-white-lighter);
+}
+
+.concise-component .color-white-dark {
+    color: var(--concise-color-white-dark);
+}
+
+.concise-component span.color-icon.background-white-dark,
+.concise-component .background-white-dark {
+    background-color: var(--concise-color-white-dark);
+}
+
+.concise-component .color-white-darker {
+    color: var(--concise-color-white-darker);
+}
+
+.concise-component span.color-icon.background-white-darker,
+.concise-component .background-white-darker {
+    background-color: var(--concise-color-white-darker);
+}
+
+.concise-component .color-black-base {
+    color: var(--concise-color-black-base);
+}
+
+.concise-component span.color-icon.background-black-base,
+.concise-component .background-black-base
+{
+    background-color: var(--concise-color-black-base);
+}
+
+.concise-component .color-black-light {
+    color: var(--concise-color-black-light);
+}
+
+.concise-component span.color-icon.background-black-light,
+.concise-component .background-black-light {
+    background-color: var(--concise-color-black-light);
+}
+
+.concise-component .color-black-lighter {
+    color: var(--concise-color-black-lighter);
+}
+
+.concise-component span.color-icon.background-black-lighter,
+.concise-component .background-black-lighter {
+    background-color: var(--concise-color-black-lighter);
+}
+
+.concise-component .color-black-dark {
+    color: var(--concise-color-black-dark);
+}
+
+.concise-component span.color-icon.background-black-dark,
+.concise-component .background-black-dark {
+    background-color: var(--concise-color-black-dark);
+}
+
+.concise-component .color-black-darker {
+    color: var(--concise-color-black-darker);
+}
+
+.concise-component span.color-icon.background-black-darker,
+.concise-component .background-black-darker {
+    background-color: var(--concise-color-black-darker);
+}
