@@ -9,7 +9,7 @@ export const Icon: Story = {
   render: () => `
     <span hx-get="/stories/concise/basic/icon/icon.component.html"
         hx-trigger="load"
-        hx-swap="innerHTML">
+        hx-swap="outerHTML">
     </span>
   `
 };
