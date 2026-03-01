@@ -1,0 +1,19 @@
+.concise-component img.picture {
+    width: var(--concise-list-item-width);
+    min-width: var(--concise-list-item-width);
+    max-width: var(--concise-list-item-width);
+
+    height: var(--concise-list-item-width);
+    min-height: var(--concise-list-item-width);
+    max-height: var(--concise-list-item-width);
+}
+
+.concise-component img.profile-picture.picture {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    height: var(--concise-list-item-content-width);
+    min-height: var(--concise-list-item-content-width);
+    max-height: var(--concise-list-item-content-width);
+}
