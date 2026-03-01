@@ -5,12 +5,20 @@ export default meta;
 
 type Story = StoryObj;
 
+export const Picture: Story = {
+  render: () => `
+    <img hx-get="/stories/concise/basic/picture/picture.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML"
+    />
+  `
+};
+
 export const ProfilePicture: Story = {
   render: () => `
-    <img class="profile-picture picture image"
-        src="/assets/images/richeve-bebedor.profile-picture.png"
-        alt="Richeve Bebedor Profile Picture"
-        aria-label="Richeve Bebedor Profile Picture"
+    <img hx-get="/stories/concise/basic/picture/profile-picture.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML"
     />
   `
 };
