@@ -11,16 +11,16 @@
 }
 
 .concise-component svg.logo-icon.icon {
-    width: var(--concise-logo-icon-size);
-    height: var(--concise-logo-icon-size);
+    width: var(--concise-logo-size-base);
+    height: var(--concise-logo-size-base);
 }
 
 .concise-component span.icon {
-    min-height: var(--concise-base-unit);
-    height: var(--concise-base-unit);
+    min-height: var(--concise-unit-base);
+    height: var(--concise-unit-base);
 
-    min-width: var(--concise-base-unit);
-    width: var(--concise-base-unit);
+    min-width: var(--concise-unit-base);
+    width: var(--concise-unit-base);
 
     display: flex;
     align-items: center;
