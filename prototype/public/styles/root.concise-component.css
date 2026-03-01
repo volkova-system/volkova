@@ -20,7 +20,7 @@
     --concise-icon-size:        19px;
     --concise-text-heading-5:   19px;
     --concise-text-heading-6:   17px;
-    --concise-text-size-base:        17px;
+    --concise-text-size-base:   17px;
 
     --concise-text-heading-1-line-height:   47px;
     --concise-text-heading-2-line-height:   43px;
@@ -29,8 +29,6 @@
     --concise-text-heading-5-line-height:   31px;
     --concise-text-heading-6-line-height:   29px;
     --concise-text-line-height:             23px;
-
-
 
     --concise-text-main-section-title: var(--concise-text-heading-1);
     --concise-text-main-section-description: var(--concise-text-heading-6);
@@ -224,41 +222,7 @@ body:has(.concise-component),
     background: unset;
 }
 
-.concise-component h1 {
-    font-size: var(--concise-text-heading-1);
-    line-height: var(--concise-text-heading-1-line-height);
-    font-weight: unset;
-}
 
-.concise-component h2 {
-    font-size: var(--concise-text-heading-2);
-    line-height: var(--concise-text-heading-2-line-height);
-    font-weight: unset;
-}
-
-.concise-component h3 {
-    font-size: var(--concise-text-heading-3);
-    line-height: var(--concise-text-heading-3-line-height);
-    font-weight: unset;
-}
-
-.concise-component h4 {
-    font-size: var(--concise-text-heading-4);
-    line-height: var(--concise-text-heading-4-line-height);
-    font-weight: unset;
-}
-
-.concise-component h5 {
-    font-size: var(--concise-text-heading-5);
-    line-height: var(--concise-text-heading-5-line-height);
-    font-weight: unset;
-}
-
-.concise-component h6 {
-    font-size: var(--concise-text-heading-6);
-    line-height: var(--concise-text-heading-6-line-height);
-    font-weight: unset;
-}
 
 .concise-component .hidden {
     display: none !important;
