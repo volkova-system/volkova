@@ -5,42 +5,38 @@ export default meta;
 
 type Story = StoryObj;
 
-export const IconBare: Story = {
+export const Icon: Story = {
   render: () => `
-    <span
-        class="icon"
-
-        hx-get="/stories/icon.component.html"
+    <span hx-get="/stories/concise/basic/icon/icon.component.html"
         hx-trigger="load"
-        hx-swap="innerHTML"
-    />
+        hx-swap="innerHTML">
+    </span>
   `
 };
 
 export const IconWithLogo: Story = {
   render: () => `
-    <span class="logo-icon icon"
-
-        hx-get="/stories/logo-icon.component.html"
+    <span hx-get="/stories/concise/basic/icon/icon-with-logo.component.html"
         hx-trigger="load"
-        hx-swap="innerHTML"
-    />
+        hx-swap="outerHTML">
+    </span>
   `
 };
 
 export const IconWithLetter: Story = {
   render: () => `
-    <span class="letter-icon icon" role="img" aria-label="volkovasystems">
-        <span aria-hidden="true">vs</span>
+    <span hx-get="/stories/concise/basic/icon/icon-with-letter.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
     </span>
   `
 };
 
 export const IconWithColor: Story = {
   render: () => `
-    <span class="color-icon icon"
-        role="img"
-        aria-label="orange">
+    <span hx-get="/stories/concise/basic/icon/icon-with-color.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
     </span>
   `
 };
@@ -67,15 +63,6 @@ export const IconWithSquareColor: Story = {
     <span class="square-icon shape-icon color-icon icon"
         role="img"
         aria-label="square orange">
-    </span>
-  `
-};
-
-export const IconWithTriangleColor: Story = {
-  render: () => `
-    <span class="triangle-icon shape-icon color-icon icon"
-        role="img"
-        aria-label="triangle orange">
     </span>
   `
 };
@@ -108,20 +95,6 @@ export const IconWithSquareColorBase: Story = {
   `
 };
 
-export const IconWithTriangleColorBase: Story = {
-  render: () => `
-    <span
-        class="triangle-icon shape-icon color-icon icon"
-        role="img"
-        aria-label="svg triangle color icon"
-
-        hx-get="/stories/icon.component.html"
-        hx-trigger="load"
-        hx-swap="innerHTML"
-    />
-  `
-};
-
 export const IconWithRoundLetterColor: Story = {
   render: () => `
     <span
@@ -138,18 +111,6 @@ export const IconWithSquareLetterColor: Story = {
   render: () => `
     <span
         class="square-icon shape-icon letter-icon color-icon icon"
-        role="img"
-        aria-label="volkovasystems"
-    >
-        <span aria-hidden="true">vs</span>
-    </span
-  `
-};
-
-export const IconWithTriangleLetterColor: Story = {
-  render: () => `
-    <span
-        class="triangle-icon shape-icon letter-icon color-icon icon"
         role="img"
         aria-label="volkovasystems"
     >
