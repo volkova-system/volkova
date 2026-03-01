@@ -149,6 +149,6 @@ containers/*/data/**/*.*
 !todos/**/*.done
 
 !waste/
-!waste/**/*
+!waste/**/*.waste
 
 package-lock.json
