@@ -23,7 +23,8 @@
 }
 
 .concise-component div.item.spacer,
-.concise-component li.item.spacer {
+.concise-component li.item.spacer
+{
     width: var(--concise-list-item-width);
     min-width: var(--concise-list-item-width);
 
