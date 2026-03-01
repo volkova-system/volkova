@@ -7,11 +7,9 @@ type Story = StoryObj;
 
 export const Typography: Story = {
   render: () => `
-    <main class="content-tree list"
-        hx-get="/stories/concise/basic/text/typography.component.html"
+    <div hx-get="/stories/concise/basic/text/typography.component.html"
         hx-trigger="load"
-        hx-swap="innerHTML"
-    >
-    </main>
+        hx-swap="outerHTML">
+    </div>
   `
 };
