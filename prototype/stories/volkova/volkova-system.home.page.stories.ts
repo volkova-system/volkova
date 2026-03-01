@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/html";
 
-const meta: Meta = { title: "Precise Pages/Volkova System/Home Page" };
+const meta: Meta = { title: "Precise Pages/Volkova System/Home" };
 export default meta;
 
 type Story = StoryObj;
 
-export const VolkovaSystemHomePage: Story = {
+export const VolkovaSystemHome: Story = {
   render: () => `
     <div hx-get="/pages/volkova-system.home.page.html"
         hx-trigger="load"
-        hx-swap="outerHTML"
-    >
+        hx-swap="outerHTML">
     </div>
   `
 };
