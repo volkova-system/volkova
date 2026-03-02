@@ -5,6 +5,8 @@
 
     min-height: calc(var(--concise-list-height) * 3);
     height: auto;
+
+    background-color: var(--concise-color-black-dark);
 }
 
 .concise-component article.focus-tree > header.focus-tree-header.item {
