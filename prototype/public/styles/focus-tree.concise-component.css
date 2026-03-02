@@ -1,19 +1,41 @@
-.concise-component article.focus-tree.list {
+.concise-component article.focus-tree.tree.list {
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
 
+    min-height: calc(var(--concise-list-height) * 3);
     height: auto;
 }
 
+.concise-component article.focus-tree > header.focus-tree-header.item {
+    height: var(--concise-list-item-content-height);
+    min-height: var(--concise-list-item-content-height);
+    max-height: calc(var(--concise-list-item-content-height) * 3);
+
+    flex-direction: row;
+}
+
+.concise-component article.focus-tree > footer.focus-tree-footer.item {
+    width: var(--concise-list-item-width);
+    min-width: var(--concise-list-item-width);
+    max-width: var(--concise-list-item-width);
+
+    height: var(--concise-list-item-height);
+    min-height: var(--concise-list-item-height);
+    max-height: var(--concise-list-item-height);
+
+    display: flex;
+    flex-direction: row;
+}
+
+.concise-component article.focus-tree > ul.focus-tree-list.list,
 .concise-component article.focus-tree > ol.focus-tree-list.list {
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
 
+    min-height: var(--concise-list-height);
     height: auto;
-
-    overflow-y: auto;
 }
 
 .concise-component li.focus-tree-item.item {
@@ -26,7 +48,6 @@
     min-width: var(--concise-list-item-content-width);
     max-width: var(--concise-list-item-content-width);
 
-    display: flex;
     flex-direction: column;
 
     padding-left: var(--concise-base-spacing);
