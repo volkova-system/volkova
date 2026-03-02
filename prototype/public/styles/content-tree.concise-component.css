@@ -39,6 +39,10 @@
     padding-right: var(--concise-base-spacing);
 }
 
+.concise-component .content-tree .picture.content {
+    padding: 0;
+}
+
 .concise-component .content-tree .main-content.content {
     color: var(--concise-main-text-color);
 }
