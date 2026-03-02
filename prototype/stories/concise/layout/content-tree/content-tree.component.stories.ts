@@ -1,20 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/html";
 
-const meta: Meta = { title: "Concise Components/Content Tree" };
+const meta: Meta = { title: "Concise/Layout/Content Tree" };
 export default meta;
 
 type Story = StoryObj;
 
-export const ContentTreeBare: Story = {
+export const ContentTree: Story = {
   render: () => `
-    <main class="content-tree list">
-    </main>
-  `
-};
-
-export const ContentTreeBase: Story = {
-  render: () => `
-    <main class="content-tree list">
-    </main>
+    <div hx-get="/stories/concise/layout/content-tree/content-tree.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
+    </div>
   `
 };
