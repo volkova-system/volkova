@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/html";
 
-const meta: Meta = { title: "Precise/Richeve Bebedor/Home" };
+const meta: Meta = { title: "Precise/Neilro Jhon Llaban/Home" };
 export default meta;
 
 type Story = StoryObj;
 
-export const RicheveBebedorHome: Story = {
+export const NeilroJhonLlabanHome: Story = {
   render: () => `
-    <div hx-get="/stories/precise/richeve-bebedor/pages/richeve-bebedor.home-page.html"
+    <div hx-get="/stories/precise/neilrojhon-llaban/pages/neilrojhon-llaban.home-page.html"
         hx-trigger="load"
         hx-swap="outerHTML">
     </div>
