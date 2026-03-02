@@ -8,8 +8,6 @@
     height: 100dvh;
     min-height: 100dvh;
     max-height: 100dvh;
-
-
 }
 
 .concise-component aside.content-tree > ul.content-tree-list.list,
@@ -27,7 +25,6 @@
 }
 
 .concise-component li.content-tree-item.item {
-    display: flex;
     flex-direction: row;
 }
 
@@ -36,7 +33,6 @@
     min-width: var(--concise-list-item-content-width);
     max-width: var(--concise-list-item-content-width);
 
-    display: flex;
     flex-direction: column;
 
     padding-left: var(--concise-base-spacing);
@@ -44,13 +40,15 @@
 }
 
 .concise-component .content-tree .main-content.content {
-    justify-content: center;
-
     color: var(--concise-main-text-color);
 }
 
 .concise-component .content-tree .support-content.content {
-    justify-content: center;
-
     color: var(--concise-support-text-color);
+}
+
+.concise-component .content-tree .focus-content.content {
+    flex-direction: column;
+
+    padding: 0;
 }
