@@ -1,18 +1,28 @@
 .concise-component .list {
+    min-width: var(--concise-list-width);
+
     height: auto;
     min-height: var(--concise-list-height);
-
-    min-width: var(--concise-list-width);
 
     display: flex;
     flex-direction: column;
 }
 
 .concise-component .list > .item {
+    min-width: var(--concise-list-item-width);
+
     height: auto;
     min-height: var(--concise-list-item-height);
 
+    display: flex;
+    flex-direction: row;
+}
+
+.concise-component .list > .item > .content {
     min-width: var(--concise-list-item-width);
+
+    height: auto;
+    min-height: var(--concise-list-item-height);
 
     display: flex;
     flex-direction: row;
