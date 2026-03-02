@@ -7,7 +7,7 @@ type Story = StoryObj;
 
 export const VolkovaSystemHome: Story = {
   render: () => `
-    <div hx-get="/pages/volkova-system.home.page.html"
+    <div hx-get="/stories/precise/volkova-system/pages/volkova-system.home-page.html"
         hx-trigger="load"
         hx-swap="outerHTML">
     </div>
