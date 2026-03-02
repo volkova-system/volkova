@@ -1,9 +1,6 @@
 .concise-component a.link {
     display: flex;
     align-items: center;
-
-    padding-left: var(--concise-base-spacing);
-    padding-right: var(--concise-base-spacing);
 }
 
 .concise-component a.link:hover * {
