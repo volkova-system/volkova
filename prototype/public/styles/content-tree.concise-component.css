@@ -1,4 +1,4 @@
-.concise-component aside.content-tree.list
+.concise-component aside.content-tree.list,
 .concise-component main.content-tree.list
 {
     width: var(--concise-list-width);
