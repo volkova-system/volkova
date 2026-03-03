@@ -33,3 +33,7 @@
 .concise-component .list > .item > .content:only-child {
     min-width: var(--concise-list-item-width);
 }
+
+.concise-component .list > .item > .content:has(label) {
+    justify-content: center;
+}
