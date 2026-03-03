@@ -56,13 +56,18 @@
 .concise-component article.focus-tree .main-content.content h2,
 .concise-component article.focus-tree .main-content.content h3,
 .concise-component article.focus-tree .main-content.content h4,
-.concise-component article.focus-tree .main-content.content > h5,
-.concise-component article.focus-tree .main-content.content > h6,
+.concise-component article.focus-tree .main-content.content h5,
+.concise-component article.focus-tree .main-content.content h6,
 .concise-component article.focus-tree .main-content.content
 {
     justify-content: center;
 
     color: var(--concise-main-text-color);
+}
+
+.concise-component article.focus-tree .main-content.content p
+{
+    color: var(--concise-support-text-color);
 }
 
 .concise-component article.focus-tree .support-content.content >
