@@ -47,7 +47,7 @@
                 },
                 {
                     "PackageIdentifier": "Docker.DockerDesktop",
-                    "Version": "4.60.1",
+                    "Version": "4.63.0",
                     "Source": "winget"
                 },
                 {
