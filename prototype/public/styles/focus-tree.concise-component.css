@@ -1,43 +1,32 @@
-.concise-component article.focus-tree.tree.list {
+.concise-component aside.focus-tree.list,
+.concise-component article.focus-tree.list
+{
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
 
-    min-height: calc(var(--concise-list-height) * 3);
-    height: auto;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
 
     background-color: var(--concise-color-black-dark);
 }
 
-.concise-component article.focus-tree > header.focus-tree-header > .content {
-    justify-content: center;
-}
-
-.concise-component article.focus-tree > footer.focus-tree-footer.item {
-    width: var(--concise-list-item-width);
-    min-width: var(--concise-list-item-width);
-    max-width: var(--concise-list-item-width);
-
-    height: var(--concise-list-item-height);
-    min-height: var(--concise-list-item-height);
-    max-height: var(--concise-list-item-height);
-
-    display: flex;
-    flex-direction: row;
-}
-
-.concise-component article.focus-tree > ul.focus-tree-list.list,
-.concise-component article.focus-tree > ol.focus-tree-list.list {
+.concise-component aside.focus-tree > ul.focus-tree-list.list,
+.concise-component article.focus-tree > ul.focus-tree-list.list
+.concise-component aside.focus-tree > ol.focus-tree-list.list,
+.concise-component article.focus-tree > ol.focus-tree-list.list
+{
     width: var(--concise-list-width);
     min-width: var(--concise-list-width);
     max-width: var(--concise-list-width);
 
-    min-height: var(--concise-list-height);
     height: auto;
+
+    overflow-y: auto;
 }
 
 .concise-component li.focus-tree-item.item {
-    display: flex;
     flex-direction: row;
 }
 
@@ -52,27 +41,20 @@
     padding-right: var(--concise-base-spacing);
 }
 
-.concise-component article.focus-tree .main-content.content h1,
-.concise-component article.focus-tree .main-content.content h2,
-.concise-component article.focus-tree .main-content.content h3,
-.concise-component article.focus-tree .main-content.content h4,
-.concise-component article.focus-tree .main-content.content h5,
-.concise-component article.focus-tree .main-content.content h6,
-.concise-component article.focus-tree .main-content.content
-{
-    justify-content: center;
+.concise-component .focus-tree .picture.content {
+    padding: 0;
+}
 
+.concise-component .focus-tree .main-content.content *:not(label) {
     color: var(--concise-main-text-color);
 }
 
-.concise-component article.focus-tree .main-content.content p
-{
+.concise-component .focus-tree .support-content.content * {
     color: var(--concise-support-text-color);
 }
 
-.concise-component article.focus-tree .support-content.content 
-.concise-component article.focus-tree .support-content.content {
-    justify-content: center;
+.concise-component .focus-tree .focus-content.content {
+    flex-direction: column;
 
-    color: var(--concise-support-text-color);
+    padding: 0;
 }
