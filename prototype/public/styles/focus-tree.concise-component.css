@@ -9,14 +9,6 @@
     background-color: var(--concise-color-black-dark);
 }
 
-.concise-component article.focus-tree > header.focus-tree-header.item {
-    height: var(--concise-list-item-content-height);
-    min-height: var(--concise-list-item-content-height);
-    max-height: calc(var(--concise-list-item-content-height) * 3);
-
-    flex-direction: row;
-}
-
 .concise-component article.focus-tree > footer.focus-tree-footer.item {
     width: var(--concise-list-item-width);
     min-width: var(--concise-list-item-width);
