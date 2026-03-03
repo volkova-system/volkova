@@ -10,7 +10,6 @@
 }
 
 .concise-component article.focus-tree > header.focus-tree-header > .content {
-    flex-direction: column;
     justify-content: center;
 }
 
@@ -53,7 +52,9 @@
     padding-right: var(--concise-base-spacing);
 }
 
-.concise-component article.focus-tree .main-content.content {
+.concise-component article.focus-tree .main-content.content > h1,
+.concise-component article.focus-tree .main-content.content
+{
     justify-content: center;
 
     color: var(--concise-main-text-color);
