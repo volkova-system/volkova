@@ -1,24 +1,67 @@
+:root,
+:host
+{
+    --concise-level-1: calc(var(--concise-unit-base) * 1);
+    --concise-level-2: calc(var(--concise-unit-base) * 2);
+    --concise-level-3: calc(var(--concise-unit-base) * 3);
+    --concise-level-4: calc(var(--concise-unit-base) * 4);
+    --concise-level-5: calc(var(--concise-unit-base) * 5);
+    --concise-level-6: calc(var(--concise-unit-base) * 6);
+    --concise-level-7: calc(var(--concise-unit-base) * 7);
+    --concise-level-8: calc(var(--concise-unit-base) * 8);
+    --concise-level-9: calc(var(--concise-unit-base) * 9);
+}
+
 .concise-component .item.level-1 {
-    min-height: var(--concise-level-1);
     height: var(--concise-level-1);
+    min-height: var(--concise-level-1);
+    max-height: var(--concise-level-1);
 }
 
 .concise-component .item.level-2 {
-    min-height: var(--concise-level-2);
     height: var(--concise-level-2);
+    min-height: var(--concise-level-2);
+    max-height: var(--concise-level-2);
 }
 
 .concise-component .item.level-3 {
-    min-height: var(--concise-level-3);
     height: var(--concise-level-3);
+    min-height: var(--concise-level-3);
+    max-height: var(--concise-level-3);
 }
 
 .concise-component .item.level-4 {
-    min-height: var(--concise-level-4);
     height: var(--concise-level-4);
+    min-height: var(--concise-level-4);
+    max-height: var(--concise-level-4);
 }
 
 .concise-component .item.level-5 {
-    min-height: var(--concise-level-5);
     height: var(--concise-level-5);
+    min-height: var(--concise-level-5);
+    max-height: var(--concise-level-5);
+}
+
+.concise-component .item.level-6 {
+    height: var(--concise-level-6);
+    min-height: var(--concise-level-6);
+    max-height: var(--concise-level-6);
+}
+
+.concise-component .item.level-7 {
+    height: var(--concise-level-7);
+    min-height: var(--concise-level-7);
+    max-height: var(--concise-level-7);
+}
+
+.concise-component .item.level-8 {
+    height: var(--concise-level-8);
+    min-height: var(--concise-level-8);
+    max-height: var(--concise-level-8);
+}
+
+.concise-component .item.level-9 {
+    height: var(--concise-level-9);
+    min-height: var(--concise-level-9);
+    max-height: var(--concise-level-9);
 }
