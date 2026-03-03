@@ -1,4 +1,6 @@
-.concise-component button.control {
+.concise-component a.control,
+.concise-component button.control
+{
     height: var(--concise-control-height);
     min-height: var(--concise-control-height);
     max-height: var(--concise-control-height);
@@ -17,7 +19,9 @@
     color: var(--concise-color-white-base);
 }
 
-.concise-component button.icon-control.control {
+.concise-component a.icon-control.control,
+.concise-component button.icon-control.control
+{
     height: var(--concise-icon-control-height);
     min-height: var(--concise-icon-control-height);
     max-height: var(--concise-icon-control-height);
@@ -27,21 +31,31 @@
     max-width: var(--concise-icon-control-width);
 }
 
-.concise-component button.control:hover {
+.concise-component a.control:hover,
+.concise-component button.control:hover
+{
     background-color: var(--concise-color-black-light);
 }
 
+.concise-component a.control:hover *,
+.concise-component a.control:hover > *,
 .concise-component button.control:hover *,
-.concise-component button.control:hover > * {
+.concise-component button.control:hover > *
+{
     color: var(--concise-color-white-light);
 }
 
-.concise-component button.control:active {
+.concise-component a.control:active,
+.concise-component button.control:active
+{
     background-color: var(--concise-color-black-dark);
 }
 
+.concise-component a.control:active *,
+.concise-component a.control:active > *,
 .concise-component button.control:active *,
-.concise-component button.control:active > * {
+.concise-component button.control:active > *
+{
     color: var(--concise-color-white-dark);
 }
 
