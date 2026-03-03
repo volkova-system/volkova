@@ -9,6 +9,11 @@
     background-color: var(--concise-color-black-dark);
 }
 
+.concise-component article.focus-tree > header.focus-tree-header > .content {
+    flex-direction: column;
+    justify-content: center;
+}
+
 .concise-component article.focus-tree > footer.focus-tree-footer.item {
     width: var(--concise-list-item-width);
     min-width: var(--concise-list-item-width);
