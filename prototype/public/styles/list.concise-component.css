@@ -27,7 +27,7 @@
     min-height: var(--concise-list-item-height);
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .concise-component .list > .item > .content:only-child {
