@@ -1,3 +1,44 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root,
+:host
+{
+    --concise-text-font-family: 'Fira Code', monospace;
+
+    --concise-text-heading-1:   37px;
+    --concise-text-heading-2:   31px;
+    --concise-text-heading-3:   29px;
+    --concise-text-heading-4:   23px;
+    --concise-text-heading-5:   19px;
+    --concise-text-heading-6:   17px;
+    --concise-text-size-base:   17px;
+    --concise-text-value-size:  13px;
+    --concise-text-label-size:  11px;
+
+    --concise-text-heading-1-line-height:   47px;
+    --concise-text-heading-2-line-height:   43px;
+    --concise-text-heading-3-line-height:   41px;
+    --concise-text-heading-4-line-height:   37px;
+    --concise-text-heading-5-line-height:   31px;
+    --concise-text-heading-6-line-height:   29px;
+    --concise-text-line-height:             23px;
+    --concise-text-value-line-height:       17px;
+    --concise-text-label-line-height:       13px;
+
+    --concise-text-main-section-title: var(--concise-text-heading-1);
+    --concise-text-main-section-description: var(--concise-text-heading-6);
+    --concise-text-support-section-title: var(--concise-text-heading-2);
+    --concise-text-support-section-description: var(--concise-text-heading-6);
+    --concise-text-specific-section-title: var(--concise-text-heading-3);
+    --concise-text-specific-section-description: var(--concise-text-heading-6);
+}
+
 .concise-component h1 {
     font-size: var(--concise-text-heading-1);
     line-height: var(--concise-text-heading-1-line-height);
@@ -37,5 +78,23 @@
 .concise-component p {
     font-size: var(--concise-text-size-base);
     line-height: var(--concise-text-line-height);
+    font-weight: normal;
+}
+
+.concise-component label {
+    font-size: var(--concise-text-label-size);
+    line-height: var(--concise-text-label-line-height);
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.concise-component label::after {
+    content: ':';
+}
+
+.concise-component data {
+    font-size: var(--concise-text-value-size);
+    line-height: var(--concise-text-value-line-height);
     font-weight: normal;
 }
