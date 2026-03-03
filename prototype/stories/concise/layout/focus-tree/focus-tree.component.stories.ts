@@ -13,3 +13,12 @@ export const FocusTree: Story = {
     </div>
   `
 };
+
+export const FocusTreeWithSpacer: Story = {
+  render: () => `
+    <div hx-get="/stories/concise/layout/focus-tree/focus-tree-with-spacer.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
+    </div>
+  `
+};
