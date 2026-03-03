@@ -1,41 +1,11 @@
-@font-face {
-    font-family: 'Fira Code';
-    src: url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
+
 
 :root,
 :host {
-    --concise-text-font-family: 'Fira Code', monospace;
-
     --concise-unit-base:        47px;
-    --concise-logo-size-base:   41px;
-    --concise-text-heading-1:   37px;
-    --concise-text-heading-2:   31px;
-    --concise-text-heading-3:   29px;
-    --concise-letter-icon-size: 23px;
-    --concise-text-heading-4:   23px;
     --concise-icon-size:        19px;
-    --concise-text-heading-5:   19px;
-    --concise-text-heading-6:   17px;
-    --concise-text-size-base:   17px;
-
-    --concise-text-heading-1-line-height:   47px;
-    --concise-text-heading-2-line-height:   43px;
-    --concise-text-heading-3-line-height:   41px;
-    --concise-text-heading-4-line-height:   37px;
-    --concise-text-heading-5-line-height:   31px;
-    --concise-text-heading-6-line-height:   29px;
-    --concise-text-line-height:             23px;
-
-    --concise-text-main-section-title: var(--concise-text-heading-1);
-    --concise-text-main-section-description: var(--concise-text-heading-6);
-    --concise-text-support-section-title: var(--concise-text-heading-2);
-    --concise-text-support-section-description: var(--concise-text-heading-6);
-    --concise-text-specific-section-title: var(--concise-text-heading-3);
-    --concise-text-specific-section-description: var(--concise-text-heading-6);
+    --concise-logo-size-base:   41px;
+    --concise-letter-icon-size: 23px;
 
     --concise-equilateral-ratio: 0.8660254;
     --concise-base-division: calc(var(--concise-unit-base) / 5);
@@ -105,7 +75,6 @@ body:has(.concise-component),
     width: 100dvw;
 }
 
-.concise-component article.content-tree,
 .concise-component li.list-item,
 .concise-component nav:has(> .page-list),
 .concise-component ol.list,
@@ -133,8 +102,6 @@ body:has(.concise-component),
 
     background: unset;
 }
-
-
 
 .concise-component .hidden {
     display: none !important;
