@@ -17,3 +17,13 @@
     min-height: var(--concise-list-item-content-width);
     max-height: var(--concise-list-item-content-width);
 }
+
+.concise-component img.professional-picture.picture {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    height: var(--concise-list-item-content-width);
+    min-height: var(--concise-list-item-content-width);
+    max-height: var(--concise-list-item-content-width);
+}
