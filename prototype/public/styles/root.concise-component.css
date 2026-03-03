@@ -41,12 +41,6 @@
     --concise-base-division: calc(var(--concise-unit-base) / 5);
     --concise-base-spacing: calc(var(--concise-base-division) / 2);
 
-    --concise-level-1: calc(var(--concise-unit-base) * 1);
-    --concise-level-2: calc(var(--concise-unit-base) * 2);
-    --concise-level-3: calc(var(--concise-unit-base) * 3);
-    --concise-level-4: calc(var(--concise-unit-base) * 4);
-    --concise-level-5: calc(var(--concise-unit-base) * 5);
-
     --concise-list-item-unit: 7;
     --concise-list-item-content-unit: 5;
 
@@ -71,8 +65,6 @@
     );
     --concise-icon-control-height: var(--concise-unit-base);
     --concise-icon-control-width: var(--concise-unit-base);
-
-    
 }
 
 @media (max-width: 331px) {
@@ -87,7 +79,7 @@
         --concise-icon-size:        17px;
         --concise-text-heading-5:   17px;
         --concise-text-heading-6:   13px;
-        --concise-text-size-base:        13px;
+        --concise-text-size-base:   13px;
 
         --concise-text-heading-1-line-height:   41px;
         --concise-text-heading-2-line-height:   37px;
