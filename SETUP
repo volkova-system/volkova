@@ -6,6 +6,7 @@ scripts/install-node-version.ps1
 scripts/setup-npm-packages.ps1
 
 scripts/setup-htmx.ps1 -DestinationDirectory prototype\public\scripts
+scripts/setup-hyperscript.ps1 -DestinationDirectory prototype\public\scripts
 scripts/setup-pico-css.ps1 -DestinationDirectory prototype\public\styles
 scripts/setup-feather-icons.ps1 -DestinationDirectory prototype\public\assets\images
 scripts/setup-fira-code.ps1 -DestinationDirectory prototype\public\assets\fonts
