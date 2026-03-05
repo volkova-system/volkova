@@ -4,9 +4,9 @@
     max-width: var(--concise-list-width);
 
 
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
 }
 
 .concise-component main.content-tree > ol.content-tree-list.list {
