@@ -99,15 +99,16 @@ containers/*/data/**/*.*
 !prompts/**/*.prompt
 
 !prototype/
-!prototype/.storybook/
-!prototype/public/
-!prototype/stories/
-!prototype/.storybook/**/*
-!prototype/public/**/*
-!prototype/stories/**/*
-!prototype/.npmrc
-!prototype/package.json
-!prototype/tsconfig.json
+!prototype/web/
+!prototype/web/.storybook/
+!prototype/web/public/
+!prototype/web/stories/
+!prototype/web/.storybook/**/*
+!prototype/web/public/**/*
+!prototype/web/stories/**/*
+!prototype/web/.npmrc
+!prototype/web/package.json
+!prototype/web/tsconfig.json
 
 !public/
 !public/**/*
