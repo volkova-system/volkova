@@ -1,13 +1,9 @@
-:root,
-:host
-{
+:host,
+:root {
     --concise-unit-base:        47px;
     --concise-golden-ratio:     1.6180339887;
-    --concise-division-base:    calc(var(--concise-unit-base) / 5);
-
-    --concise-icon-size:        19px;
-    --concise-logo-size-base:   41px;
-    --concise-letter-icon-size: 23px;
+    --concise-slicing-base:     calc(var(--concise-unit-base) / 5);
+    --concise-division-base:    calc(var(--concise-unit-base) / 7);
 
     --concise-list-item-unit: 7;
     --concise-list-item-content-unit: 5;
