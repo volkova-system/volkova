@@ -1,6 +1,5 @@
-:root,
-:host
-{
+:host,
+:root {
     --concise-scrollbar-color: rgba(13, 13, 13, 0.1);
     --concise-scrollbar-background-color: rgba(13, 13, 13, 0.1);
     --concise-scrollbar-background-color-hover: rgba(13, 13, 13, 0.1);
