@@ -1,0 +1,6 @@
+:host,
+:root {
+    --concise-icon-size:        19px;
+    --concise-logo-size-base:   41px;
+    --concise-letter-icon-size: 23px;
+}
