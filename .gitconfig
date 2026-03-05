@@ -11,6 +11,9 @@
 [user]
     email = richeve.bebedor963+vs@proton.me
 
+[core]
+    sshCommand = ssh -i C:/Users/volkovasystem/vs/volkova/.credentials/2026-03-05-github-vs-windows -o IdentitiesOnly=yes
+
 [remote "origin"]
     url = git@github.com:volkova-system/volkova.git
     fetch = +refs/heads/*:refs/remotes/origin/*
