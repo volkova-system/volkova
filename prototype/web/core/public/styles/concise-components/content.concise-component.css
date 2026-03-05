@@ -1,4 +1,4 @@
-.concise-component .list > .item > .content {
+.concise-component .list > .item .content {
     width: auto;
     min-width: var(--concise-list-item-content-width);
 
@@ -9,16 +9,26 @@
     flex-direction: column;
 }
 
-.concise-component .list > .item > .content:only-child {
+.concise-component .list > .item:has(.content:only-child) > .content {
     min-width: var(--concise-list-item-width);
 }
 
-.concise-component .list > .item > .content.value,
-.concise-component .list > .item > .content:has(.value),
-.concise-component .list > .item > .content:has(.label):has(.value)
+.concise-component .list > .item .main-content.content,
+.concise-component .list > .item .support-content.content,
+.concise-component .list > .item .content.value,
+.concise-component .list > .item .content:has(.value),
+.concise-component .list > .item .content:has(.label):has(.value)
 {
     justify-content: center;
 
-    padding-left: var(--concise-spacing-normal);
-    padding-right: var(--concise-spacing-normal);
+    padding-left: var(--concise-gap-normal);
+    padding-right: var(--concise-gap-normal);
+}
+
+.concise-component .list > .item .main-content.content {
+    color: var(--concise-main-text-color);
+}
+
+.concise-component .list > .item .support-content.content {
+    color: var(--concise-support-text-color);
 }
