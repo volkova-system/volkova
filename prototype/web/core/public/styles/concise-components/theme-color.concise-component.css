@@ -1,6 +1,5 @@
-:root,
-:host
-{
+:host,
+:root {
     --concise-color-white-darker:   rgba(139, 127, 109, 1);
     --concise-color-white-dark:     rgba(173, 137, 113, 1);
     --concise-color-white-base:     rgba(211, 173, 149, 1);
