@@ -1,0 +1,30 @@
+.concise-component .tree > .list {
+    scrollbar-color: var(--concise-scrollbar-color) transparent;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar-button {
+    display: none;
+
+    height: 0;
+    width: 0;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar-thumb {
+    background-color: var(--concise-scrollbar-background-color);
+    border-radius: 999px;
+}
+
+.concise-component .tree > .list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--concise-scrollbar-background-color-hover);
+}
