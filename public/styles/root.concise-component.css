@@ -177,8 +177,8 @@ body:has(.concise-component),
 .concise-component {
     background: var(--concise-base-background-color);
 
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
 }
 
 .concise-component article.content-tree,
