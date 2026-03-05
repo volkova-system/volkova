@@ -1,3 +1,8 @@
+.concise-component .label {
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
 .concise-component .label::after {
     content: ':';
 }
