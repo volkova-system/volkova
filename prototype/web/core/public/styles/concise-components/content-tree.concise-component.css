@@ -28,31 +28,6 @@
     flex-direction: row;
 }
 
-.concise-component li.content-tree-item .content {
-    width: var(--concise-list-item-content-width);
-    min-width: var(--concise-list-item-content-width);
-    max-width: var(--concise-list-item-content-width);
-
-    flex-direction: column;
-
-    padding-left: var(--concise-base-spacing);
-    padding-right: var(--concise-base-spacing);
-}
-
 .concise-component .content-tree .picture.content {
-    padding: 0;
-}
-
-.concise-component .content-tree .main-content.content {
-    color: var(--concise-main-text-color);
-}
-
-.concise-component .content-tree .support-content.content {
-    color: var(--concise-support-text-color);
-}
-
-.concise-component .content-tree .focus-content.content {
-    flex-direction: column;
-
     padding: 0;
 }
