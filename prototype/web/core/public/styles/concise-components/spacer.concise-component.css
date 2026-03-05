@@ -39,16 +39,14 @@
 }
 
 .concise-component .normal-spacing.item.spacer:empty,
-.concise-component .normal-spacing.spacer:empty
-{
+.concise-component .normal-spacing.spacer:empty {
     height: var(--concise-spacing-normal);
     min-height: var(--concise-spacing-normal);
     max-height: var(--concise-spacing-normal);
 }
 
 .concise-component .emphasize-spacing.item.spacer:empty,
-.concise-component .emphasize-spacing.spacer:empty
-{
+.concise-component .emphasize-spacing.spacer:empty {
     height: var(--concise-spacing-emphasis);
     min-height: var(--concise-spacing-emphasis);
     max-height: var(--concise-spacing-emphasis);
