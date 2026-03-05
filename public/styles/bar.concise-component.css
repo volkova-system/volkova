@@ -8,9 +8,9 @@
 }
 
 .concise-component .sidebar {
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
 
     width: auto;
     min-width: var(--concise-unit-base);
