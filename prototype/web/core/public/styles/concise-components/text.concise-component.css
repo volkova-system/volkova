@@ -1,5 +1,3 @@
-
-
 .concise-component h1 {
     font-size: var(--concise-text-heading-1);
     line-height: var(--concise-text-heading-1-line-height);
@@ -43,18 +41,14 @@
 }
 
 .concise-component label,
-.concise-component dt
-{
+.concise-component dt {
     font-size: var(--concise-text-label-size);
     line-height: var(--concise-text-label-line-height);
     font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: 1.3px;
 }
 
 .concise-component dd,
-.concise-component data
-{
+.concise-component data {
     font-size: var(--concise-text-value-size);
     line-height: var(--concise-text-value-line-height);
     font-weight: normal;
