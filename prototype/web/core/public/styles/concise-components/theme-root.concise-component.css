@@ -1,0 +1,36 @@
+:root,
+:host
+{
+    --concise-unit-base:        47px;
+    --concise-golden-ratio:     1.6180339887;
+    --concise-division-base:    calc(var(--concise-unit-base) / 5);
+
+    --concise-icon-size:        19px;
+    --concise-logo-size-base:   41px;
+    --concise-letter-icon-size: 23px;
+
+    --concise-list-item-unit: 7;
+    --concise-list-item-content-unit: 5;
+
+    --concise-list-height: var(--concise-unit-base);
+    --concise-list-width: calc(
+        var(--concise-unit-base) * var(--concise-list-item-unit)
+    );
+
+    --concise-list-item-height: var(--concise-unit-base);
+    --concise-list-item-width: calc(
+        var(--concise-unit-base) * var(--concise-list-item-unit)
+    );
+
+    --concise-list-item-content-height: var(--concise-list-item-height);
+    --concise-list-item-content-width: calc(
+        var(--concise-unit-base) * var(--concise-list-item-content-unit)
+    );
+
+    --concise-control-height: var(--concise-unit-base);
+    --concise-control-width: calc(
+        var(--concise-unit-base) * var(--concise-list-item-unit)
+    );
+    --concise-icon-control-height: var(--concise-unit-base);
+    --concise-icon-control-width: var(--concise-unit-base);
+}

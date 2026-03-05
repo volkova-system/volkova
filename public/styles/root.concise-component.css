@@ -40,8 +40,8 @@
     --concise-text-specific-section-description: var(--concise-text-heading-6);
 
     --concise-equilateral-ratio: 0.8660254;
-    --concise-base-division: calc(var(--concise-unit-base) / 5);
-    --concise-base-spacing: calc(var(--concise-base-division) / 2);
+    --concise-division-base: calc(var(--concise-unit-base) / 5);
+    --concise-base-spacing: calc(var(--concise-division-base) / 2);
 
     --concise-level-1: calc(var(--concise-unit-base) * 1);
     --concise-level-2: calc(var(--concise-unit-base) * 2);
@@ -128,7 +128,7 @@
     --concise-color-black-light:    rgba(53, 53, 53, 1);
     --concise-color-black-lighter:  rgba(79, 79, 79, 1);
 
-    --concise-base-background-color: var(--concise-color-black-base);
+    --concise-color-background-base: var(--concise-color-black-base);
     --concise-text-color-base: var(--concise-color-white-base);
 
     --concise-main-text-color: var(--concise-color-white-lighter);
@@ -175,7 +175,7 @@
 html:has(.concise-component),
 body:has(.concise-component),
 .concise-component {
-    background: var(--concise-base-background-color);
+    background: var(--concise-color-background-base);
 
     height: 100dvh;
     width: 100dvw;

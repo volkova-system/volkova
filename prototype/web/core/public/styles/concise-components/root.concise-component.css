@@ -1,0 +1,41 @@
+.concise-component nav *,
+.concise-component nav,
+.concise-component li *,
+.concise-component li,
+.concise-component ol,
+.concise-component ul,
+.concise-component *,
+.concise-component
+{
+    color: var(--concise-text-color-base);
+    font-family: var(--concise-text-font-family);
+    font-variant-ligatures: contextual;
+    text-decoration: none;
+    text-shadow: none;
+    text-shadow: none;
+
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+
+    box-shadow: none;
+    outline: none;
+
+    margin: 0;
+    padding: 0;
+
+    background: unset;
+}
+
+.concise-component {
+    flex-direction: row !important;
+}
+
+html:has(.concise-component),
+body:has(.concise-component),
+.concise-component {
+    background: var(--concise-color-background-base) !important;
+
+    height: 100dvh !important;
+    width: 100dvw !important;
+}

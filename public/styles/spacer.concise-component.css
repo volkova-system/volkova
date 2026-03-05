@@ -31,13 +31,13 @@
     min-height: var(--concise-unit-base);
 }
 
-.concise-component .one-fifth-space.item.spacer {
+.concise-component .normal-spacing.item.spacer {
     height: calc(var(--concise-unit-base) / 5);
     min-height: calc(var(--concise-unit-base) / 5);
     max-height: calc(var(--concise-unit-base) / 5);
 }
 
-.concise-component .one-third-space.item.spacer {
+.concise-component .emphasize-spacing.item.spacer {
     height: calc(var(--concise-unit-base) / 3);
     min-height: calc(var(--concise-unit-base) / 3);
     max-height: calc(var(--concise-unit-base) / 3);

@@ -55,7 +55,7 @@
     --concise-color-black-light:    rgba(53, 53, 53, 1);
     --concise-color-black-lighter:  rgba(79, 79, 79, 1);
 
-    --concise-base-background-color: var(--concise-color-black-base);
+    --concise-color-background-base: var(--concise-color-black-base);
     --concise-text-color-base: var(--concise-color-white-base);
 
     --concise-main-text-color: var(--concise-color-white-lighter);

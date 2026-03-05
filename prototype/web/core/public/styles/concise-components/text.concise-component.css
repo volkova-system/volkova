@@ -42,7 +42,9 @@
     font-weight: normal;
 }
 
-.concise-component label {
+.concise-component label,
+.concise-component dt
+{
     font-size: var(--concise-text-label-size);
     line-height: var(--concise-text-label-line-height);
     font-weight: normal;
@@ -50,11 +52,9 @@
     letter-spacing: 1.3px;
 }
 
-.concise-component label::after {
-    content: ':';
-}
-
-.concise-component data {
+.concise-component dd,
+.concise-component data
+{
     font-size: var(--concise-text-value-size);
     line-height: var(--concise-text-value-line-height);
     font-weight: normal;

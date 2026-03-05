@@ -5,9 +5,9 @@ scripts/set-custom-local-gitconfig.ps1
 scripts/install-node-version.ps1
 scripts/setup-npm-packages.ps1
 
-scripts/setup-htmx.ps1 -DestinationDirectory prototype\web\core\public\scripts
-scripts/setup-hyperscript.ps1 -DestinationDirectory prototype\web\core\public\scripts
-scripts/setup-pico-css.ps1 -DestinationDirectory prototype\web\core\public\styles
+scripts/setup-htmx.ps1 -DestinationDirectory prototype\web\core\public\scripts\core
+scripts/setup-hyperscript.ps1 -DestinationDirectory prototype\web\core\public\scripts\core
+scripts/setup-pico-css.ps1 -DestinationDirectory prototype\web\core\public\styles\core
 scripts/setup-feather-icons.ps1 -DestinationDirectory prototype\web\core\public\assets\images
 scripts/setup-fira-code.ps1 -DestinationDirectory prototype\web\core\public\assets\fonts
 

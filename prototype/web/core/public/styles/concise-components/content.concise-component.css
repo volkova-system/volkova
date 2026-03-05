@@ -1,0 +1,24 @@
+.concise-component .list > .item > .content {
+    width: auto;
+    min-width: var(--concise-list-item-content-width);
+
+    height: auto;
+    min-height: var(--concise-list-item-height);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.concise-component .list > .item > .content:only-child {
+    min-width: var(--concise-list-item-width);
+}
+
+.concise-component .list > .item > .content.value,
+.concise-component .list > .item > .content:has(.value),
+.concise-component .list > .item > .content:has(.label):has(.value)
+{
+    justify-content: center;
+
+    padding-left: var(--concise-spacing-normal);
+    padding-right: var(--concise-spacing-normal);
+}

@@ -1,0 +1,55 @@
+.concise-component .spacer:empty {
+    height: var(--concise-spacing-next);
+    min-height: var(--concise-spacing-next);
+    max-height: var(--concise-spacing-next);
+
+    width: var(--concise-spacing-next);
+    min-width: var(--concise-spacing-next);
+    max-width: var(--concise-spacing-next);
+}
+
+.concise-component .bar.spacer:empty {
+    height: var(--concise-spacing-next);
+    min-height: var(--concise-spacing-next);
+    max-height: var(--concise-spacing-next);
+
+    width: 100dvw;
+    min-width: 100dvw;
+    max-width: 100dvw;
+}
+
+.concise-component .sidebar.spacer:empty {
+    width: var(--concise-spacing-next);
+    min-width: var(--concise-spacing-next);
+    max-width: var(--concise-spacing-next);
+
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+}
+
+.concise-component .item.spacer:empty {
+    height: var(--concise-spacing-next);
+    min-height: var(--concise-spacing-next);
+    max-height: var(--concise-spacing-next);
+
+    width: var(--concise-list-item-width);
+    min-width: var(--concise-list-item-width);
+    max-width: var(--concise-list-item-width);
+}
+
+.concise-component .normal-spacing.item.spacer:empty,
+.concise-component .normal-spacing.spacer:empty
+{
+    height: var(--concise-spacing-normal);
+    min-height: var(--concise-spacing-normal);
+    max-height: var(--concise-spacing-normal);
+}
+
+.concise-component .emphasize-spacing.item.spacer:empty,
+.concise-component .emphasize-spacing.spacer:empty
+{
+    height: var(--concise-spacing-emphasis);
+    min-height: var(--concise-spacing-emphasis);
+    max-height: var(--concise-spacing-emphasis);
+}
