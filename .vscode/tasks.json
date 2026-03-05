@@ -17,7 +17,7 @@
             "label": "Background Storybook",
             "type": "npm",
             "script": "storybook",
-            "path": "prototype/web",
+            "path": "prototype/web/core",
             "isBackground": true,
             "promptOnClose": true,
             "problemMatcher": [

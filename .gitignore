@@ -100,15 +100,18 @@ containers/*/data/**/*.*
 
 !prototype/
 !prototype/web/
-!prototype/web/.storybook/
-!prototype/web/public/
-!prototype/web/stories/
-!prototype/web/.storybook/**/*
-!prototype/web/public/**/*
-!prototype/web/stories/**/*
-!prototype/web/.npmrc
-!prototype/web/package.json
-!prototype/web/tsconfig.json
+!prototype/web/core/
+!prototype/web/widgets/
+!prototype/web/widgets/**/*
+!prototype/web/core/.storybook/
+!prototype/web/core/public/
+!prototype/web/core/stories/
+!prototype/web/core/.storybook/**/*
+!prototype/web/core/public/**/*
+!prototype/web/core/stories/**/*
+!prototype/web/core/.npmrc
+!prototype/web/core/package.json
+!prototype/web/core/tsconfig.json
 
 !public/
 !public/**/*
