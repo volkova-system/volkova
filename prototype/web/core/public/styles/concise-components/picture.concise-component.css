@@ -17,3 +17,13 @@
     min-height: var(--concise-picture-profile-size);
     max-height: var(--concise-picture-profile-size);
 }
+
+.concise-component img.thumbnail-picture.picture {
+    width: var(--concise-picture-thumbnail-size);
+    min-width: var(--concise-picture-thumbnail-size);
+    max-width: var(--concise-picture-thumbnail-size);
+
+    height: var(--concise-picture-thumbnail-size);
+    min-height: var(--concise-picture-thumbnail-size);
+    max-height: var(--concise-picture-thumbnail-size);
+}
