@@ -41,9 +41,9 @@
 }
 
 .concise-component .round-icon.shape-icon.icon {
-    clip-path: circle(calc(50% - var(--concise-base-spacing)) at 50% 50%);
+    clip-path: circle(calc(50% - var(--concise-gap-base)) at 50% 50%);
 }
 
 .concise-component .square-icon.shape-icon.icon {
-    clip-path: inset(var(--concise-base-spacing));
+    clip-path: inset(var(--concise-gap-base));
 }
