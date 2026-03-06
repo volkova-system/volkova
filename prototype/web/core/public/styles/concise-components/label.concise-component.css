@@ -3,6 +3,11 @@
     letter-spacing: 1.3px;
 }
 
-.concise-component .label::after {
+.concise-component .title.label {
+    font-size: var(--concise-text-size-base);
+    letter-spacing: 1.1px;
+}
+
+.concise-component .label:not(.title)::after {
     content: ':';
 }
