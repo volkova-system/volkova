@@ -1,35 +1,35 @@
 .concise-component h1 {
-    font-size: var(--concise-text-heading-1);
+    font-size: var(--concise-text-heading-1-size);
     line-height: var(--concise-text-heading-1-line-height);
     font-weight: normal;
 }
 
 .concise-component h2 {
-    font-size: var(--concise-text-heading-2);
+    font-size: var(--concise-text-heading-2-size);
     line-height: var(--concise-text-heading-2-line-height);
     font-weight: normal;
 }
 
 .concise-component h3 {
-    font-size: var(--concise-text-heading-3);
+    font-size: var(--concise-text-heading-3-size);
     line-height: var(--concise-text-heading-3-line-height);
     font-weight: normal;
 }
 
 .concise-component h4 {
-    font-size: var(--concise-text-heading-4);
+    font-size: var(--concise-text-heading-4-size);
     line-height: var(--concise-text-heading-4-line-height);
     font-weight: normal;
 }
 
 .concise-component h5 {
-    font-size: var(--concise-text-heading-5);
+    font-size: var(--concise-text-heading-5-size);
     line-height: var(--concise-text-heading-5-line-height);
     font-weight: normal;
 }
 
 .concise-component h6 {
-    font-size: var(--concise-text-heading-6);
+    font-size: var(--concise-text-heading-6-size);
     line-height: var(--concise-text-heading-6-line-height);
     font-weight: normal;
 }
