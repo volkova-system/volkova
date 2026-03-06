@@ -28,8 +28,8 @@
     --concise-text-heading-5-line-height:   31px;
     --concise-text-heading-6-line-height:   29px;
     --concise-text-line-height:             23px;
-    --concise-text-value-line-height:       17px;
-    --concise-text-label-line-height:       13px;
+    --concise-text-value-line-height:       19px;
+    --concise-text-label-line-height:       17px;
 
     --concise-text-main-section-title: var(--concise-text-heading-1);
     --concise-text-main-section-description: var(--concise-text-heading-6);
