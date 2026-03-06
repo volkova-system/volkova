@@ -7,9 +7,9 @@ type Story = StoryObj;
 
 export const RicheveBebedorHome: Story = {
   render: () => `
-    <div hx-get="/stories/precise/richeve-bebedor/pages/richeve-bebedor.home-page.html"
+    <section hx-get="/stories/precise/richeve-bebedor/pages/richeve-bebedor.home-page.html"
         hx-trigger="load"
         hx-swap="outerHTML">
-    </div>
+    </section>
   `
 };
