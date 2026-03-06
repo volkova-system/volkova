@@ -1,29 +1,19 @@
 .concise-component img.picture {
-    width: var(--concise-list-item-width);
-    min-width: var(--concise-list-item-width);
-    max-width: var(--concise-list-item-width);
+    width: var(--concise-picture-size-base);
+    min-width: var(--concise-picture-size-base);
+    max-width: var(--concise-picture-size-base);
 
-    height: var(--concise-list-item-width);
-    min-height: var(--concise-list-item-width);
-    max-height: var(--concise-list-item-width);
+    height: var(--concise-picture-size-base);
+    min-height: var(--concise-picture-size-base);
+    max-height: var(--concise-picture-size-base);
 }
 
 .concise-component img.profile-picture.picture {
-    width: var(--concise-list-item-content-width);
-    min-width: var(--concise-list-item-content-width);
-    max-width: var(--concise-list-item-content-width);
+    width: var(--concise-picture-profile-size);
+    min-width: var(--concise-picture-profile-size);
+    max-width: var(--concise-picture-profile-size);
 
-    height: var(--concise-list-item-content-width);
-    min-height: var(--concise-list-item-content-width);
-    max-height: var(--concise-list-item-content-width);
-}
-
-.concise-component img.professional-picture.picture {
-    width: var(--concise-list-item-content-width);
-    min-width: var(--concise-list-item-content-width);
-    max-width: var(--concise-list-item-content-width);
-
-    height: var(--concise-list-item-content-width);
-    min-height: var(--concise-list-item-content-width);
-    max-height: var(--concise-list-item-content-width);
+    height: var(--concise-picture-profile-size);
+    min-height: var(--concise-picture-profile-size);
+    max-height: var(--concise-picture-profile-size);
 }
