@@ -13,3 +13,12 @@ export const LabelValue: Story = {
     </ol>
   `
 };
+
+export const LabelValueWithIcon: Story = {
+  render: () => `
+    <ol hx-get="/stories/concise/complex/label-value/label-value-with-icon.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
+    </ol>
+  `
+};
