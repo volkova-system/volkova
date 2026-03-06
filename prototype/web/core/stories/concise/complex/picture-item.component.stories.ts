@@ -5,11 +5,11 @@ export default meta;
 
 type Story = StoryObj;
 
-export const PictureItem: Story = {
+export const PictureItemBasic: Story = {
   render: () => `
-    <ol hx-get="/stories/concise/complex/picture-item/picture-item.component.html"
+    <section hx-get="/stories/concise/complex/picture-item/picture-item.component.html"
         hx-trigger="load"
         hx-swap="outerHTML">
-    </ol>
+    </section>
   `
 };
