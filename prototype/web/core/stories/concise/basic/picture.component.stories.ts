@@ -14,9 +14,18 @@ export const Picture: Story = {
   `
 };
 
-export const ProfilePicture: Story = {
+export const PictureInProfileSize: Story = {
   render: () => `
-    <img hx-get="/stories/concise/basic/picture/profile-picture.component.html"
+    <img hx-get="/stories/concise/basic/picture/picture-in-profile-size.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML"
+    />
+  `
+};
+
+export const PictureInThumbnailSize: Story = {
+  render: () => `
+    <img hx-get="/stories/concise/basic/picture/picture-in-thumbnail-size.component.html"
         hx-trigger="load"
         hx-swap="outerHTML"
     />
