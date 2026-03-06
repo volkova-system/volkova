@@ -21,7 +21,7 @@
     --concise-text-size-depth-2:    11px;
     --concise-text-size-depth-3:    7px;
 
-    --concise-line-height-factor:           calc(3 * var(--concise-ratio));
+    --concise-line-height-factor:           calc((var(--concise-text-size-base) * var(--concise-ratio)) / 3);
     --concise-text-line-height-emphasis-5:  calc(var(--concise-text-size-emphasis-5) + var(--concise-line-height-factor));
     --concise-text-line-height-emphasis-4:  calc(var(--concise-text-size-emphasis-4) + var(--concise-line-height-factor));
     --concise-text-line-height-emphasis-3:  calc(var(--concise-text-size-emphasis-3) + var(--concise-line-height-factor));
