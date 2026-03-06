@@ -7,22 +7,30 @@
 
     display: flex;
     flex-direction: column;
+
+    padding-left: var(--concise-gap-normal);
+    padding-right: var(--concise-gap-normal);
+}
+
+.concise-component .list > .item .content:has(.picture),
+.concise-component .list > .item .content.picture {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .concise-component .list > .item:has(.content:only-child) > .content {
     min-width: var(--concise-list-item-width);
 }
 
-.concise-component .list > .item .main-content.content,
-.concise-component .list > .item .support-content.content,
-.concise-component .list > .item .content.value,
-.concise-component .list > .item .content:has(.value),
-.concise-component .list > .item .content:has(.label):has(.value)
-{
+.concise-component .list > .item > .content:has(.value):has(.label),
+.concise-component .list > .item > .content:has(.value),
+.concise-component .list > .item > .content.value {
     justify-content: center;
+}
 
-    padding-left: var(--concise-gap-normal);
-    padding-right: var(--concise-gap-normal);
+.concise-component .list > .item > .content:has(.description:only-child),
+.concise-component .list > .item > .content.description {
+    justify-content: flex-start;
 }
 
 .concise-component .list > .item .main-content.content {
