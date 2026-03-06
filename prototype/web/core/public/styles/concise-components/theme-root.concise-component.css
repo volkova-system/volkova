@@ -1,7 +1,8 @@
 :host,
 :root {
-    --concise-unit-base:        47px;
-    --concise-golden-ratio:     1.6180339887;
+    --concise-unit-base:    47px;
+    --concise-ratio:        1.6180339887;
+
     --concise-slicing-base:     calc(var(--concise-unit-base) / 5);
     --concise-division-base:    calc(var(--concise-unit-base) / 7);
 
