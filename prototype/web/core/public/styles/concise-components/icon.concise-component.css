@@ -33,7 +33,7 @@
 }
 
 .concise-component .letter-icon.icon {
-    font-size: var(--concise-letter-icon-size);
+    font-size: var(--concise-icon-letter-size);
 }
 
 .concise-component .color-icon.icon {
