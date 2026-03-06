@@ -5,3 +5,11 @@
 .concise-component .subtitle.value {
     text-transform: uppercase;
 }
+
+.concise-component .currency-usd.currency.value::after {
+    content: ' USD';
+}
+
+.concise-component .discount.value::after {
+    content: '% off!';
+}
