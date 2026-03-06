@@ -1,6 +1,11 @@
 :host,
 :root {
     --concise-icon-size:        19px;
+    --concise-icon-letter-size: 23px;
+
     --concise-logo-size-base:   41px;
-    --concise-letter-icon-size: 23px;
+
+    --concise-picture-size-base: calc(var(--concise-unit-base) * 7);
+    --concise-picture-profile-size: calc(var(--concise-picture-size-base) * 5);
+    --concise-picture-thumbnail-size: calc(var(--concise-picture-size-base) * 3 );
 }
