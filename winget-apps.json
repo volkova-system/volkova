@@ -69,6 +69,11 @@
                     "PackageIdentifier": "nginxinc.nginx",
                     "Version": "1.29.5",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "GnuPG.Gpg4win",
+                    "Version": "5.0.1",
+                    "Source": "winget"
                 }
             ]
         }
