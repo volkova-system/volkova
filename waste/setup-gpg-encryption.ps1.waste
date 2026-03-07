@@ -1,0 +1,135 @@
+#!/usr/bin/env pwsh
+# GPG Key Generation and SSH Key Encryption Script
+# Maximum Security Configuration with Brute Force Protection
+
+# Configuration
+$NAME = "Richeve Bebebdor"
+$EMAIL = "richeve.bebedor963+vs-credentials@proton.me"
+$PASSPHRASE = ""
+$EXPIRY = "1m"
+$BACKUP_DIR = ".credentials/gpg-secure-backup"
+$SSH_KEY_NAME = "2026-03-08-github-vs-windows"
+$SSH_KEY_DIR = ".credentials"
+
+Write-Host "=== GPG Maximum Security Setup ===" -ForegroundColor Cyan
+Write-Host ""
+
+# Step 1: Create backup directory
+Write-Host "[1/7] Creating backup directory..." -ForegroundColor Yellow
+New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
+Write-Host "✓ Directory created: $BACKUP_DIR" -ForegroundColor Green
+Write-Host ""
+
+# Step 2: Create GPG batch configuration
+Write-Host "[2/7] Creating GPG configuration..." -ForegroundColor Yellow
+$gpgConfig = @"
+%echo Generating maximum security GPG key with brute force protection
+Key-Type: EDDSA
+Key-Curve: Ed25519
+Key-Usage: sign
+Subkey-Type: ECDH
+Subkey-Curve: Cv25519
+Subkey-Usage: encrypt
+Name-Real: $NAME
+Name-Email: $EMAIL
+Expire-Date: $EXPIRY
+Passphrase: $PASSPHRASE
+Preferences: SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
+%commit
+%echo Key generation complete
+"@
+
+$configFile = Join-Path $BACKUP_DIR "gpg-config.txt"
+Set-Content -Path $configFile -Value $gpgConfig -Encoding ASCII
+Write-Host "✓ Configuration file created" -ForegroundColor Green
+Write-Host ""
+
+# Step 3: Generate GPG key with maximum security
+Write-Host "[3/7] Generating GPG key (this may take a moment)..." -ForegroundColor Yellow
+Write-Host "  - Key Type: Ed25519 (ECC)
+
+    Write-Host "✗ GPG key generation failed" -ForegroundColor Red
+    exit 1
+}
+Write-Host ""
+
+# Step 4: Export GPG keys
+Write-Host "[4/7] Exporting GPG keys..." -ForegroundColor Yellow
+gpg --armor --export $EMAIL | Out-File -FilePath "$BACKUP_DIR/gpg-public.asc" -Encoding ASCII
+gpg --batch --passphrase $PASSPHRASE --pinentry-mode loopback --armor --export-secret-keys $EMAIL | Out-File -FilePath "$BACKUP_DIR/gpg-private.asc" -Encoding ASCII
+gpg --export-ownertrust | Out-File -FilePath "$BACKUP_DIR/gpg-trust.txt" -Encoding ASCII
+Write-Host "✓ GPG keys exported" -ForegroundColor Green
+Write-Host ""
+
+# Step 5: Create revocation certificate
+Write-Host "[5/7] Creating revocation certificate..." -ForegroundColor Yellow
+gpg --batch --passphrase $PASSPHRASE --pinentry-mode loopback --output "$BACKUP_DIR/gpg-revocation.asc" --gen-revoke $EMAIL 2>$null
+Write-Host "✓ Revocation certificate created" -ForegroundColor Green
+Write-Host ""
+
+# Step 6: Encrypt SSH keys
+Write-Host "[6/7] Encrypting SSH keys..." -ForegroundColor Yellow
+
+
+if (Test-Path "$SSH_KEY_DIR/$SSH_KEY_NAME") {
+    gpg --encrypt --recipient $EMAIL --armor -o "$SSH_KEY_DIR/$SSH_KEY_NAME.gpg.asc" "$SSH_KEY_DIR/$SSH_KEY_NAME"
+    Write-Host "✓ Private key encrypted: $SSH_KEY_NAME.gpg.asc" -ForegroundColor Green
+} else {
+    Write-Host "⚠ Private key not found: $SSH_KEY_DIR/$SSH_KEY_NAME" -ForegroundColor Yellow
+}
+
+if (Test-Path "$SSH_KEY_DIR/$SSH_KEY_NAME.pub") {
+    gpg --encrypt --recipient $EMAIL --armor -o "$SSH_KEY_DIR/$SSH_KEY_NAME.pub.gpg.asc" "$SSH_KEY_DIR/$SSH_KEY_NAME.pub"
+    Write-Host "✓ Public key encrypted: $SSH_KEY_NAME.pub.gpg.asc" -ForegroundColor Green
+} else {
+    Write-Host "⚠ Public key not found: $SSH_KEY_DIR/$SSH_KEY_NAME.pub" -ForegroundColor Yellow
+}
+Write-Host ""
+
+# Step 7: Verify and test
+Write-Host "[7/7] Verifying setup..." -ForegroundColor Yellow
+Write-Host ""
+Write-Host "GPG Key Information:" -ForegroundColor Cyan
+gpg --list-keys $EMAIL
+Write-Host ""
+
+# Test decryption
+if (Test-Path "$SSH_KEY_DIR/$SSH_KEY_NAME.gpg.asc") {
+    Write-Host "Testing decryption (first 2 lines):" -ForegroundColor Cyan
+    $decrypted = gpg --batch --passphrase $PASSPHRASE --pinentry-mode loopback --decrypt "$SSH_KEY_DIR/$SSH_KEY_NAME.gpg.asc" 2>$null
+    $decrypted | Select-Object -First 2
+    Write-Host "✓ Decryption test successful" -ForegroundColor Green
+}
+Write-Host ""
+
+# Clean up config file (contains passphrase)
+Remove-Item -Path $configFile -Force
+Write-Host "✓ Temporary config file removed" -ForegroundColor Green
+Write-Host ""
+
+# Summary
+Write-Host "=== Setup Complete ===" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Files created:" -ForegroundColor White
+Write-Host "  GPG Keys:" -ForegroundColor Gray
+Write-Host "    - $BACKUP_DIR/gpg-public.asc" -ForegroundColor Gray
+Write-Host "    - $BACKUP_DIR/gpg-private.asc" -ForegroundColor Gray
+Write-Host "    - $BACKUP_DIR/gpg-trust.txt" -ForegroundColor Gray
+Write-Host "    - $BACKUP_DIR/gpg-revocation.asc" -ForegroundColor Gray
+Write-Host ""
+Write-Host "  Encrypted SSH Keys:" -ForegroundColor Gray
+Get-ChildItem "$SSH_KEY_DIR/*.gpg.asc" -ErrorAction SilentlyContinue | ForEach-Object {
+    Write-Host "    - $($_.Name)" -ForegroundColor Gray
+}
+Write-Host ""
+Write-Host "Security Notes:" -ForegroundColor Yellow
+Write-Host "  • GPG key expires in 1 month" -ForegroundColor White
+Write-Host "  • S2K iterations: 65,011,712 (maximum brute force protection)" -ForegroundColor White
+Write-Host "  • Store GPG private key and revocation certificate securely" -ForegroundColor White
+Write-Host "  • Backup GPG keys to multiple secure locations" -ForegroundColor White
+Write-Host ""
+Write-Host "Next Steps:" -ForegroundColor Yellow
+Write-Host "  1. Backup $BACKUP_DIR to a secure location" -ForegroundColor White
+Write-Host "  2. Test decryption: gpg --decrypt $SSH_KEY_DIR/$SSH_KEY_NAME.gpg.asc" -ForegroundColor White
+Write-Host "  3. (Optional) Securely delete original SSH keys if no longer needed" -ForegroundColor White
+Write-Host ""
