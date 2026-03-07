@@ -59,6 +59,16 @@
                     "PackageIdentifier": "Postman.Postman",
                     "Version": "12.0.4",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "CaddyServer.Caddy",
+                    "Version": "2.11.2",
+                    "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "nginxinc.nginx",
+                    "Version": "1.29.5",
+                    "Source": "winget"
                 }
             ]
         }
