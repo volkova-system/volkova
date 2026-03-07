@@ -27,7 +27,7 @@
                 },
                 {
                     "PackageIdentifier": "GoLang.Go",
-                    "Version": "1.26.0",
+                    "Version": "1.26.1",
                     "Source": "winget"
                 },
                 {
@@ -52,12 +52,12 @@
                 },
                 {
                     "PackageIdentifier": "Erlang.ErlangOTP",
-                    "Version": "28.3.3",
+                    "Version": "28.4",
                     "Source": "winget"
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.0.4",
+                    "Version": "12.0.8",
                     "Source": "winget"
                 },
                 {
