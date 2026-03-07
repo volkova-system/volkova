@@ -1,0 +1,85 @@
+#!/usr/bin/env pwsh
+# SSH Key Decryption and Restoration Script
+
+param(
+    [Parameter(Mandatory=$false)]
+    [string]$Email = "richeve.bebedor963+vs-credentials@proton.me",
+
+    [Parameter(Mandatory=$false)]
+    [string]$KeyName = "2026-03-08-github-vs-windows",
+
+    [Parameter(Mandatory=$false)]
+    [string]$OutputDir = ".credentials/decrypted",
+
+    [Parameter(Mandatory=$false)]
+    [switch]$ToStdout
+)
+
+$SSH_KEY_DIR = ".credentials"
+
+Write-Host "=== SSH Key Decryption ===" -ForegroundColor Cyan
+Write-Host ""
+
+# Check if encrypted files exist
+$privateKeyEncrypted = "$SSH_KEY_DIR/$KeyName.gpg.asc"
+$publicKeyEncrypted = "$SSH_KEY_DIR/$KeyName.pub.gpg.asc"
+
+if (-not (Test-Path $privateKeyEncrypted)) {
+    Write-Host "✗ Encrypted private key not found: $privateKeyEncrypted" -ForegroundColor Red
+    exit 1
+}
+
+# Decrypt to stdout or file
+if ($ToStdout) {
+    Write-Host "Decrypting to stdout..." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "=== Private Key ===" -ForegroundColor Cyan
+    gpg --decrypt $privateKeyEncrypted
+    Write-Host ""
+
+    if (Test-Path $publicKeyEncrypted) {
+        Write-Host "=== Public Key ===" -ForegroundColor Cyan
+        gpg --decrypt $publicKeyEncrypted
+    }
+} else {
+    # Create output directory
+    New-Item -ItemType Directory -Force -Path $OutputDir | Out-Null
+
+    # Decrypt private key
+    Write-Host "Decrypting private key..." -ForegroundColor Yellow
+    $privateKeyOutput = Join-Path $OutputDir $KeyName
+    gpg --decrypt $privateKeyEncrypted | Out-File -FilePath $privateKeyOutput -Encoding ASCII -NoNewline
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✓ Private key decrypted: $privateKeyOutput" -ForegroundColor Green
+
+        # Set proper permissions (Windows equivalent)
+        icacls $privateKeyOutput /inheritance:r /grant:r "$($env:USERNAME):(R,W)" | Out-Null
+        Write-Host "✓ Permissions set (read/write for current user only)" -ForegroundColor Green
+    } else {
+        Write-Host "✗ Decryption failed" -ForegroundColor Red
+        exit 1
+    }
+
+    # Decrypt public key
+    if (Test-Path $publicKeyEncrypted) {
+        Write-Host "Decrypting public key..." -ForegroundColor Yellow
+        $publicKeyOutput = Join-Path $OutputDir "$KeyName.pub"
+        gpg --decrypt $publicKeyEncrypted | Out-File -FilePath $publicKeyOutput -Encoding ASCII -NoNewline
+        Write-Host "✓ Public key decrypted: $publicKeyOutput" -ForegroundColor Green
+    }
+
+    Write-Host ""
+    Write-Host "=== Decryption Complete ===" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "Decrypted files:" -ForegroundColor White
+    Get-ChildItem $OutputDir | ForEach-Object {
+        Write-Host "  - $($_.FullName)" -ForegroundColor Gray
+    }
+    Write-Host ""
+    Write-Host "To use with SSH:" -ForegroundColor Yellow
+    Write-Host "  1. Copy to ~/.ssh/: Copy-Item $privateKeyOutput ~/.ssh/" -ForegroundColor White
+    Write-Host "  2. Set permissions: icacls ~/.ssh/$KeyName /inheritance:r /grant:r `"`$(`$env:USERNAME):(R,W)`"" -ForegroundColor White
+    Write-Host "  3. Add to SSH agent: ssh-add ~/.ssh/$KeyName" -ForegroundColor White
+    Write-Host ""
+}
