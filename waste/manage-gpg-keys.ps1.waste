@@ -1,0 +1,145 @@
+#!/usr/bin/env pwsh
+# GPG Key Management Script
+
+param(
+    [Parameter(Mandatory=$true)]
+    [ValidateSet('list', 'export', 'import', 'extend', 'revoke', 'delete')]
+    [string]$Action,
+
+    [Parameter(Mandatory=$false)]
+    [string]$Email = "richeve.bebedor963+vs-credentials@proton.me",
+
+    [Parameter(Mandatory=$false)]
+    [string]$ImportPath,
+
+    [Parameter(Mandatory=$false)]
+    [string]$ExportPath = ".credentials/gpg-secure-backup"
+)
+
+Write-Host "=== GPG Key Management ===" -ForegroundColor Cyan
+Write-Host ""
+
+switch ($Action) {
+    'list' {
+        Write-Host "Public Keys:" -ForegroundColor Yellow
+        gpg --list-keys
+        Write-Host ""
+        Write-Host "Private Keys:" -ForegroundColor Yellow
+        gpg --list-secret-keys
+        Write-Host ""
+        Write-Host "Key Details:" -ForegroundColor Yellow
+        gpg --list-keys --keyid-format LONG $Email
+    }
+
+    'export' {
+        Write-Host "Exporting GPG keys to: $ExportPath" -ForegroundColor Yellow
+        New-Item -ItemType Directory -Force -Path $ExportPath | Out-Null
+
+        # Export public key
+        gpg --armor --export $Email | Out-File -FilePath "$ExportPath/gpg-public.asc" -Encoding ASCII
+        Write-Host "✓ Public key exported: $ExportPath/gpg-public.asc" -ForegroundColor Green
+
+        # Export private key
+        gpg --armor --export-secret-keys $Email | Out-File -FilePath "$ExportPath/gpg-private.asc" -Encoding ASCII
+        Write-Host "✓ Private key exported: $ExportPath/gpg-private.asc" -ForegroundColor Green
+
+        # Export trust database
+        gpg --export-ownertrust | Out-File -FilePath "$ExportPath/gpg-trust.txt" -Encoding ASCII
+        Write-Host "✓ Trust database exported: $ExportPath/gpg-trust.txt" -ForegroundColor Green
+
+        Write-Host ""
+        Write-Host "Backup complete! Store these files securely." -ForegroundColor Cyan
+    }
+
+    'import' {
+        if (-not $ImportPath) {
+            Write-Host "✗ Please specify -ImportPath" -ForegroundColor Red
+            exit 1
+        }
+
+        Write-H
+     }
+
+        # Import trust database
+        if (Test-Path "$ImportPath/gpg-trust.txt") {
+            gpg --import-ownertrust "$ImportPath/gpg-trust.txt"
+            Write-Host "✓ Trust database imported" -ForegroundColor Green
+        }
+
+        Write-Host ""
+        Write-Host "Import complete!" -ForegroundColor Cyan
+        gpg --list-keys
+    }
+
+    'extend' {
+        Write-Host "Extending key expiration for: $Email" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "Current key info:" -ForegroundColor Cyan
+        gpg --list-keys $Email
+        Write-Host ""
+        Write-Host "To extend expiration, run:" -ForegroundColor Yellow
+        Write-Host "  gpg --edit-key $Email" -ForegroundColor White
+        Write-Host ""
+        Write-Host "Then in the GPG prompt:" -ForegroundColor Yellow
+        Write-Host "  gpg> expire" -ForegroundColor White
+        Write-Host "  gpg> 1m  (or your desired expiration)" -ForegroundColor White
+        Write-Host "  gpg> save" -ForegroundColor White
+        Write-Host ""
+        Write-Host "Opening interactive mode..." -ForegroundColor Cyan
+        Start-Sleep -Seconds 2
+        gpg --edit-key $Email
+    }
+
+    'revoke' {
+        Write-Host "Revoking key: $Email" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "⚠ WARNING: This will permanently revoke your GPG key!" -ForegroundColor Red
+        Write-Host ""
+        $confirm = Read-Host "Type 'REVOKE' to confirm"
+
+        if ($confirm -eq 'REVOKE') {
+            $revokePath = ".credentials/gpg-secure-backup/gpg-revocation-$(Get-Date -Format 'yyyy-MM-dd').asc"
+
+            # Check if revocation certificate exists
+            if (Test-Path ".credentials/gpg-secure-backup/gpg-revocation.asc") {
+                Write-Host "Using existing revocation certificate..." -ForegroundColor Yellow
+                gpg --import ".credentials/gpg-secure-backup/gpg-revocation.asc"
+            } else {
+                Write-Host "Generating new revocation certificate..." -ForegroundColor Yellow
+                gpg --output $revokePath --gen-revoke $Email
+                gpg --import $revokePath
+            }
+
+            Write-Host "✓ Key revoked" -ForegroundColor Green
+            Write-Host ""
+            Write-Host "Don't forget to:" -ForegroundColor Yellow
+            Write-Host "  1. Upload revocation to keyservers (if published)" -ForegroundColor White
+            Write-Host "  2. Notify contacts about the revocation" -ForegroundColor White
+        } else {
+            Write-Host "Revocation cancelled" -ForegroundColor Yellow
+        }
+    }
+
+    'delete' {
+        Write-Host "Deleting key: $Email" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "⚠ WARNING: This will delete your GPG key from this machine!" -ForegroundColor Red
+        Write-Host "Make sure you have a backup before proceeding." -ForegroundColor Red
+        Write-Host ""
+        $confirm = Read-Host "Type 'DELETE' to confirm"
+
+        if ($confirm -eq 'DELETE') {
+            # Delete private key first
+            gpg --delete-secret-keys $Email
+
+            # Then delete public key
+            gpg --delete-keys $Email
+
+            Write-Host "✓ Key deleted" -ForegroundColor Green
+        } else {
+            Write-Host "Deletion cancelled" -ForegroundColor Yellow
+        }
+    }
+}
+
+Write-Host ""
