@@ -164,6 +164,65 @@
                 "panel": "shared"
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Run Windows Setup",
+            "type": "shell",
+            "command": "gsudo.exe",
+            "args": [
+                "pwsh",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/scripts/setup.ps1"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Windows Test Image File Service",
+            "type": "shell",
+            "command": "caddy.exe",
+            "args": [
+                "run",
+                "--config",
+                "Caddyfile"
+            ],
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/services/image-file-service-caddy",
+                "env": {
+                    "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/core/public/assets/images"
+                }
+            },
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop Windows Test Image File Service",
+            "type": "shell",
+            "command": "echo ${input:terminateBackgroundImageFileService}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
         }
     ],
     "inputs": [
@@ -193,6 +252,12 @@
             "id": "closeStorybookPreview",
             "type": "command",
             "command": "workbench.action.debug.stop"
+        },
+        {
+            "id": "terminateBackgroundImageFileService",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Start Windows Test Image File Service"
         }
     ]
 }
