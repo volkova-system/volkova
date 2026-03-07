@@ -148,6 +148,22 @@
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
+        },
+        {
+            "label": "Open Windows Postman",
+            "type": "shell",
+            "command": "&",
+            "args": [
+                "\"${env:LOCALAPPDATA}\\Postman\\Postman.exe\""
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
         }
     ],
     "inputs": [
