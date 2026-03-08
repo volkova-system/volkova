@@ -18,15 +18,15 @@ func main() {
 	}
 	defer cache.Close()
 
-	service := fiber.New(fiber.Config{
+	server := fiber.New(fiber.Config{
 		AppName: "sarikanto-product-data-service",
 	})
 
-	service.Use(logger.New())
-	service.Use(cors.New())
+	server.Use(logger.New())
+	server.Use(cors.New())
 
-	api := app.Group("/service")
-	products := api.Group("/products")
+	service := server.Group("/service")
+	products := service.Group("/products")
 
 	products.Get("/health", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
