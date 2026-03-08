@@ -2,9 +2,48 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Storybook Preview",
+            "label": "Run Windows Setup",
             "type": "shell",
-            "command": "echo ${input:openStorybookPreview}",
+            "command": "gsudo.exe",
+            "args": [
+                "pwsh",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/scripts/setup.ps1"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Open Windows Postman",
+            "type": "shell",
+            "command": "&",
+            "args": [
+                "\"${env:LOCALAPPDATA}\\Postman\\Postman.exe\""
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Open Core Storybook Preview",
+            "type": "shell",
+            "command": "echo ${input:openCoreStorybookPreview}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -14,7 +53,19 @@
             }
         },
         {
-            "label": "Background Storybook",
+            "label": "Close Core Storybook Preview",
+            "type": "shell",
+            "command": "echo ${input:closeCoreStorybookPreview}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Run Core Background Storybook",
             "type": "npm",
             "script": "storybook",
             "path": "prototype/web/core",
@@ -41,18 +92,9 @@
             ]
         },
         {
-            "label": "Open Storybook",
-            "dependsOn": [
-                "Background Storybook",
-                "Storybook Preview"
-            ],
-            "dependsOrder": "sequence",
-            "problemMatcher": []
-        },
-        {
-            "label": "Terminate Background Storybook",
+            "label": "Stop Core Background Storybook",
             "type": "shell",
-            "command": "echo ${input:terminateBackgroundStorybook}",
+            "command": "echo ${input:stopCoreBackgroundStorybook}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -62,130 +104,21 @@
             }
         },
         {
-            "label": "Close Storybook Preview",
-            "type": "shell",
-            "command": "echo ${input:closeStorybookPreview}",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "never",
-                "echo": false,
-                "focus": false,
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "Close Storybook",
+            "label": "Open Core Storybook",
             "dependsOn": [
-                "Close Storybook Preview",
-                "Terminate Background Storybook"
+                "Run Core Background Storybook",
+                "Open Core Storybook Preview"
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
         },
         {
-            "label": "Background Production Website",
-            "type": "shell",
-            "command": "npx http-server public -p 9630",
-            "isBackground": true,
-            "problemMatcher": [
-                {
-                    "owner": "custom",
-                    "fileLocation": [
-                        "relative",
-                        "${workspaceFolder}"
-                    ],
-                    "pattern": {
-                        "regexp": "^(.*)$",
-                        "file": 1,
-                        "message": 1
-                    },
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": ".*Starting up http-server.*",
-                        "endsPattern": ".*Available on:.*"
-                    }
-                }
-            ]
-        },
-        {
-            "label": "Production Website Preview",
-            "type": "shell",
-            "command": "echo ${input:openProductionWebsitePreview}",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "never",
-                "echo": false,
-                "focus": false,
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "Open Production Website",
+            "label": "Close Core Storybook",
             "dependsOn": [
-                "Background Production Website",
-                "Production Website Preview"
+                "Close Core Storybook Preview",
+                "Stop Core Background Storybook"
             ],
             "dependsOrder": "sequence",
-            "problemMatcher": []
-        },
-        {
-            "label": "Terminate Background Production Website",
-            "type": "shell",
-            "command": "echo ${input:terminateBackgroundProductionWebsite}",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "never",
-                "echo": false,
-                "focus": false,
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "Close Production Website",
-            "dependsOn": [
-                "Close Storybook Preview",
-                "Terminate Background Production Website"
-            ],
-            "dependsOrder": "sequence",
-            "problemMatcher": []
-        },
-        {
-            "label": "Open Windows Postman",
-            "type": "shell",
-            "command": "&",
-            "args": [
-                "\"${env:LOCALAPPDATA}\\Postman\\Postman.exe\""
-            ],
-            "group": "build",
-            "presentation": {
-                "reveal": "never",
-                "echo": false,
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Windows Setup",
-            "type": "shell",
-            "command": "gsudo.exe",
-            "args": [
-                "pwsh",
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                "${workspaceFolder}/scripts/setup.ps1"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "focus": true,
-                "panel": "shared"
-            },
             "problemMatcher": []
         },
         {
@@ -227,31 +160,20 @@
     ],
     "inputs": [
         {
-            "id": "openStorybookPreview",
+            "id": "openCoreStorybookPreview",
             "type": "command",
             "command": "workbench.action.debug.start"
         },
         {
-            "id": "openProductionWebsitePreview",
-            "type": "command",
-            "command": "workbench.action.debug.start"
-        },
-        {
-            "id": "terminateBackgroundStorybook",
-            "type": "command",
-            "command": "workbench.action.tasks.terminate",
-            "args": "Background Storybook"
-        },
-        {
-            "id": "terminateBackgroundProductionWebsite",
-            "type": "command",
-            "command": "workbench.action.tasks.terminate",
-            "args": "Background Production Website"
-        },
-        {
-            "id": "closeStorybookPreview",
+            "id": "closeCoreStorybookPreview",
             "type": "command",
             "command": "workbench.action.debug.stop"
+        },
+        {
+            "id": "stopCoreBackgroundStorybook",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Run Core Background Storybook"
         },
         {
             "id": "terminateWindowsSarikantoTestImageFileService",
