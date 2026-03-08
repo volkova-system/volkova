@@ -115,10 +115,10 @@ containers/*/data/**/*.*
 !prototype/web/*/stories/**/*
 !prototype/web/*/.npmrc
 !prototype/web/*/package.json
-!prototype/web/core/tsconfig.json
+!prototype/web/*/tsconfig.json
 
-!prototype/widgets/
-!prototype/widgets/**/*
+!prototype/widget/
+!prototype/widget/*/
 
 !public/
 !public/**/*
