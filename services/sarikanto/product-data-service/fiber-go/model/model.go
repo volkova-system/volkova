@@ -12,13 +12,11 @@ type Product struct {
 	Context             string              `json:"@context"`
 	Type                string              `json:"@type"`
 	ID                  string              `json:"@id"`
-
 	SKU                 string              `json:"sku"`
 	Name                string              `json:"name"`
 	Headline            string              `json:"headline"`
 	Description         string              `json:"description"`
 	URL                 string              `json:"url"`
-    CacheKey            string              `json:"cacheKey"`
     PriceCurrency       string              `json:"priceCurrency"`
 	Price               float64             `json:"price"`
 	RatingValue         float64             `json:"ratingValue"`
