@@ -81,6 +81,7 @@ func (product *Product) Normalize() {
     product.ID = slug.Make(product.Name + "-" + product.SKU)
     product.Description = strings.TrimSpace(product.Description)
     product.URL = strings.TrimSpace(product.URL)
+    product.PriceCurrency = strings.ToLower(strings.TrimSpace(product.PriceCurrency))
 
     product.CacheIdentifier.Type = "PropertyValue"
     product.CacheIdentifier.PropertyID = "cache:key"
@@ -98,8 +99,7 @@ func (product *Product) Normalize() {
     product.Offers.Availability = "https://schema.org/InStock"
     product.Offers.PriceSpecification.Type = "PriceSpecification"
     product.Offers.PriceSpecification.Price = product.Price
-    product.Offers.PriceSpecification.PriceCurrency = strings.ToUpper(
-        strings.TrimSpace(product.PriceCurrency))
+    product.Offers.PriceSpecification.PriceCurrency = product.PriceCurrency
     product.Offers.DiscountPercentage = product.DiscountPercentage
 
     for index := range product.AdditionalProperty {
