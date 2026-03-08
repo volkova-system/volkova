@@ -123,6 +123,7 @@ containers/*/data/**/*.*
 !public/**/*
 
 !scripts/
+!scripts/*/
 !scripts/**/*.js
 !scripts/**/*.mjs
 !scripts/**/*.ps1
