@@ -9,7 +9,8 @@
         ],
         "strict": true,
         "skipLibCheck": true,
-        "noEmit": true
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true
     },
     "include": [
         "./.storybook/**/*.ts",
