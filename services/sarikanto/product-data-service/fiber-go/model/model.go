@@ -33,9 +33,9 @@ type Product struct {
 }
 
 type Identifier struct {
-    Type string `json:"@type"`
-    PropertyID string `json:"propertyID"`
-    Value string `json:"value"`
+    Type string         `json:"@type"`
+    PropertyID string   `json:"propertyID"`
+    Value string        `json:"value"`
 }
 
 type Brand struct {
