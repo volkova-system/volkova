@@ -136,7 +136,8 @@ containers/*/data/**/*.*
 
 !services/
 !services/*/
-!services/*/*-service
+!services/*/*-service/
+!services/*/*-service/**/*
 
 !settings/
 !settings/**/*.setting
