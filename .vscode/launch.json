@@ -7,13 +7,6 @@
             "name": "Open Storybook in Edge",
             "url": "http://localhost:3690",
             "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "msedge",
-            "request": "launch",
-            "name": "Open Production Website in Edge",
-            "url": "http://localhost:9630",
-            "webRoot": "${workspaceFolder}/public"
         }
     ]
 }
