@@ -7,42 +7,31 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 
-	"product-data-service/database"
-	"product-data-service/handlers"
+	"product-data-service/cache"
 )
 
 func main() {
-	// Initialize database
-	db, err := database.NewDB()
+	// Initialize cache
+	cache, err := cache.Open()
 	if err != nil {
-		log.Fatal("Failed to initialize database:", err)
+		log.Fatal("cannot open cache:", err)
 	}
-	defer db.Close()
+	defer cache.Close()
 
-	// Initialize Fiber app
 	app := fiber.New(fiber.Config{
-		AppName: "Product Service v1.0.0",
+		AppName: "sarikanto-product-data-service",
 	})
 
-	// Middleware
 	app.Use(logger.New())
 	app.Use(cors.New())
 
-	// Initialize handlers
-	productHandler := handlers.NewProductHandler(db)
-
-	// Routes
 	api := app.Group("/service")
 	products := api.Group("/products")
 
-	products.Get("/", productHandler.GetProducts)
-	products.Get("/:id", productHandler.GetProduct)
-
 	// Health check
-	app.Get("/health", func(c *fiber.Ctx) error {
+	products.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status": "ok",
-			"service": "product-data-service",
 		})
 	})
 
