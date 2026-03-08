@@ -1,0 +1,60 @@
+.concise-component aside.focus-tree.list,
+.concise-component article.focus-tree.list
+{
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+
+    background-color: var(--concise-color-black-dark);
+}
+
+.concise-component aside.focus-tree > ul.focus-tree-list.list,
+.concise-component article.focus-tree > ul.focus-tree-list.list
+.concise-component aside.focus-tree > ol.focus-tree-list.list,
+.concise-component article.focus-tree > ol.focus-tree-list.list
+{
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: auto;
+
+    overflow-y: auto;
+}
+
+.concise-component li.focus-tree-item.item {
+    flex-direction: row;
+}
+
+.concise-component li.focus-tree-item .content {
+    width: var(--concise-list-item-content-width);
+    min-width: var(--concise-list-item-content-width);
+    max-width: var(--concise-list-item-content-width);
+
+    flex-direction: column;
+
+    padding-left: var(--concise-base-spacing);
+    padding-right: var(--concise-base-spacing);
+}
+
+.concise-component .focus-tree .picture.content {
+    padding: 0;
+}
+
+.concise-component .focus-tree .main-content.content *:not(label) {
+    color: var(--concise-main-text-color);
+}
+
+.concise-component .focus-tree .support-content.content * {
+    color: var(--concise-support-text-color);
+}
+
+.concise-component .focus-tree .focus-content.content {
+    flex-direction: column;
+
+    padding: 0;
+}

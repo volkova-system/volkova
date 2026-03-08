@@ -1,0 +1,49 @@
+.concise-component svg.icon {
+    width: var(--concise-icon-size);
+    min-width: var(--concise-icon-size);
+    max-width: var(--concise-icon-size);
+
+    height: var(--concise-icon-size);
+    min-height: var(--concise-icon-size);
+    max-height: var(--concise-icon-size);
+
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    fill: none;
+}
+
+.concise-component a.icon,
+.concise-component span.icon {
+    height: var(--concise-unit-base);
+    min-height: var(--concise-unit-base);
+    max-height: var(--concise-unit-base);
+
+    width: var(--concise-unit-base);
+    min-width: var(--concise-unit-base);
+    max-width: var(--concise-unit-base);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.concise-component .letter-icon.icon {
+    font-size: var(--concise-icon-letter-size);
+}
+
+.concise-component .color-icon.icon {
+    background-color: var(--concise-color-orange-base);
+}
+
+.concise-component .round-icon.shape-icon.icon {
+    clip-path: circle(calc(50% - var(--concise-gap-base)) at 50% 50%);
+}
+
+.concise-component .square-icon.shape-icon.icon {
+    clip-path: inset(var(--concise-gap-base));
+}

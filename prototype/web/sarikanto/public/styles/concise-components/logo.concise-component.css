@@ -1,0 +1,33 @@
+.concise-component svg.logo {
+    width: var(--concise-logo-size-base);
+    min-width: var(--concise-logo-size-base);
+    max-width: var(--concise-logo-size-base);
+
+    height: var(--concise-logo-size-base);
+    min-height: var(--concise-logo-size-base);
+    max-height: var(--concise-logo-size-base);
+}
+
+.concise-component span.logo {
+    height: var(--concise-unit-base);
+    min-height: var(--concise-unit-base);
+    max-height: var(--concise-unit-base);
+
+    width: var(--concise-unit-base);
+    min-width: var(--concise-unit-base);
+    max-width: var(--concise-unit-base);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.concise-component svg.inverted-logo.logo {
+    transform: rotate(180deg) scaleX(-1);
+}
+
+.concise-component svg.grayscale-logo.logo {
+    filter: grayscale(100%);
+}

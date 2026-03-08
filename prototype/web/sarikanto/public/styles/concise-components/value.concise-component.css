@@ -1,0 +1,31 @@
+.concise-component .value {
+    letter-spacing: .3px;
+}
+
+.concise-component .deprecated.value {
+    text-decoration: line-through;
+    opacity: .5;
+}
+
+.concise-component .title.value {
+    font-size: var(--concise-text-title-value-size);
+    line-height: var(--concise-text-title-value-line-height);
+    letter-spacing: 1.1px;
+}
+
+.concise-component .description.value {
+    font-size: var(--concise-text-description-value-size);
+    line-height: var(--concise-text-description-value-line-height);
+}
+
+.concise-component .subtitle.value {
+    text-transform: uppercase;
+}
+
+.concise-component .currency-usd.currency.value::after {
+    content: ' USD';
+}
+
+.concise-component .discount.value::after {
+    content: '% off!';
+}
