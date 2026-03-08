@@ -7,7 +7,6 @@ import (
 	"github.com/gosimple/slug"
 )
 
-// Product represents the JSON-LD Product schema
 type Product struct {
 	Context             string              `json:"@context"`
 	Type                string              `json:"@type"`
@@ -21,8 +20,9 @@ type Product struct {
 	Price               float64             `json:"price"`
 	RatingValue         float64             `json:"ratingValue"`
 	DiscountPercentage  float64             `json:"discountPercentage"`
-	Keywords            []string            `json:"keywords"`
+    Thumbnail           string              `json:"thumbnail"`
 	Image               []string            `json:"image"`
+	Keywords            []string            `json:"keywords"`
     CacheIdentifier     Identifier          `json:"cacheIdentifier"`
     Brand               Brand               `json:"brand"`
 	DateCreated         time.Time           `json:"dateCreated"`
@@ -33,9 +33,10 @@ type Product struct {
 }
 
 type Identifier struct {
-    Type string         `json:"@type"`
-    PropertyID string   `json:"propertyID"`
-    Value string        `json:"value"`
+    Type        string   `json:"@type"`
+    PropertyID  string   `json:"propertyID"`
+    Name        string   `json:"name"`
+    Value       string   `json:"value"`
 }
 
 type Brand struct {
@@ -85,6 +86,7 @@ func (product *Product) Normalize() {
 
     product.CacheIdentifier.Type = "PropertyValue"
     product.CacheIdentifier.PropertyID = "cache:key"
+    product.CacheIdentifier.Name = "cache_key"
     product.CacheIdentifier.Value = "product:" + product.ID
 
     product.Brand.Type = "Brand"
