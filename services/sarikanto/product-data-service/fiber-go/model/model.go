@@ -12,19 +12,20 @@ type Product struct {
 	Context             string              `json:"@context"`
 	Type                string              `json:"@type"`
 	ID                  string              `json:"@id"`
-    CacheIdentifier     Identifier          `json:"cacheIdentifier"`
+
 	SKU                 string              `json:"sku"`
 	Name                string              `json:"name"`
 	Headline            string              `json:"headline"`
 	Description         string              `json:"description"`
 	URL                 string              `json:"url"`
+    CacheKey            string              `json:"cacheKey"`
     PriceCurrency       string              `json:"priceCurrency"`
 	Price               float64             `json:"price"`
 	RatingValue         float64             `json:"ratingValue"`
 	DiscountPercentage  float64             `json:"discountPercentage"`
-
 	Keywords            []string            `json:"keywords"`
 	Image               []string            `json:"image"`
+    CacheIdentifier     Identifier          `json:"cacheIdentifier"`
     Brand               Brand               `json:"brand"`
 	DateCreated         time.Time           `json:"dateCreated"`
 	DateModified        time.Time           `json:"dateModified"`
