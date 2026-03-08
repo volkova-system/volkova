@@ -7,15 +7,15 @@ This script fetches product data from https://dummyjson.com/products API
 and saves it to a JSON file in a specified directory structure.
 
 Usage:
-    python save-dummyjson-products-to-json.py <directory_path> [skip] [limit]
+    python save-dummyjson-products-to-json.py --directory <directory_path> [--skip <skip>] [--limit <limit>]
 
 Arguments:
-    directory_path: Target directory where dummyjson-products will be created
-    skip: Number of products to skip (optional, default: 0)
-    limit: Maximum number of products to fetch (optional, default: 30)
+    --directory: Target directory where dummyjson-products will be created
+    --skip: Number of products to skip (optional, default: 0)
+    --limit: Maximum number of products to fetch (optional, default: 100)
 
 Example:
-    python save-dummyjson-products-to-json.py ./data 10 20
+    python save-dummyjson-products-to-json.py --directory ./data --skip 10 --limit 20
 """
 
 import sys
@@ -23,14 +23,16 @@ import json
 import urllib.request
 import urllib.parse
 import urllib.error
+import argparse
+import os
 from pathlib import Path
 from typing import cast
 from urllib.response import addinfourl
 
 
-def validate_arguments() -> tuple[str, int, int]:
+def parse_arguments() -> tuple[str, int, int]:
     """
-    Validate command line arguments.
+    Parse command line arguments.
 
     Returns:
         tuple: (directory_path, skip, limit)
@@ -39,14 +41,36 @@ def validate_arguments() -> tuple[str, int, int]:
         SystemExit: If arguments are invalid
     """
 
-    if len(sys.argv) < 2:
-        print("Error: Directory path is required")
-        print("Usage: python script.py <directory_path> [skip] [limit]")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Fetch DummyJSON products and save to JSON file"
+    )
 
-    directory_path = sys.argv[1]
-    skip = int(sys.argv[2]) if len(sys.argv) > 2 else 0
-    limit = int(sys.argv[3]) if len(sys.argv) > 3 else 30
+    _ = parser.add_argument(
+        "--directory",
+        required=True,
+        help="Target directory where dummyjson-products will be created"
+    )
+
+    _ = parser.add_argument(
+        "--skip",
+        type=int,
+        default=0,
+        help="Number of products to skip (default: 0)"
+    )
+
+    _ = parser.add_argument(
+        "--limit",
+        type=int,
+        default=100,
+        help="Maximum number of products to fetch (default: 100)"
+    )
+
+    args = parser.parse_args()
+
+    # Cast to proper types for type checking
+    skip = cast(int, args.skip)
+    limit = cast(int, args.limit)
+    directory = cast(str, args.directory)
 
     if skip < 0:
         print("Error: Skip parameter must be non-negative")
@@ -55,6 +79,9 @@ def validate_arguments() -> tuple[str, int, int]:
     if limit <= 0:
         print("Error: Limit parameter must be positive")
         sys.exit(1)
+
+    # Convert to absolute path
+    directory_path = os.path.abspath(directory)
 
     return directory_path, skip, limit
 
@@ -105,10 +132,10 @@ def create_output_directory(base_path: str) -> Path:
     Create dummyjson-products directory in the specified path.
 
     Args:
-        base_path (str): Base directory path
+        base_path (str): Absolute base directory path
 
     Returns:
-        Path: Path to the created directory
+        Path: Absolute path to the created directory
 
     Raises:
         SystemExit: If directory creation fails
@@ -122,11 +149,14 @@ def create_output_directory(base_path: str) -> Path:
 
         output_dir = base_dir / "dummyjson-products"
         output_dir.mkdir(exist_ok=True)
-        return output_dir
+
+        # Return absolute path
+        return output_dir.resolve()
 
     except PermissionError:
         print(f"Error: Permission denied creating directory in '{base_path}'")
         sys.exit(1)
+
     except OSError as e:
         print(f"Error: Failed to create directory - {e}")
         sys.exit(1)
@@ -138,7 +168,7 @@ def save_products_json(products_data: dict[str, object], output_directory: Path)
 
     Args:
         products_data (dict): Products data from API
-        output_directory (Path): Directory to save the file
+        output_directory (Path): Absolute directory path to save the file
 
     Raises:
         SystemExit: If file save fails
@@ -146,6 +176,12 @@ def save_products_json(products_data: dict[str, object], output_directory: Path)
 
     try:
         output_file = output_directory / "products.json"
+
+        # Delete existing products.json file if it exists
+        if output_file.exists():
+            output_file.unlink()
+            print(f"Deleted existing file: {output_file}")
+
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(products_data, f, indent=2, ensure_ascii=False)
 
@@ -159,6 +195,7 @@ def save_products_json(products_data: dict[str, object], output_directory: Path)
     except PermissionError:
         print(f"Error: Permission denied writing to '{output_directory}'")
         sys.exit(1)
+
     except OSError as e:
         print(f"Error: Failed to save file - {e}")
         sys.exit(1)
@@ -168,8 +205,9 @@ def main() -> None:
     """
     Main function to orchestrate the product fetching and saving process.
     """
-    # Validate command line arguments
-    directory_path, skip, limit = validate_arguments()
+
+    # Parse command line arguments
+    directory_path, skip, limit = parse_arguments()
 
     # Fetch products from API
     products_data = fetch_products(skip, limit)
