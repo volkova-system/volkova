@@ -189,7 +189,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Start Windows Test Image File Service",
+            "label": "Start Windows Sarikanto Test Image File Service",
             "type": "shell",
             "command": "caddy.exe",
             "args": [
@@ -199,9 +199,9 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/image-file-service/caddy",
+                "cwd": "${workspaceFolder}/services/sarikanto/image-file-service/caddy",
                 "env": {
-                    "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/core/public/assets/images"
+                    "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/sarikanto/public/assets/images"
                 }
             },
             "presentation": {
@@ -213,9 +213,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Stop Windows Test Image File Service",
+            "label": "Stop Windows Test Sarikanto Image File Service",
             "type": "shell",
-            "command": "echo ${input:terminateBackgroundImageFileService}",
+            "command": "echo ${input:terminateWindowsSarikantoTestImageFileService}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -254,10 +254,10 @@
             "command": "workbench.action.debug.stop"
         },
         {
-            "id": "terminateBackgroundImageFileService",
+            "id": "terminateWindowsSarikantoTestImageFileService",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
-            "args": "Start Windows Test Image File Service"
+            "args": "Start Windows Sarikanto Test Image File Service"
         }
     ]
 }
