@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
+	"github.com/gofiber/fiber/v3/middleware/logger"
 
 	"product-data-service/cache"
 )
@@ -29,7 +29,7 @@ func main() {
 	products := api.Group("/products")
 
 	// Health check
-	products.Get("/health", func(c *fiber.Ctx) error {
+	products.Get("/health", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status": "ok",
 		})
