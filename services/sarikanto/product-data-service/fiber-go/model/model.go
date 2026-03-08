@@ -22,9 +22,10 @@ type Product struct {
 	Price               float64             `json:"price"`
 	RatingValue         float64             `json:"ratingValue"`
 	DiscountPercentage  float64             `json:"discountPercentage"`
-	Brand               Brand               `json:"brand"`
+
 	Keywords            []string            `json:"keywords"`
 	Image               []string            `json:"image"`
+    Brand               Brand               `json:"brand"`
 	DateCreated         time.Time           `json:"dateCreated"`
 	DateModified        time.Time           `json:"dateModified"`
 	AggregateRating     AggregateRating     `json:"aggregateRating"`
