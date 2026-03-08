@@ -199,7 +199,7 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/image-file-service-caddy",
+                "cwd": "${workspaceFolder}/services/image-file-service/caddy",
                 "env": {
                     "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/core/public/assets/images"
                 }
