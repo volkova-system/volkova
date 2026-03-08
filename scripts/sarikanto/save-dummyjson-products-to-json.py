@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Standalone CLI script to fetch DummyJSON products and save to JSON file.
 
@@ -18,14 +19,16 @@ Example:
 """
 
 import sys
-import os
 import json
 import urllib.request
 import urllib.parse
+import urllib.error
 from pathlib import Path
+from typing import cast
+from urllib.response import addinfourl
 
 
-def validate_arguments():
+def validate_arguments() -> tuple[str, int, int]:
     """
     Validate command line arguments.
 
@@ -35,6 +38,7 @@ def validate_arguments():
     Raises:
         SystemExit: If arguments are invalid
     """
+
     if len(sys.argv) < 2:
         print("Error: Directory path is required")
         print("Usage: python script.py <directory_path> [skip] [limit]")
@@ -55,7 +59,7 @@ def validate_arguments():
     return directory_path, skip, limit
 
 
-def fetch_products(skip=0, limit=30):
+def fetch_products(skip: int = 0, limit: int = 30) -> dict[str, object]:
     """
     Fetch products from DummyJSON API.
 
@@ -69,6 +73,7 @@ def fetch_products(skip=0, limit=30):
     Raises:
         SystemExit: If API request fails
     """
+
     base_url = "https://dummyjson.com/products"
     params = urllib.parse.urlencode({"skip": skip, "limit": limit})
     url = f"{base_url}?{params}"
@@ -77,23 +82,25 @@ def fetch_products(skip=0, limit=30):
         request = urllib.request.Request(url)
         request.add_header('User-Agent', 'Python/3 CLI Script')
 
-        with urllib.request.urlopen(request) as response:
+        response = cast(addinfourl, urllib.request.urlopen(request))
+        with response:
             if response.status != 200:
                 print(f"Error: API returned status {response.status}")
                 sys.exit(1)
 
-            data = json.loads(response.read().decode('utf-8'))
+            data = cast(dict[str, object], json.loads(response.read().decode('utf-8')))
             return data
 
     except urllib.error.URLError as e:
         print(f"Error: Failed to fetch data from API - {e}")
         sys.exit(1)
+
     except json.JSONDecodeError as e:
         print(f"Error: Invalid JSON response - {e}")
         sys.exit(1)
 
 
-def create_output_directory(base_path):
+def create_output_directory(base_path: str) -> Path:
     """
     Create dummyjson-products directory in the specified path.
 
@@ -106,6 +113,7 @@ def create_output_directory(base_path):
     Raises:
         SystemExit: If directory creation fails
     """
+
     try:
         base_dir = Path(base_path)
         if not base_dir.exists():
@@ -124,7 +132,7 @@ def create_output_directory(base_path):
         sys.exit(1)
 
 
-def save_products_json(products_data, output_directory):
+def save_products_json(products_data: dict[str, object], output_directory: Path) -> None:
     """
     Save products data to JSON file.
 
@@ -135,13 +143,18 @@ def save_products_json(products_data, output_directory):
     Raises:
         SystemExit: If file save fails
     """
+
     try:
         output_file = output_directory / "products.json"
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(products_data, f, indent=2, ensure_ascii=False)
 
-        print(f"Successfully saved {len(products_data.get('products', []))} "
-              f"products to {output_file}")
+        products_list = products_data.get('products', [])
+        if isinstance(products_list, list):
+            product_count = len(cast(list[object], products_list))
+        else:
+            product_count = 0
+        print(f"Successfully saved {product_count} products to {output_file}")
 
     except PermissionError:
         print(f"Error: Permission denied writing to '{output_directory}'")
@@ -151,7 +164,7 @@ def save_products_json(products_data, output_directory):
         sys.exit(1)
 
 
-def main():
+def main() -> None:
     """
     Main function to orchestrate the product fetching and saving process.
     """
