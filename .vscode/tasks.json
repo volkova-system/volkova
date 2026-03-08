@@ -2,6 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Setup Windows Core Ecosystem",
+            "dependsOn": [
+                "Run Windows Setup",
+                "Open Windows Postman",
+                "Open Core Storybook",
+            ],
+            "dependsOrder": "sequence",
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Run Windows Setup",
             "type": "shell",
             "command": "gsudo.exe",
