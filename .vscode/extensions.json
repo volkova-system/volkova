@@ -6,16 +6,17 @@
         "ms-vscode.powershell",
         "ms-python.python",
         "redhat.vscode-yaml",
-        "ziglang.vscode-zig",
         "formulahendry.auto-rename-tag",
         "detachhead.basedpyright",
         "tamasfe.even-better-toml",
         "arniu.vscode-abnf",
         "ms-edgedevtools.vscode-edge-devtools",
         "ms-azuretools.vscode-docker",
-        "matthewpi.caddyfile-support"
+        "matthewpi.caddyfile-support",
+        "golang.go"
     ],
     "unwantedRecommendations": [
+        "ziglang.vscode-zig",
         "caddyserver.vscode-caddyfile",
         "ExpertLSP.expert",
         "erlang-ls.erlang-ls"
