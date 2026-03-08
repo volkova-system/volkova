@@ -14,11 +14,5 @@
         "ms-azuretools.vscode-docker",
         "matthewpi.caddyfile-support",
         "golang.go"
-    ],
-    "unwantedRecommendations": [
-        "ziglang.vscode-zig",
-        "caddyserver.vscode-caddyfile",
-        "ExpertLSP.expert",
-        "erlang-ls.erlang-ls"
     ]
 }
