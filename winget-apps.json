@@ -21,38 +21,13 @@
                     "Source": "winget"
                 },
                 {
-                    "PackageIdentifier": "Python.Python.3.12",
-                    "Version": "3.12.10",
+                    "PackageIdentifier": "Python.Python.3.14",
+                    "Version": "3.14.3",
                     "Source": "winget"
                 },
                 {
                     "PackageIdentifier": "GoLang.Go",
                     "Version": "1.26.1",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "StrawberryPerl.StrawberryPerl",
-                    "Version": "5.42.0.1",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "Gyan.FFmpeg",
-                    "Version": "8.0.1",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "ImageMagick.ImageMagick",
-                    "Version": "7.1.2.15",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "Docker.DockerDesktop",
-                    "Version": "4.63.0",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "Erlang.ErlangOTP",
-                    "Version": "28.4",
                     "Source": "winget"
                 },
                 {
@@ -63,16 +38,6 @@
                 {
                     "PackageIdentifier": "CaddyServer.Caddy",
                     "Version": "2.11.2",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "nginxinc.nginx",
-                    "Version": "1.29.5",
-                    "Source": "winget"
-                },
-                {
-                    "PackageIdentifier": "GnuPG.Gpg4win",
-                    "Version": "5.0.1",
                     "Source": "winget"
                 }
             ]
