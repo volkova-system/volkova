@@ -67,15 +67,19 @@
 !.vscode/**/*.json
 
 !assets/
-!assets/audios/
-!assets/documents/
-!assets/fonts/
-!assets/images/
-!assets/images/
-!assets/media/
-!assets/videos/
-!assets/images/**/*.svg
-!assets/images/**/*.png
+!assets/*/
+!assets/*/audios/
+!assets/*/data/
+!assets/*/documents/
+!assets/*/fonts/
+!assets/*/images/
+!assets/*/media/
+!assets/*/videos/
+!assets/*/images/**/*.svg
+!assets/*/images/**/*.png
+!assets/*/images/**/*.jpg
+!assets/*/images/**/*.ico
+!assets/*/images/**/*.webp
 
 !containers/
 !containers/terminusdb/
@@ -130,7 +134,8 @@ containers/*/data/**/*.*
 !scripts/**/*.py
 
 !services/
-!services/**/*
+!services/*/
+!services/*/*-service
 
 !settings/
 !settings/**/*.setting
