@@ -79,6 +79,7 @@
             ]
         }
     },
+    "terminal.integrated.enablePersistentSessions": true,
     "workbench.editor.centeredLayoutAutoResize": false,
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
