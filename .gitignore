@@ -165,4 +165,8 @@ containers/*/data/**/*.*
 !waste/
 !waste/**/*.waste
 
+!workflows/
+!workflows/*/
+!workflows/**/*.workflow
+
 package-lock.json
