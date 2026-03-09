@@ -33,13 +33,9 @@ type Product struct {
     Keywords            []string            `json:"keywords"`
 
     CacheIdentifier     Identifier          `json:"cacheIdentifier"`
-
     Brand               Brand               `json:"brand"`
-
 	AggregateRating     AggregateRating     `json:"aggregateRating"`
-
     Offers              Offer               `json:"offers"`
-
     AdditionalProperty  []PropertyValue     `json:"additionalProperty"`
 }
 
@@ -47,6 +43,7 @@ type Identifier struct {
     Type        string   `json:"@type"`
     PropertyID  string   `json:"propertyID"`
     Name        string   `json:"name"`
+    Description string   `json:"description"`
     Value       string   `json:"value"`
 }
 
