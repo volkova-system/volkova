@@ -38,7 +38,12 @@ func getProductsFromCache(c fiber.Ctx, cache *cache.Cache) error {
 		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
 	}
 
-	return sendProductsResponse(c, products)
+	total, err := cache.GetProductCount()
+	if err != nil {
+		return sendError(c, fiber.StatusInternalServerError, "cache count error", err)
+	}
+
+	return sendProductsResponse(c, products, skip, limit, total)
 }
 
 // parsePaginationParams extracts skip and limit from query parameters.
@@ -76,10 +81,13 @@ func retrieveProductsFromCache(cache *cache.Cache, skip, limit int) (
 	return cache.GetProducts(skip, limit)
 }
 
-// sendProductsResponse returns products list as JSON response.
-func sendProductsResponse(c fiber.Ctx, products interface{}) error {
+// sendProductsResponse returns products list as JSON response with pagination metadata.
+func sendProductsResponse(c fiber.Ctx, products interface{}, skip, limit, total int) error {
 	return c.JSON(fiber.Map{
 		"status":   "success",
 		"products": products,
+		"skip":  skip,
+        "limit": limit,
+        "total": total,
 	})
 }
