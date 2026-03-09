@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "lunch-box-kit-brd-lun-065",
+  "sku": "kit-brd-lun-065",
+  "name": "lunch-box",
+  "headline": "Lunch Box",
+  "description": "The Lunch Box is a convenient and portable container for packing and carrying your meals. With compartments for different foods, it's perfect for on-the-go dining.",
+  "url": "https://example.com/products/lunch-box-kit-brd-lun-065",
+  "ratingValue": 4.93,
+  "priceCurrency": "php",
+  "price": 12.99,
+  "netPrice": 12.99,
+  "discountPercentage": 10.34,
+  "dateCreated": "2026-03-09T17:33:16.969293Z",
+  "dateModified": "2026-03-09T17:33:16.969293Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/lunch-box/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/lunch-box/1.webp"
+  ],
+  "keywords": [
+    "kitchen-accessories"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:lunch-box-kit-brd-lun-065"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.93,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 12.99,
+    "netPrice": 12.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 12.99
+    },
+    "discountPercentage": 10.34
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "12.45"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "19.08"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "8.24"
+    }
+  ]
+}

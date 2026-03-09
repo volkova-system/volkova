@@ -1,0 +1,95 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "gigabyte-aorus-men-tshirt-men-gig-gig-084",
+  "sku": "men-gig-gig-084",
+  "name": "gigabyte-aorus-men-tshirt",
+  "headline": "Gigabyte Aorus Men Tshirt",
+  "description": "The Gigabyte Aorus Men Tshirt is a cool and casual shirt for gaming enthusiasts. With the Aorus logo and sleek design, it's perfect for expressing your gaming style.",
+  "url": "https://example.com/products/gigabyte-aorus-men-tshirt-men-gig-gig-084",
+  "ratingValue": 3.18,
+  "priceCurrency": "php",
+  "price": 24.99,
+  "netPrice": 24.99,
+  "discountPercentage": 0.94,
+  "dateCreated": "2026-03-09T17:33:16.980262Z",
+  "dateModified": "2026-03-09T17:33:16.980262Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/3.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/4.webp"
+  ],
+  "keywords": [
+    "mens-shirts"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:gigabyte-aorus-men-tshirt-men-gig-gig-084"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.18,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 24.99,
+    "netPrice": 24.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 24.99
+    },
+    "discountPercentage": 0.94
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "22.31"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "26.47"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "13.27"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "gigabyte"
+  }
+}

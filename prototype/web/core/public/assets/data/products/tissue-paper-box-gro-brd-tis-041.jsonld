@@ -1,0 +1,89 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "tissue-paper-box-gro-brd-tis-041",
+  "sku": "gro-brd-tis-041",
+  "name": "tissue-paper-box",
+  "headline": "Tissue Paper Box",
+  "description": "Convenient tissue paper box for everyday use, providing soft and absorbent tissues.",
+  "url": "https://example.com/products/tissue-paper-box-gro-brd-tis-041",
+  "ratingValue": 2.69,
+  "priceCurrency": "php",
+  "price": 2.49,
+  "netPrice": 2.49,
+  "discountPercentage": 13.28,
+  "dateCreated": "2026-03-09T17:33:16.956934Z",
+  "dateModified": "2026-03-09T17:33:16.956934Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/1.webp",
+    "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/2.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:tissue-paper-box-gro-brd-tis-041"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 2.69,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 2.49,
+    "netPrice": 2.49,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 2.49
+    },
+    "discountPercentage": 13.28
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "1"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "18.75"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "17.58"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "12.43"
+    }
+  ]
+}

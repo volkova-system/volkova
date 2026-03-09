@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "longines-master-collection-men-lon-lon-094",
+  "sku": "men-lon-lon-094",
+  "name": "longines-master-collection",
+  "headline": "Longines Master Collection",
+  "description": "The Longines Master Collection is an elegant and refined watch known for its precision and craftsmanship. With a timeless design, it's a symbol of luxury and sophistication.",
+  "url": "https://example.com/products/longines-master-collection-men-lon-lon-094",
+  "ratingValue": 3.87,
+  "priceCurrency": "php",
+  "price": 1499.99,
+  "netPrice": 1499.99,
+  "discountPercentage": 17.24,
+  "dateCreated": "2026-03-09T17:33:16.986971Z",
+  "dateModified": "2026-03-09T17:33:16.986971Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/3.webp"
+  ],
+  "keywords": [
+    "mens-watches"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:longines-master-collection-men-lon-lon-094"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.87,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1499.99,
+    "netPrice": 1499.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1499.99
+    },
+    "discountPercentage": 17.24
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "15.39"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "10.06"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "20.32"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "longines"
+  }
+}

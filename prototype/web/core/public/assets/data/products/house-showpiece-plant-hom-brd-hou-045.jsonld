@@ -1,0 +1,90 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "house-showpiece-plant-hom-brd-hou-045",
+  "sku": "hom-brd-hou-045",
+  "name": "house-showpiece-plant",
+  "headline": "House Showpiece Plant",
+  "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
+  "url": "https://example.com/products/house-showpiece-plant-hom-brd-hou-045",
+  "ratingValue": 4.67,
+  "priceCurrency": "php",
+  "price": 39.99,
+  "netPrice": 39.99,
+  "discountPercentage": 7.46,
+  "dateCreated": "2026-03-09T17:33:16.959173Z",
+  "dateModified": "2026-03-09T17:33:16.959173Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/1.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/2.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/3.webp"
+  ],
+  "keywords": [
+    "home-decoration"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:house-showpiece-plant-hom-brd-hou-045"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.67,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 39.99,
+    "netPrice": 39.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 39.99
+    },
+    "discountPercentage": 7.46
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "8"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "8.55"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "14.62"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "17.25"
+    }
+  ]
+}

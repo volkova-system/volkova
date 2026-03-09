@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "dior-j_adore-fra-dio-dio-008",
+  "sku": "fra-dio-dio-008",
+  "name": "dior-j_adore",
+  "headline": "Dior J'adore",
+  "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
+  "url": "https://example.com/products/dior-j_adore-fra-dio-dio-008",
+  "ratingValue": 3.8,
+  "priceCurrency": "php",
+  "price": 89.99,
+  "netPrice": 89.99,
+  "discountPercentage": 14.72,
+  "dateCreated": "2026-03-09T17:33:16.936113Z",
+  "dateModified": "2026-03-09T17:33:16.936113Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/1.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/2.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/3.webp"
+  ],
+  "keywords": [
+    "fragrances"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:dior-j_adore-fra-dio-dio-008"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.8,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 89.99,
+    "netPrice": 89.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 89.99
+    },
+    "discountPercentage": 14.72
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "27.67"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "28.28"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "11.83"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "dior"
+  }
+}

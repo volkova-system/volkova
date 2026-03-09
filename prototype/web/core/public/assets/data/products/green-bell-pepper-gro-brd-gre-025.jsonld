@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "green-bell-pepper-gro-brd-gre-025",
+  "sku": "gro-brd-gre-025",
+  "name": "green-bell-pepper",
+  "headline": "Green Bell Pepper",
+  "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
+  "url": "https://example.com/products/green-bell-pepper-gro-brd-gre-025",
+  "ratingValue": 3.25,
+  "priceCurrency": "php",
+  "price": 1.29,
+  "netPrice": 1.29,
+  "discountPercentage": 0.16,
+  "dateCreated": "2026-03-09T17:33:16.947717Z",
+  "dateModified": "2026-03-09T17:33:16.947717Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:green-bell-pepper-gro-brd-gre-025"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.25,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1.29,
+    "netPrice": 1.29,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1.29
+    },
+    "discountPercentage": 0.16
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "2"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "15.33"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "26.65"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "14.44"
+    }
+  ]
+}

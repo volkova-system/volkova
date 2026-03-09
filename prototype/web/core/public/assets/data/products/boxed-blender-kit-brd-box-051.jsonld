@@ -1,0 +1,91 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "boxed-blender-kit-brd-box-051",
+  "sku": "kit-brd-box-051",
+  "name": "boxed-blender",
+  "headline": "Boxed Blender",
+  "description": "The Boxed Blender is a powerful and compact blender perfect for smoothies, shakes, and more. Its convenient design and multiple functions make it a versatile kitchen appliance.",
+  "url": "https://example.com/products/boxed-blender-kit-brd-box-051",
+  "ratingValue": 4.56,
+  "priceCurrency": "php",
+  "price": 39.99,
+  "netPrice": 39.99,
+  "discountPercentage": 7.26,
+  "dateCreated": "2026-03-09T17:33:16.962134Z",
+  "dateModified": "2026-03-09T17:33:16.962134Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/1.webp",
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/2.webp",
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/3.webp",
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/4.webp"
+  ],
+  "keywords": [
+    "kitchen-accessories"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:boxed-blender-kit-brd-box-051"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.56,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 39.99,
+    "netPrice": 39.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 39.99
+    },
+    "discountPercentage": 7.26
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "1"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "9.05"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "19.45"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "17.59"
+    }
+  ]
+}

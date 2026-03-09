@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
+  "sku": "fur-bat-woo-015",
+  "name": "wooden-bathroom-sink-with-mirror",
+  "headline": "Wooden Bathroom Sink With Mirror",
+  "description": "The Wooden Bathroom Sink with Mirror is a unique and stylish addition to your bathroom, featuring a wooden sink countertop and a matching mirror.",
+  "url": "https://example.com/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
+  "ratingValue": 3.59,
+  "priceCurrency": "php",
+  "price": 799.99,
+  "netPrice": 799.99,
+  "discountPercentage": 8.8,
+  "dateCreated": "2026-03-09T17:33:16.940878Z",
+  "dateModified": "2026-03-09T17:33:16.940878Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/1.webp",
+    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/2.webp",
+    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/3.webp"
+  ],
+  "keywords": [
+    "furniture"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:wooden-bathroom-sink-with-mirror-fur-bat-woo-015"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.59,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 799.99,
+    "netPrice": 799.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 799.99
+    },
+    "discountPercentage": 8.8
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "10"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "7.98"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "8.88"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "28.46"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "bath trends"
+  }
+}

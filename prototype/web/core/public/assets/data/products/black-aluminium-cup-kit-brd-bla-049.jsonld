@@ -1,0 +1,89 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "black-aluminium-cup-kit-brd-bla-049",
+  "sku": "kit-brd-bla-049",
+  "name": "black-aluminium-cup",
+  "headline": "Black Aluminium Cup",
+  "description": "The Black Aluminium Cup is a stylish and durable cup suitable for both hot and cold beverages. Its sleek black design adds a modern touch to your drinkware collection.",
+  "url": "https://example.com/products/black-aluminium-cup-kit-brd-bla-049",
+  "ratingValue": 4.46,
+  "priceCurrency": "php",
+  "price": 5.99,
+  "netPrice": 5.99,
+  "discountPercentage": 15.65,
+  "dateCreated": "2026-03-09T17:33:16.961163Z",
+  "dateModified": "2026-03-09T17:33:16.961163Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/1.webp",
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/2.webp"
+  ],
+  "keywords": [
+    "kitchen-accessories"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:black-aluminium-cup-kit-brd-bla-049"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.46,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 5.99,
+    "netPrice": 5.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 5.99
+    },
+    "discountPercentage": 15.65
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "5.88"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "5.11"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "10.03"
+    }
+  ]
+}

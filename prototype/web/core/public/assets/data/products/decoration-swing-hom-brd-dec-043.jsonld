@@ -1,0 +1,90 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "decoration-swing-hom-brd-dec-043",
+  "sku": "hom-brd-dec-043",
+  "name": "decoration-swing",
+  "headline": "Decoration Swing",
+  "description": "The Decoration Swing is a charming addition to your home decor. Crafted with intricate details, it adds a touch of elegance and whimsy to any room.",
+  "url": "https://example.com/products/decoration-swing-hom-brd-dec-043",
+  "ratingValue": 3.16,
+  "priceCurrency": "php",
+  "price": 59.99,
+  "netPrice": 59.99,
+  "discountPercentage": 10.41,
+  "dateCreated": "2026-03-09T17:33:16.957929Z",
+  "dateModified": "2026-03-09T17:33:16.957929Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/1.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/2.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/3.webp"
+  ],
+  "keywords": [
+    "home-decoration"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:decoration-swing-hom-brd-dec-043"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.16,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 59.99,
+    "netPrice": 59.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 59.99
+    },
+    "discountPercentage": 10.41
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "23.84"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "15.19"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "26.05"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "puma-future-rider-trainers-men-pum-pum-090",
+  "sku": "men-pum-pum-090",
+  "name": "puma-future-rider-trainers",
+  "headline": "Puma Future Rider Trainers",
+  "description": "The Puma Future Rider Trainers offer a blend of retro style and modern comfort. Perfect for casual wear, these trainers provide a fashionable and comfortable option for everyday use.",
+  "url": "https://example.com/products/puma-future-rider-trainers-men-pum-pum-090",
+  "ratingValue": 4.9,
+  "priceCurrency": "php",
+  "price": 89.99,
+  "netPrice": 89.99,
+  "discountPercentage": 4.2,
+  "dateCreated": "2026-03-09T17:33:16.984257Z",
+  "dateModified": "2026-03-09T17:33:16.984257Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/3.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/4.webp"
+  ],
+  "keywords": [
+    "mens-shoes"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:puma-future-rider-trainers-men-pum-pum-090"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.9,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 89.99,
+    "netPrice": 89.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 89.99
+    },
+    "discountPercentage": 4.2
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "6"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "17.45"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "15.58"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "23.13"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "puma"
+  }
+}

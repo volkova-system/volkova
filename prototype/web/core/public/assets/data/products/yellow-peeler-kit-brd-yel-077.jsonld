@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "yellow-peeler-kit-brd-yel-077",
+  "sku": "kit-brd-yel-077",
+  "name": "yellow-peeler",
+  "headline": "Yellow Peeler",
+  "description": "The Yellow Peeler is a handy tool for peeling fruits and vegetables with ease. Its bright yellow color adds a cheerful touch to your kitchen gadgets.",
+  "url": "https://example.com/products/yellow-peeler-kit-brd-yel-077",
+  "ratingValue": 4.24,
+  "priceCurrency": "php",
+  "price": 5.99,
+  "netPrice": 5.99,
+  "discountPercentage": 12.48,
+  "dateCreated": "2026-03-09T17:33:16.976299Z",
+  "dateModified": "2026-03-09T17:33:16.976299Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/1.webp"
+  ],
+  "keywords": [
+    "kitchen-accessories"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:yellow-peeler-kit-brd-yel-077"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.24,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 5.99,
+    "netPrice": 5.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 5.99
+    },
+    "discountPercentage": 12.48
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "9.7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "6.43"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "17.93"
+    }
+  ]
+}

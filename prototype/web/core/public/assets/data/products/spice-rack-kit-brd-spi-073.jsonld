@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "spice-rack-kit-brd-spi-073",
+  "sku": "kit-brd-spi-073",
+  "name": "spice-rack",
+  "headline": "Spice Rack",
+  "description": "The Spice Rack is a convenient organizer for your spices and seasonings. Keep your kitchen essentials within reach and neatly arranged with this stylish spice rack.",
+  "url": "https://example.com/products/spice-rack-kit-brd-spi-073",
+  "ratingValue": 4.87,
+  "priceCurrency": "php",
+  "price": 19.99,
+  "netPrice": 19.99,
+  "discountPercentage": 12.09,
+  "dateCreated": "2026-03-09T17:33:16.974022Z",
+  "dateModified": "2026-03-09T17:33:16.974022Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/spice-rack/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/kitchen-accessories/spice-rack/1.webp"
+  ],
+  "keywords": [
+    "kitchen-accessories"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:spice-rack-kit-brd-spi-073"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.87,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 19.99,
+    "netPrice": 19.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 19.99
+    },
+    "discountPercentage": 12.09
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "28.06"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "22.43"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "26.34"
+    }
+  ]
+}

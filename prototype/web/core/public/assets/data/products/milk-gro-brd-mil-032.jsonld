@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "milk-gro-brd-mil-032",
+  "sku": "gro-brd-mil-032",
+  "name": "milk",
+  "headline": "Milk",
+  "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
+  "url": "https://example.com/products/milk-gro-brd-mil-032",
+  "ratingValue": 2.61,
+  "priceCurrency": "php",
+  "price": 3.49,
+  "netPrice": 3.49,
+  "discountPercentage": 13.74,
+  "dateCreated": "2026-03-09T17:33:16.951672Z",
+  "dateModified": "2026-03-09T17:33:16.951672Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/milk/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/milk/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:milk-gro-brd-mil-032"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 2.61,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 3.49,
+    "netPrice": 3.49,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 3.49
+    },
+    "discountPercentage": 13.74
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "5"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "12.92"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "15.76"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "11.29"
+    }
+  ]
+}

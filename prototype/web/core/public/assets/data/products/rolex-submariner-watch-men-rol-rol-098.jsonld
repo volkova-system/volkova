@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "rolex-submariner-watch-men-rol-rol-098",
+  "sku": "men-rol-rol-098",
+  "name": "rolex-submariner-watch",
+  "headline": "Rolex Submariner Watch",
+  "description": "The Rolex Submariner is a legendary dive watch with a rich history. Known for its durability and water resistance, it's a symbol of adventure and exploration.",
+  "url": "https://example.com/products/rolex-submariner-watch-men-rol-rol-098",
+  "ratingValue": 2.69,
+  "priceCurrency": "php",
+  "price": 13999.99,
+  "netPrice": 13999.99,
+  "discountPercentage": 5.05,
+  "dateCreated": "2026-03-09T17:33:16.989155Z",
+  "dateModified": "2026-03-09T17:33:16.989155Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/3.webp"
+  ],
+  "keywords": [
+    "mens-watches"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:rolex-submariner-watch-men-rol-rol-098"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 2.69,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 13999.99,
+    "netPrice": 13999.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 13999.99
+    },
+    "discountPercentage": 5.05
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "17.69"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "12.48"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "8.75"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "rolex"
+  }
+}

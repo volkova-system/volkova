@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "apple-gro-brd-app-016",
+  "sku": "gro-brd-app-016",
+  "name": "apple",
+  "headline": "Apple",
+  "description": "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
+  "url": "https://example.com/products/apple-gro-brd-app-016",
+  "ratingValue": 4.19,
+  "priceCurrency": "php",
+  "price": 1.99,
+  "netPrice": 1.99,
+  "discountPercentage": 12.62,
+  "dateCreated": "2026-03-09T17:33:16.941579Z",
+  "dateModified": "2026-03-09T17:33:16.941579Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/apple/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:apple-gro-brd-app-016"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.19,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1.99,
+    "netPrice": 1.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1.99
+    },
+    "discountPercentage": 12.62
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "13.66"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "11.01"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "9.73"
+    }
+  ]
+}

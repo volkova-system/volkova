@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "lemon-gro-brd-lem-031",
+  "sku": "gro-brd-lem-031",
+  "name": "lemon",
+  "headline": "Lemon",
+  "description": "Zesty and tangy lemons, versatile for cooking, baking, or making refreshing beverages.",
+  "url": "https://example.com/products/lemon-gro-brd-lem-031",
+  "ratingValue": 3.53,
+  "priceCurrency": "php",
+  "price": 0.79,
+  "netPrice": 0.79,
+  "discountPercentage": 9.7,
+  "dateCreated": "2026-03-09T17:33:16.951052Z",
+  "dateModified": "2026-03-09T17:33:16.951052Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/lemon/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/lemon/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:lemon-gro-brd-lem-031"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.53,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 0.79,
+    "netPrice": 0.79,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 0.79
+    },
+    "discountPercentage": 9.7
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "3"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "23.77"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "9.22"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "12.05"
+    }
+  ]
+}

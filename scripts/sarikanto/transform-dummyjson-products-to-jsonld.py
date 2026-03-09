@@ -204,7 +204,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "dateModified": current_time,
 
         "thumbnail": str(product.get('thumbnail', '')),
-        "image": product.get('images', []),
+        "images": product.get('images', []),
 
         "keywords": [str(product.get('category', ''))],
 

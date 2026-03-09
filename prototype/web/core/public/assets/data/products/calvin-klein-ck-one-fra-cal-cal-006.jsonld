@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "calvin-klein-ck-one-fra-cal-cal-006",
+  "sku": "fra-cal-cal-006",
+  "name": "calvin-klein-ck-one",
+  "headline": "Calvin Klein CK One",
+  "description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
+  "url": "https://example.com/products/calvin-klein-ck-one-fra-cal-cal-006",
+  "ratingValue": 4.37,
+  "priceCurrency": "php",
+  "price": 49.99,
+  "netPrice": 49.99,
+  "discountPercentage": 1.89,
+  "dateCreated": "2026-03-09T17:33:16.934718Z",
+  "dateModified": "2026-03-09T17:33:16.934718Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/1.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/2.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/3.webp"
+  ],
+  "keywords": [
+    "fragrances"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:calvin-klein-ck-one-fra-cal-cal-006"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.37,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 49.99,
+    "netPrice": 49.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 49.99
+    },
+    "discountPercentage": 1.89
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "29.36"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "27.76"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "20.72"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "calvin klein"
+  }
+}

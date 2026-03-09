@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "asus-zenbook-pro-dual-screen-laptop-lap-asu-asu-079",
+  "sku": "lap-asu-asu-079",
+  "name": "asus-zenbook-pro-dual-screen-laptop",
+  "headline": "Asus Zenbook Pro Dual Screen Laptop",
+  "description": "The Asus Zenbook Pro Dual Screen Laptop is a high-performance device with dual screens, providing productivity and versatility for creative professionals.",
+  "url": "https://example.com/products/asus-zenbook-pro-dual-screen-laptop-lap-asu-asu-079",
+  "ratingValue": 3.95,
+  "priceCurrency": "php",
+  "price": 1799.99,
+  "netPrice": 1799.99,
+  "discountPercentage": 11.14,
+  "dateCreated": "2026-03-09T17:33:16.977334Z",
+  "dateModified": "2026-03-09T17:33:16.977334Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/1.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/2.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/3.webp"
+  ],
+  "keywords": [
+    "laptops"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:asus-zenbook-pro-dual-screen-laptop-lap-asu-asu-079"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.95,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1799.99,
+    "netPrice": 1799.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1799.99
+    },
+    "discountPercentage": 11.14
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "16.6"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "11.49"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "10.89"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "asus"
+  }
+}

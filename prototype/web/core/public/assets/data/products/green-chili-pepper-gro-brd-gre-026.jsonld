@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "green-chili-pepper-gro-brd-gre-026",
+  "sku": "gro-brd-gre-026",
+  "name": "green-chili-pepper",
+  "headline": "Green Chili Pepper",
+  "description": "Spicy green chili pepper, ideal for adding heat to your favorite recipes.",
+  "url": "https://example.com/products/green-chili-pepper-gro-brd-gre-026",
+  "ratingValue": 3.66,
+  "priceCurrency": "php",
+  "price": 0.99,
+  "netPrice": 0.99,
+  "discountPercentage": 1.0,
+  "dateCreated": "2026-03-09T17:33:16.948364Z",
+  "dateModified": "2026-03-09T17:33:16.948364Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:green-chili-pepper-gro-brd-gre-026"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.66,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 0.99,
+    "netPrice": 0.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 0.99
+    },
+    "discountPercentage": 1.0
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "7"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "15.38"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "18.12"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "19.92"
+    }
+  ]
+}

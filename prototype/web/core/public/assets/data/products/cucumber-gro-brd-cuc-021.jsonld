@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "cucumber-gro-brd-cuc-021",
+  "sku": "gro-brd-cuc-021",
+  "name": "cucumber",
+  "headline": "Cucumber",
+  "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
+  "url": "https://example.com/products/cucumber-gro-brd-cuc-021",
+  "ratingValue": 4.07,
+  "priceCurrency": "php",
+  "price": 1.49,
+  "netPrice": 1.49,
+  "discountPercentage": 0.16,
+  "dateCreated": "2026-03-09T17:33:16.945013Z",
+  "dateModified": "2026-03-09T17:33:16.945013Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cucumber/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/cucumber/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:cucumber-gro-brd-cuc-021"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.07,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1.49,
+    "netPrice": 1.49,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1.49
+    },
+    "discountPercentage": 0.16
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "12.8"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "28.38"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "21.34"
+    }
+  ]
+}

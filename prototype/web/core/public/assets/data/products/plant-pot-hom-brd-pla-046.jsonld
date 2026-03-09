@@ -1,0 +1,91 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "plant-pot-hom-brd-pla-046",
+  "sku": "hom-brd-pla-046",
+  "name": "plant-pot",
+  "headline": "Plant Pot",
+  "description": "The Plant Pot is a stylish container for your favorite plants. With a sleek design, it complements your indoor or outdoor garden, adding a modern touch to your plant display.",
+  "url": "https://example.com/products/plant-pot-hom-brd-pla-046",
+  "ratingValue": 3.01,
+  "priceCurrency": "php",
+  "price": 14.99,
+  "netPrice": 14.99,
+  "discountPercentage": 6.84,
+  "dateCreated": "2026-03-09T17:33:16.959664Z",
+  "dateModified": "2026-03-09T17:33:16.959664Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/1.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/2.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/3.webp",
+    "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/4.webp"
+  ],
+  "keywords": [
+    "home-decoration"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:plant-pot-hom-brd-pla-046"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.01,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 14.99,
+    "netPrice": 14.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 14.99
+    },
+    "discountPercentage": 6.84
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "9.83"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "20.28"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "13.49"
+    }
+  ]
+}

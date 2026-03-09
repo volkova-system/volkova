@@ -1,0 +1,92 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "eyeshadow-palette-with-mirror-bea-gla-eye-002",
+  "sku": "bea-gla-eye-002",
+  "name": "eyeshadow-palette-with-mirror",
+  "headline": "Eyeshadow Palette with Mirror",
+  "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+  "url": "https://example.com/products/eyeshadow-palette-with-mirror-bea-gla-eye-002",
+  "ratingValue": 2.86,
+  "priceCurrency": "php",
+  "price": 19.99,
+  "netPrice": 19.99,
+  "discountPercentage": 18.19,
+  "dateCreated": "2026-03-09T17:33:16.931472Z",
+  "dateModified": "2026-03-09T17:33:16.931472Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp"
+  ],
+  "keywords": [
+    "beauty"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:eyeshadow-palette-with-mirror-bea-gla-eye-002"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 2.86,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 19.99,
+    "netPrice": 19.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 19.99
+    },
+    "discountPercentage": 18.19
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "9.26"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "22.47"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "27.67"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "glamour beauty"
+  }
+}

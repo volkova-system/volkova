@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "huawei-matebook-x-pro-lap-hua-hua-080",
+  "sku": "lap-hua-hua-080",
+  "name": "huawei-matebook-x-pro",
+  "headline": "Huawei Matebook X Pro",
+  "description": "The Huawei Matebook X Pro is a slim and stylish laptop with a high-resolution touchscreen display, offering a premium experience for users on the go.",
+  "url": "https://example.com/products/huawei-matebook-x-pro-lap-hua-hua-080",
+  "ratingValue": 4.98,
+  "priceCurrency": "php",
+  "price": 1399.99,
+  "netPrice": 1399.99,
+  "discountPercentage": 9.38,
+  "dateCreated": "2026-03-09T17:33:16.977842Z",
+  "dateModified": "2026-03-09T17:33:16.977842Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/1.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/2.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/3.webp"
+  ],
+  "keywords": [
+    "laptops"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:huawei-matebook-x-pro-lap-hua-hua-080"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.98,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1399.99,
+    "netPrice": 1399.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1399.99
+    },
+    "discountPercentage": 9.38
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "18.21"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "22.83"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "17.26"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "huawei"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "dolce-shine-eau-de-fra-dol-dol-009",
+  "sku": "fra-dol-dol-009",
+  "name": "dolce-shine-eau-de",
+  "headline": "Dolce Shine Eau de",
+  "description": "Dolce Shine by Dolce & Gabbana is a vibrant and fruity fragrance, featuring notes of mango, jasmine, and blonde woods. It's a joyful and youthful scent.",
+  "url": "https://example.com/products/dolce-shine-eau-de-fra-dol-dol-009",
+  "ratingValue": 3.96,
+  "priceCurrency": "php",
+  "price": 69.99,
+  "netPrice": 69.99,
+  "discountPercentage": 0.62,
+  "dateCreated": "2026-03-09T17:33:16.936936Z",
+  "dateModified": "2026-03-09T17:33:16.936936Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/1.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/2.webp",
+    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/3.webp"
+  ],
+  "keywords": [
+    "fragrances"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:dolce-shine-eau-de-fra-dol-dol-009"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.96,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 69.99,
+    "netPrice": 69.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 69.99
+    },
+    "discountPercentage": 0.62
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "6"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "27.28"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "29.88"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "18.3"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "dolce & gabbana"
+  }
+}

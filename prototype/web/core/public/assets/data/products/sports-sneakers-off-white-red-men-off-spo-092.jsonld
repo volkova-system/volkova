@@ -1,0 +1,95 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "sports-sneakers-off-white-red-men-off-spo-092",
+  "sku": "men-off-spo-092",
+  "name": "sports-sneakers-off-white-red",
+  "headline": "Sports Sneakers Off White Red",
+  "description": "Another variant of the Sports Sneakers in Off White Red, featuring a unique design. These sneakers offer style and comfort for casual occasions.",
+  "url": "https://example.com/products/sports-sneakers-off-white-red-men-off-spo-092",
+  "ratingValue": 4.69,
+  "priceCurrency": "php",
+  "price": 109.99,
+  "netPrice": 109.99,
+  "discountPercentage": 0.04,
+  "dateCreated": "2026-03-09T17:33:16.985820Z",
+  "dateModified": "2026-03-09T17:33:16.985820Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/3.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/4.webp"
+  ],
+  "keywords": [
+    "mens-shoes"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:sports-sneakers-off-white-red-men-off-spo-092"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.69,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 109.99,
+    "netPrice": 109.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 109.99
+    },
+    "discountPercentage": 0.04
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "21.43"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "9.86"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "28.5"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "off white"
+  }
+}

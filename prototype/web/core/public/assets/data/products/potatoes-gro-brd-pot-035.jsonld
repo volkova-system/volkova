@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "potatoes-gro-brd-pot-035",
+  "sku": "gro-brd-pot-035",
+  "name": "potatoes",
+  "headline": "Potatoes",
+  "description": "Versatile and starchy potatoes, great for roasting, mashing, or as a side dish.",
+  "url": "https://example.com/products/potatoes-gro-brd-pot-035",
+  "ratingValue": 4.81,
+  "priceCurrency": "php",
+  "price": 2.29,
+  "netPrice": 2.29,
+  "discountPercentage": 5.38,
+  "dateCreated": "2026-03-09T17:33:16.953277Z",
+  "dateModified": "2026-03-09T17:33:16.953277Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/potatoes/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/potatoes/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:potatoes-gro-brd-pot-035"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.81,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 2.29,
+    "netPrice": 2.29,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 2.29
+    },
+    "discountPercentage": 5.38
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "9"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "22.65"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "9.83"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "21.75"
+    }
+  ]
+}

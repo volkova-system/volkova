@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "annibale-colombo-bed-fur-ann-ann-011",
+  "sku": "fur-ann-ann-011",
+  "name": "annibale-colombo-bed",
+  "headline": "Annibale Colombo Bed",
+  "description": "The Annibale Colombo Bed is a luxurious and elegant bed frame, crafted with high-quality materials for a comfortable and stylish bedroom.",
+  "url": "https://example.com/products/annibale-colombo-bed-fur-ann-ann-011",
+  "ratingValue": 4.77,
+  "priceCurrency": "php",
+  "price": 1899.99,
+  "netPrice": 1899.99,
+  "discountPercentage": 8.57,
+  "dateCreated": "2026-03-09T17:33:16.938230Z",
+  "dateModified": "2026-03-09T17:33:16.938230Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/1.webp",
+    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/2.webp",
+    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/3.webp"
+  ],
+  "keywords": [
+    "furniture"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:annibale-colombo-bed-fur-ann-ann-011"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.77,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 1899.99,
+    "netPrice": 1899.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 1899.99
+    },
+    "discountPercentage": 8.57
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "10"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "28.16"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "25.36"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "17.28"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "annibale colombo"
+  }
+}

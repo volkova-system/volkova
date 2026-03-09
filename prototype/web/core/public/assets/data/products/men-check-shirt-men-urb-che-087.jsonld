@@ -1,0 +1,95 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "men-check-shirt-men-urb-che-087",
+  "sku": "men-urb-che-087",
+  "name": "men-check-shirt",
+  "headline": "Men Check Shirt",
+  "description": "The Men Check Shirt is a classic and versatile shirt featuring a stylish check pattern. Suitable for various occasions, it adds a smart and polished touch to your wardrobe.",
+  "url": "https://example.com/products/men-check-shirt-men-urb-che-087",
+  "ratingValue": 2.72,
+  "priceCurrency": "php",
+  "price": 27.99,
+  "netPrice": 27.99,
+  "discountPercentage": 11.38,
+  "dateCreated": "2026-03-09T17:33:16.981872Z",
+  "dateModified": "2026-03-09T17:33:16.981872Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/3.webp",
+    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/4.webp"
+  ],
+  "keywords": [
+    "mens-shirts"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:men-check-shirt-men-urb-che-087"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 2.72,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 27.99,
+    "netPrice": 27.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 27.99
+    },
+    "discountPercentage": 11.38
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "10"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "23.48"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "7.03"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "27.33"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "urban chic"
+  }
+}

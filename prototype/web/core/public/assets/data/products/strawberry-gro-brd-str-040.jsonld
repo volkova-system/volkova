@@ -1,0 +1,88 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "strawberry-gro-brd-str-040",
+  "sku": "gro-brd-str-040",
+  "name": "strawberry",
+  "headline": "Strawberry",
+  "description": "Sweet and succulent strawberries, great for snacking, desserts, or blending into smoothies.",
+  "url": "https://example.com/products/strawberry-gro-brd-str-040",
+  "ratingValue": 3.08,
+  "priceCurrency": "php",
+  "price": 3.99,
+  "netPrice": 3.99,
+  "discountPercentage": 1.12,
+  "dateCreated": "2026-03-09T17:33:16.956440Z",
+  "dateModified": "2026-03-09T17:33:16.956440Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/strawberry/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/groceries/strawberry/1.webp"
+  ],
+  "keywords": [
+    "groceries"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:strawberry-gro-brd-str-040"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.08,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 3.99,
+    "netPrice": 3.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 3.99
+    },
+    "discountPercentage": 1.12
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "1"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "28.18"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "21.25"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "28.54"
+    }
+  ]
+}

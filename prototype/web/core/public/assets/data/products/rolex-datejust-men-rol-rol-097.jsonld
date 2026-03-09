@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "rolex-datejust-men-rol-rol-097",
+  "sku": "men-rol-rol-097",
+  "name": "rolex-datejust",
+  "headline": "Rolex Datejust",
+  "description": "The Rolex Datejust is an iconic and versatile timepiece with a date window. Known for its timeless design and reliability, it's a symbol of Rolex's watchmaking excellence.",
+  "url": "https://example.com/products/rolex-datejust-men-rol-rol-097",
+  "ratingValue": 3.66,
+  "priceCurrency": "php",
+  "price": 10999.99,
+  "netPrice": 10999.99,
+  "discountPercentage": 3.73,
+  "dateCreated": "2026-03-09T17:33:16.988591Z",
+  "dateModified": "2026-03-09T17:33:16.988591Z",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/thumbnail.webp",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/1.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/2.webp",
+    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/3.webp"
+  ],
+  "keywords": [
+    "mens-watches"
+  ],
+  "cacheIdentifier": {
+    "@type": "PropertyValue",
+    "propertyID": "cache:key",
+    "name": "cache_key",
+    "description": "cache storage key",
+    "value": "product:rolex-datejust-men-rol-rol-097"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 3.66,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "php",
+    "price": 10999.99,
+    "netPrice": 10999.99,
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "php",
+      "price": 10999.99
+    },
+    "discountPercentage": 3.73
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "weight_unit",
+      "description": "product weight unit",
+      "value": "g"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weight",
+      "description": "product weight",
+      "value": "4"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "dimension_unit",
+      "description": "product dimension unit",
+      "value": "cm"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "width",
+      "description": "product width",
+      "value": "23.11"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "height",
+      "description": "product height",
+      "value": "19.97"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "depth",
+      "description": "product depth",
+      "value": "27.04"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "rolex"
+  }
+}
