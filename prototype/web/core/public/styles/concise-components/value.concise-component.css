@@ -22,6 +22,10 @@
     text-transform: uppercase;
 }
 
+.concise-component .currency-php.currency.value::after {
+    content: ' PHP';
+}
+
 .concise-component .currency-usd.currency.value::after {
     content: ' USD';
 }
