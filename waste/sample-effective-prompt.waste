@@ -1,0 +1,41 @@
+You must read line by line from start to finish #RULES
+
+You must read line by line from start to finish all related files to #RULES
+
+You must comply with #RULES
+
+You must comply with all related files to #RULES
+
+
+
+You must read line by line from start to finish #transform-dummyjson-products-to-jsonld.py
+
+
+
+You must accomplish the following goals,
+
+
+
+1. You must create a standalone, independent, isolated, minimal, concise and reliable python cli script
+
+2. The script must accept a products.json path using --products parameter
+
+3.
+
+4.
+
+5.
+
+
+
+
+
+A. If any procedures fails, fail fast and loud with concise and focused error report
+
+B. Do not provide fallback flow. Each operation must use only one reliable simple flow.
+
+C. Each operation must be encapsulated in one function. Each function must only do one reliable set of procedures.
+
+D. Each operation must be concise, simple, reliable and should follow the standards, conventions and best practices.
+
+E. Each operation must be self documenting and must provide proper documentation based on standards, conventions and best practices.
