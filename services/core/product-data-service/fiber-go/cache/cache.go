@@ -2,6 +2,7 @@ package cache
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/tidwall/buntdb"
 
@@ -57,16 +58,20 @@ func (db *Cache) Close() error {
 }
 
 func (db *Cache) PushProduct(product model.Product) error {
+    // Marshal product to JSON with error context
     data, err := json.Marshal(product)
+    if err != nil {
+        return fmt.Errorf("failed to marshal product data: %w", err)
+    }
 
-	if err != nil {
-		return err
-	}
-
+    // Store in cache with transaction safety
     return db.products.Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set(product.CacheIdentifier.Value, string(data), nil)
-		return err
-	})
+        _, _, err := tx.Set(product.CacheIdentifier.Value, string(data), nil)
+        if err != nil {
+            return fmt.Errorf("failed to store product in cache: %w", err)
+        }
+        return nil
+    })
 }
 
 func (db *Cache) GetProduct(key string) (*model.Product, error) {
