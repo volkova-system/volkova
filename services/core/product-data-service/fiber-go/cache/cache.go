@@ -1,3 +1,6 @@
+// Package cache provides an in-memory caching layer for product data using BuntDB.
+// It offers efficient storage and retrieval of product information with indexing
+// capabilities for optimized queries.
 package cache
 
 import (
@@ -9,13 +12,28 @@ import (
 	"product-data-service/model"
 )
 
+// defaultCacheName is the default index name used for product storage.
 const defaultCacheName = "products"
 
+// Cache represents an in-memory cache for product data using BuntDB.
+// It provides thread-safe operations for storing and retrieving products
+// with built-in indexing for efficient queries.
 type Cache struct {
-    name     string
-	products *buntdb.DB
+	name     string     // name of the cache index
+	products *buntdb.DB // underlying BuntDB database connection
 }
 
+// Open creates and initializes a new in-memory cache instance.
+// It sets up the BuntDB database with necessary indexes for efficient
+// product querying by key and SKU.
+//
+// Returns:
+//   - *Cache: A new cache instance ready for use
+//   - error: Any error that occurred during initialization
+//
+// The cache creates two indexes:
+//   - "products": General index for all product keys matching "product:*" pattern
+//   - "sku": Custom index for SKU-based lookups with string comparison
 func Open() (*Cache, error) {
 	conn, err := buntdb.Open(":memory:")
 
@@ -53,10 +71,25 @@ func Open() (*Cache, error) {
 	return &Cache{name: defaultCacheName, products: conn}, nil
 }
 
+// Close gracefully shuts down the cache and releases all resources.
+// It closes the underlying BuntDB connection and should be called
+// when the cache is no longer needed to prevent resource leaks.
+//
+// Returns:
+//   - error: Any error that occurred during the close operation
 func (db *Cache) Close() error {
 	return db.products.Close()
 }
 
+// PushProduct stores a product in the cache using its cache identifier as the key.
+// The product is serialized to JSON and stored in a thread-safe transaction.
+// If a product with the same cache identifier already exists, it will be overwritten.
+//
+// Parameters:
+//   - product: The product to store in the cache
+//
+// Returns:
+//   - error: Any error that occurred during marshaling or storage
 func (db *Cache) PushProduct(product model.Product) error {
     // Marshal product to JSON with error context
     data, err := json.Marshal(product)
@@ -70,21 +103,44 @@ func (db *Cache) PushProduct(product model.Product) error {
         if err != nil {
             return fmt.Errorf("failed to store product in cache: %w", err)
         }
+
         return nil
     })
 }
 
+// GetProduct retrieves a single product from the cache by its key.
+// The product data is deserialized from JSON and returned as a Product struct.
+//
+// Parameters:
+//   - key: The cache key to look up (typically the product's cache identifier value)
+//
+// Returns:
+//   - *model.Product: The retrieved product, or nil if not found or error occurred
+//   - error: Any error that occurred during retrieval or unmarshaling
+//
+// Returns an error if:
+//   - The key is empty
+//   - The product is not found in the cache
+//   - JSON unmarshaling fails
 func (db *Cache) GetProduct(key string) (*model.Product, error) {
-	var product model.Product
+	if key == "" {
+        return nil, fmt.Errorf("key cannot be empty")
+    }
+
+    var product model.Product
 
 	err := db.products.View(func(tx *buntdb.Tx) error {
 		val, err := tx.Get(key)
 
 		if err != nil {
-			return err
+			return fmt.Errorf("product not found for key %s: %w", key, err)
 		}
 
-        return json.Unmarshal([]byte(val), &product)
+        if err := json.Unmarshal([]byte(val), &product); err != nil {
+            return fmt.Errorf("failed to unmarshal product data: %w", err)
+        }
+
+        return nil
 	})
 
 	if err != nil {
@@ -92,4 +148,72 @@ func (db *Cache) GetProduct(key string) (*model.Product, error) {
 	}
 
 	return &product, nil
+}
+// GetProducts retrieves a paginated list of products from the cache.
+// Products are returned in ascending order based on the default cache index.
+// Supports pagination through skip and limit parameters.
+//
+// Parameters:
+//   - skip: Number of products to skip (offset). Negative values are treated as 0
+//   - limit: Maximum number of products to return. Values <= 0 default to 10
+//
+// Returns:
+//   - []model.Product: Slice of products matching the pagination criteria
+//   - error: Any error that occurred during retrieval or unmarshaling
+//
+// The function uses the BuntDB Ascend method to iterate through products
+// in index order, applying skip/limit logic for pagination.
+func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
+	if skip < 0 {
+		skip = 0
+	}
+
+    if limit <= 0 {
+		limit = 10
+	}
+
+	var products []model.Product
+
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		count := 0
+		collected := 0
+
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			// Skip items until we reach the skip offset
+			if count < skip {
+				count++
+
+				return true
+			}
+
+			// Stop if we've collected enough items
+			if collected >= limit {
+				return false
+			}
+
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf("failed to unmarshal product at key %s: %w", key, err)
+
+                return false
+			}
+
+			products = append(products, product)
+
+			collected++
+			count++
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve products: %w", err)
+	}
+
+	return products, nil
 }
