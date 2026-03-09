@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "cucumber-gro-brd-cuc-021",
+  "reference": "cucumber-gro-brd-cuc-021",
   "sku": "gro-brd-cuc-021",
   "name": "cucumber",
   "headline": "Cucumber",
   "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
-  "url": "https://example.com/products/cucumber-gro-brd-cuc-021",
+  "url": "/pages/products/cucumber-gro-brd-cuc-021",
   "ratingValue": 4.07,
   "priceCurrency": "php",
   "price": 1.49,
   "netPrice": 1.49,
   "discountPercentage": 0.16,
-  "dateCreated": "2026-03-09T17:33:16.945013Z",
-  "dateModified": "2026-03-09T17:33:16.945013Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cucumber/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.413557Z",
+  "dateModified": "2026-03-09T20:30:01.413557Z",
+  "thumbnail": "/assets/images/products/thumbnails/cucumber-gro-brd-cuc-021.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/cucumber/1.webp"
+    "/assets/images/products/cucumber-gro-brd-cuc-021/picture-0.webp"
   ],
   "keywords": [
     "groceries"

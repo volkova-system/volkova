@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "bedside-table-african-cherry-fur-fur-bed-013",
+  "reference": "bedside-table-african-cherry-fur-fur-bed-013",
   "sku": "fur-fur-bed-013",
   "name": "bedside-table-african-cherry",
   "headline": "Bedside Table African Cherry",
   "description": "The Bedside Table in African Cherry is a stylish and functional addition to your bedroom, providing convenient storage space and a touch of elegance.",
-  "url": "https://example.com/products/bedside-table-african-cherry-fur-fur-bed-013",
+  "url": "/pages/products/bedside-table-african-cherry-fur-fur-bed-013",
   "ratingValue": 2.87,
   "priceCurrency": "php",
   "price": 299.99,
   "netPrice": 299.99,
   "discountPercentage": 19.09,
-  "dateCreated": "2026-03-09T17:33:16.939737Z",
-  "dateModified": "2026-03-09T17:33:16.939737Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.408544Z",
+  "dateModified": "2026-03-09T20:30:01.408544Z",
+  "thumbnail": "/assets/images/products/thumbnails/bedside-table-african-cherry-fur-fur-bed-013.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/1.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/2.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/3.webp"
+    "/assets/images/products/bedside-table-african-cherry-fur-fur-bed-013/picture-0.webp",
+    "/assets/images/products/bedside-table-african-cherry-fur-fur-bed-013/picture-1.webp",
+    "/assets/images/products/bedside-table-african-cherry-fur-fur-bed-013/picture-2.webp"
   ],
   "keywords": [
     "furniture"

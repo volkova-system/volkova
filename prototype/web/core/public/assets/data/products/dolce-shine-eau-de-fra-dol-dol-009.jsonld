@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "dolce-shine-eau-de-fra-dol-dol-009",
+  "reference": "dolce-shine-eau-de-fra-dol-dol-009",
   "sku": "fra-dol-dol-009",
   "name": "dolce-shine-eau-de",
   "headline": "Dolce Shine Eau de",
   "description": "Dolce Shine by Dolce & Gabbana is a vibrant and fruity fragrance, featuring notes of mango, jasmine, and blonde woods. It's a joyful and youthful scent.",
-  "url": "https://example.com/products/dolce-shine-eau-de-fra-dol-dol-009",
+  "url": "/pages/products/dolce-shine-eau-de-fra-dol-dol-009",
   "ratingValue": 3.96,
   "priceCurrency": "php",
   "price": 69.99,
   "netPrice": 69.99,
   "discountPercentage": 0.62,
-  "dateCreated": "2026-03-09T17:33:16.936936Z",
-  "dateModified": "2026-03-09T17:33:16.936936Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.405852Z",
+  "dateModified": "2026-03-09T20:30:01.405852Z",
+  "thumbnail": "/assets/images/products/thumbnails/dolce-shine-eau-de-fra-dol-dol-009.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/1.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/2.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/3.webp"
+    "/assets/images/products/dolce-shine-eau-de-fra-dol-dol-009/picture-0.webp",
+    "/assets/images/products/dolce-shine-eau-de-fra-dol-dol-009/picture-1.webp",
+    "/assets/images/products/dolce-shine-eau-de-fra-dol-dol-009/picture-2.webp"
   ],
   "keywords": [
     "fragrances"

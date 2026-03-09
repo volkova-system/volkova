@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	// Initialize cache
 	cache, err := cache.Open()
 	if err != nil {
 		log.Fatal("cannot open cache:", err)
@@ -19,7 +18,7 @@ func main() {
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName: "sarikanto-product-data-service",
+		AppName: "core-product-data-service",
 	})
 
 	server.Use(logger.New())

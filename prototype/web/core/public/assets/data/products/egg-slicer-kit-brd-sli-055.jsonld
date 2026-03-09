@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "egg-slicer-kit-brd-sli-055",
+  "reference": "egg-slicer-kit-brd-sli-055",
   "sku": "kit-brd-sli-055",
   "name": "egg-slicer",
   "headline": "Egg Slicer",
   "description": "The Egg Slicer is a convenient tool for slicing boiled eggs evenly. It's perfect for salads, sandwiches, and other dishes where sliced eggs are desired.",
-  "url": "https://example.com/products/egg-slicer-kit-brd-sli-055",
+  "url": "/pages/products/egg-slicer-kit-brd-sli-055",
   "ratingValue": 3.09,
   "priceCurrency": "php",
   "price": 6.99,
   "netPrice": 6.99,
   "discountPercentage": 14.76,
-  "dateCreated": "2026-03-09T17:33:16.964063Z",
-  "dateModified": "2026-03-09T17:33:16.964063Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/egg-slicer/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.433444Z",
+  "dateModified": "2026-03-09T20:30:01.433444Z",
+  "thumbnail": "/assets/images/products/thumbnails/egg-slicer-kit-brd-sli-055.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/egg-slicer/1.webp"
+    "/assets/images/products/egg-slicer-kit-brd-sli-055/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

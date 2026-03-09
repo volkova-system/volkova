@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "kitchen-sieve-kit-brd-kit-063",
+  "reference": "kitchen-sieve-kit-brd-kit-063",
   "sku": "kit-brd-kit-063",
   "name": "kitchen-sieve",
   "headline": "Kitchen Sieve",
   "description": "The Kitchen Sieve is a versatile tool for sifting and straining dry and wet ingredients. Its fine mesh design ensures smooth results in your cooking and baking.",
-  "url": "https://example.com/products/kitchen-sieve-kit-brd-kit-063",
+  "url": "/pages/products/kitchen-sieve-kit-brd-kit-063",
   "ratingValue": 3.09,
   "priceCurrency": "php",
   "price": 7.99,
   "netPrice": 7.99,
   "discountPercentage": 18.91,
-  "dateCreated": "2026-03-09T17:33:16.968328Z",
-  "dateModified": "2026-03-09T17:33:16.968328Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/kitchen-sieve/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.438372Z",
+  "dateModified": "2026-03-09T20:30:01.438372Z",
+  "thumbnail": "/assets/images/products/thumbnails/kitchen-sieve-kit-brd-kit-063.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/kitchen-sieve/1.webp"
+    "/assets/images/products/kitchen-sieve-kit-brd-kit-063/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

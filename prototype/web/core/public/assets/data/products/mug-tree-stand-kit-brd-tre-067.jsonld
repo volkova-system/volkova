@@ -2,22 +2,23 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "mug-tree-stand-kit-brd-tre-067",
+  "reference": "mug-tree-stand-kit-brd-tre-067",
   "sku": "kit-brd-tre-067",
   "name": "mug-tree-stand",
   "headline": "Mug Tree Stand",
   "description": "The Mug Tree Stand is a stylish and space-saving solution for organizing your mugs. Keep your favorite mugs easily accessible and neatly displayed in your kitchen.",
-  "url": "https://example.com/products/mug-tree-stand-kit-brd-tre-067",
+  "url": "/pages/products/mug-tree-stand-kit-brd-tre-067",
   "ratingValue": 2.64,
   "priceCurrency": "php",
   "price": 15.99,
   "netPrice": 15.99,
   "discountPercentage": 9.25,
-  "dateCreated": "2026-03-09T17:33:16.970261Z",
-  "dateModified": "2026-03-09T17:33:16.970261Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/mug-tree-stand/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.440429Z",
+  "dateModified": "2026-03-09T20:30:01.440429Z",
+  "thumbnail": "/assets/images/products/thumbnails/mug-tree-stand-kit-brd-tre-067.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/mug-tree-stand/1.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/mug-tree-stand/2.webp"
+    "/assets/images/products/mug-tree-stand-kit-brd-tre-067/picture-0.webp",
+    "/assets/images/products/mug-tree-stand-kit-brd-tre-067/picture-1.webp"
   ],
   "keywords": [
     "kitchen-accessories"

@@ -188,11 +188,12 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "@type": "Product",
         "@id": product_id,
 
+        "reference": product_id,
         "sku": str(product.get('sku', product.get('id', ''))).lower(),
         "name": format_product_name(product),
         "headline": str(product.get('title', '')),
         "description": str(product.get('description', '')),
-        "url": f"https://example.com/products/{product_id}",
+        "url": f"/pages/products/{product_id}",
         "ratingValue": safe_float(product.get('rating', 0)),
 
         "priceCurrency": "php",
@@ -203,8 +204,11 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "dateCreated": current_time,
         "dateModified": current_time,
 
-        "thumbnail": str(product.get('thumbnail', '')),
-        "images": product.get('images', []),
+        "thumbnail": f"/assets/images/products/thumbnails/{product_id}.webp",
+        "images": [
+            f"/assets/images/products/{product_id}/picture-{index}.webp"
+            for index in range(len(images))
+        ] if isinstance(images := product.get('images', []), list) else [],
 
         "keywords": [str(product.get('category', ''))],
 

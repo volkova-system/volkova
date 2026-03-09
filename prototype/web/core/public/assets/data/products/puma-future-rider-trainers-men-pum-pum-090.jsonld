@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "puma-future-rider-trainers-men-pum-pum-090",
+  "reference": "puma-future-rider-trainers-men-pum-pum-090",
   "sku": "men-pum-pum-090",
   "name": "puma-future-rider-trainers",
   "headline": "Puma Future Rider Trainers",
   "description": "The Puma Future Rider Trainers offer a blend of retro style and modern comfort. Perfect for casual wear, these trainers provide a fashionable and comfortable option for everyday use.",
-  "url": "https://example.com/products/puma-future-rider-trainers-men-pum-pum-090",
+  "url": "/pages/products/puma-future-rider-trainers-men-pum-pum-090",
   "ratingValue": 4.9,
   "priceCurrency": "php",
   "price": 89.99,
   "netPrice": 89.99,
   "discountPercentage": 4.2,
-  "dateCreated": "2026-03-09T17:33:16.984257Z",
-  "dateModified": "2026-03-09T17:33:16.984257Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.453673Z",
+  "dateModified": "2026-03-09T20:30:01.453673Z",
+  "thumbnail": "/assets/images/products/thumbnails/puma-future-rider-trainers-men-pum-pum-090.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/4.webp"
+    "/assets/images/products/puma-future-rider-trainers-men-pum-pum-090/picture-0.webp",
+    "/assets/images/products/puma-future-rider-trainers-men-pum-pum-090/picture-1.webp",
+    "/assets/images/products/puma-future-rider-trainers-men-pum-pum-090/picture-2.webp",
+    "/assets/images/products/puma-future-rider-trainers-men-pum-pum-090/picture-3.webp"
   ],
   "keywords": [
     "mens-shoes"

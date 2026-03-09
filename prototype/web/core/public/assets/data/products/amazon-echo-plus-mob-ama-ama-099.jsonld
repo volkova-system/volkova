@@ -2,22 +2,23 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "amazon-echo-plus-mob-ama-ama-099",
+  "reference": "amazon-echo-plus-mob-ama-ama-099",
   "sku": "mob-ama-ama-099",
   "name": "amazon-echo-plus",
   "headline": "Amazon Echo Plus",
   "description": "The Amazon Echo Plus is a smart speaker with built-in Alexa voice control. It features premium sound quality and serves as a hub for controlling smart home devices.",
-  "url": "https://example.com/products/amazon-echo-plus-mob-ama-ama-099",
+  "url": "/pages/products/amazon-echo-plus-mob-ama-ama-099",
   "ratingValue": 4.99,
   "priceCurrency": "php",
   "price": 99.99,
   "netPrice": 99.99,
   "discountPercentage": 12.07,
-  "dateCreated": "2026-03-09T17:33:16.989656Z",
-  "dateModified": "2026-03-09T17:33:16.989656Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/amazon-echo-plus/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.459109Z",
+  "dateModified": "2026-03-09T20:30:01.459109Z",
+  "thumbnail": "/assets/images/products/thumbnails/amazon-echo-plus-mob-ama-ama-099.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mobile-accessories/amazon-echo-plus/1.webp",
-    "https://cdn.dummyjson.com/product-images/mobile-accessories/amazon-echo-plus/2.webp"
+    "/assets/images/products/amazon-echo-plus-mob-ama-ama-099/picture-0.webp",
+    "/assets/images/products/amazon-echo-plus-mob-ama-ama-099/picture-1.webp"
   ],
   "keywords": [
     "mobile-accessories"

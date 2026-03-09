@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "annibale-colombo-bed-fur-ann-ann-011",
+  "reference": "annibale-colombo-bed-fur-ann-ann-011",
   "sku": "fur-ann-ann-011",
   "name": "annibale-colombo-bed",
   "headline": "Annibale Colombo Bed",
   "description": "The Annibale Colombo Bed is a luxurious and elegant bed frame, crafted with high-quality materials for a comfortable and stylish bedroom.",
-  "url": "https://example.com/products/annibale-colombo-bed-fur-ann-ann-011",
+  "url": "/pages/products/annibale-colombo-bed-fur-ann-ann-011",
   "ratingValue": 4.77,
   "priceCurrency": "php",
   "price": 1899.99,
   "netPrice": 1899.99,
   "discountPercentage": 8.57,
-  "dateCreated": "2026-03-09T17:33:16.938230Z",
-  "dateModified": "2026-03-09T17:33:16.938230Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.407402Z",
+  "dateModified": "2026-03-09T20:30:01.407402Z",
+  "thumbnail": "/assets/images/products/thumbnails/annibale-colombo-bed-fur-ann-ann-011.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/1.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/2.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/3.webp"
+    "/assets/images/products/annibale-colombo-bed-fur-ann-ann-011/picture-0.webp",
+    "/assets/images/products/annibale-colombo-bed-fur-ann-ann-011/picture-1.webp",
+    "/assets/images/products/annibale-colombo-bed-fur-ann-ann-011/picture-2.webp"
   ],
   "keywords": [
     "furniture"

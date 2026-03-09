@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "essence-mascara-lash-princess-bea-ess-ess-001",
+  "reference": "essence-mascara-lash-princess-bea-ess-ess-001",
   "sku": "bea-ess-ess-001",
   "name": "essence-mascara-lash-princess",
   "headline": "Essence Mascara Lash Princess",
   "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-  "url": "https://example.com/products/essence-mascara-lash-princess-bea-ess-ess-001",
+  "url": "/pages/products/essence-mascara-lash-princess-bea-ess-ess-001",
   "ratingValue": 2.56,
   "priceCurrency": "php",
   "price": 9.99,
   "netPrice": 9.99,
   "discountPercentage": 10.48,
-  "dateCreated": "2026-03-09T17:33:16.930624Z",
-  "dateModified": "2026-03-09T17:33:16.930624Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.400312Z",
+  "dateModified": "2026-03-09T20:30:01.400312Z",
+  "thumbnail": "/assets/images/products/thumbnails/essence-mascara-lash-princess-bea-ess-ess-001.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
+    "/assets/images/products/essence-mascara-lash-princess-bea-ess-ess-001/picture-0.webp"
   ],
   "keywords": [
     "beauty"

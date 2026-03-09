@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "men-check-shirt-men-urb-che-087",
+  "reference": "men-check-shirt-men-urb-che-087",
   "sku": "men-urb-che-087",
   "name": "men-check-shirt",
   "headline": "Men Check Shirt",
   "description": "The Men Check Shirt is a classic and versatile shirt featuring a stylish check pattern. Suitable for various occasions, it adds a smart and polished touch to your wardrobe.",
-  "url": "https://example.com/products/men-check-shirt-men-urb-che-087",
+  "url": "/pages/products/men-check-shirt-men-urb-che-087",
   "ratingValue": 2.72,
   "priceCurrency": "php",
   "price": 27.99,
   "netPrice": 27.99,
   "discountPercentage": 11.38,
-  "dateCreated": "2026-03-09T17:33:16.981872Z",
-  "dateModified": "2026-03-09T17:33:16.981872Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.452141Z",
+  "dateModified": "2026-03-09T20:30:01.452141Z",
+  "thumbnail": "/assets/images/products/thumbnails/men-check-shirt-men-urb-che-087.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/men-check-shirt/4.webp"
+    "/assets/images/products/men-check-shirt-men-urb-che-087/picture-0.webp",
+    "/assets/images/products/men-check-shirt-men-urb-che-087/picture-1.webp",
+    "/assets/images/products/men-check-shirt-men-urb-che-087/picture-2.webp",
+    "/assets/images/products/men-check-shirt-men-urb-che-087/picture-3.webp"
   ],
   "keywords": [
     "mens-shirts"

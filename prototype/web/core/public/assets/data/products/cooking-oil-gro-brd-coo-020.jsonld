@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "cooking-oil-gro-brd-coo-020",
+  "reference": "cooking-oil-gro-brd-coo-020",
   "sku": "gro-brd-coo-020",
   "name": "cooking-oil",
   "headline": "Cooking Oil",
   "description": "Versatile cooking oil suitable for frying, sautéing, and various culinary applications.",
-  "url": "https://example.com/products/cooking-oil-gro-brd-coo-020",
+  "url": "/pages/products/cooking-oil-gro-brd-coo-020",
   "ratingValue": 4.8,
   "priceCurrency": "php",
   "price": 4.99,
   "netPrice": 4.99,
   "discountPercentage": 9.33,
-  "dateCreated": "2026-03-09T17:33:16.944286Z",
-  "dateModified": "2026-03-09T17:33:16.944286Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.412857Z",
+  "dateModified": "2026-03-09T20:30:01.412857Z",
+  "thumbnail": "/assets/images/products/thumbnails/cooking-oil-gro-brd-coo-020.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/1.webp"
+    "/assets/images/products/cooking-oil-gro-brd-coo-020/picture-0.webp"
   ],
   "keywords": [
     "groceries"

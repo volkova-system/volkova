@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "milk-gro-brd-mil-032",
+  "reference": "milk-gro-brd-mil-032",
   "sku": "gro-brd-mil-032",
   "name": "milk",
   "headline": "Milk",
   "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
-  "url": "https://example.com/products/milk-gro-brd-mil-032",
+  "url": "/pages/products/milk-gro-brd-mil-032",
   "ratingValue": 2.61,
   "priceCurrency": "php",
   "price": 3.49,
   "netPrice": 3.49,
   "discountPercentage": 13.74,
-  "dateCreated": "2026-03-09T17:33:16.951672Z",
-  "dateModified": "2026-03-09T17:33:16.951672Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/milk/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.420575Z",
+  "dateModified": "2026-03-09T20:30:01.420575Z",
+  "thumbnail": "/assets/images/products/thumbnails/milk-gro-brd-mil-032.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/milk/1.webp"
+    "/assets/images/products/milk-gro-brd-mil-032/picture-0.webp"
   ],
   "keywords": [
     "groceries"

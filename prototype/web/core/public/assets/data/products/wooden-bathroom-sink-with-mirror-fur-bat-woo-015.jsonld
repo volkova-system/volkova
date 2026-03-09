@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
+  "reference": "wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
   "sku": "fur-bat-woo-015",
   "name": "wooden-bathroom-sink-with-mirror",
   "headline": "Wooden Bathroom Sink With Mirror",
   "description": "The Wooden Bathroom Sink with Mirror is a unique and stylish addition to your bathroom, featuring a wooden sink countertop and a matching mirror.",
-  "url": "https://example.com/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
+  "url": "/pages/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015",
   "ratingValue": 3.59,
   "priceCurrency": "php",
   "price": 799.99,
   "netPrice": 799.99,
   "discountPercentage": 8.8,
-  "dateCreated": "2026-03-09T17:33:16.940878Z",
-  "dateModified": "2026-03-09T17:33:16.940878Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.409617Z",
+  "dateModified": "2026-03-09T20:30:01.409617Z",
+  "thumbnail": "/assets/images/products/thumbnails/wooden-bathroom-sink-with-mirror-fur-bat-woo-015.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/1.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/2.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/3.webp"
+    "/assets/images/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015/picture-0.webp",
+    "/assets/images/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015/picture-1.webp",
+    "/assets/images/products/wooden-bathroom-sink-with-mirror-fur-bat-woo-015/picture-2.webp"
   ],
   "keywords": [
     "furniture"

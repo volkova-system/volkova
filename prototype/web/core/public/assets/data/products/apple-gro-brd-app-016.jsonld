@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "apple-gro-brd-app-016",
+  "reference": "apple-gro-brd-app-016",
   "sku": "gro-brd-app-016",
   "name": "apple",
   "headline": "Apple",
   "description": "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
-  "url": "https://example.com/products/apple-gro-brd-app-016",
+  "url": "/pages/products/apple-gro-brd-app-016",
   "ratingValue": 4.19,
   "priceCurrency": "php",
   "price": 1.99,
   "netPrice": 1.99,
   "discountPercentage": 12.62,
-  "dateCreated": "2026-03-09T17:33:16.941579Z",
-  "dateModified": "2026-03-09T17:33:16.941579Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.410412Z",
+  "dateModified": "2026-03-09T20:30:01.410412Z",
+  "thumbnail": "/assets/images/products/thumbnails/apple-gro-brd-app-016.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/apple/1.webp"
+    "/assets/images/products/apple-gro-brd-app-016/picture-0.webp"
   ],
   "keywords": [
     "groceries"

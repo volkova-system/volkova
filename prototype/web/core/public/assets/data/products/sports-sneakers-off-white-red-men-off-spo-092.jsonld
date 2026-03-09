@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "sports-sneakers-off-white-red-men-off-spo-092",
+  "reference": "sports-sneakers-off-white-red-men-off-spo-092",
   "sku": "men-off-spo-092",
   "name": "sports-sneakers-off-white-red",
   "headline": "Sports Sneakers Off White Red",
   "description": "Another variant of the Sports Sneakers in Off White Red, featuring a unique design. These sneakers offer style and comfort for casual occasions.",
-  "url": "https://example.com/products/sports-sneakers-off-white-red-men-off-spo-092",
+  "url": "/pages/products/sports-sneakers-off-white-red-men-off-spo-092",
   "ratingValue": 4.69,
   "priceCurrency": "php",
   "price": 109.99,
   "netPrice": 109.99,
   "discountPercentage": 0.04,
-  "dateCreated": "2026-03-09T17:33:16.985820Z",
-  "dateModified": "2026-03-09T17:33:16.985820Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.454689Z",
+  "dateModified": "2026-03-09T20:30:01.454689Z",
+  "thumbnail": "/assets/images/products/thumbnails/sports-sneakers-off-white-red-men-off-spo-092.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/4.webp"
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-092/picture-0.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-092/picture-1.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-092/picture-2.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-092/picture-3.webp"
   ],
   "keywords": [
     "mens-shoes"

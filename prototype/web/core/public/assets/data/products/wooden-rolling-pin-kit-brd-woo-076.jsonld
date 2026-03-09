@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "wooden-rolling-pin-kit-brd-woo-076",
+  "reference": "wooden-rolling-pin-kit-brd-woo-076",
   "sku": "kit-brd-woo-076",
   "name": "wooden-rolling-pin",
   "headline": "Wooden Rolling Pin",
   "description": "The Wooden Rolling Pin is a classic kitchen tool for rolling out dough for baking. Its smooth surface and sturdy handles make it easy to achieve uniform thickness.",
-  "url": "https://example.com/products/wooden-rolling-pin-kit-brd-woo-076",
+  "url": "/pages/products/wooden-rolling-pin-kit-brd-woo-076",
   "ratingValue": 2.92,
   "priceCurrency": "php",
   "price": 11.99,
   "netPrice": 11.99,
   "discountPercentage": 9.75,
-  "dateCreated": "2026-03-09T17:33:16.975779Z",
-  "dateModified": "2026-03-09T17:33:16.975779Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/wooden-rolling-pin/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.445805Z",
+  "dateModified": "2026-03-09T20:30:01.445805Z",
+  "thumbnail": "/assets/images/products/thumbnails/wooden-rolling-pin-kit-brd-woo-076.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/wooden-rolling-pin/1.webp"
+    "/assets/images/products/wooden-rolling-pin-kit-brd-woo-076/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

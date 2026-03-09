@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "huawei-matebook-x-pro-lap-hua-hua-080",
+  "reference": "huawei-matebook-x-pro-lap-hua-hua-080",
   "sku": "lap-hua-hua-080",
   "name": "huawei-matebook-x-pro",
   "headline": "Huawei Matebook X Pro",
   "description": "The Huawei Matebook X Pro is a slim and stylish laptop with a high-resolution touchscreen display, offering a premium experience for users on the go.",
-  "url": "https://example.com/products/huawei-matebook-x-pro-lap-hua-hua-080",
+  "url": "/pages/products/huawei-matebook-x-pro-lap-hua-hua-080",
   "ratingValue": 4.98,
   "priceCurrency": "php",
   "price": 1399.99,
   "netPrice": 1399.99,
   "discountPercentage": 9.38,
-  "dateCreated": "2026-03-09T17:33:16.977842Z",
-  "dateModified": "2026-03-09T17:33:16.977842Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.447946Z",
+  "dateModified": "2026-03-09T20:30:01.447946Z",
+  "thumbnail": "/assets/images/products/thumbnails/huawei-matebook-x-pro-lap-hua-hua-080.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/1.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/2.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/3.webp"
+    "/assets/images/products/huawei-matebook-x-pro-lap-hua-hua-080/picture-0.webp",
+    "/assets/images/products/huawei-matebook-x-pro-lap-hua-hua-080/picture-1.webp",
+    "/assets/images/products/huawei-matebook-x-pro-lap-hua-hua-080/picture-2.webp"
   ],
   "keywords": [
     "laptops"

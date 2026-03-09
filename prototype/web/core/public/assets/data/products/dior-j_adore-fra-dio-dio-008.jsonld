@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "dior-j_adore-fra-dio-dio-008",
+  "reference": "dior-j_adore-fra-dio-dio-008",
   "sku": "fra-dio-dio-008",
   "name": "dior-j_adore",
   "headline": "Dior J'adore",
   "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-  "url": "https://example.com/products/dior-j_adore-fra-dio-dio-008",
+  "url": "/pages/products/dior-j_adore-fra-dio-dio-008",
   "ratingValue": 3.8,
   "priceCurrency": "php",
   "price": 89.99,
   "netPrice": 89.99,
   "discountPercentage": 14.72,
-  "dateCreated": "2026-03-09T17:33:16.936113Z",
-  "dateModified": "2026-03-09T17:33:16.936113Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.405257Z",
+  "dateModified": "2026-03-09T20:30:01.405257Z",
+  "thumbnail": "/assets/images/products/thumbnails/dior-j_adore-fra-dio-dio-008.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/1.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/2.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/3.webp"
+    "/assets/images/products/dior-j_adore-fra-dio-dio-008/picture-0.webp",
+    "/assets/images/products/dior-j_adore-fra-dio-dio-008/picture-1.webp",
+    "/assets/images/products/dior-j_adore-fra-dio-dio-008/picture-2.webp"
   ],
   "keywords": [
     "fragrances"

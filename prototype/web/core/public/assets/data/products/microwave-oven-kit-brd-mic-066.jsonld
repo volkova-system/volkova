@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "microwave-oven-kit-brd-mic-066",
+  "reference": "microwave-oven-kit-brd-mic-066",
   "sku": "kit-brd-mic-066",
   "name": "microwave-oven",
   "headline": "Microwave Oven",
   "description": "The Microwave Oven is a versatile kitchen appliance for quick and efficient cooking, reheating, and defrosting. Its compact size makes it suitable for various kitchen setups.",
-  "url": "https://example.com/products/microwave-oven-kit-brd-mic-066",
+  "url": "/pages/products/microwave-oven-kit-brd-mic-066",
   "ratingValue": 4.82,
   "priceCurrency": "php",
   "price": 89.99,
   "netPrice": 89.99,
   "discountPercentage": 12.13,
-  "dateCreated": "2026-03-09T17:33:16.969784Z",
-  "dateModified": "2026-03-09T17:33:16.969784Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.439911Z",
+  "dateModified": "2026-03-09T20:30:01.439911Z",
+  "thumbnail": "/assets/images/products/thumbnails/microwave-oven-kit-brd-mic-066.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/1.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/2.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/3.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/4.webp"
+    "/assets/images/products/microwave-oven-kit-brd-mic-066/picture-0.webp",
+    "/assets/images/products/microwave-oven-kit-brd-mic-066/picture-1.webp",
+    "/assets/images/products/microwave-oven-kit-brd-mic-066/picture-2.webp",
+    "/assets/images/products/microwave-oven-kit-brd-mic-066/picture-3.webp"
   ],
   "keywords": [
     "kitchen-accessories"

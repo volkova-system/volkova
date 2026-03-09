@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "carbon-steel-wok-kit-brd-car-052",
+  "reference": "carbon-steel-wok-kit-brd-car-052",
   "sku": "kit-brd-car-052",
   "name": "carbon-steel-wok",
   "headline": "Carbon Steel Wok",
   "description": "The Carbon Steel Wok is a versatile cooking pan suitable for stir-frying, sautéing, and deep frying. Its sturdy construction ensures even heat distribution for delicious meals.",
-  "url": "https://example.com/products/carbon-steel-wok-kit-brd-car-052",
+  "url": "/pages/products/carbon-steel-wok-kit-brd-car-052",
   "ratingValue": 4.05,
   "priceCurrency": "php",
   "price": 29.99,
   "netPrice": 29.99,
   "discountPercentage": 6.53,
-  "dateCreated": "2026-03-09T17:33:16.962611Z",
-  "dateModified": "2026-03-09T17:33:16.962611Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/carbon-steel-wok/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.431977Z",
+  "dateModified": "2026-03-09T20:30:01.431977Z",
+  "thumbnail": "/assets/images/products/thumbnails/carbon-steel-wok-kit-brd-car-052.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/carbon-steel-wok/1.webp"
+    "/assets/images/products/carbon-steel-wok-kit-brd-car-052/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

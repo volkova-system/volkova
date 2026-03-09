@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "lunch-box-kit-brd-lun-065",
+  "reference": "lunch-box-kit-brd-lun-065",
   "sku": "kit-brd-lun-065",
   "name": "lunch-box",
   "headline": "Lunch Box",
   "description": "The Lunch Box is a convenient and portable container for packing and carrying your meals. With compartments for different foods, it's perfect for on-the-go dining.",
-  "url": "https://example.com/products/lunch-box-kit-brd-lun-065",
+  "url": "/pages/products/lunch-box-kit-brd-lun-065",
   "ratingValue": 4.93,
   "priceCurrency": "php",
   "price": 12.99,
   "netPrice": 12.99,
   "discountPercentage": 10.34,
-  "dateCreated": "2026-03-09T17:33:16.969293Z",
-  "dateModified": "2026-03-09T17:33:16.969293Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/lunch-box/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.439414Z",
+  "dateModified": "2026-03-09T20:30:01.439414Z",
+  "thumbnail": "/assets/images/products/thumbnails/lunch-box-kit-brd-lun-065.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/lunch-box/1.webp"
+    "/assets/images/products/lunch-box-kit-brd-lun-065/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

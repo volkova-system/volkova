@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "dog-food-gro-brd-foo-022",
+  "reference": "dog-food-gro-brd-foo-022",
   "sku": "gro-brd-foo-022",
   "name": "dog-food",
   "headline": "Dog Food",
   "description": "Specially formulated dog food designed to provide essential nutrients for your canine companion.",
-  "url": "https://example.com/products/dog-food-gro-brd-foo-022",
+  "url": "/pages/products/dog-food-gro-brd-foo-022",
   "ratingValue": 4.55,
   "priceCurrency": "php",
   "price": 10.99,
   "netPrice": 10.99,
   "discountPercentage": 10.27,
-  "dateCreated": "2026-03-09T17:33:16.945733Z",
-  "dateModified": "2026-03-09T17:33:16.945733Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/dog-food/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.414578Z",
+  "dateModified": "2026-03-09T20:30:01.414578Z",
+  "thumbnail": "/assets/images/products/thumbnails/dog-food-gro-brd-foo-022.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/dog-food/1.webp"
+    "/assets/images/products/dog-food-gro-brd-foo-022/picture-0.webp"
   ],
   "keywords": [
     "groceries"

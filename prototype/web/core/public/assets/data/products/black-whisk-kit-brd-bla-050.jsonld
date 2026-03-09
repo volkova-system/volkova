@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "black-whisk-kit-brd-bla-050",
+  "reference": "black-whisk-kit-brd-bla-050",
   "sku": "kit-brd-bla-050",
   "name": "black-whisk",
   "headline": "Black Whisk",
   "description": "The Black Whisk is a kitchen essential for whisking and beating ingredients. Its ergonomic handle and sleek design make it a practical and stylish tool.",
-  "url": "https://example.com/products/black-whisk-kit-brd-bla-050",
+  "url": "/pages/products/black-whisk-kit-brd-bla-050",
   "ratingValue": 3.9,
   "priceCurrency": "php",
   "price": 9.99,
   "netPrice": 9.99,
   "discountPercentage": 10.24,
-  "dateCreated": "2026-03-09T17:33:16.961648Z",
-  "dateModified": "2026-03-09T17:33:16.961648Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-whisk/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.430941Z",
+  "dateModified": "2026-03-09T20:30:01.430941Z",
+  "thumbnail": "/assets/images/products/thumbnails/black-whisk-kit-brd-bla-050.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-whisk/1.webp"
+    "/assets/images/products/black-whisk-kit-brd-bla-050/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

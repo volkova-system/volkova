@@ -2,22 +2,23 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "black-aluminium-cup-kit-brd-bla-049",
+  "reference": "black-aluminium-cup-kit-brd-bla-049",
   "sku": "kit-brd-bla-049",
   "name": "black-aluminium-cup",
   "headline": "Black Aluminium Cup",
   "description": "The Black Aluminium Cup is a stylish and durable cup suitable for both hot and cold beverages. Its sleek black design adds a modern touch to your drinkware collection.",
-  "url": "https://example.com/products/black-aluminium-cup-kit-brd-bla-049",
+  "url": "/pages/products/black-aluminium-cup-kit-brd-bla-049",
   "ratingValue": 4.46,
   "priceCurrency": "php",
   "price": 5.99,
   "netPrice": 5.99,
   "discountPercentage": 15.65,
-  "dateCreated": "2026-03-09T17:33:16.961163Z",
-  "dateModified": "2026-03-09T17:33:16.961163Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.430301Z",
+  "dateModified": "2026-03-09T20:30:01.430301Z",
+  "thumbnail": "/assets/images/products/thumbnails/black-aluminium-cup-kit-brd-bla-049.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/1.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-aluminium-cup/2.webp"
+    "/assets/images/products/black-aluminium-cup-kit-brd-bla-049/picture-0.webp",
+    "/assets/images/products/black-aluminium-cup-kit-brd-bla-049/picture-1.webp"
   ],
   "keywords": [
     "kitchen-accessories"

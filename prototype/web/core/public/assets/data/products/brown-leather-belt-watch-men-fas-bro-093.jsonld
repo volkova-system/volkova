@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "brown-leather-belt-watch-men-fas-bro-093",
+  "reference": "brown-leather-belt-watch-men-fas-bro-093",
   "sku": "men-fas-bro-093",
   "name": "brown-leather-belt-watch",
   "headline": "Brown Leather Belt Watch",
   "description": "The Brown Leather Belt Watch is a stylish timepiece with a classic design. Featuring a genuine leather strap and a sleek dial, it adds a touch of sophistication to your look.",
-  "url": "https://example.com/products/brown-leather-belt-watch-men-fas-bro-093",
+  "url": "/pages/products/brown-leather-belt-watch-men-fas-bro-093",
   "ratingValue": 4.19,
   "priceCurrency": "php",
   "price": 89.99,
   "netPrice": 89.99,
   "discountPercentage": 5.99,
-  "dateCreated": "2026-03-09T17:33:16.986429Z",
-  "dateModified": "2026-03-09T17:33:16.986429Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.455373Z",
+  "dateModified": "2026-03-09T20:30:01.455373Z",
+  "thumbnail": "/assets/images/products/thumbnails/brown-leather-belt-watch-men-fas-bro-093.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/3.webp"
+    "/assets/images/products/brown-leather-belt-watch-men-fas-bro-093/picture-0.webp",
+    "/assets/images/products/brown-leather-belt-watch-men-fas-bro-093/picture-1.webp",
+    "/assets/images/products/brown-leather-belt-watch-men-fas-bro-093/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

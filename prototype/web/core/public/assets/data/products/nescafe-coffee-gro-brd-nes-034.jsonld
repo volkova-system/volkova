@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "nescafe-coffee-gro-brd-nes-034",
+  "reference": "nescafe-coffee-gro-brd-nes-034",
   "sku": "gro-brd-nes-034",
   "name": "nescafe-coffee",
   "headline": "Nescafe Coffee",
   "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
-  "url": "https://example.com/products/nescafe-coffee-gro-brd-nes-034",
+  "url": "/pages/products/nescafe-coffee-gro-brd-nes-034",
   "ratingValue": 4.82,
   "priceCurrency": "php",
   "price": 7.99,
   "netPrice": 7.99,
   "discountPercentage": 1.59,
-  "dateCreated": "2026-03-09T17:33:16.952770Z",
-  "dateModified": "2026-03-09T17:33:16.952770Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/nescafe-coffee/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.422039Z",
+  "dateModified": "2026-03-09T20:30:01.422039Z",
+  "thumbnail": "/assets/images/products/thumbnails/nescafe-coffee-gro-brd-nes-034.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/nescafe-coffee/1.webp"
+    "/assets/images/products/nescafe-coffee-gro-brd-nes-034/picture-0.webp"
   ],
   "keywords": [
     "groceries"

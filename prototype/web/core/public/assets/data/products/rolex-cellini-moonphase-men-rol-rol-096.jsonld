@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "rolex-cellini-moonphase-men-rol-rol-096",
+  "reference": "rolex-cellini-moonphase-men-rol-rol-096",
   "sku": "men-rol-rol-096",
   "name": "rolex-cellini-moonphase",
   "headline": "Rolex Cellini Moonphase",
   "description": "The Rolex Cellini Moonphase is a masterpiece of horology, featuring a moon phase complication and exquisite design. It reflects Rolex's commitment to precision and elegance.",
-  "url": "https://example.com/products/rolex-cellini-moonphase-men-rol-rol-096",
+  "url": "/pages/products/rolex-cellini-moonphase-men-rol-rol-096",
   "ratingValue": 2.58,
   "priceCurrency": "php",
   "price": 12999.99,
   "netPrice": 12999.99,
   "discountPercentage": 17.52,
-  "dateCreated": "2026-03-09T17:33:16.988083Z",
-  "dateModified": "2026-03-09T17:33:16.988083Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-moonphase/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.457383Z",
+  "dateModified": "2026-03-09T20:30:01.457383Z",
+  "thumbnail": "/assets/images/products/thumbnails/rolex-cellini-moonphase-men-rol-rol-096.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-moonphase/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-moonphase/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-moonphase/3.webp"
+    "/assets/images/products/rolex-cellini-moonphase-men-rol-rol-096/picture-0.webp",
+    "/assets/images/products/rolex-cellini-moonphase-men-rol-rol-096/picture-1.webp",
+    "/assets/images/products/rolex-cellini-moonphase-men-rol-rol-096/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

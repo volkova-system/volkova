@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "nike-baseball-cleats-men-nik-nik-089",
+  "reference": "nike-baseball-cleats-men-nik-nik-089",
   "sku": "men-nik-nik-089",
   "name": "nike-baseball-cleats",
   "headline": "Nike Baseball Cleats",
   "description": "Nike Baseball Cleats are designed for maximum traction and performance on the baseball field. They provide stability and support for players during games and practices.",
-  "url": "https://example.com/products/nike-baseball-cleats-men-nik-nik-089",
+  "url": "/pages/products/nike-baseball-cleats-men-nik-nik-089",
   "ratingValue": 3.88,
   "priceCurrency": "php",
   "price": 79.99,
   "netPrice": 79.99,
   "discountPercentage": 18.04,
-  "dateCreated": "2026-03-09T17:33:16.983480Z",
-  "dateModified": "2026-03-09T17:33:16.983480Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.453150Z",
+  "dateModified": "2026-03-09T20:30:01.453150Z",
+  "thumbnail": "/assets/images/products/thumbnails/nike-baseball-cleats-men-nik-nik-089.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/4.webp"
+    "/assets/images/products/nike-baseball-cleats-men-nik-nik-089/picture-0.webp",
+    "/assets/images/products/nike-baseball-cleats-men-nik-nik-089/picture-1.webp",
+    "/assets/images/products/nike-baseball-cleats-men-nik-nik-089/picture-2.webp",
+    "/assets/images/products/nike-baseball-cleats-men-nik-nik-089/picture-3.webp"
   ],
   "keywords": [
     "mens-shoes"

@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "juice-gro-brd-jui-029",
+  "reference": "juice-gro-brd-jui-029",
   "sku": "gro-brd-jui-029",
   "name": "juice",
   "headline": "Juice",
   "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
-  "url": "https://example.com/products/juice-gro-brd-jui-029",
+  "url": "/pages/products/juice-gro-brd-jui-029",
   "ratingValue": 3.94,
   "priceCurrency": "php",
   "price": 3.99,
   "netPrice": 3.99,
   "discountPercentage": 12.06,
-  "dateCreated": "2026-03-09T17:33:16.950042Z",
-  "dateModified": "2026-03-09T17:33:16.950042Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/juice/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.418759Z",
+  "dateModified": "2026-03-09T20:30:01.418759Z",
+  "thumbnail": "/assets/images/products/thumbnails/juice-gro-brd-jui-029.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/juice/1.webp"
+    "/assets/images/products/juice-gro-brd-jui-029/picture-0.webp"
   ],
   "keywords": [
     "groceries"

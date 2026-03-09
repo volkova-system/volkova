@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "longines-master-collection-men-lon-lon-094",
+  "reference": "longines-master-collection-men-lon-lon-094",
   "sku": "men-lon-lon-094",
   "name": "longines-master-collection",
   "headline": "Longines Master Collection",
   "description": "The Longines Master Collection is an elegant and refined watch known for its precision and craftsmanship. With a timeless design, it's a symbol of luxury and sophistication.",
-  "url": "https://example.com/products/longines-master-collection-men-lon-lon-094",
+  "url": "/pages/products/longines-master-collection-men-lon-lon-094",
   "ratingValue": 3.87,
   "priceCurrency": "php",
   "price": 1499.99,
   "netPrice": 1499.99,
   "discountPercentage": 17.24,
-  "dateCreated": "2026-03-09T17:33:16.986971Z",
-  "dateModified": "2026-03-09T17:33:16.986971Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.456020Z",
+  "dateModified": "2026-03-09T20:30:01.456020Z",
+  "thumbnail": "/assets/images/products/thumbnails/longines-master-collection-men-lon-lon-094.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/3.webp"
+    "/assets/images/products/longines-master-collection-men-lon-lon-094/picture-0.webp",
+    "/assets/images/products/longines-master-collection-men-lon-lon-094/picture-1.webp",
+    "/assets/images/products/longines-master-collection-men-lon-lon-094/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

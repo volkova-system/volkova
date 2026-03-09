@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "knife-kit-brd-kni-064",
+  "reference": "knife-kit-brd-kni-064",
   "sku": "kit-brd-kni-064",
   "name": "knife",
   "headline": "Knife",
   "description": "The Knife is an essential kitchen tool for chopping, slicing, and dicing. Its sharp blade and ergonomic handle make it a reliable choice for food preparation.",
-  "url": "https://example.com/products/knife-kit-brd-kni-064",
+  "url": "/pages/products/knife-kit-brd-kni-064",
   "ratingValue": 3.26,
   "priceCurrency": "php",
   "price": 14.99,
   "netPrice": 14.99,
   "discountPercentage": 18.86,
-  "dateCreated": "2026-03-09T17:33:16.968818Z",
-  "dateModified": "2026-03-09T17:33:16.968818Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/knife/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.438863Z",
+  "dateModified": "2026-03-09T20:30:01.438863Z",
+  "thumbnail": "/assets/images/products/thumbnails/knife-kit-brd-kni-064.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/knife/1.webp"
+    "/assets/images/products/knife-kit-brd-kni-064/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

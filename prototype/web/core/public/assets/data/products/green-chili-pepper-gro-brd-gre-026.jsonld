@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "green-chili-pepper-gro-brd-gre-026",
+  "reference": "green-chili-pepper-gro-brd-gre-026",
   "sku": "gro-brd-gre-026",
   "name": "green-chili-pepper",
   "headline": "Green Chili Pepper",
   "description": "Spicy green chili pepper, ideal for adding heat to your favorite recipes.",
-  "url": "https://example.com/products/green-chili-pepper-gro-brd-gre-026",
+  "url": "/pages/products/green-chili-pepper-gro-brd-gre-026",
   "ratingValue": 3.66,
   "priceCurrency": "php",
   "price": 0.99,
   "netPrice": 0.99,
   "discountPercentage": 1.0,
-  "dateCreated": "2026-03-09T17:33:16.948364Z",
-  "dateModified": "2026-03-09T17:33:16.948364Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.417109Z",
+  "dateModified": "2026-03-09T20:30:01.417109Z",
+  "thumbnail": "/assets/images/products/thumbnails/green-chili-pepper-gro-brd-gre-026.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/1.webp"
+    "/assets/images/products/green-chili-pepper-gro-brd-gre-026/picture-0.webp"
   ],
   "keywords": [
     "groceries"

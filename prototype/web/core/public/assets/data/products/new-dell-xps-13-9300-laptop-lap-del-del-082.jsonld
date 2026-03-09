@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "new-dell-xps-13-9300-laptop-lap-del-del-082",
+  "reference": "new-dell-xps-13-9300-laptop-lap-del-del-082",
   "sku": "lap-del-del-082",
   "name": "new-dell-xps-13-9300-laptop",
   "headline": "New DELL XPS 13 9300 Laptop",
   "description": "The New DELL XPS 13 9300 Laptop is a compact and powerful device, featuring a virtually borderless InfinityEdge display and high-end performance for various tasks.",
-  "url": "https://example.com/products/new-dell-xps-13-9300-laptop-lap-del-del-082",
+  "url": "/pages/products/new-dell-xps-13-9300-laptop-lap-del-del-082",
   "ratingValue": 2.67,
   "priceCurrency": "php",
   "price": 1499.99,
   "netPrice": 1499.99,
   "discountPercentage": 11.89,
-  "dateCreated": "2026-03-09T17:33:16.979009Z",
-  "dateModified": "2026-03-09T17:33:16.979009Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.449245Z",
+  "dateModified": "2026-03-09T20:30:01.449245Z",
+  "thumbnail": "/assets/images/products/thumbnails/new-dell-xps-13-9300-laptop-lap-del-del-082.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/1.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/2.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/3.webp"
+    "/assets/images/products/new-dell-xps-13-9300-laptop-lap-del-del-082/picture-0.webp",
+    "/assets/images/products/new-dell-xps-13-9300-laptop-lap-del-del-082/picture-1.webp",
+    "/assets/images/products/new-dell-xps-13-9300-laptop-lap-del-del-082/picture-2.webp"
   ],
   "keywords": [
     "laptops"

@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "rolex-submariner-watch-men-rol-rol-098",
+  "reference": "rolex-submariner-watch-men-rol-rol-098",
   "sku": "men-rol-rol-098",
   "name": "rolex-submariner-watch",
   "headline": "Rolex Submariner Watch",
   "description": "The Rolex Submariner is a legendary dive watch with a rich history. Known for its durability and water resistance, it's a symbol of adventure and exploration.",
-  "url": "https://example.com/products/rolex-submariner-watch-men-rol-rol-098",
+  "url": "/pages/products/rolex-submariner-watch-men-rol-rol-098",
   "ratingValue": 2.69,
   "priceCurrency": "php",
   "price": 13999.99,
   "netPrice": 13999.99,
   "discountPercentage": 5.05,
-  "dateCreated": "2026-03-09T17:33:16.989155Z",
-  "dateModified": "2026-03-09T17:33:16.989155Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.458443Z",
+  "dateModified": "2026-03-09T20:30:01.458443Z",
+  "thumbnail": "/assets/images/products/thumbnails/rolex-submariner-watch-men-rol-rol-098.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/3.webp"
+    "/assets/images/products/rolex-submariner-watch-men-rol-rol-098/picture-0.webp",
+    "/assets/images/products/rolex-submariner-watch-men-rol-rol-098/picture-1.webp",
+    "/assets/images/products/rolex-submariner-watch-men-rol-rol-098/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

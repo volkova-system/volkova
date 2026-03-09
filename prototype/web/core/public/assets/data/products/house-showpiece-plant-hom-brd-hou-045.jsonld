@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "house-showpiece-plant-hom-brd-hou-045",
+  "reference": "house-showpiece-plant-hom-brd-hou-045",
   "sku": "hom-brd-hou-045",
   "name": "house-showpiece-plant",
   "headline": "House Showpiece Plant",
   "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
-  "url": "https://example.com/products/house-showpiece-plant-hom-brd-hou-045",
+  "url": "/pages/products/house-showpiece-plant-hom-brd-hou-045",
   "ratingValue": 4.67,
   "priceCurrency": "php",
   "price": 39.99,
   "netPrice": 39.99,
   "discountPercentage": 7.46,
-  "dateCreated": "2026-03-09T17:33:16.959173Z",
-  "dateModified": "2026-03-09T17:33:16.959173Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.428179Z",
+  "dateModified": "2026-03-09T20:30:01.428179Z",
+  "thumbnail": "/assets/images/products/thumbnails/house-showpiece-plant-hom-brd-hou-045.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/1.webp",
-    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/2.webp",
-    "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/3.webp"
+    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-0.webp",
+    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-1.webp",
+    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-2.webp"
   ],
   "keywords": [
     "home-decoration"

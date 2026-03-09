@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "slotted-turner-kit-brd-slo-072",
+  "reference": "slotted-turner-kit-brd-slo-072",
   "sku": "kit-brd-slo-072",
   "name": "slotted-turner",
   "headline": "Slotted Turner",
   "description": "The Slotted Turner is a kitchen utensil designed for flipping and turning food items. Its slotted design allows excess liquid to drain, making it ideal for frying and sautéing.",
-  "url": "https://example.com/products/slotted-turner-kit-brd-slo-072",
+  "url": "/pages/products/slotted-turner-kit-brd-slo-072",
   "ratingValue": 3.4,
   "priceCurrency": "php",
   "price": 8.99,
   "netPrice": 8.99,
   "discountPercentage": 13.35,
-  "dateCreated": "2026-03-09T17:33:16.973368Z",
-  "dateModified": "2026-03-09T17:33:16.973368Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/slotted-turner/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.443283Z",
+  "dateModified": "2026-03-09T20:30:01.443283Z",
+  "thumbnail": "/assets/images/products/thumbnails/slotted-turner-kit-brd-slo-072.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/slotted-turner/1.webp"
+    "/assets/images/products/slotted-turner-kit-brd-slo-072/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

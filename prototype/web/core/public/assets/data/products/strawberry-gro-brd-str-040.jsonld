@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "strawberry-gro-brd-str-040",
+  "reference": "strawberry-gro-brd-str-040",
   "sku": "gro-brd-str-040",
   "name": "strawberry",
   "headline": "Strawberry",
   "description": "Sweet and succulent strawberries, great for snacking, desserts, or blending into smoothies.",
-  "url": "https://example.com/products/strawberry-gro-brd-str-040",
+  "url": "/pages/products/strawberry-gro-brd-str-040",
   "ratingValue": 3.08,
   "priceCurrency": "php",
   "price": 3.99,
   "netPrice": 3.99,
   "discountPercentage": 1.12,
-  "dateCreated": "2026-03-09T17:33:16.956440Z",
-  "dateModified": "2026-03-09T17:33:16.956440Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/strawberry/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.425529Z",
+  "dateModified": "2026-03-09T20:30:01.425529Z",
+  "thumbnail": "/assets/images/products/thumbnails/strawberry-gro-brd-str-040.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/strawberry/1.webp"
+    "/assets/images/products/strawberry-gro-brd-str-040/picture-0.webp"
   ],
   "keywords": [
     "groceries"

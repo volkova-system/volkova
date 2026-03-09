@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "honey-jar-gro-brd-hon-027",
+  "reference": "honey-jar-gro-brd-hon-027",
   "sku": "gro-brd-hon-027",
   "name": "honey-jar",
   "headline": "Honey Jar",
   "description": "Pure and natural honey in a convenient jar, perfect for sweetening beverages or drizzling over food.",
-  "url": "https://example.com/products/honey-jar-gro-brd-hon-027",
+  "url": "/pages/products/honey-jar-gro-brd-hon-027",
   "ratingValue": 3.97,
   "priceCurrency": "php",
   "price": 6.99,
   "netPrice": 6.99,
   "discountPercentage": 14.4,
-  "dateCreated": "2026-03-09T17:33:16.948959Z",
-  "dateModified": "2026-03-09T17:33:16.948959Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/honey-jar/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.417668Z",
+  "dateModified": "2026-03-09T20:30:01.417668Z",
+  "thumbnail": "/assets/images/products/thumbnails/honey-jar-gro-brd-hon-027.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/honey-jar/1.webp"
+    "/assets/images/products/honey-jar-gro-brd-hon-027/picture-0.webp"
   ],
   "keywords": [
     "groceries"

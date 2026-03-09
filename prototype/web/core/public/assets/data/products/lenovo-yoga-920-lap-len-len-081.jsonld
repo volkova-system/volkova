@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "lenovo-yoga-920-lap-len-len-081",
+  "reference": "lenovo-yoga-920-lap-len-len-081",
   "sku": "lap-len-len-081",
   "name": "lenovo-yoga-920",
   "headline": "Lenovo Yoga 920",
   "description": "The Lenovo Yoga 920 is a 2-in-1 convertible laptop with a flexible hinge, allowing you to use it as a laptop or tablet, offering versatility and portability.",
-  "url": "https://example.com/products/lenovo-yoga-920-lap-len-len-081",
+  "url": "/pages/products/lenovo-yoga-920-lap-len-len-081",
   "ratingValue": 2.86,
   "priceCurrency": "php",
   "price": 1099.99,
   "netPrice": 1099.99,
   "discountPercentage": 6.55,
-  "dateCreated": "2026-03-09T17:33:16.978479Z",
-  "dateModified": "2026-03-09T17:33:16.978479Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/lenovo-yoga-920/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.448697Z",
+  "dateModified": "2026-03-09T20:30:01.448697Z",
+  "thumbnail": "/assets/images/products/thumbnails/lenovo-yoga-920-lap-len-len-081.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/laptops/lenovo-yoga-920/1.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/lenovo-yoga-920/2.webp",
-    "https://cdn.dummyjson.com/product-images/laptops/lenovo-yoga-920/3.webp"
+    "/assets/images/products/lenovo-yoga-920-lap-len-len-081/picture-0.webp",
+    "/assets/images/products/lenovo-yoga-920-lap-len-len-081/picture-1.webp",
+    "/assets/images/products/lenovo-yoga-920-lap-len-len-081/picture-2.webp"
   ],
   "keywords": [
     "laptops"

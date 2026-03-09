@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "soft-drinks-gro-brd-sof-039",
+  "reference": "soft-drinks-gro-brd-sof-039",
   "sku": "gro-brd-sof-039",
   "name": "soft-drinks",
   "headline": "Soft Drinks",
   "description": "Assorted soft drinks in various flavors, perfect for refreshing beverages.",
-  "url": "https://example.com/products/soft-drinks-gro-brd-sof-039",
+  "url": "/pages/products/soft-drinks-gro-brd-sof-039",
   "ratingValue": 4.75,
   "priceCurrency": "php",
   "price": 1.99,
   "netPrice": 1.99,
   "discountPercentage": 17.48,
-  "dateCreated": "2026-03-09T17:33:16.955466Z",
-  "dateModified": "2026-03-09T17:33:16.955466Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.424759Z",
+  "dateModified": "2026-03-09T20:30:01.424759Z",
+  "thumbnail": "/assets/images/products/thumbnails/soft-drinks-gro-brd-sof-039.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/1.webp"
+    "/assets/images/products/soft-drinks-gro-brd-sof-039/picture-0.webp"
   ],
   "keywords": [
     "groceries"

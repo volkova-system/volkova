@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "tray-kit-brd-tra-075",
+  "reference": "tray-kit-brd-tra-075",
   "sku": "kit-brd-tra-075",
   "name": "tray",
   "headline": "Tray",
   "description": "The Tray is a functional and decorative item for serving snacks, appetizers, or drinks. Its stylish design makes it a versatile accessory for entertaining guests.",
-  "url": "https://example.com/products/tray-kit-brd-tra-075",
+  "url": "/pages/products/tray-kit-brd-tra-075",
   "ratingValue": 4.62,
   "priceCurrency": "php",
   "price": 16.99,
   "netPrice": 16.99,
   "discountPercentage": 7.48,
-  "dateCreated": "2026-03-09T17:33:16.975230Z",
-  "dateModified": "2026-03-09T17:33:16.975230Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/tray/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.445173Z",
+  "dateModified": "2026-03-09T20:30:01.445173Z",
+  "thumbnail": "/assets/images/products/thumbnails/tray-kit-brd-tra-075.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/tray/1.webp"
+    "/assets/images/products/tray-kit-brd-tra-075/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

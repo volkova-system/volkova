@@ -1,10 +1,7 @@
 package model
 
 import (
-	"strings"
 	"time"
-
-	"github.com/gosimple/slug"
 )
 
 type Product struct {
@@ -28,7 +25,7 @@ type Product struct {
 	DateModified        time.Time           `json:"dateModified"`
 
     Thumbnail           string              `json:"thumbnail"`
-	Images              []string           `json:"images"`
+	Images              []string            `json:"images"`
 
     Keywords            []string            `json:"keywords"`
 
@@ -80,58 +77,4 @@ type PropertyValue struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Value       string `json:"value"`
-}
-
-func (product *Product) Normalize() {
-    product.Context = "https://schema.org"
-	product.Type = "Product"
-    product.ID = slug.Make(product.Name + "-" + product.SKU)
-
-    product.SKU = slug.Make(product.SKU)
-    product.Name = slug.Make(product.Headline)
-    product.Headline = strings.TrimSpace(product.Headline)
-    product.Description = strings.TrimSpace(product.Description)
-    product.URL = strings.TrimSpace(product.URL)
-
-    product.PriceCurrency = strings.ToLower(strings.TrimSpace(product.PriceCurrency))
-
-    product.CacheIdentifier.Type = "PropertyValue"
-    product.CacheIdentifier.PropertyID = "cache:key"
-    product.CacheIdentifier.Name = "cache_key"
-    product.CacheIdentifier.Value = "product:" + product.ID
-
-    product.Brand.Type = "Brand"
-    product.Brand.Name = strings.TrimSpace(product.Brand.Name)
-
-    product.AggregateRating.Type = "AggregateRating"
-    product.AggregateRating.RatingValue = product.RatingValue
-    product.AggregateRating.BestRating = 5
-    product.AggregateRating.WorstRating = 1
-
-    product.Offers.Type = "Offer"
-    product.Offers.Availability = "https://schema.org/InStock"
-    product.Offers.PriceSpecification.Type = "PriceSpecification"
-    product.Offers.PriceSpecification.Price = product.Price
-    product.Offers.PriceSpecification.PriceCurrency = product.PriceCurrency
-    product.Offers.DiscountPercentage = product.DiscountPercentage
-
-    for index := range product.AdditionalProperty {
-        if product.AdditionalProperty[index].Type == "" {
-            product.AdditionalProperty[index].Type = "PropertyValue"
-            product.AdditionalProperty[index].Name = strings.TrimSpace(
-                product.AdditionalProperty[index].Name)
-            product.AdditionalProperty[index].Description = strings.TrimSpace(
-                product.AdditionalProperty[index].Description)
-            product.AdditionalProperty[index].Value = strings.TrimSpace(
-                product.AdditionalProperty[index].Value)
-        }
-    }
-
-    if product.DateCreated.IsZero() {
-		product.DateCreated = time.Now().UTC()
-	}
-
-    if product.DateModified.IsZero() {
-		product.DateModified = time.Now().UTC()
-	}
 }

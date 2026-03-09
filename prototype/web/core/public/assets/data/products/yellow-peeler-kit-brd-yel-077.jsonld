@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "yellow-peeler-kit-brd-yel-077",
+  "reference": "yellow-peeler-kit-brd-yel-077",
   "sku": "kit-brd-yel-077",
   "name": "yellow-peeler",
   "headline": "Yellow Peeler",
   "description": "The Yellow Peeler is a handy tool for peeling fruits and vegetables with ease. Its bright yellow color adds a cheerful touch to your kitchen gadgets.",
-  "url": "https://example.com/products/yellow-peeler-kit-brd-yel-077",
+  "url": "/pages/products/yellow-peeler-kit-brd-yel-077",
   "ratingValue": 4.24,
   "priceCurrency": "php",
   "price": 5.99,
   "netPrice": 5.99,
   "discountPercentage": 12.48,
-  "dateCreated": "2026-03-09T17:33:16.976299Z",
-  "dateModified": "2026-03-09T17:33:16.976299Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.446397Z",
+  "dateModified": "2026-03-09T20:30:01.446397Z",
+  "thumbnail": "/assets/images/products/thumbnails/yellow-peeler-kit-brd-yel-077.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/1.webp"
+    "/assets/images/products/yellow-peeler-kit-brd-yel-077/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "hand-blender-kit-brd-han-061",
+  "reference": "hand-blender-kit-brd-han-061",
   "sku": "kit-brd-han-061",
   "name": "hand-blender",
   "headline": "Hand Blender",
   "description": "The Hand Blender is a versatile kitchen appliance for blending, pureeing, and mixing. Its compact design and powerful motor make it a convenient tool for various recipes.",
-  "url": "https://example.com/products/hand-blender-kit-brd-han-061",
+  "url": "/pages/products/hand-blender-kit-brd-han-061",
   "ratingValue": 3.86,
   "priceCurrency": "php",
   "price": 34.99,
   "netPrice": 34.99,
   "discountPercentage": 17.02,
-  "dateCreated": "2026-03-09T17:33:16.967348Z",
-  "dateModified": "2026-03-09T17:33:16.967348Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/hand-blender/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.437337Z",
+  "dateModified": "2026-03-09T20:30:01.437337Z",
+  "thumbnail": "/assets/images/products/thumbnails/hand-blender-kit-brd-han-061.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/hand-blender/1.webp"
+    "/assets/images/products/hand-blender-kit-brd-han-061/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

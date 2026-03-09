@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "rolex-cellini-date-black-dial-men-rol-rol-095",
+  "reference": "rolex-cellini-date-black-dial-men-rol-rol-095",
   "sku": "men-rol-rol-095",
   "name": "rolex-cellini-date-black-dial",
   "headline": "Rolex Cellini Date Black Dial",
   "description": "The Rolex Cellini Date with Black Dial is a classic and prestigious watch. With a black dial and date complication, it exudes sophistication and is a symbol of Rolex's heritage.",
-  "url": "https://example.com/products/rolex-cellini-date-black-dial-men-rol-rol-095",
+  "url": "/pages/products/rolex-cellini-date-black-dial-men-rol-rol-095",
   "ratingValue": 4.97,
   "priceCurrency": "php",
   "price": 8999.99,
   "netPrice": 8999.99,
   "discountPercentage": 8.88,
-  "dateCreated": "2026-03-09T17:33:16.987484Z",
-  "dateModified": "2026-03-09T17:33:16.987484Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.456745Z",
+  "dateModified": "2026-03-09T20:30:01.456745Z",
+  "thumbnail": "/assets/images/products/thumbnails/rolex-cellini-date-black-dial-men-rol-rol-095.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/3.webp"
+    "/assets/images/products/rolex-cellini-date-black-dial-men-rol-rol-095/picture-0.webp",
+    "/assets/images/products/rolex-cellini-date-black-dial-men-rol-rol-095/picture-1.webp",
+    "/assets/images/products/rolex-cellini-date-black-dial-men-rol-rol-095/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

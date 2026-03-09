@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "man-plaid-shirt-men-cla-pla-085",
+  "reference": "man-plaid-shirt-men-cla-pla-085",
   "sku": "men-cla-pla-085",
   "name": "man-plaid-shirt",
   "headline": "Man Plaid Shirt",
   "description": "The Man Plaid Shirt is a timeless and versatile men's shirt with a classic plaid pattern. Its comfortable fit and casual style make it a wardrobe essential for various occasions.",
-  "url": "https://example.com/products/man-plaid-shirt-men-cla-pla-085",
+  "url": "/pages/products/man-plaid-shirt-men-cla-pla-085",
   "ratingValue": 3.46,
   "priceCurrency": "php",
   "price": 34.99,
   "netPrice": 34.99,
   "discountPercentage": 19.5,
-  "dateCreated": "2026-03-09T17:33:16.980824Z",
-  "dateModified": "2026-03-09T17:33:16.980824Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/man-plaid-shirt/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.451086Z",
+  "dateModified": "2026-03-09T20:30:01.451086Z",
+  "thumbnail": "/assets/images/products/thumbnails/man-plaid-shirt-men-cla-pla-085.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-plaid-shirt/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-plaid-shirt/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-plaid-shirt/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-plaid-shirt/4.webp"
+    "/assets/images/products/man-plaid-shirt-men-cla-pla-085/picture-0.webp",
+    "/assets/images/products/man-plaid-shirt-men-cla-pla-085/picture-1.webp",
+    "/assets/images/products/man-plaid-shirt-men-cla-pla-085/picture-2.webp",
+    "/assets/images/products/man-plaid-shirt-men-cla-pla-085/picture-3.webp"
   ],
   "keywords": [
     "mens-shirts"

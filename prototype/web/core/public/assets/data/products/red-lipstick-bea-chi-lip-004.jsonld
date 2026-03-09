@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "red-lipstick-bea-chi-lip-004",
+  "reference": "red-lipstick-bea-chi-lip-004",
   "sku": "bea-chi-lip-004",
   "name": "red-lipstick",
   "headline": "Red Lipstick",
   "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
-  "url": "https://example.com/products/red-lipstick-bea-chi-lip-004",
+  "url": "/pages/products/red-lipstick-bea-chi-lip-004",
   "ratingValue": 4.36,
   "priceCurrency": "php",
   "price": 12.99,
   "netPrice": 12.99,
   "discountPercentage": 12.16,
-  "dateCreated": "2026-03-09T17:33:16.933392Z",
-  "dateModified": "2026-03-09T17:33:16.933392Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.402494Z",
+  "dateModified": "2026-03-09T20:30:01.402494Z",
+  "thumbnail": "/assets/images/products/thumbnails/red-lipstick-bea-chi-lip-004.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
+    "/assets/images/products/red-lipstick-bea-chi-lip-004/picture-0.webp"
   ],
   "keywords": [
     "beauty"

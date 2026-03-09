@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "electric-stove-kit-brd-ele-056",
+  "reference": "electric-stove-kit-brd-ele-056",
   "sku": "kit-brd-ele-056",
   "name": "electric-stove",
   "headline": "Electric Stove",
   "description": "The Electric Stove provides a portable and efficient cooking solution. Ideal for small kitchens or as an additional cooking surface for various culinary needs.",
-  "url": "https://example.com/products/electric-stove-kit-brd-ele-056",
+  "url": "/pages/products/electric-stove-kit-brd-ele-056",
   "ratingValue": 4.11,
   "priceCurrency": "php",
   "price": 49.99,
   "netPrice": 49.99,
   "discountPercentage": 14.04,
-  "dateCreated": "2026-03-09T17:33:16.964787Z",
-  "dateModified": "2026-03-09T17:33:16.964787Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.433925Z",
+  "dateModified": "2026-03-09T20:30:01.433925Z",
+  "thumbnail": "/assets/images/products/thumbnails/electric-stove-kit-brd-ele-056.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/1.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/2.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/3.webp",
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/4.webp"
+    "/assets/images/products/electric-stove-kit-brd-ele-056/picture-0.webp",
+    "/assets/images/products/electric-stove-kit-brd-ele-056/picture-1.webp",
+    "/assets/images/products/electric-stove-kit-brd-ele-056/picture-2.webp",
+    "/assets/images/products/electric-stove-kit-brd-ele-056/picture-3.webp"
   ],
   "keywords": [
     "kitchen-accessories"

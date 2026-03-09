@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "lemon-gro-brd-lem-031",
+  "reference": "lemon-gro-brd-lem-031",
   "sku": "gro-brd-lem-031",
   "name": "lemon",
   "headline": "Lemon",
   "description": "Zesty and tangy lemons, versatile for cooking, baking, or making refreshing beverages.",
-  "url": "https://example.com/products/lemon-gro-brd-lem-031",
+  "url": "/pages/products/lemon-gro-brd-lem-031",
   "ratingValue": 3.53,
   "priceCurrency": "php",
   "price": 0.79,
   "netPrice": 0.79,
   "discountPercentage": 9.7,
-  "dateCreated": "2026-03-09T17:33:16.951052Z",
-  "dateModified": "2026-03-09T17:33:16.951052Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/lemon/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.419787Z",
+  "dateModified": "2026-03-09T20:30:01.419787Z",
+  "thumbnail": "/assets/images/products/thumbnails/lemon-gro-brd-lem-031.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/lemon/1.webp"
+    "/assets/images/products/lemon-gro-brd-lem-031/picture-0.webp"
   ],
   "keywords": [
     "groceries"

@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "family-tree-photo-frame-hom-brd-fam-044",
+  "reference": "family-tree-photo-frame-hom-brd-fam-044",
   "sku": "hom-brd-fam-044",
   "name": "family-tree-photo-frame",
   "headline": "Family Tree Photo Frame",
   "description": "The Family Tree Photo Frame is a sentimental and stylish way to display your cherished family memories. With multiple photo slots, it tells the story of your loved ones.",
-  "url": "https://example.com/products/family-tree-photo-frame-hom-brd-fam-044",
+  "url": "/pages/products/family-tree-photo-frame-hom-brd-fam-044",
   "ratingValue": 4.53,
   "priceCurrency": "php",
   "price": 29.99,
   "netPrice": 29.99,
   "discountPercentage": 14.87,
-  "dateCreated": "2026-03-09T17:33:16.958625Z",
-  "dateModified": "2026-03-09T17:33:16.958625Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/family-tree-photo-frame/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.427635Z",
+  "dateModified": "2026-03-09T20:30:01.427635Z",
+  "thumbnail": "/assets/images/products/thumbnails/family-tree-photo-frame-hom-brd-fam-044.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/home-decoration/family-tree-photo-frame/1.webp"
+    "/assets/images/products/family-tree-photo-frame-hom-brd-fam-044/picture-0.webp"
   ],
   "keywords": [
     "home-decoration"

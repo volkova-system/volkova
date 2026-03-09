@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "ice-cream-gro-brd-cre-028",
+  "reference": "ice-cream-gro-brd-cre-028",
   "sku": "gro-brd-cre-028",
   "name": "ice-cream",
   "headline": "Ice Cream",
   "description": "Creamy and delicious ice cream, available in various flavors for a delightful treat.",
-  "url": "https://example.com/products/ice-cream-gro-brd-cre-028",
+  "url": "/pages/products/ice-cream-gro-brd-cre-028",
   "ratingValue": 3.39,
   "priceCurrency": "php",
   "price": 5.49,
   "netPrice": 5.49,
   "discountPercentage": 8.69,
-  "dateCreated": "2026-03-09T17:33:16.949524Z",
-  "dateModified": "2026-03-09T17:33:16.949524Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/ice-cream/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.418173Z",
+  "dateModified": "2026-03-09T20:30:01.418173Z",
+  "thumbnail": "/assets/images/products/thumbnails/ice-cream-gro-brd-cre-028.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/ice-cream/1.webp",
-    "https://cdn.dummyjson.com/product-images/groceries/ice-cream/2.webp",
-    "https://cdn.dummyjson.com/product-images/groceries/ice-cream/3.webp",
-    "https://cdn.dummyjson.com/product-images/groceries/ice-cream/4.webp"
+    "/assets/images/products/ice-cream-gro-brd-cre-028/picture-0.webp",
+    "/assets/images/products/ice-cream-gro-brd-cre-028/picture-1.webp",
+    "/assets/images/products/ice-cream-gro-brd-cre-028/picture-2.webp",
+    "/assets/images/products/ice-cream-gro-brd-cre-028/picture-3.webp"
   ],
   "keywords": [
     "groceries"

@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "knoll-saarinen-executive-conference-chair-fur-kno-kno-014",
+  "reference": "knoll-saarinen-executive-conference-chair-fur-kno-kno-014",
   "sku": "fur-kno-kno-014",
   "name": "knoll-saarinen-executive-conference-chair",
   "headline": "Knoll Saarinen Executive Conference Chair",
   "description": "The Knoll Saarinen Executive Conference Chair is a modern and ergonomic chair, perfect for your office or conference room with its timeless design.",
-  "url": "https://example.com/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014",
+  "url": "/pages/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014",
   "ratingValue": 4.88,
   "priceCurrency": "php",
   "price": 499.99,
   "netPrice": 499.99,
   "discountPercentage": 2.01,
-  "dateCreated": "2026-03-09T17:33:16.940313Z",
-  "dateModified": "2026-03-09T17:33:16.940313Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.409088Z",
+  "dateModified": "2026-03-09T20:30:01.409088Z",
+  "thumbnail": "/assets/images/products/thumbnails/knoll-saarinen-executive-conference-chair-fur-kno-kno-014.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/1.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/2.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/3.webp"
+    "/assets/images/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014/picture-0.webp",
+    "/assets/images/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014/picture-1.webp",
+    "/assets/images/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014/picture-2.webp"
   ],
   "keywords": [
     "furniture"

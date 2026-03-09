@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "grater-black-kit-brd-gra-060",
+  "reference": "grater-black-kit-brd-gra-060",
   "sku": "kit-brd-gra-060",
   "name": "grater-black",
   "headline": "Grater Black",
   "description": "The Grater in Black is a handy kitchen tool for grating cheese, vegetables, and more. Its sleek design and sharp blades make food preparation efficient and easy.",
-  "url": "https://example.com/products/grater-black-kit-brd-gra-060",
+  "url": "/pages/products/grater-black-kit-brd-gra-060",
   "ratingValue": 3.21,
   "priceCurrency": "php",
   "price": 10.99,
   "netPrice": 10.99,
   "discountPercentage": 3.56,
-  "dateCreated": "2026-03-09T17:33:16.966861Z",
-  "dateModified": "2026-03-09T17:33:16.966861Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/grater-black/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.436783Z",
+  "dateModified": "2026-03-09T20:30:01.436783Z",
+  "thumbnail": "/assets/images/products/thumbnails/grater-black-kit-brd-gra-060.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/grater-black/1.webp"
+    "/assets/images/products/grater-black-kit-brd-gra-060/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

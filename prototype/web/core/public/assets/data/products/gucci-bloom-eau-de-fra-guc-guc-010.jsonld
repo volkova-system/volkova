@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "gucci-bloom-eau-de-fra-guc-guc-010",
+  "reference": "gucci-bloom-eau-de-fra-guc-guc-010",
   "sku": "fra-guc-guc-010",
   "name": "gucci-bloom-eau-de",
   "headline": "Gucci Bloom Eau de",
   "description": "Gucci Bloom by Gucci is a floral and captivating fragrance, with notes of tuberose, jasmine, and Rangoon creeper. It's a modern and romantic scent.",
-  "url": "https://example.com/products/gucci-bloom-eau-de-fra-guc-guc-010",
+  "url": "/pages/products/gucci-bloom-eau-de-fra-guc-guc-010",
   "ratingValue": 2.74,
   "priceCurrency": "php",
   "price": 79.99,
   "netPrice": 79.99,
   "discountPercentage": 14.39,
-  "dateCreated": "2026-03-09T17:33:16.937589Z",
-  "dateModified": "2026-03-09T17:33:16.937589Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.406659Z",
+  "dateModified": "2026-03-09T20:30:01.406659Z",
+  "thumbnail": "/assets/images/products/thumbnails/gucci-bloom-eau-de-fra-guc-guc-010.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/1.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/2.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/3.webp"
+    "/assets/images/products/gucci-bloom-eau-de-fra-guc-guc-010/picture-0.webp",
+    "/assets/images/products/gucci-bloom-eau-de-fra-guc-guc-010/picture-1.webp",
+    "/assets/images/products/gucci-bloom-eau-de-fra-guc-guc-010/picture-2.webp"
   ],
   "keywords": [
     "fragrances"

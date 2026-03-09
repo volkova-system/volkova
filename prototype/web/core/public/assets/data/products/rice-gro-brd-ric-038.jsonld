@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "rice-gro-brd-ric-038",
+  "reference": "rice-gro-brd-ric-038",
   "sku": "gro-brd-ric-038",
   "name": "rice",
   "headline": "Rice",
   "description": "High-quality rice, a staple for various cuisines and a versatile base for many dishes.",
-  "url": "https://example.com/products/rice-gro-brd-ric-038",
+  "url": "/pages/products/rice-gro-brd-ric-038",
   "ratingValue": 3.18,
   "priceCurrency": "php",
   "price": 5.99,
   "netPrice": 5.99,
   "discountPercentage": 9.29,
-  "dateCreated": "2026-03-09T17:33:16.954827Z",
-  "dateModified": "2026-03-09T17:33:16.954827Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/rice/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.424265Z",
+  "dateModified": "2026-03-09T20:30:01.424265Z",
+  "thumbnail": "/assets/images/products/thumbnails/rice-gro-brd-ric-038.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/rice/1.webp"
+    "/assets/images/products/rice-gro-brd-ric-038/picture-0.webp"
   ],
   "keywords": [
     "groceries"

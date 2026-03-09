@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "ice-cube-tray-kit-brd-cub-062",
+  "reference": "ice-cube-tray-kit-brd-cub-062",
   "sku": "kit-brd-cub-062",
   "name": "ice-cube-tray",
   "headline": "Ice Cube Tray",
   "description": "The Ice Cube Tray is a practical accessory for making ice cubes in various shapes. Perfect for keeping your drinks cool and adding a fun element to your beverages.",
-  "url": "https://example.com/products/ice-cube-tray-kit-brd-cub-062",
+  "url": "/pages/products/ice-cube-tray-kit-brd-cub-062",
   "ratingValue": 4.71,
   "priceCurrency": "php",
   "price": 5.99,
   "netPrice": 5.99,
   "discountPercentage": 0.63,
-  "dateCreated": "2026-03-09T17:33:16.967836Z",
-  "dateModified": "2026-03-09T17:33:16.967836Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/ice-cube-tray/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.437845Z",
+  "dateModified": "2026-03-09T20:30:01.437845Z",
+  "thumbnail": "/assets/images/products/thumbnails/ice-cube-tray-kit-brd-cub-062.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/ice-cube-tray/1.webp"
+    "/assets/images/products/ice-cube-tray-kit-brd-cub-062/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

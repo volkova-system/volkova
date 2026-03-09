@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "man-short-sleeve-shirt-men-cas-sho-086",
+  "reference": "man-short-sleeve-shirt-men-cas-sho-086",
   "sku": "men-cas-sho-086",
   "name": "man-short-sleeve-shirt",
   "headline": "Man Short Sleeve Shirt",
   "description": "The Man Short Sleeve Shirt is a breezy and stylish option for warm days. With a comfortable fit and short sleeves, it's perfect for a laid-back yet polished look.",
-  "url": "https://example.com/products/man-short-sleeve-shirt-men-cas-sho-086",
+  "url": "/pages/products/man-short-sleeve-shirt-men-cas-sho-086",
   "ratingValue": 2.9,
   "priceCurrency": "php",
   "price": 19.99,
   "netPrice": 19.99,
   "discountPercentage": 6.83,
-  "dateCreated": "2026-03-09T17:33:16.981369Z",
-  "dateModified": "2026-03-09T17:33:16.981369Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.451634Z",
+  "dateModified": "2026-03-09T20:30:01.451634Z",
+  "thumbnail": "/assets/images/products/thumbnails/man-short-sleeve-shirt-men-cas-sho-086.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/4.webp"
+    "/assets/images/products/man-short-sleeve-shirt-men-cas-sho-086/picture-0.webp",
+    "/assets/images/products/man-short-sleeve-shirt-men-cas-sho-086/picture-1.webp",
+    "/assets/images/products/man-short-sleeve-shirt-men-cas-sho-086/picture-2.webp",
+    "/assets/images/products/man-short-sleeve-shirt-men-cas-sho-086/picture-3.webp"
   ],
   "keywords": [
     "mens-shirts"

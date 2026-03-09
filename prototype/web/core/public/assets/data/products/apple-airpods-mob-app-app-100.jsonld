@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "apple-airpods-mob-app-app-100",
+  "reference": "apple-airpods-mob-app-app-100",
   "sku": "mob-app-app-100",
   "name": "apple-airpods",
   "headline": "Apple Airpods",
   "description": "The Apple Airpods offer a seamless wireless audio experience. With easy pairing, high-quality sound, and Siri integration, they are perfect for on-the-go listening.",
-  "url": "https://example.com/products/apple-airpods-mob-app-app-100",
+  "url": "/pages/products/apple-airpods-mob-app-app-100",
   "ratingValue": 4.15,
   "priceCurrency": "php",
   "price": 129.99,
   "netPrice": 129.99,
   "discountPercentage": 15.54,
-  "dateCreated": "2026-03-09T17:33:16.990152Z",
-  "dateModified": "2026-03-09T17:33:16.990152Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.459676Z",
+  "dateModified": "2026-03-09T20:30:01.459676Z",
+  "thumbnail": "/assets/images/products/thumbnails/apple-airpods-mob-app-app-100.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/1.webp",
-    "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/2.webp",
-    "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/3.webp"
+    "/assets/images/products/apple-airpods-mob-app-app-100/picture-0.webp",
+    "/assets/images/products/apple-airpods-mob-app-app-100/picture-1.webp",
+    "/assets/images/products/apple-airpods-mob-app-app-100/picture-2.webp"
   ],
   "keywords": [
     "mobile-accessories"

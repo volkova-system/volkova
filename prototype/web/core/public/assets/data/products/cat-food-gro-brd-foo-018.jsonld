@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "cat-food-gro-brd-foo-018",
+  "reference": "cat-food-gro-brd-foo-018",
   "sku": "gro-brd-foo-018",
   "name": "cat-food",
   "headline": "Cat Food",
   "description": "Nutritious cat food formulated to meet the dietary needs of your feline friend.",
-  "url": "https://example.com/products/cat-food-gro-brd-foo-018",
+  "url": "/pages/products/cat-food-gro-brd-foo-018",
   "ratingValue": 3.13,
   "priceCurrency": "php",
   "price": 8.99,
   "netPrice": 8.99,
   "discountPercentage": 9.58,
-  "dateCreated": "2026-03-09T17:33:16.942904Z",
-  "dateModified": "2026-03-09T17:33:16.942904Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cat-food/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.411764Z",
+  "dateModified": "2026-03-09T20:30:01.411764Z",
+  "thumbnail": "/assets/images/products/thumbnails/cat-food-gro-brd-foo-018.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/cat-food/1.webp"
+    "/assets/images/products/cat-food-gro-brd-foo-018/picture-0.webp"
   ],
   "keywords": [
     "groceries"

@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "gigabyte-aorus-men-tshirt-men-gig-gig-084",
+  "reference": "gigabyte-aorus-men-tshirt-men-gig-gig-084",
   "sku": "men-gig-gig-084",
   "name": "gigabyte-aorus-men-tshirt",
   "headline": "Gigabyte Aorus Men Tshirt",
   "description": "The Gigabyte Aorus Men Tshirt is a cool and casual shirt for gaming enthusiasts. With the Aorus logo and sleek design, it's perfect for expressing your gaming style.",
-  "url": "https://example.com/products/gigabyte-aorus-men-tshirt-men-gig-gig-084",
+  "url": "/pages/products/gigabyte-aorus-men-tshirt-men-gig-gig-084",
   "ratingValue": 3.18,
   "priceCurrency": "php",
   "price": 24.99,
   "netPrice": 24.99,
   "discountPercentage": 0.94,
-  "dateCreated": "2026-03-09T17:33:16.980262Z",
-  "dateModified": "2026-03-09T17:33:16.980262Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.450428Z",
+  "dateModified": "2026-03-09T20:30:01.450428Z",
+  "thumbnail": "/assets/images/products/thumbnails/gigabyte-aorus-men-tshirt-men-gig-gig-084.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shirts/gigabyte-aorus-men-tshirt/4.webp"
+    "/assets/images/products/gigabyte-aorus-men-tshirt-men-gig-gig-084/picture-0.webp",
+    "/assets/images/products/gigabyte-aorus-men-tshirt-men-gig-gig-084/picture-1.webp",
+    "/assets/images/products/gigabyte-aorus-men-tshirt-men-gig-gig-084/picture-2.webp",
+    "/assets/images/products/gigabyte-aorus-men-tshirt-men-gig-gig-084/picture-3.webp"
   ],
   "keywords": [
     "mens-shirts"

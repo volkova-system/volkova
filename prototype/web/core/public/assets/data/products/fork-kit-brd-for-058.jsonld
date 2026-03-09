@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "fork-kit-brd-for-058",
+  "reference": "fork-kit-brd-for-058",
   "sku": "kit-brd-for-058",
   "name": "fork",
   "headline": "Fork",
   "description": "The Fork is a classic utensil for various dining and serving purposes. Its durable and ergonomic design makes it a reliable choice for everyday use.",
-  "url": "https://example.com/products/fork-kit-brd-for-058",
+  "url": "/pages/products/fork-kit-brd-for-058",
   "ratingValue": 3.11,
   "priceCurrency": "php",
   "price": 3.99,
   "netPrice": 3.99,
   "discountPercentage": 8.07,
-  "dateCreated": "2026-03-09T17:33:16.965844Z",
-  "dateModified": "2026-03-09T17:33:16.965844Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/fork/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.435537Z",
+  "dateModified": "2026-03-09T20:30:01.435537Z",
+  "thumbnail": "/assets/images/products/thumbnails/fork-kit-brd-for-058.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/fork/1.webp"
+    "/assets/images/products/fork-kit-brd-for-058/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

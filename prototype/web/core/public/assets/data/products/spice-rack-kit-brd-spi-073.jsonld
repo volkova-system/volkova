@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "spice-rack-kit-brd-spi-073",
+  "reference": "spice-rack-kit-brd-spi-073",
   "sku": "kit-brd-spi-073",
   "name": "spice-rack",
   "headline": "Spice Rack",
   "description": "The Spice Rack is a convenient organizer for your spices and seasonings. Keep your kitchen essentials within reach and neatly arranged with this stylish spice rack.",
-  "url": "https://example.com/products/spice-rack-kit-brd-spi-073",
+  "url": "/pages/products/spice-rack-kit-brd-spi-073",
   "ratingValue": 4.87,
   "priceCurrency": "php",
   "price": 19.99,
   "netPrice": 19.99,
   "discountPercentage": 12.09,
-  "dateCreated": "2026-03-09T17:33:16.974022Z",
-  "dateModified": "2026-03-09T17:33:16.974022Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/spice-rack/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.443986Z",
+  "dateModified": "2026-03-09T20:30:01.443986Z",
+  "thumbnail": "/assets/images/products/thumbnails/spice-rack-kit-brd-spi-073.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/spice-rack/1.webp"
+    "/assets/images/products/spice-rack-kit-brd-spi-073/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

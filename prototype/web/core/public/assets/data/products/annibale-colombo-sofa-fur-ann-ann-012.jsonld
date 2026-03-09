@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "annibale-colombo-sofa-fur-ann-ann-012",
+  "reference": "annibale-colombo-sofa-fur-ann-ann-012",
   "sku": "fur-ann-ann-012",
   "name": "annibale-colombo-sofa",
   "headline": "Annibale Colombo Sofa",
   "description": "The Annibale Colombo Sofa is a sophisticated and comfortable seating option, featuring exquisite design and premium upholstery for your living room.",
-  "url": "https://example.com/products/annibale-colombo-sofa-fur-ann-ann-012",
+  "url": "/pages/products/annibale-colombo-sofa-fur-ann-ann-012",
   "ratingValue": 3.92,
   "priceCurrency": "php",
   "price": 2499.99,
   "netPrice": 2499.99,
   "discountPercentage": 14.4,
-  "dateCreated": "2026-03-09T17:33:16.939094Z",
-  "dateModified": "2026-03-09T17:33:16.939094Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.407960Z",
+  "dateModified": "2026-03-09T20:30:01.407960Z",
+  "thumbnail": "/assets/images/products/thumbnails/annibale-colombo-sofa-fur-ann-ann-012.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/1.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/2.webp",
-    "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/3.webp"
+    "/assets/images/products/annibale-colombo-sofa-fur-ann-ann-012/picture-0.webp",
+    "/assets/images/products/annibale-colombo-sofa-fur-ann-ann-012/picture-1.webp",
+    "/assets/images/products/annibale-colombo-sofa-fur-ann-ann-012/picture-2.webp"
   ],
   "keywords": [
     "furniture"

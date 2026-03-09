@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "rolex-datejust-men-rol-rol-097",
+  "reference": "rolex-datejust-men-rol-rol-097",
   "sku": "men-rol-rol-097",
   "name": "rolex-datejust",
   "headline": "Rolex Datejust",
   "description": "The Rolex Datejust is an iconic and versatile timepiece with a date window. Known for its timeless design and reliability, it's a symbol of Rolex's watchmaking excellence.",
-  "url": "https://example.com/products/rolex-datejust-men-rol-rol-097",
+  "url": "/pages/products/rolex-datejust-men-rol-rol-097",
   "ratingValue": 3.66,
   "priceCurrency": "php",
   "price": 10999.99,
   "netPrice": 10999.99,
   "discountPercentage": 3.73,
-  "dateCreated": "2026-03-09T17:33:16.988591Z",
-  "dateModified": "2026-03-09T17:33:16.988591Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.457925Z",
+  "dateModified": "2026-03-09T20:30:01.457925Z",
+  "thumbnail": "/assets/images/products/thumbnails/rolex-datejust-men-rol-rol-097.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/3.webp"
+    "/assets/images/products/rolex-datejust-men-rol-rol-097/picture-0.webp",
+    "/assets/images/products/rolex-datejust-men-rol-rol-097/picture-1.webp",
+    "/assets/images/products/rolex-datejust-men-rol-rol-097/picture-2.webp"
   ],
   "keywords": [
     "mens-watches"

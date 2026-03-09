@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "sports-sneakers-off-white-red-men-off-spo-091",
+  "reference": "sports-sneakers-off-white-red-men-off-spo-091",
   "sku": "men-off-spo-091",
   "name": "sports-sneakers-off-white-red",
   "headline": "Sports Sneakers Off White & Red",
   "description": "The Sports Sneakers in Off White and Red combine style and functionality, making them a fashionable choice for sports enthusiasts. The red and off-white color combination adds a bold and energetic touch.",
-  "url": "https://example.com/products/sports-sneakers-off-white-red-men-off-spo-091",
+  "url": "/pages/products/sports-sneakers-off-white-red-men-off-spo-091",
   "ratingValue": 4.77,
   "priceCurrency": "php",
   "price": 119.99,
   "netPrice": 119.99,
   "discountPercentage": 4.97,
-  "dateCreated": "2026-03-09T17:33:16.985026Z",
-  "dateModified": "2026-03-09T17:33:16.985026Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.454172Z",
+  "dateModified": "2026-03-09T20:30:01.454172Z",
+  "thumbnail": "/assets/images/products/thumbnails/sports-sneakers-off-white-red-men-off-spo-091.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/4.webp"
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-091/picture-0.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-091/picture-1.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-091/picture-2.webp",
+    "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-091/picture-3.webp"
   ],
   "keywords": [
     "mens-shoes"

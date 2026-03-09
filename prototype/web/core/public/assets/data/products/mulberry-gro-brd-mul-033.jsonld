@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "mulberry-gro-brd-mul-033",
+  "reference": "mulberry-gro-brd-mul-033",
   "sku": "gro-brd-mul-033",
   "name": "mulberry",
   "headline": "Mulberry",
   "description": "Sweet and juicy mulberries, perfect for snacking or adding to desserts and cereals.",
-  "url": "https://example.com/products/mulberry-gro-brd-mul-033",
+  "url": "/pages/products/mulberry-gro-brd-mul-033",
   "ratingValue": 4.95,
   "priceCurrency": "php",
   "price": 4.99,
   "netPrice": 4.99,
   "discountPercentage": 12.87,
-  "dateCreated": "2026-03-09T17:33:16.952256Z",
-  "dateModified": "2026-03-09T17:33:16.952256Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/mulberry/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.421441Z",
+  "dateModified": "2026-03-09T20:30:01.421441Z",
+  "thumbnail": "/assets/images/products/thumbnails/mulberry-gro-brd-mul-033.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/mulberry/1.webp"
+    "/assets/images/products/mulberry-gro-brd-mul-033/picture-0.webp"
   ],
   "keywords": [
     "groceries"

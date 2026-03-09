@@ -2,24 +2,25 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "nike-air-jordan-1-red-and-black-men-nik-nik-088",
+  "reference": "nike-air-jordan-1-red-and-black-men-nik-nik-088",
   "sku": "men-nik-nik-088",
   "name": "nike-air-jordan-1-red-and-black",
   "headline": "Nike Air Jordan 1 Red And Black",
   "description": "The Nike Air Jordan 1 in Red and Black is an iconic basketball sneaker known for its stylish design and high-performance features, making it a favorite among sneaker enthusiasts and athletes.",
-  "url": "https://example.com/products/nike-air-jordan-1-red-and-black-men-nik-nik-088",
+  "url": "/pages/products/nike-air-jordan-1-red-and-black-men-nik-nik-088",
   "ratingValue": 4.77,
   "priceCurrency": "php",
   "price": 149.99,
   "netPrice": 149.99,
   "discountPercentage": 4.12,
-  "dateCreated": "2026-03-09T17:33:16.982693Z",
-  "dateModified": "2026-03-09T17:33:16.982693Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.452640Z",
+  "dateModified": "2026-03-09T20:30:01.452640Z",
+  "thumbnail": "/assets/images/products/thumbnails/nike-air-jordan-1-red-and-black-men-nik-nik-088.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/1.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/2.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/3.webp",
-    "https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/4.webp"
+    "/assets/images/products/nike-air-jordan-1-red-and-black-men-nik-nik-088/picture-0.webp",
+    "/assets/images/products/nike-air-jordan-1-red-and-black-men-nik-nik-088/picture-1.webp",
+    "/assets/images/products/nike-air-jordan-1-red-and-black-men-nik-nik-088/picture-2.webp",
+    "/assets/images/products/nike-air-jordan-1-red-and-black-men-nik-nik-088/picture-3.webp"
   ],
   "keywords": [
     "mens-shoes"

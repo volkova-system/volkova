@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "powder-canister-bea-vel-pow-003",
+  "reference": "powder-canister-bea-vel-pow-003",
   "sku": "bea-vel-pow-003",
   "name": "powder-canister",
   "headline": "Powder Canister",
   "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
-  "url": "https://example.com/products/powder-canister-bea-vel-pow-003",
+  "url": "/pages/products/powder-canister-bea-vel-pow-003",
   "ratingValue": 4.64,
   "priceCurrency": "php",
   "price": 14.99,
   "netPrice": 14.99,
   "discountPercentage": 9.84,
-  "dateCreated": "2026-03-09T17:33:16.932353Z",
-  "dateModified": "2026-03-09T17:33:16.932353Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.401700Z",
+  "dateModified": "2026-03-09T20:30:01.401700Z",
+  "thumbnail": "/assets/images/products/thumbnails/powder-canister-bea-vel-pow-003.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp"
+    "/assets/images/products/powder-canister-bea-vel-pow-003/picture-0.webp"
   ],
   "keywords": [
     "beauty"

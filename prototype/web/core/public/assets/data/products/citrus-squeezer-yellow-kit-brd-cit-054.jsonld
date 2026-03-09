@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "citrus-squeezer-yellow-kit-brd-cit-054",
+  "reference": "citrus-squeezer-yellow-kit-brd-cit-054",
   "sku": "kit-brd-cit-054",
   "name": "citrus-squeezer-yellow",
   "headline": "Citrus Squeezer Yellow",
   "description": "The Citrus Squeezer in Yellow is a handy tool for extracting juice from citrus fruits. Its vibrant color adds a cheerful touch to your kitchen gadgets.",
-  "url": "https://example.com/products/citrus-squeezer-yellow-kit-brd-cit-054",
+  "url": "/pages/products/citrus-squeezer-yellow-kit-brd-cit-054",
   "ratingValue": 4.63,
   "priceCurrency": "php",
   "price": 8.99,
   "netPrice": 8.99,
   "discountPercentage": 12.1,
-  "dateCreated": "2026-03-09T17:33:16.963584Z",
-  "dateModified": "2026-03-09T17:33:16.963584Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/citrus-squeezer-yellow/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.432960Z",
+  "dateModified": "2026-03-09T20:30:01.432960Z",
+  "thumbnail": "/assets/images/products/thumbnails/citrus-squeezer-yellow-kit-brd-cit-054.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/citrus-squeezer-yellow/1.webp"
+    "/assets/images/products/citrus-squeezer-yellow-kit-brd-cit-054/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

@@ -2,23 +2,24 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "chanel-coco-noir-eau-de-fra-cha-cha-007",
+  "reference": "chanel-coco-noir-eau-de-fra-cha-cha-007",
   "sku": "fra-cha-cha-007",
   "name": "chanel-coco-noir-eau-de",
   "headline": "Chanel Coco Noir Eau De",
   "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
-  "url": "https://example.com/products/chanel-coco-noir-eau-de-fra-cha-cha-007",
+  "url": "/pages/products/chanel-coco-noir-eau-de-fra-cha-cha-007",
   "ratingValue": 4.26,
   "priceCurrency": "php",
   "price": 129.99,
   "netPrice": 129.99,
   "discountPercentage": 16.51,
-  "dateCreated": "2026-03-09T17:33:16.935363Z",
-  "dateModified": "2026-03-09T17:33:16.935363Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.404608Z",
+  "dateModified": "2026-03-09T20:30:01.404608Z",
+  "thumbnail": "/assets/images/products/thumbnails/chanel-coco-noir-eau-de-fra-cha-cha-007.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp",
-    "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp"
+    "/assets/images/products/chanel-coco-noir-eau-de-fra-cha-cha-007/picture-0.webp",
+    "/assets/images/products/chanel-coco-noir-eau-de-fra-cha-cha-007/picture-1.webp",
+    "/assets/images/products/chanel-coco-noir-eau-de-fra-cha-cha-007/picture-2.webp"
   ],
   "keywords": [
     "fragrances"

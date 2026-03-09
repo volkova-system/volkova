@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "green-bell-pepper-gro-brd-gre-025",
+  "reference": "green-bell-pepper-gro-brd-gre-025",
   "sku": "gro-brd-gre-025",
   "name": "green-bell-pepper",
   "headline": "Green Bell Pepper",
   "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
-  "url": "https://example.com/products/green-bell-pepper-gro-brd-gre-025",
+  "url": "/pages/products/green-bell-pepper-gro-brd-gre-025",
   "ratingValue": 3.25,
   "priceCurrency": "php",
   "price": 1.29,
   "netPrice": 1.29,
   "discountPercentage": 0.16,
-  "dateCreated": "2026-03-09T17:33:16.947717Z",
-  "dateModified": "2026-03-09T17:33:16.947717Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.416515Z",
+  "dateModified": "2026-03-09T20:30:01.416515Z",
+  "thumbnail": "/assets/images/products/thumbnails/green-bell-pepper-gro-brd-gre-025.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/1.webp"
+    "/assets/images/products/green-bell-pepper-gro-brd-gre-025/picture-0.webp"
   ],
   "keywords": [
     "groceries"

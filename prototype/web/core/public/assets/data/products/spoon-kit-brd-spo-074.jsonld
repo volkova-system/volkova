@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "spoon-kit-brd-spo-074",
+  "reference": "spoon-kit-brd-spo-074",
   "sku": "kit-brd-spo-074",
   "name": "spoon",
   "headline": "Spoon",
   "description": "The Spoon is a versatile kitchen utensil for stirring, serving, and tasting. Its ergonomic design and durable construction make it an essential tool for every kitchen.",
-  "url": "https://example.com/products/spoon-kit-brd-spo-074",
+  "url": "/pages/products/spoon-kit-brd-spo-074",
   "ratingValue": 4.03,
   "priceCurrency": "php",
   "price": 4.99,
   "netPrice": 4.99,
   "discountPercentage": 1.53,
-  "dateCreated": "2026-03-09T17:33:16.974685Z",
-  "dateModified": "2026-03-09T17:33:16.974685Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/spoon/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.444596Z",
+  "dateModified": "2026-03-09T20:30:01.444596Z",
+  "thumbnail": "/assets/images/products/thumbnails/spoon-kit-brd-spo-074.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/spoon/1.webp"
+    "/assets/images/products/spoon-kit-brd-spo-074/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "table-lamp-hom-brd-tab-047",
+  "reference": "table-lamp-hom-brd-tab-047",
   "sku": "hom-brd-tab-047",
   "name": "table-lamp",
   "headline": "Table Lamp",
   "description": "The Table Lamp is a functional and decorative lighting solution for your living space. With a modern design, it provides both ambient and task lighting, enhancing the atmosphere.",
-  "url": "https://example.com/products/table-lamp-hom-brd-tab-047",
+  "url": "/pages/products/table-lamp-hom-brd-tab-047",
   "ratingValue": 3.55,
   "priceCurrency": "php",
   "price": 49.99,
   "netPrice": 49.99,
   "discountPercentage": 7.09,
-  "dateCreated": "2026-03-09T17:33:16.960158Z",
-  "dateModified": "2026-03-09T17:33:16.960158Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.429222Z",
+  "dateModified": "2026-03-09T20:30:01.429222Z",
+  "thumbnail": "/assets/images/products/thumbnails/table-lamp-hom-brd-tab-047.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/1.webp"
+    "/assets/images/products/table-lamp-hom-brd-tab-047/picture-0.webp"
   ],
   "keywords": [
     "home-decoration"

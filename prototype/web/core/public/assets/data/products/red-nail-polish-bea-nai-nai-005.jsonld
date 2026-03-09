@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "red-nail-polish-bea-nai-nai-005",
+  "reference": "red-nail-polish-bea-nai-nai-005",
   "sku": "bea-nai-nai-005",
   "name": "red-nail-polish",
   "headline": "Red Nail Polish",
   "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
-  "url": "https://example.com/products/red-nail-polish-bea-nai-nai-005",
+  "url": "/pages/products/red-nail-polish-bea-nai-nai-005",
   "ratingValue": 4.32,
   "priceCurrency": "php",
   "price": 8.99,
   "netPrice": 8.99,
   "discountPercentage": 11.44,
-  "dateCreated": "2026-03-09T17:33:16.934141Z",
-  "dateModified": "2026-03-09T17:33:16.934141Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.403357Z",
+  "dateModified": "2026-03-09T20:30:01.403357Z",
+  "thumbnail": "/assets/images/products/thumbnails/red-nail-polish-bea-nai-nai-005.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp"
+    "/assets/images/products/red-nail-polish-bea-nai-nai-005/picture-0.webp"
   ],
   "keywords": [
     "beauty"

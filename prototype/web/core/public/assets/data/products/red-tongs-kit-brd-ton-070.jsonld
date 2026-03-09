@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "red-tongs-kit-brd-ton-070",
+  "reference": "red-tongs-kit-brd-ton-070",
   "sku": "kit-brd-ton-070",
   "name": "red-tongs",
   "headline": "Red Tongs",
   "description": "The Red Tongs are versatile kitchen tongs suitable for various cooking and serving tasks. Their vibrant color adds a pop of excitement to your kitchen utensils.",
-  "url": "https://example.com/products/red-tongs-kit-brd-ton-070",
+  "url": "/pages/products/red-tongs-kit-brd-ton-070",
   "ratingValue": 4.42,
   "priceCurrency": "php",
   "price": 6.99,
   "netPrice": 6.99,
   "discountPercentage": 14.52,
-  "dateCreated": "2026-03-09T17:33:16.972089Z",
-  "dateModified": "2026-03-09T17:33:16.972089Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/red-tongs/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.442240Z",
+  "dateModified": "2026-03-09T20:30:01.442240Z",
+  "thumbnail": "/assets/images/products/thumbnails/red-tongs-kit-brd-ton-070.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/kitchen-accessories/red-tongs/1.webp"
+    "/assets/images/products/red-tongs-kit-brd-ton-070/picture-0.webp"
   ],
   "keywords": [
     "kitchen-accessories"

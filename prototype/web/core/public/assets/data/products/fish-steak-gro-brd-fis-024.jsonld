@@ -2,21 +2,22 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "fish-steak-gro-brd-fis-024",
+  "reference": "fish-steak-gro-brd-fis-024",
   "sku": "gro-brd-fis-024",
   "name": "fish-steak",
   "headline": "Fish Steak",
   "description": "Quality fish steak, suitable for grilling, baking, or pan-searing.",
-  "url": "https://example.com/products/fish-steak-gro-brd-fis-024",
+  "url": "/pages/products/fish-steak-gro-brd-fis-024",
   "ratingValue": 3.78,
   "priceCurrency": "php",
   "price": 14.99,
   "netPrice": 14.99,
   "discountPercentage": 4.23,
-  "dateCreated": "2026-03-09T17:33:16.947125Z",
-  "dateModified": "2026-03-09T17:33:16.947125Z",
-  "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/fish-steak/thumbnail.webp",
+  "dateCreated": "2026-03-09T20:30:01.415915Z",
+  "dateModified": "2026-03-09T20:30:01.415915Z",
+  "thumbnail": "/assets/images/products/thumbnails/fish-steak-gro-brd-fis-024.webp",
   "images": [
-    "https://cdn.dummyjson.com/product-images/groceries/fish-steak/1.webp"
+    "/assets/images/products/fish-steak-gro-brd-fis-024/picture-0.webp"
   ],
   "keywords": [
     "groceries"
