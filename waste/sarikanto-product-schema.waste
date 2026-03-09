@@ -7,7 +7,7 @@
 	"name": "product_name",
 	"headline": "product_title",
 	"description": "product_description",
-	"url": "https://example.com/products/product_name-product_reference",
+	"url": "/pages/products/product_name-product_reference",
 	"ratingValue": 4.5,
 
 	"priceCurrency": "usd",
@@ -20,8 +20,7 @@
 
 	"thumbnail": "/assets/images/products/thumbnails/product_name-product_reference.webp",
 	"images": [
-		"picture_uri_1",
-		"picture_uri_2"
+		"/assets/images/products/product_name-product_reference/picture-1.webp"
 	],
 
 	"keywords": [
