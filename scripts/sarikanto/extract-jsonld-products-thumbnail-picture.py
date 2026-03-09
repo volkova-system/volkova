@@ -117,11 +117,11 @@ def extract_product_data(jsonld_file: Path) -> tuple[str, str]:
         print(f"Error: Cannot read JSON-LD file {jsonld_file}: {e}")
         sys.exit(1)
 
-    product_id = data.get('id')
+    product_id = data.get('@id')
     thumbnail = data.get('thumbnail')
 
     if not product_id:
-        print(f"Error: Missing 'id' field in {jsonld_file}")
+        print(f"Error: Missing '@id' field in {jsonld_file}")
         sys.exit(1)
 
     if not thumbnail:
@@ -188,8 +188,20 @@ def download_thumbnail(thumbnail_url: str, product_id: str,
         if filepath.exists():
             filepath.unlink()
 
-        # Download and save thumbnail
-        _ = urllib.request.urlretrieve(thumbnail_url, filepath)
+        req = urllib.request.Request(
+            thumbnail_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                "Accept": "image/avif,image/webp,image/apng,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9",
+                "Referer": "https://dummyjson.com/",
+                "Accept-Encoding": "gzip, deflate"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = resp.read()
+        with open(filepath, "wb") as f:
+            _ = f.write(data)
 
     except (OSError, urllib.error.URLError) as e:
         print(f"Error: Cannot download thumbnail {thumbnail_url}: {e}")
@@ -210,6 +222,7 @@ def main() -> None:
         required=True,
         help="Directory path containing JSON-LD files"
     )
+
     _ = parser.add_argument(
         "--directory",
         required=True,
