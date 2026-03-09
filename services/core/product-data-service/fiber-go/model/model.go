@@ -9,6 +9,7 @@ type Product struct {
 	Type                string              `json:"@type"`
 	ID                  string              `json:"@id"`
 
+    Reference           string              `json:"reference"`
     SKU                 string              `json:"sku"`
 	Name                string              `json:"name"`
 	Headline            string              `json:"headline"`
@@ -30,7 +31,7 @@ type Product struct {
     Keywords            []string            `json:"keywords"`
 
     CacheIdentifier     Identifier          `json:"cacheIdentifier"`
-    Brand               Brand               `json:"brand"`
+    Brand               *Brand              `json:"brand,omitempty"`
 	AggregateRating     AggregateRating     `json:"aggregateRating"`
     Offers              Offer               `json:"offers"`
     AdditionalProperty  []PropertyValue     `json:"additionalProperty"`
