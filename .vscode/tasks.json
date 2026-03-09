@@ -132,7 +132,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Start Windows Sarikanto Test Image File Service",
+            "label": "Start Windows Prototype Core Image File Service",
             "type": "shell",
             "command": "caddy.exe",
             "args": [
@@ -142,9 +142,9 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/sarikanto/image-file-service/caddy",
+                "cwd": "${workspaceFolder}/services/core/image-file-service/caddy",
                 "env": {
-                    "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/sarikanto/public/assets/images"
+                    "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/core/public/assets/images"
                 }
             },
             "presentation": {
@@ -156,9 +156,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Stop Windows Test Sarikanto Image File Service",
+            "label": "Stop Windows Prototype Core Image File Service",
             "type": "shell",
-            "command": "echo ${input:terminateWindowsSarikantoTestImageFileService}",
+            "command": "echo ${input:stopWindowsPrototypeCoreImageFileService}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -186,10 +186,10 @@
             "args": "Run Core Background Storybook"
         },
         {
-            "id": "terminateWindowsSarikantoTestImageFileService",
+            "id": "stopWindowsPrototypeCoreImageFileService",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
-            "args": "Start Windows Sarikanto Test Image File Service"
+            "args": "Start Windows Prototype Core Image File Service"
         }
     ]
 }
