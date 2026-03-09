@@ -149,6 +149,7 @@ func (db *Cache) GetProduct(key string) (*model.Product, error) {
 
 	return &product, nil
 }
+
 // GetProducts retrieves a paginated list of products from the cache.
 // Products are returned in ascending order based on the default cache index.
 // Supports pagination through skip and limit parameters.
@@ -216,4 +217,30 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 	}
 
 	return products, nil
+}
+
+// GetProductCount returns the total number of products stored in the cache.
+// This is useful for pagination calculations and providing total count metadata.
+//
+// Returns:
+//   - int: The total number of products in the cache
+//   - error: Any error that occurred during the count operation
+func (db *Cache) GetProductCount() (int, error) {
+	var count int
+
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			count++
+
+			return true
+		})
+
+		return nil
+	})
+
+	if err != nil {
+		return 0, fmt.Errorf("failed to count products: %w", err)
+	}
+
+	return count, nil
 }
