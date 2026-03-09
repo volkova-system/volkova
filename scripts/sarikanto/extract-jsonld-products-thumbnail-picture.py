@@ -199,6 +199,7 @@ def download_thumbnail(thumbnail_url: str, product_id: str,
                 "Accept-Encoding": "gzip, deflate"
             }
         )
+
         # For HTTP/HTTPS URLs, urlopen returns HTTPResponse which has a read() method
         response: HTTPResponse
         with cast(HTTPResponse, urllib.request.urlopen(req, timeout=30)) as response:
