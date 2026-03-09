@@ -11,25 +11,36 @@ type Product struct {
 	Context             string              `json:"@context"`
 	Type                string              `json:"@type"`
 	ID                  string              `json:"@id"`
-	SKU                 string              `json:"sku"`
+
+    SKU                 string              `json:"sku"`
 	Name                string              `json:"name"`
 	Headline            string              `json:"headline"`
 	Description         string              `json:"description"`
 	URL                 string              `json:"url"`
+	RatingValue         float64             `json:"ratingValue"`
+
     PriceCurrency       string              `json:"priceCurrency"`
 	Price               float64             `json:"price"`
-	RatingValue         float64             `json:"ratingValue"`
+    NetPrice            float64             `json:"netPrice"`
 	DiscountPercentage  float64             `json:"discountPercentage"`
-    Thumbnail           string              `json:"thumbnail"`
-	Image               []string            `json:"image"`
-	Keywords            []string            `json:"keywords"`
-    CacheIdentifier     Identifier          `json:"cacheIdentifier"`
-    Brand               Brand               `json:"brand"`
-	DateCreated         time.Time           `json:"dateCreated"`
+
+    DateCreated         time.Time           `json:"dateCreated"`
 	DateModified        time.Time           `json:"dateModified"`
+
+    Thumbnail           string              `json:"thumbnail"`
+	Images              []string           `json:"images"`
+
+    Keywords            []string            `json:"keywords"`
+
+    CacheIdentifier     Identifier          `json:"cacheIdentifier"`
+
+    Brand               Brand               `json:"brand"`
+
 	AggregateRating     AggregateRating     `json:"aggregateRating"`
-	Offers              Offer               `json:"offers"`
-	AdditionalProperty  []PropertyValue     `json:"additionalProperty"`
+
+    Offers              Offer               `json:"offers"`
+
+    AdditionalProperty  []PropertyValue     `json:"additionalProperty"`
 }
 
 type Identifier struct {
@@ -55,6 +66,7 @@ type Offer struct {
 	Type                string              `json:"@type"`
 	PriceCurrency       string              `json:"priceCurrency"`
 	Price               float64             `json:"price"`
+    NetPrice            float64             `json:"netPrice"`
 	Availability        string              `json:"availability"`
 	PriceSpecification  PriceSpecification  `json:"priceSpecification"`
 	DiscountPercentage  float64             `json:"discountPercentage"`
@@ -76,12 +88,14 @@ type PropertyValue struct {
 func (product *Product) Normalize() {
     product.Context = "https://schema.org"
 	product.Type = "Product"
-    product.SKU = slug.Make(product.SKU)
-    product.Headline = strings.TrimSpace(product.Headline)
-    product.Name = slug.Make(product.Headline)
     product.ID = slug.Make(product.Name + "-" + product.SKU)
+
+    product.SKU = slug.Make(product.SKU)
+    product.Name = slug.Make(product.Headline)
+    product.Headline = strings.TrimSpace(product.Headline)
     product.Description = strings.TrimSpace(product.Description)
     product.URL = strings.TrimSpace(product.URL)
+
     product.PriceCurrency = strings.ToLower(strings.TrimSpace(product.PriceCurrency))
 
     product.CacheIdentifier.Type = "PropertyValue"
