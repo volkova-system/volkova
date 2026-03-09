@@ -11,14 +11,15 @@
 	"ratingValue": 4.5,
 
 	"priceCurrency": "usd",
-	"price": 80,
-	"discountPercentage": 20,
+    "price": 100.00
+	"netPrice": 80.00,
+	"discountPercentage": 20.00,
 
 	"dateCreated": "2026-03-08T10:00:00Z",
 	"dateModified": "2026-03-08T11:00:00Z",
 
 	"thumbnail": "thumbnail_uri",
-	"image": [
+	"images": [
 		"picture_uri_1",
 		"picture_uri_2"
 	],
@@ -44,24 +45,25 @@
 	"aggregateRating": {
 		"@type": "AggregateRating",
 		"ratingValue": 4.5,
-		"bestRating": 5,
-		"worstRating": 1
+		"bestRating": 5.0,
+		"worstRating": 1.0
 	},
 
 	"offers": {
 		"@type": "Offer",
-		"priceCurrency": "usd",
-		"price": 80.00,
+		"priceCurrency": "php",
+        "price": 100.00,
+		"netPrice": 80.00,
 
 		"availability": "https://schema.org/InStock",
 
 		"priceSpecification": {
 			"@type": "PriceSpecification",
-			"priceCurrency": "usd",
+			"priceCurrency": "php",
 			"price": 100.00
 		},
 
-		"discountPercentage": 20
+		"discountPercentage": 20.00
 	},
 
 	"additionalProperty": [
