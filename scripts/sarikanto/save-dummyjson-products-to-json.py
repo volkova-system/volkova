@@ -130,6 +130,7 @@ def fetch_products(skip: int = 0, limit: int = 30) -> dict[str, object]:
 def create_output_directory(base_path: str) -> Path:
     """
     Create dummyjson-products directory in the specified path.
+    If the directory already exists, it will be deleted first.
 
     Args:
         base_path (str): Absolute base directory path
@@ -148,6 +149,13 @@ def create_output_directory(base_path: str) -> Path:
             sys.exit(1)
 
         output_dir = base_dir / "dummyjson-products"
+
+        # Delete existing directory if it exists
+        if output_dir.exists():
+            import shutil
+            shutil.rmtree(output_dir)
+            print(f"Deleted existing directory: {output_dir}")
+
         output_dir.mkdir(exist_ok=True)
 
         # Return absolute path
