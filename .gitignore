@@ -75,9 +75,9 @@
 !assets/*/images/
 !assets/*/media/
 !assets/*/videos/
-!assets/*/data/*/
+!assets/*/data/**/
 !assets/*/data/**/*.jsonld
-!assets/*/images/*/
+!assets/*/images/**/
 !assets/*/images/**/*.svg
 !assets/*/images/**/*.png
 !assets/*/images/**/*.jpg
