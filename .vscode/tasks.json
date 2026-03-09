@@ -9,9 +9,6 @@
                 "Open Core Storybook",
             ],
             "dependsOrder": "sequence",
-            "runOptions": {
-                "runOn": "folderOpen"
-            },
             "problemMatcher": []
         },
         {
