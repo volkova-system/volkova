@@ -16,6 +16,7 @@ from typing import cast
 
 # Type alias for JSON data
 JsonValue = str | int | float | bool | None | list['JsonValue'] | dict[str, 'JsonValue']
+JsonDict = dict[str, JsonValue]
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -45,7 +46,7 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def read_products_file(products_path: str) -> dict[str, JsonValue]:
+def read_products_file(products_path: str) -> JsonDict:
     """
     Read and parse the products JSON file.
 
@@ -61,7 +62,7 @@ def read_products_file(products_path: str) -> dict[str, JsonValue]:
 
     try:
         with open(products_path, 'r', encoding='utf-8') as file:
-            data = cast(dict[str, JsonValue], json.load(file))
+            data = cast(JsonDict, json.load(file))
             return data
 
     except FileNotFoundError:
@@ -101,7 +102,7 @@ def create_products_directory(output_dir: str) -> Path:
         sys.exit(1)
 
 
-def generate_product_id(product: dict[str, JsonValue]) -> str:
+def generate_product_id(product: JsonDict) -> str:
     """
     Generate product ID from name and SKU.
 
@@ -116,7 +117,7 @@ def generate_product_id(product: dict[str, JsonValue]) -> str:
     return f"{name}-{sku}"
 
 
-def map_product_to_jsonld(product: dict[str, JsonValue]) -> dict[str, JsonValue]:
+def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     """
     Map DummyJSON product data to JSON-LD schema format.
 
@@ -129,6 +130,17 @@ def map_product_to_jsonld(product: dict[str, JsonValue]) -> dict[str, JsonValue]
     product_id = generate_product_id(product)
     current_time = datetime.now().isoformat() + "Z"
 
+    # Helper function to safely convert to float
+    def safe_float(value: JsonValue, default: float = 0.0) -> float:
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            try:
+                return float(value)
+            except ValueError:
+                return default
+        return default
+
     # Map basic product information
     jsonld_product = {
         "@context": "https://schema.org",
@@ -139,10 +151,10 @@ def map_product_to_jsonld(product: dict[str, JsonValue]) -> dict[str, JsonValue]
         "headline": str(product.get('title', '')),
         "description": str(product.get('description', '')),
         "url": f"https://example.com/products/{product_id}",
-        "ratingValue": float(product.get('rating', 0)),
+        "ratingValue": safe_float(product.get('rating', 0)),
         "priceCurrency": "usd",
-        "price": float(product.get('price', 0)),
-        "discountPercentage": float(product.get('discountPercentage', 0)),
+        "price": safe_float(product.get('price', 0)),
+        "discountPercentage": safe_float(product.get('discountPercentage', 0)),
         "dateCreated": current_time,
         "dateModified": current_time,
         "thumbnail": str(product.get('thumbnail', '')),
@@ -160,50 +172,54 @@ def map_product_to_jsonld(product: dict[str, JsonValue]) -> dict[str, JsonValue]
         },
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": float(product.get('rating', 0)),
+            "ratingValue": safe_float(product.get('rating', 0)),
             "bestRating": 5,
             "worstRating": 1
         },
         "offers": {
             "@type": "Offer",
             "priceCurrency": "usd",
-            "price": float(product.get('price', 0)),
+            "price": safe_float(product.get('price', 0)),
             "availability": "https://schema.org/InStock",
             "priceSpecification": {
                 "@type": "PriceSpecification",
                 "priceCurrency": "usd",
-                "price": float(product.get('price', 0))
+                "price": safe_float(product.get('price', 0))
             },
-            "discountPercentage": float(product.get('discountPercentage', 0))
+            "discountPercentage": safe_float(product.get('discountPercentage', 0))
         },
-        "additionalProperty": []
+        "additionalProperty": cast(list[JsonDict], [])
     }
 
     # Add additional properties if available
+    additional_props = cast(list[JsonDict], jsonld_product["additionalProperty"])
+
     if 'weight' in product:
-        jsonld_product["additionalProperty"].append({
+        additional_props.append({
             "@type": "PropertyValue",
             "name": "weight",
             "description": "Product Weight",
             "value": str(product['weight'])
         })
 
+    # Add additional properties if available
     if 'dimensions' in product:
-        dims = product['dimensions']
-        width = dims.get('width', 0)
-        height = dims.get('height', 0)
-        depth = dims.get('depth', 0)
-        jsonld_product["additionalProperty"].append({
-            "@type": "PropertyValue",
-            "name": "dimensions",
-            "description": "Product Dimensions",
-            "value": f"{width}x{height}x{depth}"
-        })
+        dims = product.get('dimensions')
+        if isinstance(dims, dict):
+            width = safe_float(dims.get('width', 0))
+            height = safe_float(dims.get('height', 0))
+            depth = safe_float(dims.get('depth', 0))
+            additional_props.append({
+                "@type": "PropertyValue",
+                "name": "dimensions",
+                "description": "Product Dimensions",
+                "value": f"{width}x{height}x{depth}"
+            })
 
-    return jsonld_product
+    return cast(JsonDict, jsonld_product)
 
 
-def save_jsonld_file(product_data: dict[str, JsonValue],
+def save_jsonld_file(product_data: JsonDict,
                      products_dir: Path) -> None:
     """
     Save JSON-LD product data to file.
@@ -231,7 +247,7 @@ def save_jsonld_file(product_data: dict[str, JsonValue],
         sys.exit(1)
 
 
-def process_products(products_data: dict[str, JsonValue],
+def process_products(products_data: JsonDict,
                      products_dir: Path) -> None:
     """
     Process all products and convert to JSON-LD format.
@@ -245,13 +261,19 @@ def process_products(products_data: dict[str, JsonValue],
     """
     try:
         products = products_data.get('products', [])
+        if not isinstance(products, list):
+            print("Error: Products data is not a list")
+            sys.exit(1)
+
         if not products:
             print("Error: No products found in data")
             sys.exit(1)
 
         for product in products:
-            jsonld_product = map_product_to_jsonld(product)
-            save_jsonld_file(jsonld_product, products_dir)
+            if isinstance(product, dict):
+                product_dict = cast(JsonDict, product)
+                jsonld_product = map_product_to_jsonld(product_dict)
+                save_jsonld_file(jsonld_product, products_dir)
 
         print(f"Successfully processed {len(products)} products")
 
@@ -269,10 +291,10 @@ def main() -> None:
         args = parse_arguments()
 
         # Read products data
-        products_data = read_products_file(args.products)
+        products_data = read_products_file(cast(str, args.products))
 
         # Create output directory
-        products_dir = create_products_directory(args.directory)
+        products_dir = create_products_directory(cast(str, args.directory))
 
         # Process and save products
         process_products(products_data, products_dir)
@@ -280,6 +302,7 @@ def main() -> None:
     except KeyboardInterrupt:
         print("\nOperation cancelled by user")
         sys.exit(1)
+
     except Exception as e:
         print(f"Unexpected error: {e}")
         sys.exit(1)
