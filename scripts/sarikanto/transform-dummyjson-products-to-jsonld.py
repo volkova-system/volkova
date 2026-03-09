@@ -197,6 +197,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
         "priceCurrency": "php",
         "price": safe_float(product.get('price', 0)),
+        "netPrice": safe_float(product.get('price', 0)),
         "discountPercentage": safe_float(product.get('discountPercentage', 0)),
 
         "dateCreated": current_time,
@@ -212,13 +213,8 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
             "propertyID": "cache:key",
             "name": "cache_key",
-            "value": f"product:{product.get('id', '')}"
-        },
-
-        "brand": {
-            "@type": "Brand",
-
-            "name": str(product.get('brand', ''))
+            "description": "cache storage key",
+            "value": f"product:{product_id}"
         },
 
         "aggregateRating": {
@@ -233,15 +229,16 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "offers": {
             "@type": "Offer",
 
-            "priceCurrency": "usd",
+            "priceCurrency": "php",
             "price": safe_float(product.get('price', 0)),
+            "netPrice": safe_float(product.get('price', 0)),
 
             "availability": "https://schema.org/InStock",
 
             "priceSpecification": {
                 "@type": "PriceSpecification",
 
-                "priceCurrency": "usd",
+                "priceCurrency": "php",
                 "price": safe_float(product.get('price', 0))
             },
 
@@ -251,6 +248,13 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "additionalProperty": cast(list[JsonDict], [])
     }
 
+    if 'brand' in product:
+        jsonld_product["brand" ] = {
+            "@type": "Brand",
+
+            "name": str(product["brand"]).lower()
+        }
+
     # Add additional properties if available
     additional_props = cast(list[JsonDict], jsonld_product["additionalProperty"])
 
@@ -258,8 +262,16 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         additional_props.append({
             "@type": "PropertyValue",
 
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        })
+
+        additional_props.append({
+            "@type": "PropertyValue",
+
             "name": "weight",
-            "description": "Product Weight",
+            "description": "product weight",
             "value": str(product['weight'])
         })
 
@@ -274,8 +286,16 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             additional_props.append({
                 "@type": "PropertyValue",
 
+                "name": "dimension_unit",
+                "description": "product dimension unit",
+                "value": "cm"
+            })
+
+            additional_props.append({
+                "@type": "PropertyValue",
+
                 "name": "width",
-                "description": "Product Width",
+                "description": "product width",
                 "value": f"{width}"
             })
 
@@ -283,7 +303,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
                 "@type": "PropertyValue",
 
                 "name": "height",
-                "description": "Product Height",
+                "description": "product height",
                 "value": f"{height}"
             })
 
@@ -291,7 +311,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
                 "@type": "PropertyValue",
 
                 "name": "depth",
-                "description": "Product Depth",
+                "description": "product depth",
                 "value": f"{depth}"
             })
 
