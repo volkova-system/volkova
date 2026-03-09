@@ -1,0 +1,76 @@
+{
+	"@context": "https://schema.org",
+	"@type": "Product",
+	"@id": "product_name-product_reference",
+
+	"sku": "product_reference",
+	"name": "product_name",
+	"headline": "product_title",
+	"description": "product_description",
+	"url": "/pages/products/product_name-product_reference",
+	"ratingValue": 4.5,
+
+	"priceCurrency": "usd",
+    "price": 100.00
+	"netPrice": 80.00,
+	"discountPercentage": 20.00,
+
+	"dateCreated": "2026-03-08T10:00:00Z",
+	"dateModified": "2026-03-08T11:00:00Z",
+
+	"thumbnail": "/assets/images/products/thumbnails/product_name-product_reference.webp",
+	"images": [
+		"/assets/images/products/product_name-product_reference/picture-1.webp"
+	],
+
+	"keywords": [
+		"category_1",
+		"category_2",
+		"category_3"
+	],
+
+	"cacheIdentifier": {
+		"@type": "PropertyValue",
+		"propertyID": "cache:key",
+		"name": "cache_key",
+		"value": "product:product_id"
+	},
+
+	"brand": {
+		"@type": "Brand",
+		"name": "Brand Name"
+	},
+
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": 4.5,
+		"bestRating": 5.0,
+		"worstRating": 1.0
+	},
+
+	"offers": {
+		"@type": "Offer",
+		"priceCurrency": "php",
+        "price": 100.00,
+		"netPrice": 80.00,
+
+		"availability": "https://schema.org/InStock",
+
+		"priceSpecification": {
+			"@type": "PriceSpecification",
+			"priceCurrency": "php",
+			"price": 100.00
+		},
+
+		"discountPercentage": 20.00
+	},
+
+	"additionalProperty": [
+		{
+			"@type": "PropertyValue",
+			"name": "detail_name",
+			"description": "detail_title",
+			"value": "detail_value"
+		}
+	]
+}
