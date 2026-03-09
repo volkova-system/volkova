@@ -18,7 +18,7 @@
 	"dateCreated": "2026-03-08T10:00:00Z",
 	"dateModified": "2026-03-08T11:00:00Z",
 
-	"thumbnail": "thumbnail_uri",
+	"thumbnail": "/assets/images/products/thumbnails/product_name-product_reference.webp",
 	"images": [
 		"picture_uri_1",
 		"picture_uri_2"
