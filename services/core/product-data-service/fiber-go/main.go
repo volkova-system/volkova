@@ -33,5 +33,12 @@ func main() {
 		})
 	})
 
+	server.Use(func(c fiber.Ctx) error {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "Not Found",
+			"path":  c.Path(),
+		})
+	})
+
 	log.Fatal(server.Listen(":4979"))
 }
