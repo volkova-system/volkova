@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/logger"
 
 	"product-data-service/cache"
+	"product-data-service/handlers"
 )
 
 func main() {
@@ -32,6 +33,8 @@ func main() {
 			"status": "ok",
 		})
 	})
+
+	products.Post("/push", handlers.PushProductHandler(cache))
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
