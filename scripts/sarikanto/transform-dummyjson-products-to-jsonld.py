@@ -10,6 +10,7 @@ import argparse
 import json
 import shutil
 import sys
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import cast
@@ -106,6 +107,26 @@ def create_products_directory(output_dir: str) -> Path:
         sys.exit(1)
 
 
+def format_product_name(product: JsonDict) -> str:
+    """
+    Format product name from title.
+
+    Args:
+        product: DummyJSON product data
+
+    Returns:
+        Formatted product name string
+    """
+
+    name = str(product.get('title', '')).replace(' ', '-').lower()
+    name = re.sub(r'[^a-z0-9\-]+', '_', name)
+    name = re.sub(r'[\-]+', '-', name)
+    name = re.sub(r'[_]+', '_', name)
+    name = re.sub(r'(-_-)+', '-', name)
+
+    return name
+
+
 def generate_product_id(product: JsonDict) -> str:
     """
     Generate product ID from name and SKU.
@@ -117,11 +138,35 @@ def generate_product_id(product: JsonDict) -> str:
         String ID in format "name-sku"
     """
 
-    name = str(product.get('title', '')).lower().replace(' ', '-')
+    name = format_product_name(product)
     sku = str(product.get('sku', product.get('id', ''))).lower()
 
     return f"{name}-{sku}"
 
+
+def safe_float(value: JsonValue, default: float = 0.0) -> float:
+    """
+    Safely convert a JSON value to a float.
+
+    Args:
+        value: Input JSON value which may be int, float, str, or other types.
+        default: Fallback value returned when conversion is not possible.
+
+    Returns:
+        float: Converted float value if coercible; otherwise the provided default.
+    """
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    if isinstance(value, str):
+        try:
+            return float(value)
+
+        except ValueError:
+            return default
+
+    return default
 
 def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     """
@@ -137,28 +182,14 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     product_id = generate_product_id(product)
     current_time = datetime.now().isoformat() + "Z"
 
-    # Helper function to safely convert to float
-    def safe_float(value: JsonValue, default: float = 0.0) -> float:
-        if isinstance(value, (int, float)):
-            return float(value)
-
-        if isinstance(value, str):
-            try:
-                return float(value)
-
-            except ValueError:
-                return default
-
-        return default
-
     # Map basic product information
     jsonld_product = {
         "@context": "https://schema.org",
         "@type": "Product",
         "@id": product_id,
 
-        "sku": str(product.get('sku', product.get('id', ''))),
-        "name": str(product.get('title', '')),
+        "sku": str(product.get('sku', product.get('id', ''))).lower(),
+        "name": format_product_name(product),
         "headline": str(product.get('title', '')),
         "description": str(product.get('description', '')),
         "url": f"https://example.com/products/{product_id}",
@@ -209,6 +240,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
             "priceSpecification": {
                 "@type": "PriceSpecification",
+
                 "priceCurrency": "usd",
                 "price": safe_float(product.get('price', 0))
             },
@@ -238,12 +270,29 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             width = safe_float(dims.get('width', 0))
             height = safe_float(dims.get('height', 0))
             depth = safe_float(dims.get('depth', 0))
+
             additional_props.append({
                 "@type": "PropertyValue",
 
-                "name": "dimensions",
-                "description": "Product Dimensions",
-                "value": f"{width}x{height}x{depth}"
+                "name": "width",
+                "description": "Product Width",
+                "value": f"{width}"
+            })
+
+            additional_props.append({
+                "@type": "PropertyValue",
+
+                "name": "height",
+                "description": "Product Height",
+                "value": f"{height}"
+            })
+
+            additional_props.append({
+                "@type": "PropertyValue",
+
+                "name": "depth",
+                "description": "Product Depth",
+                "value": f"{depth}"
             })
 
     return cast(JsonDict, jsonld_product)
