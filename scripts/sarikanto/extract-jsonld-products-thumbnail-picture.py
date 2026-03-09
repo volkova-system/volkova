@@ -1,14 +1,248 @@
 #!/usr/bin/env python3
+"""
+Extract product thumbnails from JSON-LD files.
 
+This script processes JSON-LD files containing product data, extracts
+thumbnail URLs and product IDs, then downloads the thumbnails with
+ID-based filenames to a specified output directory.
+"""
+
+import argparse
+import json
+import shutil
 import sys
+import urllib.request
+import urllib.error
+from pathlib import Path
+from typing import cast
+from urllib.parse import urlparse
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: tool <name>")
+
+def validate_products_directory(products_path: str) -> Path:
+    """
+    Validate that the products directory exists and contains JSON-LD files.
+
+    Args:
+        products_path: Path to directory containing JSON-LD files
+
+    Returns:
+        Path object of validated directory
+
+    Raises:
+        SystemExit: If directory invalid or no JSON-LD files found
+    """
+
+    path = Path(products_path)
+
+    if not path.exists():
+        print(f"Error: Products directory does not exist: {products_path}")
         sys.exit(1)
 
-    name = sys.argv[1]
-    print(f"Hello {name}!")
+    if not path.is_dir():
+        print(f"Error: Products path is not a directory: {products_path}")
+        sys.exit(1)
+
+    jsonld_files = list(path.glob("*.jsonld"))
+    if not jsonld_files:
+        print(f"Error: No JSON-LD files found in: {products_path}")
+        sys.exit(1)
+
+    return path
+
+
+def validate_output_directory(output_path: str) -> Path:
+    """
+    Validate and prepare the output directory.
+
+    Args:
+        output_path: Path to output directory
+
+    Returns:
+        Path object of validated directory
+
+    Raises:
+        SystemExit: If directory cannot be created or accessed
+    """
+
+    path = Path(output_path)
+
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+
+    except OSError as e:
+        print(f"Error: Cannot create output directory {output_path}: {e}")
+        sys.exit(1)
+
+    if not path.is_dir():
+        print(f"Error: Output path is not a directory: {output_path}")
+        sys.exit(1)
+
+    return path
+
+
+def get_jsonld_files(products_dir: Path) -> list[Path]:
+    """
+    Get all JSON-LD file paths in absolute form.
+
+    Args:
+        products_dir: Directory containing JSON-LD files
+
+    Returns:
+        List of absolute paths to JSON-LD files
+    """
+
+    jsonld_files = list(products_dir.glob("*.jsonld"))
+    return [file.resolve() for file in jsonld_files]
+
+
+def extract_product_data(jsonld_file: Path) -> tuple[str, str]:
+    """
+    Extract product ID and thumbnail URL from JSON-LD file.
+
+    Args:
+        jsonld_file: Path to JSON-LD file
+
+    Returns:
+        Tuple of (product_id, thumbnail_url)
+
+    Raises:
+        SystemExit: If file cannot be read or required fields missing
+    """
+
+    try:
+        with open(jsonld_file, 'r', encoding='utf-8') as f:
+            data = cast(dict[str, str], json.load(f))
+
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"Error: Cannot read JSON-LD file {jsonld_file}: {e}")
+        sys.exit(1)
+
+    product_id = data.get('id')
+    thumbnail = data.get('thumbnail')
+
+    if not product_id:
+        print(f"Error: Missing 'id' field in {jsonld_file}")
+        sys.exit(1)
+
+    if not thumbnail:
+        print(f"Error: Missing 'thumbnail' field in {jsonld_file}")
+        sys.exit(1)
+
+    return str(product_id), str(thumbnail)
+
+
+def create_thumbnails_directory(output_dir: Path) -> Path:
+    """
+    Create or recreate the products/thumbnails directory.
+
+    Args:
+        output_dir: Base output directory
+
+    Returns:
+        Path to thumbnails directory
+
+    Raises:
+        SystemExit: If directory operations fail
+    """
+
+    thumbnails_dir = output_dir / "products" / "thumbnails"
+
+    try:
+        if thumbnails_dir.exists():
+            shutil.rmtree(thumbnails_dir)
+
+        thumbnails_dir.mkdir(parents=True)
+
+    except OSError as e:
+        print(f"Error: Cannot create thumbnails directory: {e}")
+        sys.exit(1)
+
+    return thumbnails_dir
+
+
+def download_thumbnail(thumbnail_url: str, product_id: str,
+                      thumbnails_dir: Path) -> None:
+    """
+    Download thumbnail and save with product ID as filename.
+
+    Args:
+        thumbnail_url: URL of thumbnail image
+        product_id: Product ID for filename
+        thumbnails_dir: Directory to save thumbnail
+
+    Raises:
+        SystemExit: If download or save operations fail
+    """
+
+    try:
+        # Get file extension from URL
+        parsed_url = urlparse(thumbnail_url)
+        path_parts = parsed_url.path.split('.')
+        extension = f".{path_parts[-1]}" if len(path_parts) > 1 else ""
+
+        # Create filename with product ID
+        filename = f"{product_id}{extension}"
+        filepath = thumbnails_dir / filename
+
+        # Delete existing file if present
+        if filepath.exists():
+            filepath.unlink()
+
+        # Download and save thumbnail
+        _ = urllib.request.urlretrieve(thumbnail_url, filepath)
+
+    except (OSError, urllib.error.URLError) as e:
+        print(f"Error: Cannot download thumbnail {thumbnail_url}: {e}")
+        sys.exit(1)
+
+
+def main() -> None:
+    """
+    Main function to orchestrate thumbnail extraction process.
+    """
+
+    parser = argparse.ArgumentParser(
+        description="Extract product thumbnails from JSON-LD files"
+    )
+
+    _ = parser.add_argument(
+        "--products",
+        required=True,
+        help="Directory path containing JSON-LD files"
+    )
+    _ = parser.add_argument(
+        "--directory",
+        required=True,
+        help="Output directory path for saving thumbnails"
+    )
+
+    args = parser.parse_args()
+
+    # Validate inputs
+    products_dir = validate_products_directory(cast(str, args.products))
+    output_dir = validate_output_directory(cast(str, args.directory))
+
+    # Get JSON-LD files
+    jsonld_files = get_jsonld_files(products_dir)
+    print(f"Found {len(jsonld_files)} JSON-LD files")
+
+    # Create thumbnails directory
+    thumbnails_dir = create_thumbnails_directory(output_dir)
+    print(f"Created thumbnails directory: {thumbnails_dir}")
+
+    # Process each JSON-LD file
+    for jsonld_file in jsonld_files:
+        print(f"Processing: {jsonld_file}")
+
+        # Extract product data
+        product_id, thumbnail_url = extract_product_data(jsonld_file)
+
+        # Download thumbnail
+        download_thumbnail(thumbnail_url, product_id, thumbnails_dir)
+        print(f"Downloaded thumbnail for product: {product_id}")
+
+    print(f"Successfully processed {len(jsonld_files)} products")
+
 
 if __name__ == "__main__":
     main()
