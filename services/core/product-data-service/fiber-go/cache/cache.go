@@ -108,6 +108,30 @@ func (db *Cache) PushProduct(product model.Product) error {
     })
 }
 
+// PopProduct removes a product from the cache by its key.
+// The product is deleted from the cache in a thread-safe transaction.
+// If the product doesn't exist, an error is returned.
+//
+// Parameters:
+//   - key: The cache key to remove (typically the product's cache identifier value)
+//
+// Returns:
+//   - error: Any error that occurred during the removal operation
+func (db *Cache) PopProduct(key string) error {
+	if key == "" {
+		return fmt.Errorf("key cannot be empty")
+	}
+
+	return db.products.Update(func(tx *buntdb.Tx) error {
+		_, err := tx.Delete(key)
+		if err != nil {
+			return fmt.Errorf("failed to remove product with key %s: %w", key, err)
+		}
+
+		return nil
+	})
+}
+
 // GetProduct retrieves a single product from the cache by its key.
 // The product data is deserialized from JSON and returned as a Product struct.
 //
