@@ -5,4 +5,4 @@ python ./scripts/sarikanto/transform-dummyjson-products-to-jsonld.py --products 
 
 python ./scripts/sarikanto/extract-jsonld-products-thumbnail-picture.py --products ./assets/sarikanto/data --directory ./assets/sarikanto/images
 
-python ./scripts/sarikanto/extract-jsonld-products-pictures.py --products ./assets/sarikanto/data --directory ./assets/sarikanto/images
+python ./scripts/sarikanto/extract-jsonld-products-pictures.py --products ./assets/sarikanto/data/products --directory ./assets/sarikanto/images
