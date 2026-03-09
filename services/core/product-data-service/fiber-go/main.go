@@ -34,6 +34,7 @@ func main() {
 		})
 	})
 
+	products.Get("/", handlers.GetProductsHandler(cache))
 	products.Post("/push", handlers.PushProductHandler(cache))
 
 	server.Use(func(c fiber.Ctx) error {
