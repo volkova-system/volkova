@@ -196,8 +196,10 @@ def save_products_json(products_data: dict[str, object], output_directory: Path)
         products_list = products_data.get('products', [])
         if isinstance(products_list, list):
             product_count = len(cast(list[object], products_list))
+
         else:
             product_count = 0
+
         print(f"Successfully saved {product_count} products to {output_file}")
 
     except PermissionError:
