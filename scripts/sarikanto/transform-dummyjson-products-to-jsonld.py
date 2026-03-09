@@ -91,12 +91,16 @@ def create_products_directory(output_dir: str) -> Path:
     Raises:
         SystemExit: If directory operations fail
     """
+
     try:
         products_dir = Path(output_dir) / "products"
         if products_dir.exists():
             shutil.rmtree(products_dir)
+
         products_dir.mkdir(parents=True, exist_ok=True)
+
         return products_dir
+
     except Exception as e:
         print(f"Error: Failed to create products directory: {e}")
         sys.exit(1)
@@ -112,8 +116,10 @@ def generate_product_id(product: JsonDict) -> str:
     Returns:
         String ID in format "name-sku"
     """
+
     name = str(product.get('title', '')).lower().replace(' ', '-')
-    sku = str(product.get('sku', product.get('id', '')))
+    sku = str(product.get('sku', product.get('id', ''))).lower()
+
     return f"{name}-{sku}"
 
 
@@ -127,6 +133,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     Returns:
         Dict containing JSON-LD formatted product data
     """
+
     product_id = generate_product_id(product)
     current_time = datetime.now().isoformat() + "Z"
 
@@ -134,11 +141,14 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     def safe_float(value: JsonValue, default: float = 0.0) -> float:
         if isinstance(value, (int, float)):
             return float(value)
+
         if isinstance(value, str):
             try:
                 return float(value)
+
             except ValueError:
                 return default
+
         return default
 
     # Map basic product information
@@ -146,36 +156,45 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "@context": "https://schema.org",
         "@type": "Product",
         "@id": product_id,
+
         "sku": str(product.get('sku', product.get('id', ''))),
         "name": str(product.get('title', '')),
         "headline": str(product.get('title', '')),
         "description": str(product.get('description', '')),
         "url": f"https://example.com/products/{product_id}",
         "ratingValue": safe_float(product.get('rating', 0)),
+
         "priceCurrency": "usd",
         "price": safe_float(product.get('price', 0)),
         "discountPercentage": safe_float(product.get('discountPercentage', 0)),
+
         "dateCreated": current_time,
         "dateModified": current_time,
+
         "thumbnail": str(product.get('thumbnail', '')),
         "image": product.get('images', []),
+
         "keywords": [str(product.get('category', ''))],
+
         "cacheIdentifier": {
             "@type": "PropertyValue",
             "propertyID": "cache:key",
             "name": "cache_key",
             "value": f"product:{product.get('id', '')}"
         },
+
         "brand": {
             "@type": "Brand",
             "name": str(product.get('brand', ''))
         },
+
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": safe_float(product.get('rating', 0)),
             "bestRating": 5,
             "worstRating": 1
         },
+
         "offers": {
             "@type": "Offer",
             "priceCurrency": "usd",
@@ -188,6 +207,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             },
             "discountPercentage": safe_float(product.get('discountPercentage', 0))
         },
+
         "additionalProperty": cast(list[JsonDict], [])
     }
 
@@ -231,6 +251,7 @@ def save_jsonld_file(product_data: JsonDict,
     Raises:
         SystemExit: If file cannot be saved
     """
+
     try:
         filename = f"{product_data['@id']}.jsonld"
         filepath = products_dir / filename
@@ -259,6 +280,7 @@ def process_products(products_data: JsonDict,
     Raises:
         SystemExit: If processing fails
     """
+
     try:
         products = products_data.get('products', [])
         if not isinstance(products, list):
@@ -273,6 +295,7 @@ def process_products(products_data: JsonDict,
             if isinstance(product, dict):
                 product_dict = cast(JsonDict, product)
                 jsonld_product = map_product_to_jsonld(product_dict)
+
                 save_jsonld_file(jsonld_product, products_dir)
 
         print(f"Successfully processed {len(products)} products")
