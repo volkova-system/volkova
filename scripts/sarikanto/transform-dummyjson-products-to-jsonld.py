@@ -164,7 +164,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "url": f"https://example.com/products/{product_id}",
         "ratingValue": safe_float(product.get('rating', 0)),
 
-        "priceCurrency": "usd",
+        "priceCurrency": "php",
         "price": safe_float(product.get('price', 0)),
         "discountPercentage": safe_float(product.get('discountPercentage', 0)),
 
@@ -178,6 +178,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
         "cacheIdentifier": {
             "@type": "PropertyValue",
+
             "propertyID": "cache:key",
             "name": "cache_key",
             "value": f"product:{product.get('id', '')}"
@@ -185,26 +186,33 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
         "brand": {
             "@type": "Brand",
+
             "name": str(product.get('brand', ''))
         },
 
         "aggregateRating": {
             "@type": "AggregateRating",
+
             "ratingValue": safe_float(product.get('rating', 0)),
+
             "bestRating": 5,
             "worstRating": 1
         },
 
         "offers": {
             "@type": "Offer",
+
             "priceCurrency": "usd",
             "price": safe_float(product.get('price', 0)),
+
             "availability": "https://schema.org/InStock",
+
             "priceSpecification": {
                 "@type": "PriceSpecification",
                 "priceCurrency": "usd",
                 "price": safe_float(product.get('price', 0))
             },
+
             "discountPercentage": safe_float(product.get('discountPercentage', 0))
         },
 
@@ -217,6 +225,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     if 'weight' in product:
         additional_props.append({
             "@type": "PropertyValue",
+
             "name": "weight",
             "description": "Product Weight",
             "value": str(product['weight'])
@@ -231,6 +240,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             depth = safe_float(dims.get('depth', 0))
             additional_props.append({
                 "@type": "PropertyValue",
+
                 "name": "dimensions",
                 "description": "Product Dimensions",
                 "value": f"{width}x{height}x{depth}"
