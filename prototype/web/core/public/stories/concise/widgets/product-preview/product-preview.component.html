@@ -1,24 +1,33 @@
 <section class="page">
     <div class="leftbar sidebar spacer"></div>
     <div class="sidebar spacer"></div>
-    <main class="content-tree tree list">
+    <main id="product-list-tree"
+        class="content-tree tree list">
         <div class="item spacer"></div>
         <ol id="product-list"
             class="product-list content-tree-list list">
         </ol>
         <product-list
             target="product-list"
-            data-products-component-service-address="http://localhost:6039"
+            data-component-service-address="http://localhost:6039"
             data-component="/service/component/products"
             data-service="/service/data/products">
         </product-list>
         <div class="item spacer"></div>
     </main>
     <div class="sidebar spacer"></div>
-    <article class="focus-tree tree list">
+    <article id="product-preview-tree"
+        class="focus-tree tree list hidden">
         <div class="item spacer"></div>
-        <ol class="card focus-tree-list list">
+        <ol id="product-card"
+            class="card focus-tree-list list">
         </ol>
+        <product-card
+            target="product-card"
+            data-component-service-address="http://localhost:6039"
+            data-component="/service/component/products/product_reference/preview"
+            data-service="/service/data/products/product_reference">
+        </product-card>
         <div class="item spacer"></div>
     </article>
 </section>
