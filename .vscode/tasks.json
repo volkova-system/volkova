@@ -30,7 +30,7 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": true,
-                "panel": "shared"
+                "panel": "dedicated"
             },
             "problemMatcher": []
         },
@@ -151,9 +151,27 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": false,
-                "panel": "shared"
+                "panel": "dedicated"
             },
-            "problemMatcher": []
+            "problemMatcher": [
+                {
+                    "owner": "caddy",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*)$",
+                        "file": 1,
+                        "message": 1
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*starting.*",
+                        "endsPattern": ".*(serving|started|listening).*"
+                    }
+                }
+            ]
         },
         {
             "label": "Stop Windows Prototype Core Images File Service",
@@ -183,7 +201,7 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": false,
-                "panel": "shared"
+                "panel": "dedicated"
             },
             "dependsOn": "Build Windows Prototype Core Products Data Service",
             "problemMatcher": [
@@ -194,17 +212,14 @@
                         "${workspaceFolder}/services/core/products-data-service/fiber-go"
                     ],
                     "pattern": {
-                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "regexp": "^(.*)$",
                         "file": 1,
-                        "line": 2,
-                        "column": 3,
-                        "severity": 4,
-                        "message": 5
+                        "message": 1
                     },
                     "background": {
                         "activeOnStart": true,
-                        "beginsPattern": ".*starting.*",
-                        "endsPattern": ".*listening on.*:4979.*"
+                        "beginsPattern": ".*(starting|Starting|running|Running).*",
+                        "endsPattern": ".*(listening|Listening|ready|Ready|started|Started|server.*running|Server.*running|:4979).*"
                     }
                 }
             ]
@@ -236,7 +251,7 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": false,
-                "panel": "shared"
+                "panel": "dedicated"
             },
             "dependsOn": "Update Windows Prototype Core Products Data Service Modules",
             "group": "build",
@@ -273,7 +288,7 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": false,
-                "panel": "shared"
+                "panel": "dedicated"
             },
             "group": "build",
             "problemMatcher": []
@@ -295,12 +310,8 @@
                 "reveal": "always",
                 "echo": true,
                 "focus": false,
-                "panel": "shared"
+                "panel": "dedicated"
             },
-            "dependsOn": [
-                "Start Windows Prototype Core Products Data Service",
-                "Start Windows Prototype Core Images File Service"
-            ],
             "problemMatcher": [
                 {
                     "owner": "nextjs",
@@ -340,7 +351,7 @@
                 "Start Windows Prototype Core Products Data Service",
                 "Start Windows Prototype Core Products Component Service"
             ],
-            "dependsOrder": "sequence",
+            "dependsOrder": "parallel",
             "problemMatcher": []
         },
         {
