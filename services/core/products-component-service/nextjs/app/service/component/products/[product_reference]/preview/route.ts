@@ -25,11 +25,20 @@ export async function GET(req: Request) {
             <li class="normal-spacing item spacer"></li>
             <li class="card-item-title focus-tree-item item level-2">
                 <div class="spacer"></div>
-                <data class="title value main-content content"
-                    value="${product.headline}">
-                    ${product.headline}
-                </data>
-                <div class="spacer"></div>
+                <div class="main-content content">
+                    <data class="value"
+                        _="on load if my.innerHTML.trim() is empty add .hidden"
+                    >${product.brand?.name || ""}</data>
+                    <data class="title value"
+                        value="${product.headline}">${product.headline}</data>
+                </div>
+                <button class="icon-control control"
+                    aria-label="close ${product.headline} product preview"
+                    _="on click add .hidden to #product-preview-tree">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevron-left" />
+                    </svg>
+                </button>
             </li>
             <li class="normal-spacing item spacer"></li>
             <li class="card-item-description focus-tree-item item">
