@@ -7,4 +7,4 @@ python ./scripts/core/extract-jsonld-products-thumbnail-picture.py --products ./
 
 python ./scripts/core/extract-jsonld-products-pictures.py --products ./prototype/web/core/public/assets/data/products --directory ./prototype/web/core/public/assets/images
 
-python ./scripts/core/push-jsonld-products-to-core-product-data-service.py --products ./prototype/web/core/public/assets/data/products --service http://localhost:4979/service/products/push
+python ./scripts/core/push-jsonld-products-to-core-product-data-service.py --products ./prototype/web/core/public/assets/data/products --service http://localhost:4979/service/data/products/push
