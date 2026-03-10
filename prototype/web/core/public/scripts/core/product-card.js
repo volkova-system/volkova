@@ -27,6 +27,9 @@ class ProductCard extends HTMLElement {
     }
 
     render() {
+        const state = this.getAttribute("data-state")
+        if(state === "idle") return
+
         const componentService = this.getAttribute("data-component")
         if (!componentService) return
 
