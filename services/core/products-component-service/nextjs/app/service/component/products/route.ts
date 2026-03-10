@@ -1,4 +1,4 @@
-import { Product } from "../../product"
+import { Product } from "@/app/types/product"
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
