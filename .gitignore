@@ -150,16 +150,9 @@ containers/*/data/**/*.*
 !templates/**/*.template
 
 !tests/
-!tests/e2e/
-!tests/lib/
-!tests/logs/
-!tests/reports/
-!tests/scripts/
-!tests/units/
-!tests/**/*.js
-!tests/**/*.mjs
-!tests/**/*.ps1
-!tests/**/*.sh
+!tests/*/
+!tests/*/*-service/
+!tests/*/*-service/**/*
 
 !todos/
 !todos/**/*.todo

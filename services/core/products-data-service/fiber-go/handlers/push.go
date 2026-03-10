@@ -3,8 +3,8 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v3"
 
-	"product-data-service/cache"
-	"product-data-service/model"
+	"products-data-service/cache"
+	"products-data-service/model"
 )
 
 // PushProductHandler handles POST /service/products/push endpoint.

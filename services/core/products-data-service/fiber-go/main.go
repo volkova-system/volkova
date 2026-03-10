@@ -7,8 +7,8 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 
-	"product-data-service/cache"
-	"product-data-service/handlers"
+	"products-data-service/cache"
+	"products-data-service/handlers"
 )
 
 func main() {

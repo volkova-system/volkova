@@ -1,4 +1,4 @@
-module product-data-service
+module products-data-service
 
 go 1.26
 

@@ -9,7 +9,7 @@ import (
 
 	"github.com/tidwall/buntdb"
 
-	"product-data-service/model"
+	"products-data-service/model"
 )
 
 // defaultCacheName is the default index name used for product storage.

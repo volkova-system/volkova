@@ -132,7 +132,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Start Windows Prototype Core Image File Service",
+            "label": "Start Windows Prototype Core Images File Service",
             "type": "shell",
             "command": "caddy.exe",
             "args": [
@@ -142,7 +142,7 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/core/image-file-service/caddy",
+                "cwd": "${workspaceFolder}/services/core/images-file-service/caddy",
                 "env": {
                     "IMAGE_ASSETS_DIRECTORY_PATH": "${workspaceFolder}/prototype/web/core/public/assets/images"
                 }
@@ -156,9 +156,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Stop Windows Prototype Core Image File Service",
+            "label": "Stop Windows Prototype Core Images File Service",
             "type": "shell",
-            "command": "echo ${input:stopWindowsPrototypeCoreImageFileService}",
+            "command": "echo ${input:stopWindowsPrototypeCoreImagesFileService}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -168,7 +168,7 @@
             }
         },
         {
-            "label": "Start Windows Prototype Core Product Data Service",
+            "label": "Start Windows Prototype Core Products Data Service",
             "type": "shell",
             "command": "go",
             "args": [
@@ -177,7 +177,7 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                "cwd": "${workspaceFolder}/services/core/products-data-service/fiber-go"
             },
             "presentation": {
                 "reveal": "always",
@@ -185,13 +185,13 @@
                 "focus": false,
                 "panel": "shared"
             },
-            "dependsOn": "Build Windows Prototype Core Product Data Service",
+            "dependsOn": "Build Windows Prototype Core Products Data Service",
             "problemMatcher": [
                 {
                     "owner": "go",
                     "fileLocation": [
                         "relative",
-                        "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                        "${workspaceFolder}/services/core/products-data-service/fiber-go"
                     ],
                     "pattern": {
                         "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
@@ -210,9 +210,9 @@
             ]
         },
         {
-            "label": "Stop Windows Prototype Core Product Data Service",
+            "label": "Stop Windows Prototype Core Products Data Service",
             "type": "shell",
-            "command": "echo ${input:stopWindowsPrototypeCoreProductDataService}",
+            "command": "echo ${input:stopWindowsPrototypeCoreProductsDataService}",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
@@ -222,7 +222,7 @@
             }
         },
         {
-            "label": "Build Windows Prototype Core Product Data Service",
+            "label": "Build Windows Prototype Core Products Data Service",
             "type": "shell",
             "command": "go",
             "args": [
@@ -230,7 +230,7 @@
                 "./..."
             ],
             "options": {
-                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                "cwd": "${workspaceFolder}/services/core/products-data-service/fiber-go"
             },
             "presentation": {
                 "reveal": "always",
@@ -238,14 +238,14 @@
                 "focus": false,
                 "panel": "shared"
             },
-            "dependsOn": "Update Windows Prototype Core Product Data Service Modules",
+            "dependsOn": "Update Windows Prototype Core Products Data Service Modules",
             "group": "build",
             "problemMatcher": [
                 {
                     "owner": "go",
                     "fileLocation": [
                         "relative",
-                        "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                        "${workspaceFolder}/services/core/products-data-service/fiber-go"
                     ],
                     "pattern": {
                         "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
@@ -259,7 +259,7 @@
             ]
         },
         {
-            "label": "Update Windows Prototype Core Product Data Service Modules",
+            "label": "Update Windows Prototype Core Products Data Service Modules",
             "type": "shell",
             "command": "go",
             "args": [
@@ -267,7 +267,7 @@
                 "tidy"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                "cwd": "${workspaceFolder}/services/core/products-data-service/fiber-go"
             },
             "presentation": {
                 "reveal": "always",
@@ -297,16 +297,16 @@
             "args": "Run Core Background Storybook"
         },
         {
-            "id": "stopWindowsPrototypeCoreImageFileService",
+            "id": "stopWindowsPrototypeCoreImagesFileService",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
-            "args": "Start Windows Prototype Core Image File Service"
+            "args": "Start Windows Prototype Core Images File Service"
         },
         {
-            "id": "stopWindowsPrototypeCoreProductDataService",
+            "id": "stopWindowsPrototypeCoreProductsDataService",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
-            "args": "Start Windows Prototype Core Product Data Service"
+            "args": "Start Windows Prototype Core Products Data Service"
         }
     ]
 }

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 
-	"product-data-service/cache"
+	"products-data-service/cache"
 )
 
 // GetProductsHandler handles GET /service/products endpoint.
