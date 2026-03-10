@@ -1,12 +1,39 @@
 class ProductCard extends HTMLElement {
+    static get observedAttributes() {
+        return ["data-component", "data-service"];
+    }
+    constructor() {
+        super();
+
+        this._renderTimeout = null;
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue && oldValue !== null) {
+            this.requestRender();
+        }
+    }
+
     connectedCallback() {
+        this.requestRender();
+    }
+
+    requestRender() {
+        if (this._renderTimeout) {
+            cancelAnimationFrame(this._renderTimeout);
+        }
+
+        this._renderTimeout = requestAnimationFrame(() => this.render());
+    }
+
+    render() {
         const componentService = this.getAttribute("data-component")
         if (!componentService) return
 
-        const productsComponentServiceAddress = (
-            this.getAttribute("data-products-component-service-address")
+        const componentServiceAddress = (
+            this.getAttribute("data-component-service-address")
         );
-        if (!productsComponentServiceAddress) return
+        if (!componentServiceAddress) return
 
         if (!this.getAttribute("data-service")) return
         const dataService = encodeURIComponent(this.getAttribute("data-service"))
@@ -18,7 +45,7 @@ class ProductCard extends HTMLElement {
         if (!target) return
 
         const url = (
-            `${productsComponentServiceAddress}${componentService}?data=${dataService}`
+            `${componentServiceAddress}${componentService}?data=${dataService}`
         )
 
         fetch(url)
