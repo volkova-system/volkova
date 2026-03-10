@@ -4,9 +4,7 @@ class ProductList extends HTMLElement {
         if (!componentService) return
 
         const productsComponentServiceAddress = (
-            document.querySelector(
-                'meta[name="products-component-service-address"]'
-            ).content
+            this.getAttribute("data-products-component-service-address")
         );
         if (!productsComponentServiceAddress) return
 
