@@ -20,12 +20,13 @@ export async function GET(req: Request) {
             <li class="picture-item content-tree-item item level-2">
                 <img class="thumbnail-picture picture"
                     src="${thumbnail}"
-                    alt="${product.name} product thumbnail picture">
+                    alt="${product.headline} product thumbnail picture">
                 <dl class="main-content content">
-                    <dt class="title label">${product.name}</dt>
-                    <dd class="subtitle discount value">${product.discountPercentage}</dd>
+                    <dt class="title label">${product.headline}</dt>
+                    <dd class="subtitle discount value">${Math.ceil(product.discountPercentage)}</dd>
                 </dl>
             </li>
+            <li class="normal-spacing item spacer"></li>
         `
     }).join("")
 
