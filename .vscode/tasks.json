@@ -166,6 +166,117 @@
                 "focus": false,
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Start Windows Prototype Core Product Data Service",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "run",
+                "main.go"
+            ],
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": "Build Windows Prototype Core Product Data Service",
+            "problemMatcher": [
+                {
+                    "owner": "go",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*starting.*",
+                        "endsPattern": ".*listening on.*:4979.*"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Stop Windows Prototype Core Product Data Service",
+            "type": "shell",
+            "command": "echo ${input:stopWindowsPrototypeCoreProductDataService}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Build Windows Prototype Core Product Data Service",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "build",
+                "./..."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": "Update Windows Prototype Core Product Data Service Modules",
+            "group": "build",
+            "problemMatcher": [
+                {
+                    "owner": "go",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/services/core/product-data-service/fiber-go"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Update Windows Prototype Core Product Data Service Modules",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "mod",
+                "tidy"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/services/core/product-data-service/fiber-go"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": "build",
+            "problemMatcher": []
         }
     ],
     "inputs": [
@@ -190,6 +301,12 @@
             "type": "command",
             "command": "workbench.action.tasks.terminate",
             "args": "Start Windows Prototype Core Image File Service"
+        },
+        {
+            "id": "stopWindowsPrototypeCoreProductDataService",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Start Windows Prototype Core Product Data Service"
         }
     ]
 }
