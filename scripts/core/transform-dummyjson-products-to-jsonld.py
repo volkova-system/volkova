@@ -225,7 +225,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "name": format_product_name(product),
         "headline": str(product.get('title', '')),
         "description": str(product.get('description', '')),
-        "url": f"/service/products/{product_id}",
+        "url": f"/service/data/products/{product_id}",
         "ratingValue": safe_float(product.get('rating', 0)),
 
         "priceCurrency": "php",
