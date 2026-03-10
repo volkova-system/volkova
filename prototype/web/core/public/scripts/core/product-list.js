@@ -26,7 +26,17 @@ class ProductList extends HTMLElement {
 
         fetch(url)
         .then(response => response.text())
-        .then(html => {shadow.innerHTML = html})
+        .then(html => {
+            shadow.innerHTML = html
+
+            if (window.htmx) {
+                htmx.process(shadow);
+            }
+
+            if (window._hyperscript) {
+                _hyperscript.processNode(shadow);
+            }
+        })
 
         target.replaceWith(shadowHost)
     }
