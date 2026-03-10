@@ -26,7 +26,8 @@ func main() {
 	server.Use(cors.New())
 
 	service := server.Group("/service")
-	products := service.Group("/products")
+    data := service.Group("/data")
+	products := data.Group("/products")
 
 	products.Get("/health", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
