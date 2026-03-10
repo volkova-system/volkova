@@ -34,7 +34,12 @@ export async function GET(req: Request) {
                 </div>
                 <button class="icon-control control"
                     aria-label="close ${product.headline} product preview"
-                    _="on click add .hidden to #product-preview-tree">
+                    _="
+                        on click add .hidden to #product-preview-tree
+                        then tell <product-card/>
+                            set @data-state to 'idle'
+                        end
+                    ">
                     <svg class="icon">
                         <use href="/assets/images/feather-sprite.svg#chevron-left" />
                     </svg>
