@@ -14,6 +14,7 @@ react --save --prefix ./services/core/products-component-service/nextjs
 react-dom --save --prefix ./services/core/products-component-service/nextjs
 typescript --save-dev --prefix ./services/core/products-component-service/nextjs
 @types/node --save-dev --prefix ./services/core/products-component-service/nextjs
+@types/react --save-dev --prefix ./services/core/products-component-service/nextjs
 
 storybook --save-dev --prefix ./prototype/web/core
 @storybook/html-vite --save-dev --prefix ./prototype/web/core
