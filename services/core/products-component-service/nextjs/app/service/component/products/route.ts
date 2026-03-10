@@ -17,7 +17,14 @@ export async function GET(req: Request) {
         const thumbnail = `${process.env.IMAGES_FILE_SERVICE_ADDRESS}${product.thumbnail}`
 
         return `
-            <li class="picture-item content-tree-item item level-2">
+            <li class="picture-item content-tree-item item level-2"
+                _="
+                    on click remove .hidden from #product-preview-tree
+                    then tell <product-card/>
+                        set @data-component to '/service/component/products/${product.reference}/preview'
+                        set @data-service to '/service/data/products/${product.reference}'
+                    end
+                ">
                 <img class="thumbnail-picture picture"
                     src="${thumbnail}"
                     alt="${product.headline} product thumbnail picture">
