@@ -17,9 +17,6 @@ class ProductList extends HTMLElement {
         const target = document.getElementById(targetId)
         if (!target) return
 
-        const shadowHost = document.createElement("div")
-        const shadow = shadowHost.attachShadow({ mode: "open" })
-
         const url = (
             `${productsComponentServiceAddress}${componentService}?data=${dataService}`
         )
@@ -27,18 +24,16 @@ class ProductList extends HTMLElement {
         fetch(url)
         .then(response => response.text())
         .then(html => {
-            shadow.innerHTML = html
+            target.innerHTML = html
 
             if (window.htmx) {
-                htmx.process(shadow);
+                htmx.process(target);
             }
 
             if (window._hyperscript) {
-                _hyperscript.processNode(shadow);
+                _hyperscript.processNode(target);
             }
         })
-
-        target.replaceWith(shadowHost)
     }
 }
 
