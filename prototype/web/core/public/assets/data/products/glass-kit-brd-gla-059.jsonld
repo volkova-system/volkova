@@ -1,89 +1,148 @@
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "glass-kit-brd-gla-059",
-  "reference": "glass-kit-brd-gla-059",
-  "sku": "kit-brd-gla-059",
-  "name": "glass",
-  "headline": "Glass",
-  "description": "The Glass is a versatile and elegant drinking vessel suitable for a variety of beverages. Its clear design allows you to enjoy the colors and textures of your drinks.",
-  "url": "/pages/products/glass-kit-brd-gla-059",
-  "ratingValue": 4.02,
-  "priceCurrency": "php",
-  "price": 4.99,
-  "netPrice": 4.99,
-  "discountPercentage": 7.92,
-  "dateCreated": "2026-03-09T20:30:01.436149Z",
-  "dateModified": "2026-03-09T20:30:01.436149Z",
-  "thumbnail": "/assets/images/products/thumbnails/glass-kit-brd-gla-059.webp",
-  "images": [
-    "/assets/images/products/glass-kit-brd-gla-059/picture-0.webp"
-  ],
-  "keywords": [
-    "kitchen-accessories"
-  ],
-  "cacheIdentifier": {
-    "@type": "PropertyValue",
-    "propertyID": "cache:key",
-    "name": "cache_key",
-    "description": "cache storage key",
-    "value": "product:glass-kit-brd-gla-059"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "glass-kit-brd-gla-059",
+    "reference": "glass-kit-brd-gla-059",
+    "sku": "kit-brd-gla-059",
+    "name": "glass",
+    "headline": "Glass",
+    "description": "The Glass is a versatile and elegant drinking vessel suitable for a variety of beverages. Its clear design allows you to enjoy the colors and textures of your drinks.",
+    "url": "/pages/products/glass-kit-brd-gla-059",
     "ratingValue": 4.02,
-    "bestRating": 5,
-    "worstRating": 1
-  },
-  "offers": {
-    "@type": "Offer",
     "priceCurrency": "php",
     "price": 4.99,
-    "netPrice": 4.99,
-    "availability": "https://schema.org/InStock",
-    "priceSpecification": {
-      "@type": "PriceSpecification",
-      "priceCurrency": "php",
-      "price": 4.99
+    "netPrice": 4.594792,
+    "discountPercentage": 7.92,
+    "dateCreated": "2026-03-10T09:14:38.877230Z",
+    "dateModified": "2026-03-10T09:14:38.877230Z",
+    "thumbnail": "/assets/images/products/thumbnails/glass-kit-brd-gla-059.webp",
+    "images": [
+        "/assets/images/products/glass-kit-brd-gla-059/picture-0.webp"
+    ],
+    "keywords": [
+        "kitchen-accessories"
+    ],
+    "cacheIdentifier": {
+        "@type": "PropertyValue",
+        "propertyID": "cache:key",
+        "name": "cache_key",
+        "description": "cache storage key",
+        "value": "product:glass-kit-brd-gla-059"
     },
-    "discountPercentage": 7.92
-  },
-  "additionalProperty": [
-    {
-      "@type": "PropertyValue",
-      "name": "weight_unit",
-      "description": "product weight unit",
-      "value": "g"
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.02,
+        "bestRating": 5,
+        "worstRating": 1
     },
-    {
-      "@type": "PropertyValue",
-      "name": "weight",
-      "description": "product weight",
-      "value": "10"
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "php",
+        "price": 4.99,
+        "netPrice": 4.594792,
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "php",
+            "price": 4.99
+        },
+        "discountPercentage": 7.92
     },
-    {
-      "@type": "PropertyValue",
-      "name": "dimension_unit",
-      "description": "product dimension unit",
-      "value": "cm"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "width",
-      "description": "product width",
-      "value": "20.23"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "height",
-      "description": "product height",
-      "value": "24.56"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "depth",
-      "description": "product depth",
-      "value": "26.97"
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "weight",
+            "description": "product weight",
+            "value": "10"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "dimension_unit",
+            "description": "product dimension unit",
+            "value": "cm"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "width",
+            "description": "product width",
+            "value": "20.23"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "height",
+            "description": "product height",
+            "value": "24.56"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "depth",
+            "description": "product depth",
+            "value": "26.97"
+        }
+    ],
+    "raw": {
+        "id": 59,
+        "title": "Glass",
+        "description": "The Glass is a versatile and elegant drinking vessel suitable for a variety of beverages. Its clear design allows you to enjoy the colors and textures of your drinks.",
+        "category": "kitchen-accessories",
+        "price": 4.99,
+        "discountPercentage": 7.92,
+        "rating": 4.02,
+        "stock": 46,
+        "tags": [
+            "drinkware",
+            "glasses"
+        ],
+        "sku": "KIT-BRD-GLA-059",
+        "weight": 10,
+        "dimensions": {
+            "width": 20.23,
+            "height": 24.56,
+            "depth": 26.97
+        },
+        "warrantyInformation": "3 year warranty",
+        "shippingInformation": "Ships overnight",
+        "availabilityStatus": "In Stock",
+        "reviews": [
+            {
+                "rating": 5,
+                "comment": "Very happy with my purchase!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Jackson Evans",
+                "reviewerEmail": "jackson.evans@x.dummyjson.com"
+            },
+            {
+                "rating": 3,
+                "comment": "Waste of money!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Nicholas Bailey",
+                "reviewerEmail": "nicholas.bailey@x.dummyjson.com"
+            },
+            {
+                "rating": 5,
+                "comment": "Very satisfied!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Nathan Reed",
+                "reviewerEmail": "nathan.reed@x.dummyjson.com"
+            }
+        ],
+        "returnPolicy": "7 days return policy",
+        "minimumOrderQuantity": 17,
+        "meta": {
+            "createdAt": "2025-04-30T09:41:02.053Z",
+            "updatedAt": "2025-04-30T09:41:02.053Z",
+            "barcode": "4900880403720",
+            "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
+        },
+        "images": [
+            "https://cdn.dummyjson.com/product-images/kitchen-accessories/glass/1.webp"
+        ],
+        "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/glass/thumbnail.webp"
     }
-  ]
 }

@@ -1,89 +1,147 @@
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "green-bell-pepper-gro-brd-gre-025",
-  "reference": "green-bell-pepper-gro-brd-gre-025",
-  "sku": "gro-brd-gre-025",
-  "name": "green-bell-pepper",
-  "headline": "Green Bell Pepper",
-  "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
-  "url": "/pages/products/green-bell-pepper-gro-brd-gre-025",
-  "ratingValue": 3.25,
-  "priceCurrency": "php",
-  "price": 1.29,
-  "netPrice": 1.29,
-  "discountPercentage": 0.16,
-  "dateCreated": "2026-03-09T20:30:01.416515Z",
-  "dateModified": "2026-03-09T20:30:01.416515Z",
-  "thumbnail": "/assets/images/products/thumbnails/green-bell-pepper-gro-brd-gre-025.webp",
-  "images": [
-    "/assets/images/products/green-bell-pepper-gro-brd-gre-025/picture-0.webp"
-  ],
-  "keywords": [
-    "groceries"
-  ],
-  "cacheIdentifier": {
-    "@type": "PropertyValue",
-    "propertyID": "cache:key",
-    "name": "cache_key",
-    "description": "cache storage key",
-    "value": "product:green-bell-pepper-gro-brd-gre-025"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "green-bell-pepper-gro-brd-gre-025",
+    "reference": "green-bell-pepper-gro-brd-gre-025",
+    "sku": "gro-brd-gre-025",
+    "name": "green-bell-pepper",
+    "headline": "Green Bell Pepper",
+    "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
+    "url": "/pages/products/green-bell-pepper-gro-brd-gre-025",
     "ratingValue": 3.25,
-    "bestRating": 5,
-    "worstRating": 1
-  },
-  "offers": {
-    "@type": "Offer",
     "priceCurrency": "php",
     "price": 1.29,
-    "netPrice": 1.29,
-    "availability": "https://schema.org/InStock",
-    "priceSpecification": {
-      "@type": "PriceSpecification",
-      "priceCurrency": "php",
-      "price": 1.29
+    "netPrice": 1.287936,
+    "discountPercentage": 0.16,
+    "dateCreated": "2026-03-10T09:14:38.855509Z",
+    "dateModified": "2026-03-10T09:14:38.855509Z",
+    "thumbnail": "/assets/images/products/thumbnails/green-bell-pepper-gro-brd-gre-025.webp",
+    "images": [
+        "/assets/images/products/green-bell-pepper-gro-brd-gre-025/picture-0.webp"
+    ],
+    "keywords": [
+        "groceries"
+    ],
+    "cacheIdentifier": {
+        "@type": "PropertyValue",
+        "propertyID": "cache:key",
+        "name": "cache_key",
+        "description": "cache storage key",
+        "value": "product:green-bell-pepper-gro-brd-gre-025"
     },
-    "discountPercentage": 0.16
-  },
-  "additionalProperty": [
-    {
-      "@type": "PropertyValue",
-      "name": "weight_unit",
-      "description": "product weight unit",
-      "value": "g"
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 3.25,
+        "bestRating": 5,
+        "worstRating": 1
     },
-    {
-      "@type": "PropertyValue",
-      "name": "weight",
-      "description": "product weight",
-      "value": "2"
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "php",
+        "price": 1.29,
+        "netPrice": 1.287936,
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "php",
+            "price": 1.29
+        },
+        "discountPercentage": 0.16
     },
-    {
-      "@type": "PropertyValue",
-      "name": "dimension_unit",
-      "description": "product dimension unit",
-      "value": "cm"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "width",
-      "description": "product width",
-      "value": "15.33"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "height",
-      "description": "product height",
-      "value": "26.65"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "depth",
-      "description": "product depth",
-      "value": "14.44"
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "weight",
+            "description": "product weight",
+            "value": "2"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "dimension_unit",
+            "description": "product dimension unit",
+            "value": "cm"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "width",
+            "description": "product width",
+            "value": "15.33"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "height",
+            "description": "product height",
+            "value": "26.65"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "depth",
+            "description": "product depth",
+            "value": "14.44"
+        }
+    ],
+    "raw": {
+        "id": 25,
+        "title": "Green Bell Pepper",
+        "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
+        "category": "groceries",
+        "price": 1.29,
+        "discountPercentage": 0.16,
+        "rating": 3.25,
+        "stock": 33,
+        "tags": [
+            "vegetables"
+        ],
+        "sku": "GRO-BRD-GRE-025",
+        "weight": 2,
+        "dimensions": {
+            "width": 15.33,
+            "height": 26.65,
+            "depth": 14.44
+        },
+        "warrantyInformation": "1 month warranty",
+        "shippingInformation": "Ships in 1 week",
+        "availabilityStatus": "In Stock",
+        "reviews": [
+            {
+                "rating": 4,
+                "comment": "Highly recommended!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Avery Carter",
+                "reviewerEmail": "avery.carter@x.dummyjson.com"
+            },
+            {
+                "rating": 3,
+                "comment": "Would not recommend!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Henry Hill",
+                "reviewerEmail": "henry.hill@x.dummyjson.com"
+            },
+            {
+                "rating": 5,
+                "comment": "Excellent quality!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Addison Wright",
+                "reviewerEmail": "addison.wright@x.dummyjson.com"
+            }
+        ],
+        "returnPolicy": "30 days return policy",
+        "minimumOrderQuantity": 12,
+        "meta": {
+            "createdAt": "2025-04-30T09:41:02.053Z",
+            "updatedAt": "2025-04-30T09:41:02.053Z",
+            "barcode": "2365227493323",
+            "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
+        },
+        "images": [
+            "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/1.webp"
+        ],
+        "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp"
     }
-  ]
 }

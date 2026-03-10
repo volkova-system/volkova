@@ -1,91 +1,152 @@
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "house-showpiece-plant-hom-brd-hou-045",
-  "reference": "house-showpiece-plant-hom-brd-hou-045",
-  "sku": "hom-brd-hou-045",
-  "name": "house-showpiece-plant",
-  "headline": "House Showpiece Plant",
-  "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
-  "url": "/pages/products/house-showpiece-plant-hom-brd-hou-045",
-  "ratingValue": 4.67,
-  "priceCurrency": "php",
-  "price": 39.99,
-  "netPrice": 39.99,
-  "discountPercentage": 7.46,
-  "dateCreated": "2026-03-09T20:30:01.428179Z",
-  "dateModified": "2026-03-09T20:30:01.428179Z",
-  "thumbnail": "/assets/images/products/thumbnails/house-showpiece-plant-hom-brd-hou-045.webp",
-  "images": [
-    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-0.webp",
-    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-1.webp",
-    "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-2.webp"
-  ],
-  "keywords": [
-    "home-decoration"
-  ],
-  "cacheIdentifier": {
-    "@type": "PropertyValue",
-    "propertyID": "cache:key",
-    "name": "cache_key",
-    "description": "cache storage key",
-    "value": "product:house-showpiece-plant-hom-brd-hou-045"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "house-showpiece-plant-hom-brd-hou-045",
+    "reference": "house-showpiece-plant-hom-brd-hou-045",
+    "sku": "hom-brd-hou-045",
+    "name": "house-showpiece-plant",
+    "headline": "House Showpiece Plant",
+    "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
+    "url": "/pages/products/house-showpiece-plant-hom-brd-hou-045",
     "ratingValue": 4.67,
-    "bestRating": 5,
-    "worstRating": 1
-  },
-  "offers": {
-    "@type": "Offer",
     "priceCurrency": "php",
     "price": 39.99,
-    "netPrice": 39.99,
-    "availability": "https://schema.org/InStock",
-    "priceSpecification": {
-      "@type": "PriceSpecification",
-      "priceCurrency": "php",
-      "price": 39.99
+    "netPrice": 37.006746,
+    "discountPercentage": 7.46,
+    "dateCreated": "2026-03-10T09:14:38.868312Z",
+    "dateModified": "2026-03-10T09:14:38.868312Z",
+    "thumbnail": "/assets/images/products/thumbnails/house-showpiece-plant-hom-brd-hou-045.webp",
+    "images": [
+        "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-0.webp",
+        "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-1.webp",
+        "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-2.webp"
+    ],
+    "keywords": [
+        "home-decoration"
+    ],
+    "cacheIdentifier": {
+        "@type": "PropertyValue",
+        "propertyID": "cache:key",
+        "name": "cache_key",
+        "description": "cache storage key",
+        "value": "product:house-showpiece-plant-hom-brd-hou-045"
     },
-    "discountPercentage": 7.46
-  },
-  "additionalProperty": [
-    {
-      "@type": "PropertyValue",
-      "name": "weight_unit",
-      "description": "product weight unit",
-      "value": "g"
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.67,
+        "bestRating": 5,
+        "worstRating": 1
     },
-    {
-      "@type": "PropertyValue",
-      "name": "weight",
-      "description": "product weight",
-      "value": "8"
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "php",
+        "price": 39.99,
+        "netPrice": 37.006746,
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "php",
+            "price": 39.99
+        },
+        "discountPercentage": 7.46
     },
-    {
-      "@type": "PropertyValue",
-      "name": "dimension_unit",
-      "description": "product dimension unit",
-      "value": "cm"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "width",
-      "description": "product width",
-      "value": "8.55"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "height",
-      "description": "product height",
-      "value": "14.62"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "depth",
-      "description": "product depth",
-      "value": "17.25"
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "weight",
+            "description": "product weight",
+            "value": "8"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "dimension_unit",
+            "description": "product dimension unit",
+            "value": "cm"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "width",
+            "description": "product width",
+            "value": "8.55"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "height",
+            "description": "product height",
+            "value": "14.62"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "depth",
+            "description": "product depth",
+            "value": "17.25"
+        }
+    ],
+    "raw": {
+        "id": 45,
+        "title": "House Showpiece Plant",
+        "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
+        "category": "home-decoration",
+        "price": 39.99,
+        "discountPercentage": 7.46,
+        "rating": 4.67,
+        "stock": 28,
+        "tags": [
+            "home decor",
+            "artificial plants"
+        ],
+        "sku": "HOM-BRD-HOU-045",
+        "weight": 8,
+        "dimensions": {
+            "width": 8.55,
+            "height": 14.62,
+            "depth": 17.25
+        },
+        "warrantyInformation": "1 year warranty",
+        "shippingInformation": "Ships in 1 week",
+        "availabilityStatus": "In Stock",
+        "reviews": [
+            {
+                "rating": 5,
+                "comment": "Very happy with my purchase!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Natalie Harris",
+                "reviewerEmail": "natalie.harris@x.dummyjson.com"
+            },
+            {
+                "rating": 1,
+                "comment": "Poor quality!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Max Russell",
+                "reviewerEmail": "max.russell@x.dummyjson.com"
+            },
+            {
+                "rating": 5,
+                "comment": "Very pleased!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Nolan Gonzalez",
+                "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+            }
+        ],
+        "returnPolicy": "No return policy",
+        "minimumOrderQuantity": 3,
+        "meta": {
+            "createdAt": "2025-04-30T09:41:02.053Z",
+            "updatedAt": "2025-04-30T09:41:02.053Z",
+            "barcode": "8433795204995",
+            "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
+        },
+        "images": [
+            "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/1.webp",
+            "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/2.webp",
+            "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/3.webp"
+        ],
+        "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/house-showpiece-plant/thumbnail.webp"
     }
-  ]
 }

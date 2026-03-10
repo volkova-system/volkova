@@ -168,6 +168,33 @@ def safe_float(value: JsonValue, default: float = 0.0) -> float:
 
     return default
 
+
+def calculate_net_price(price: float, discount_percentage: float) -> float:
+    """
+    Calculate net price from original price and discount percentage.
+
+    Args:
+        price: Original price value
+        discount_percentage: Discount percentage (0-100)
+
+    Returns:
+        float: Net price after applying discount
+    """
+
+    if price <= 0:
+        return 0.0
+
+    if discount_percentage <= 0:
+        return price
+
+    if discount_percentage >= 100:
+        return 0.0
+
+    discount_amount = price * (discount_percentage / 100)
+    net_price = price - discount_amount
+
+    return max(0.0, net_price)
+
 def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     """
     Map DummyJSON product data to JSON-LD schema format.
@@ -181,6 +208,11 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
     product_id = generate_product_id(product)
     current_time = datetime.now().isoformat() + "Z"
+
+    # Calculate pricing
+    price = safe_float(product.get('price', 0))
+    discount_percentage = safe_float(product.get('discountPercentage', 0))
+    net_price = calculate_net_price(price, discount_percentage)
 
     # Map basic product information
     jsonld_product = {
@@ -197,9 +229,9 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "ratingValue": safe_float(product.get('rating', 0)),
 
         "priceCurrency": "php",
-        "price": safe_float(product.get('price', 0)),
-        "netPrice": safe_float(product.get('price', 0)),
-        "discountPercentage": safe_float(product.get('discountPercentage', 0)),
+        "price": price,
+        "netPrice": net_price,
+        "discountPercentage": discount_percentage,
 
         "dateCreated": current_time,
         "dateModified": current_time,
@@ -234,8 +266,8 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             "@type": "Offer",
 
             "priceCurrency": "php",
-            "price": safe_float(product.get('price', 0)),
-            "netPrice": safe_float(product.get('price', 0)),
+            "price": price,
+            "netPrice": net_price,
 
             "availability": "https://schema.org/InStock",
 
@@ -243,13 +275,15 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
                 "@type": "PriceSpecification",
 
                 "priceCurrency": "php",
-                "price": safe_float(product.get('price', 0))
+                "price": price
             },
 
-            "discountPercentage": safe_float(product.get('discountPercentage', 0))
+            "discountPercentage": discount_percentage
         },
 
-        "additionalProperty": cast(list[JsonDict], [])
+        "additionalProperty": cast(list[JsonDict], []),
+
+        "raw": product
     }
 
     if 'brand' in product:
@@ -344,7 +378,7 @@ def save_jsonld_file(product_data: JsonDict,
             filepath.unlink()
 
         with open(filepath, 'w', encoding='utf-8') as file:
-            json.dump(product_data, file, indent=2, ensure_ascii=False)
+            json.dump(product_data, file, indent=4, ensure_ascii=False)
 
     except Exception as e:
         print(f"Error: Failed to save JSON-LD file: {e}")

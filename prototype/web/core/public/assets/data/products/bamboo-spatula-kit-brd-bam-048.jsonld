@@ -1,89 +1,148 @@
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "bamboo-spatula-kit-brd-bam-048",
-  "reference": "bamboo-spatula-kit-brd-bam-048",
-  "sku": "kit-brd-bam-048",
-  "name": "bamboo-spatula",
-  "headline": "Bamboo Spatula",
-  "description": "The Bamboo Spatula is a versatile kitchen tool made from eco-friendly bamboo. Ideal for flipping, stirring, and serving various dishes.",
-  "url": "/pages/products/bamboo-spatula-kit-brd-bam-048",
-  "ratingValue": 3.27,
-  "priceCurrency": "php",
-  "price": 7.99,
-  "netPrice": 7.99,
-  "discountPercentage": 2.84,
-  "dateCreated": "2026-03-09T20:30:01.429763Z",
-  "dateModified": "2026-03-09T20:30:01.429763Z",
-  "thumbnail": "/assets/images/products/thumbnails/bamboo-spatula-kit-brd-bam-048.webp",
-  "images": [
-    "/assets/images/products/bamboo-spatula-kit-brd-bam-048/picture-0.webp"
-  ],
-  "keywords": [
-    "kitchen-accessories"
-  ],
-  "cacheIdentifier": {
-    "@type": "PropertyValue",
-    "propertyID": "cache:key",
-    "name": "cache_key",
-    "description": "cache storage key",
-    "value": "product:bamboo-spatula-kit-brd-bam-048"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "bamboo-spatula-kit-brd-bam-048",
+    "reference": "bamboo-spatula-kit-brd-bam-048",
+    "sku": "kit-brd-bam-048",
+    "name": "bamboo-spatula",
+    "headline": "Bamboo Spatula",
+    "description": "The Bamboo Spatula is a versatile kitchen tool made from eco-friendly bamboo. Ideal for flipping, stirring, and serving various dishes.",
+    "url": "/pages/products/bamboo-spatula-kit-brd-bam-048",
     "ratingValue": 3.27,
-    "bestRating": 5,
-    "worstRating": 1
-  },
-  "offers": {
-    "@type": "Offer",
     "priceCurrency": "php",
     "price": 7.99,
-    "netPrice": 7.99,
-    "availability": "https://schema.org/InStock",
-    "priceSpecification": {
-      "@type": "PriceSpecification",
-      "priceCurrency": "php",
-      "price": 7.99
+    "netPrice": 7.763084,
+    "discountPercentage": 2.84,
+    "dateCreated": "2026-03-10T09:14:38.870038Z",
+    "dateModified": "2026-03-10T09:14:38.870038Z",
+    "thumbnail": "/assets/images/products/thumbnails/bamboo-spatula-kit-brd-bam-048.webp",
+    "images": [
+        "/assets/images/products/bamboo-spatula-kit-brd-bam-048/picture-0.webp"
+    ],
+    "keywords": [
+        "kitchen-accessories"
+    ],
+    "cacheIdentifier": {
+        "@type": "PropertyValue",
+        "propertyID": "cache:key",
+        "name": "cache_key",
+        "description": "cache storage key",
+        "value": "product:bamboo-spatula-kit-brd-bam-048"
     },
-    "discountPercentage": 2.84
-  },
-  "additionalProperty": [
-    {
-      "@type": "PropertyValue",
-      "name": "weight_unit",
-      "description": "product weight unit",
-      "value": "g"
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 3.27,
+        "bestRating": 5,
+        "worstRating": 1
     },
-    {
-      "@type": "PropertyValue",
-      "name": "weight",
-      "description": "product weight",
-      "value": "3"
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "php",
+        "price": 7.99,
+        "netPrice": 7.763084,
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "php",
+            "price": 7.99
+        },
+        "discountPercentage": 2.84
     },
-    {
-      "@type": "PropertyValue",
-      "name": "dimension_unit",
-      "description": "product dimension unit",
-      "value": "cm"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "width",
-      "description": "product width",
-      "value": "21.32"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "height",
-      "description": "product height",
-      "value": "23.03"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "depth",
-      "description": "product depth",
-      "value": "25.94"
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "weight",
+            "description": "product weight",
+            "value": "3"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "dimension_unit",
+            "description": "product dimension unit",
+            "value": "cm"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "width",
+            "description": "product width",
+            "value": "21.32"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "height",
+            "description": "product height",
+            "value": "23.03"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "depth",
+            "description": "product depth",
+            "value": "25.94"
+        }
+    ],
+    "raw": {
+        "id": 48,
+        "title": "Bamboo Spatula",
+        "description": "The Bamboo Spatula is a versatile kitchen tool made from eco-friendly bamboo. Ideal for flipping, stirring, and serving various dishes.",
+        "category": "kitchen-accessories",
+        "price": 7.99,
+        "discountPercentage": 2.84,
+        "rating": 3.27,
+        "stock": 37,
+        "tags": [
+            "kitchen tools",
+            "utensils"
+        ],
+        "sku": "KIT-BRD-BAM-048",
+        "weight": 3,
+        "dimensions": {
+            "width": 21.32,
+            "height": 23.03,
+            "depth": 25.94
+        },
+        "warrantyInformation": "1 month warranty",
+        "shippingInformation": "Ships overnight",
+        "availabilityStatus": "In Stock",
+        "reviews": [
+            {
+                "rating": 5,
+                "comment": "Awesome product!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Lucas Ramirez",
+                "reviewerEmail": "lucas.ramirez@x.dummyjson.com"
+            },
+            {
+                "rating": 5,
+                "comment": "Highly recommended!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Caleb Perkins",
+                "reviewerEmail": "caleb.perkins@x.dummyjson.com"
+            },
+            {
+                "rating": 4,
+                "comment": "Highly recommended!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Nolan Gonzalez",
+                "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+            }
+        ],
+        "returnPolicy": "60 days return policy",
+        "minimumOrderQuantity": 29,
+        "meta": {
+            "createdAt": "2025-04-30T09:41:02.053Z",
+            "updatedAt": "2025-04-30T09:41:02.053Z",
+            "barcode": "3988181417733",
+            "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
+        },
+        "images": [
+            "https://cdn.dummyjson.com/product-images/kitchen-accessories/bamboo-spatula/1.webp"
+        ],
+        "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/bamboo-spatula/thumbnail.webp"
     }
-  ]
 }

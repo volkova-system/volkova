@@ -1,89 +1,148 @@
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "yellow-peeler-kit-brd-yel-077",
-  "reference": "yellow-peeler-kit-brd-yel-077",
-  "sku": "kit-brd-yel-077",
-  "name": "yellow-peeler",
-  "headline": "Yellow Peeler",
-  "description": "The Yellow Peeler is a handy tool for peeling fruits and vegetables with ease. Its bright yellow color adds a cheerful touch to your kitchen gadgets.",
-  "url": "/pages/products/yellow-peeler-kit-brd-yel-077",
-  "ratingValue": 4.24,
-  "priceCurrency": "php",
-  "price": 5.99,
-  "netPrice": 5.99,
-  "discountPercentage": 12.48,
-  "dateCreated": "2026-03-09T20:30:01.446397Z",
-  "dateModified": "2026-03-09T20:30:01.446397Z",
-  "thumbnail": "/assets/images/products/thumbnails/yellow-peeler-kit-brd-yel-077.webp",
-  "images": [
-    "/assets/images/products/yellow-peeler-kit-brd-yel-077/picture-0.webp"
-  ],
-  "keywords": [
-    "kitchen-accessories"
-  ],
-  "cacheIdentifier": {
-    "@type": "PropertyValue",
-    "propertyID": "cache:key",
-    "name": "cache_key",
-    "description": "cache storage key",
-    "value": "product:yellow-peeler-kit-brd-yel-077"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "yellow-peeler-kit-brd-yel-077",
+    "reference": "yellow-peeler-kit-brd-yel-077",
+    "sku": "kit-brd-yel-077",
+    "name": "yellow-peeler",
+    "headline": "Yellow Peeler",
+    "description": "The Yellow Peeler is a handy tool for peeling fruits and vegetables with ease. Its bright yellow color adds a cheerful touch to your kitchen gadgets.",
+    "url": "/pages/products/yellow-peeler-kit-brd-yel-077",
     "ratingValue": 4.24,
-    "bestRating": 5,
-    "worstRating": 1
-  },
-  "offers": {
-    "@type": "Offer",
     "priceCurrency": "php",
     "price": 5.99,
-    "netPrice": 5.99,
-    "availability": "https://schema.org/InStock",
-    "priceSpecification": {
-      "@type": "PriceSpecification",
-      "priceCurrency": "php",
-      "price": 5.99
+    "netPrice": 5.242448,
+    "discountPercentage": 12.48,
+    "dateCreated": "2026-03-10T09:14:38.888708Z",
+    "dateModified": "2026-03-10T09:14:38.888708Z",
+    "thumbnail": "/assets/images/products/thumbnails/yellow-peeler-kit-brd-yel-077.webp",
+    "images": [
+        "/assets/images/products/yellow-peeler-kit-brd-yel-077/picture-0.webp"
+    ],
+    "keywords": [
+        "kitchen-accessories"
+    ],
+    "cacheIdentifier": {
+        "@type": "PropertyValue",
+        "propertyID": "cache:key",
+        "name": "cache_key",
+        "description": "cache storage key",
+        "value": "product:yellow-peeler-kit-brd-yel-077"
     },
-    "discountPercentage": 12.48
-  },
-  "additionalProperty": [
-    {
-      "@type": "PropertyValue",
-      "name": "weight_unit",
-      "description": "product weight unit",
-      "value": "g"
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.24,
+        "bestRating": 5,
+        "worstRating": 1
     },
-    {
-      "@type": "PropertyValue",
-      "name": "weight",
-      "description": "product weight",
-      "value": "7"
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "php",
+        "price": 5.99,
+        "netPrice": 5.242448,
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "php",
+            "price": 5.99
+        },
+        "discountPercentage": 12.48
     },
-    {
-      "@type": "PropertyValue",
-      "name": "dimension_unit",
-      "description": "product dimension unit",
-      "value": "cm"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "width",
-      "description": "product width",
-      "value": "9.7"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "height",
-      "description": "product height",
-      "value": "6.43"
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "depth",
-      "description": "product depth",
-      "value": "17.93"
+    "additionalProperty": [
+        {
+            "@type": "PropertyValue",
+            "name": "weight_unit",
+            "description": "product weight unit",
+            "value": "g"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "weight",
+            "description": "product weight",
+            "value": "7"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "dimension_unit",
+            "description": "product dimension unit",
+            "value": "cm"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "width",
+            "description": "product width",
+            "value": "9.7"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "height",
+            "description": "product height",
+            "value": "6.43"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "depth",
+            "description": "product depth",
+            "value": "17.93"
+        }
+    ],
+    "raw": {
+        "id": 77,
+        "title": "Yellow Peeler",
+        "description": "The Yellow Peeler is a handy tool for peeling fruits and vegetables with ease. Its bright yellow color adds a cheerful touch to your kitchen gadgets.",
+        "category": "kitchen-accessories",
+        "price": 5.99,
+        "discountPercentage": 12.48,
+        "rating": 4.24,
+        "stock": 35,
+        "tags": [
+            "kitchen tools",
+            "peelers"
+        ],
+        "sku": "KIT-BRD-YEL-077",
+        "weight": 7,
+        "dimensions": {
+            "width": 9.7,
+            "height": 6.43,
+            "depth": 17.93
+        },
+        "warrantyInformation": "1 month warranty",
+        "shippingInformation": "Ships in 3-5 business days",
+        "availabilityStatus": "In Stock",
+        "reviews": [
+            {
+                "rating": 1,
+                "comment": "Very unhappy with my purchase!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Claire Foster",
+                "reviewerEmail": "claire.foster@x.dummyjson.com"
+            },
+            {
+                "rating": 5,
+                "comment": "Very happy with my purchase!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Aaliyah Hanson",
+                "reviewerEmail": "aaliyah.hanson@x.dummyjson.com"
+            },
+            {
+                "rating": 4,
+                "comment": "Great product!",
+                "date": "2025-04-30T09:41:02.053Z",
+                "reviewerName": "Olivia Wilson",
+                "reviewerEmail": "olivia.wilson@x.dummyjson.com"
+            }
+        ],
+        "returnPolicy": "90 days return policy",
+        "minimumOrderQuantity": 6,
+        "meta": {
+            "createdAt": "2025-04-30T09:41:02.053Z",
+            "updatedAt": "2025-04-30T09:41:02.053Z",
+            "barcode": "8946155386929",
+            "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
+        },
+        "images": [
+            "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/1.webp"
+        ],
+        "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/thumbnail.webp"
     }
-  ]
 }

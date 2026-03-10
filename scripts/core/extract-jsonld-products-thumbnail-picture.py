@@ -112,14 +112,15 @@ def extract_product_data(jsonld_file: Path) -> tuple[str, str]:
 
     try:
         with open(jsonld_file, 'r', encoding='utf-8') as f:
-            data = cast(dict[str, str], json.load(f))
+            data = cast(dict[str, object], json.load(f))
 
     except (OSError, json.JSONDecodeError) as e:
         print(f"Error: Cannot read JSON-LD file {jsonld_file}: {e}")
         sys.exit(1)
 
     product_id = data.get('@id')
-    thumbnail = data.get('thumbnail')
+    raw = cast(dict[str, object], data.get('raw', {}))
+    thumbnail = cast(str | None, raw.get('thumbnail'))
 
     if not product_id:
         print(f"Error: Missing '@id' field in {jsonld_file}")

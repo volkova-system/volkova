@@ -119,7 +119,8 @@ def extract_product_data(jsonld_file: Path) -> tuple[str, list[str]]:
         sys.exit(1)
 
     product_id = data.get('@id')
-    images = data.get('images')
+    raw = cast(dict[str, object], data.get('raw', {}))
+    images = raw.get('images')
 
     if not product_id:
         print(f"Error: Missing '@id' field in {jsonld_file}")
