@@ -7,14 +7,14 @@
     "name": "juice",
     "headline": "Juice",
     "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
-    "url": "/pages/products/juice-gro-brd-jui-029",
+    "url": "/service/products/juice-gro-brd-jui-029",
     "ratingValue": 3.94,
     "priceCurrency": "php",
     "price": 3.99,
     "netPrice": 3.5088060000000003,
     "discountPercentage": 12.06,
-    "dateCreated": "2026-03-10T09:19:24.404938Z",
-    "dateModified": "2026-03-10T09:19:24.404938Z",
+    "dateCreated": "2026-03-10T11:50:44.756838Z",
+    "dateModified": "2026-03-10T11:50:44.756838Z",
     "thumbnail": "/assets/images/products/thumbnails/juice-gro-brd-jui-029.webp",
     "images": [
         "/assets/images/products/juice-gro-brd-jui-029/picture-0.webp"

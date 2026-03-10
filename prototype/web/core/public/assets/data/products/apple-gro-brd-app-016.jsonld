@@ -7,14 +7,14 @@
     "name": "apple",
     "headline": "Apple",
     "description": "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
-    "url": "/pages/products/apple-gro-brd-app-016",
+    "url": "/service/products/apple-gro-brd-app-016",
     "ratingValue": 4.19,
     "priceCurrency": "php",
     "price": 1.99,
     "netPrice": 1.7388620000000001,
     "discountPercentage": 12.62,
-    "dateCreated": "2026-03-10T09:19:24.396995Z",
-    "dateModified": "2026-03-10T09:19:24.396995Z",
+    "dateCreated": "2026-03-10T11:50:44.749184Z",
+    "dateModified": "2026-03-10T11:50:44.749184Z",
     "thumbnail": "/assets/images/products/thumbnails/apple-gro-brd-app-016.webp",
     "images": [
         "/assets/images/products/apple-gro-brd-app-016/picture-0.webp"

@@ -7,14 +7,14 @@
     "name": "fish-steak",
     "headline": "Fish Steak",
     "description": "Quality fish steak, suitable for grilling, baking, or pan-searing.",
-    "url": "/pages/products/fish-steak-gro-brd-fis-024",
+    "url": "/service/products/fish-steak-gro-brd-fis-024",
     "ratingValue": 3.78,
     "priceCurrency": "php",
     "price": 14.99,
     "netPrice": 14.355923,
     "discountPercentage": 4.23,
-    "dateCreated": "2026-03-10T09:19:24.401858Z",
-    "dateModified": "2026-03-10T09:19:24.401858Z",
+    "dateCreated": "2026-03-10T11:50:44.753914Z",
+    "dateModified": "2026-03-10T11:50:44.753914Z",
     "thumbnail": "/assets/images/products/thumbnails/fish-steak-gro-brd-fis-024.webp",
     "images": [
         "/assets/images/products/fish-steak-gro-brd-fis-024/picture-0.webp"

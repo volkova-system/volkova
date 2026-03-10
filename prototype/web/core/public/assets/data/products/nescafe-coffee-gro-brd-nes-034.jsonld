@@ -7,14 +7,14 @@
     "name": "nescafe-coffee",
     "headline": "Nescafe Coffee",
     "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
-    "url": "/pages/products/nescafe-coffee-gro-brd-nes-034",
+    "url": "/service/products/nescafe-coffee-gro-brd-nes-034",
     "ratingValue": 4.82,
     "priceCurrency": "php",
     "price": 7.99,
     "netPrice": 7.862959,
     "discountPercentage": 1.59,
-    "dateCreated": "2026-03-10T09:19:24.408219Z",
-    "dateModified": "2026-03-10T09:19:24.408219Z",
+    "dateCreated": "2026-03-10T11:50:44.760066Z",
+    "dateModified": "2026-03-10T11:50:44.760066Z",
     "thumbnail": "/assets/images/products/thumbnails/nescafe-coffee-gro-brd-nes-034.webp",
     "images": [
         "/assets/images/products/nescafe-coffee-gro-brd-nes-034/picture-0.webp"

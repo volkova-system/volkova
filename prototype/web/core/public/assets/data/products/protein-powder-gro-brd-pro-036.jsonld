@@ -7,14 +7,14 @@
     "name": "protein-powder",
     "headline": "Protein Powder",
     "description": "Nutrient-packed protein powder, ideal for supplementing your diet with essential proteins.",
-    "url": "/pages/products/protein-powder-gro-brd-pro-036",
+    "url": "/service/products/protein-powder-gro-brd-pro-036",
     "ratingValue": 4.18,
     "priceCurrency": "php",
     "price": 19.99,
     "netPrice": 18.472759,
     "discountPercentage": 7.59,
-    "dateCreated": "2026-03-10T09:19:24.409416Z",
-    "dateModified": "2026-03-10T09:19:24.409416Z",
+    "dateCreated": "2026-03-10T11:50:44.761313Z",
+    "dateModified": "2026-03-10T11:50:44.761313Z",
     "thumbnail": "/assets/images/products/thumbnails/protein-powder-gro-brd-pro-036.webp",
     "images": [
         "/assets/images/products/protein-powder-gro-brd-pro-036/picture-0.webp"

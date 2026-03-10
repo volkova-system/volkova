@@ -7,14 +7,14 @@
     "name": "strawberry",
     "headline": "Strawberry",
     "description": "Sweet and succulent strawberries, great for snacking, desserts, or blending into smoothies.",
-    "url": "/pages/products/strawberry-gro-brd-str-040",
+    "url": "/service/products/strawberry-gro-brd-str-040",
     "ratingValue": 3.08,
     "priceCurrency": "php",
     "price": 3.99,
     "netPrice": 3.9453120000000004,
     "discountPercentage": 1.12,
-    "dateCreated": "2026-03-10T09:19:24.412034Z",
-    "dateModified": "2026-03-10T09:19:24.412034Z",
+    "dateCreated": "2026-03-10T11:50:44.763906Z",
+    "dateModified": "2026-03-10T11:50:44.763906Z",
     "thumbnail": "/assets/images/products/thumbnails/strawberry-gro-brd-str-040.webp",
     "images": [
         "/assets/images/products/strawberry-gro-brd-str-040/picture-0.webp"
