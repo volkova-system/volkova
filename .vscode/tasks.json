@@ -301,8 +301,8 @@
             "isBackground": true,
             "options": {
                 "env": {
-                    "PRODUCT_DATA_SERVICE_ADDRESS": "http://localhost:4979/",
-                    "IMAGES_FILE_SERVICE_ADDRESS": "http://localhost:5173/"
+                    "PRODUCT_DATA_SERVICE_ADDRESS": "http://localhost:4979",
+                    "IMAGES_FILE_SERVICE_ADDRESS": "http://localhost:5173"
                 }
             },
             "presentation": {
