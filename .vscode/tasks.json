@@ -301,7 +301,6 @@
             "isBackground": true,
             "options": {
                 "env": {
-                    "PORT": "6039",
                     "PRODUCT_DATA_SERVICE_ADDRESS": "http://localhost:4979/",
                     "IMAGES_FILE_SERVICE_ADDRESS": "http://localhost:5173/"
                 }
