@@ -5,7 +5,7 @@ export default meta;
 
 type Story = StoryObj;
 
-export const ProductList: Story = {
+export const ProductListBasic: Story = {
   render: () => `
     <section hx-get="/stories/concise/widgets/product-list/product-list.component.html"
         hx-trigger="load"
