@@ -13,6 +13,7 @@
         "ms-edgedevtools.vscode-edge-devtools",
         "ms-azuretools.vscode-docker",
         "matthewpi.caddyfile-support",
-        "golang.go"
+        "golang.go",
+        "rangav.vscode-thunder-client"
     ]
 }
