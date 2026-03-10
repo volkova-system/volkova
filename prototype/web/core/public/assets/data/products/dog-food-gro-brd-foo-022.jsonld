@@ -7,14 +7,14 @@
     "name": "dog-food",
     "headline": "Dog Food",
     "description": "Specially formulated dog food designed to provide essential nutrients for your canine companion.",
-    "url": "/service/products/dog-food-gro-brd-foo-022",
+    "url": "/service/data/products/dog-food-gro-brd-foo-022",
     "ratingValue": 4.55,
     "priceCurrency": "php",
     "price": 10.99,
     "netPrice": 9.861327,
     "discountPercentage": 10.27,
-    "dateCreated": "2026-03-10T11:50:44.752629Z",
-    "dateModified": "2026-03-10T11:50:44.752629Z",
+    "dateCreated": "2026-03-10T17:04:08.391032Z",
+    "dateModified": "2026-03-10T17:04:08.391032Z",
     "thumbnail": "/assets/images/products/thumbnails/dog-food-gro-brd-foo-022.webp",
     "images": [
         "/assets/images/products/dog-food-gro-brd-foo-022/picture-0.webp"

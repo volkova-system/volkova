@@ -7,14 +7,14 @@
     "name": "milk",
     "headline": "Milk",
     "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
-    "url": "/service/products/milk-gro-brd-mil-032",
+    "url": "/service/data/products/milk-gro-brd-mil-032",
     "ratingValue": 2.61,
     "priceCurrency": "php",
     "price": 3.49,
     "netPrice": 3.0104740000000003,
     "discountPercentage": 13.74,
-    "dateCreated": "2026-03-10T11:50:44.758843Z",
-    "dateModified": "2026-03-10T11:50:44.758843Z",
+    "dateCreated": "2026-03-10T17:04:08.397221Z",
+    "dateModified": "2026-03-10T17:04:08.397221Z",
     "thumbnail": "/assets/images/products/thumbnails/milk-gro-brd-mil-032.webp",
     "images": [
         "/assets/images/products/milk-gro-brd-mil-032/picture-0.webp"

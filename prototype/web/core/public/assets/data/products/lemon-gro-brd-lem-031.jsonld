@@ -7,14 +7,14 @@
     "name": "lemon",
     "headline": "Lemon",
     "description": "Zesty and tangy lemons, versatile for cooking, baking, or making refreshing beverages.",
-    "url": "/service/products/lemon-gro-brd-lem-031",
+    "url": "/service/data/products/lemon-gro-brd-lem-031",
     "ratingValue": 3.53,
     "priceCurrency": "php",
     "price": 0.79,
     "netPrice": 0.7133700000000001,
     "discountPercentage": 9.7,
-    "dateCreated": "2026-03-10T11:50:44.758121Z",
-    "dateModified": "2026-03-10T11:50:44.758121Z",
+    "dateCreated": "2026-03-10T17:04:08.396444Z",
+    "dateModified": "2026-03-10T17:04:08.396444Z",
     "thumbnail": "/assets/images/products/thumbnails/lemon-gro-brd-lem-031.webp",
     "images": [
         "/assets/images/products/lemon-gro-brd-lem-031/picture-0.webp"

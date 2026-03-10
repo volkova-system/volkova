@@ -7,14 +7,14 @@
     "name": "water",
     "headline": "Water",
     "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
-    "url": "/service/products/water-gro-brd-wat-042",
+    "url": "/service/data/products/water-gro-brd-wat-042",
     "ratingValue": 4.96,
     "priceCurrency": "php",
     "price": 0.99,
     "netPrice": 0.842292,
     "discountPercentage": 14.92,
-    "dateCreated": "2026-03-10T11:50:44.765104Z",
-    "dateModified": "2026-03-10T11:50:44.765104Z",
+    "dateCreated": "2026-03-10T17:04:08.405008Z",
+    "dateModified": "2026-03-10T17:04:08.405008Z",
     "thumbnail": "/assets/images/products/thumbnails/water-gro-brd-wat-042.webp",
     "images": [
         "/assets/images/products/water-gro-brd-wat-042/picture-0.webp"

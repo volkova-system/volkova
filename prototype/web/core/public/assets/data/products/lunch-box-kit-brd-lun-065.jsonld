@@ -7,14 +7,14 @@
     "name": "lunch-box",
     "headline": "Lunch Box",
     "description": "The Lunch Box is a convenient and portable container for packing and carrying your meals. With compartments for different foods, it's perfect for on-the-go dining.",
-    "url": "/service/products/lunch-box-kit-brd-lun-065",
+    "url": "/service/data/products/lunch-box-kit-brd-lun-065",
     "ratingValue": 4.93,
     "priceCurrency": "php",
     "price": 12.99,
     "netPrice": 11.646834,
     "discountPercentage": 10.34,
-    "dateCreated": "2026-03-10T11:50:44.778988Z",
-    "dateModified": "2026-03-10T11:50:44.778988Z",
+    "dateCreated": "2026-03-10T17:04:08.419391Z",
+    "dateModified": "2026-03-10T17:04:08.419391Z",
     "thumbnail": "/assets/images/products/thumbnails/lunch-box-kit-brd-lun-065.webp",
     "images": [
         "/assets/images/products/lunch-box-kit-brd-lun-065/picture-0.webp"

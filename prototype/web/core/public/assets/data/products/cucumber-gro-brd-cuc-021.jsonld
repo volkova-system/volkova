@@ -7,14 +7,14 @@
     "name": "cucumber",
     "headline": "Cucumber",
     "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
-    "url": "/service/products/cucumber-gro-brd-cuc-021",
+    "url": "/service/data/products/cucumber-gro-brd-cuc-021",
     "ratingValue": 4.07,
     "priceCurrency": "php",
     "price": 1.49,
     "netPrice": 1.487616,
     "discountPercentage": 0.16,
-    "dateCreated": "2026-03-10T11:50:44.752081Z",
-    "dateModified": "2026-03-10T11:50:44.752081Z",
+    "dateCreated": "2026-03-10T17:04:08.390321Z",
+    "dateModified": "2026-03-10T17:04:08.390321Z",
     "thumbnail": "/assets/images/products/thumbnails/cucumber-gro-brd-cuc-021.webp",
     "images": [
         "/assets/images/products/cucumber-gro-brd-cuc-021/picture-0.webp"

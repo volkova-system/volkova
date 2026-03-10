@@ -7,14 +7,14 @@
     "name": "mulberry",
     "headline": "Mulberry",
     "description": "Sweet and juicy mulberries, perfect for snacking or adding to desserts and cereals.",
-    "url": "/service/products/mulberry-gro-brd-mul-033",
+    "url": "/service/data/products/mulberry-gro-brd-mul-033",
     "ratingValue": 4.95,
     "priceCurrency": "php",
     "price": 4.99,
     "netPrice": 4.347787,
     "discountPercentage": 12.87,
-    "dateCreated": "2026-03-10T11:50:44.759417Z",
-    "dateModified": "2026-03-10T11:50:44.759417Z",
+    "dateCreated": "2026-03-10T17:04:08.397865Z",
+    "dateModified": "2026-03-10T17:04:08.397865Z",
     "thumbnail": "/assets/images/products/thumbnails/mulberry-gro-brd-mul-033.webp",
     "images": [
         "/assets/images/products/mulberry-gro-brd-mul-033/picture-0.webp"
