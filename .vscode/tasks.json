@@ -148,8 +148,8 @@
                 }
             },
             "presentation": {
-                "reveal": "never",
-                "echo": false,
+                "reveal": "always",
+                "echo": true,
                 "focus": false,
                 "panel": "shared"
             },
@@ -277,6 +277,81 @@
             },
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "label": "Start Windows Prototype Core Products Component Service",
+            "type": "npm",
+            "script": "dev",
+            "path": "services/core/products-component-service/nextjs",
+            "isBackground": true,
+            "options": {
+                "env": {
+                    "PORT": "6039",
+                    "PRODUCT_DATA_SERVICE_ADDRESS": "http://localhost:4979/",
+                    "IMAGES_FILE_SERVICE_ADDRESS": "http://localhost:5173/"
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": [
+                "Start Windows Prototype Core Products Data Service",
+                "Start Windows Prototype Core Images File Service"
+            ],
+            "problemMatcher": [
+                {
+                    "owner": "nextjs",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/services/core/products-component-service/nextjs"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*)$",
+                        "file": 1,
+                        "message": 1
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*starting.*",
+                        "endsPattern": ".*(Local:\\s*http://localhost:6039|Ready in)"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Stop Windows Prototype Core Products Component Service",
+            "type": "shell",
+            "command": "echo ${input:stopWindowsPrototypeCoreProductsComponentService}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Start All Windows Core Services",
+            "dependsOn": [
+                "Start Windows Prototype Core Images File Service",
+                "Start Windows Prototype Core Products Data Service",
+                "Start Windows Prototype Core Products Component Service"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop All Windows Core Services",
+            "dependsOn": [
+                "Stop Windows Prototype Core Products Component Service",
+                "Stop Windows Prototype Core Products Data Service",
+                "Stop Windows Prototype Core Images File Service"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
         }
     ],
     "inputs": [
@@ -307,6 +382,12 @@
             "type": "command",
             "command": "workbench.action.tasks.terminate",
             "args": "Start Windows Prototype Core Products Data Service"
+        },
+        {
+            "id": "stopWindowsPrototypeCoreProductsComponentService",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Start Windows Prototype Core Products Component Service"
         }
     ]
 }
