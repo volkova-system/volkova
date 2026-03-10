@@ -21,6 +21,7 @@ export async function GET(req: Request) {
                 _="
                     on click remove .hidden from #product-preview-tree
                     then tell <product-card/>
+                        set @data-state to 'active'
                         set @data-component to '/service/component/products/${product.reference}/preview'
                         set @data-service to '/service/data/products/${product.reference}'
                     end
