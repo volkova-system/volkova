@@ -1,0 +1,24 @@
+<section class="page">
+    <div class="leftbar sidebar spacer"></div>
+    <div class="sidebar spacer"></div>
+    <main class="content-tree tree list">
+        <div class="item spacer"></div>
+        <ol id="product-list"
+            class="product-list content-tree-list list">
+        </ol>
+        <product-list
+            target="product-list"
+            data-products-component-service-address="http://localhost:6039"
+            data-component="/service/component/products"
+            data-service="/service/data/products">
+        </product-list>
+        <div class="item spacer"></div>
+    </main>
+    <div class="sidebar spacer"></div>
+    <article class="focus-tree tree list">
+        <div class="item spacer"></div>
+        <ol class="card focus-tree-list list">
+        </ol>
+        <div class="item spacer"></div>
+    </article>
+</section>
