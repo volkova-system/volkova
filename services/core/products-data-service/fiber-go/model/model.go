@@ -23,6 +23,7 @@ type Product struct {
 	Headline    string `json:"headline"`    // Short marketing headline
 	Description string `json:"description"` // Detailed product description
 	URL         string `json:"url"`         // Product page URL
+    BrandName   string `json:"brandName,omitempty"`
 
 	// Rating information
 	RatingValue float64 `json:"ratingValue"` // Average rating value
