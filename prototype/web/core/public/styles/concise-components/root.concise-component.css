@@ -27,7 +27,8 @@
     background: unset;
 }
 
-.concise-component {
+.concise-component *:has(section.page) {
+    display: flex;
     flex-direction: row !important;
 }
 
