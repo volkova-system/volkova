@@ -12,3 +12,10 @@ func sendError(c fiber.Ctx, status int, message string, err error) error {
 		"details": err.Error(),
 	})
 }
+
+func computePageData(skip, limit, total int) (int, int) {
+    pages := total / limit
+    page := ( skip / limit ) + 1
+
+    return pages, page
+}
