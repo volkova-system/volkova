@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://volkova-system.github.io/sitemap.xml
