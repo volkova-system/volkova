@@ -44,9 +44,8 @@ export async function GET(req: Request) {
                     <dt class="title label">
                         ${ product.headline }
                     </dt>
-                    <dd class="subtitle discount value">
-                        ${ Math.ceil(product.discountPercentage) }
-                    </dd>
+                    <dd class="subtitle discount value"
+                        >${ Math.ceil(product.discountPercentage) }</dd>
                 </dl>
             </li>
             <li class="normal-spacing item spacer"></li>
