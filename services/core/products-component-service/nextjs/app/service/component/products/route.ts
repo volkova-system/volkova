@@ -22,12 +22,14 @@ export async function GET(req: Request) {
                     on click
                         remove .hidden from #product-preview-tree
 
-                        if  <product-list/>@data-state != 'search' and
-                            <product-list/>@data-state != 'sort' and
-                            <product-list/>@data-state != 'filter'
-                            add .hidden to #product-search-tree
-                            remove .hidden from #product-search-tree-idle
-                        end
+                        add .hidden to #product-search-tree
+                        remove .hidden from #product-search-tree-idle
+
+                        add .hidden to #product-sort-tree
+                        add .hidden to #product-sort-tree-divider
+
+                        add .hidden to #product-filter-tree
+                        add .hidden to #product-filter-tree-divider
 
                     then tell <product-card/>
                         set @data-state to 'active'
