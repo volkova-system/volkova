@@ -20,12 +20,14 @@ export async function GET(req: Request) {
 
                 return `
                     <li class="product-filter-field input-tree-item item"
+                        data-field="${ field }"
+                        data-value="${ value }"
                         _="">
-                        <div class="spacer"></div>
                         <dl class="content">
                             <dt class="label">${ label }</dt>
                             <dd class="value">${ value.split(/\-/).join(" ") }</dd>
                         </dl>
+                        <div class="spacer"></div>
                         <div class="spacer"></div>
                     </li>
                     <li class="normal-spacing item spacer"></li>
