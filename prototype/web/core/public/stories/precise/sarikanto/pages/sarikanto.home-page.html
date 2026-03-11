@@ -76,7 +76,12 @@
             </div>
             <button class="icon-control control"
                 aria-label="sort products"
-                _="">
+                _="
+                    on click
+                        remove .hidden from #product-sort-tree
+                        remove .hidden from #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'list'
+                ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#more-vertical" />
                 </svg>
@@ -90,7 +95,12 @@
             </div>
             <button class="icon-control control"
                 aria-label="sort products"
-                _="">
+                _="
+                    on click
+                        remove .hidden from #product-filter-tree
+                        remove .hidden from #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'list'
+                ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#more-vertical" />
                 </svg>
@@ -99,33 +109,35 @@
     </ol>
     <div class="item spacer"></div>
 </aside>
+<div id="product-sort-tree-divider" class="sidebar spacer hidden"></div>
 <aside id="product-sort-tree"
     class="product-sort-tree input-tree tree list hidden">
     <div class="item spacer"></div>
-    <ol id="product-sort-list"
-        class="input-tree-list list">
+    <ol id="product-sort-criteria"
+        class="product-sort-criteria input-tree-list list">
     </ol>
     <product-sort
-        target="product-sort-list"
+        target="product-sort-criteria"
         data-state="idle"
         data-component-service-address="http://localhost:6039"
         data-component="/service/component/products/sort/criteria"
-        data-service="/service/data/products/sort">
+        data-service="/service/data/products/sort/criteria">
     </product-sort>
     <div class="item spacer"></div>
 </aside>
+<div id="product-filter-tree-divider" class="sidebar spacer hidden"></div>
 <aside id="product-filter-tree"
     class="product-filter-tree input-tree tree list hidden">
     <div class="item spacer"></div>
-    <ol id="product-filter-list"
-        class="input-tree-list list">
+    <ol id="product-filter-fields"
+        class="product-filter-fields input-tree-list list">
     </ol>
     <product-filter
-        target="product-filter-list"
+        target="product-filter-fields"
         data-state="idle"
         data-component-service-address="http://localhost:6039"
         data-component="/service/component/products/filter/fields"
-        data-service="/service/data/products/filter">
+        data-service="/service/data/products/filter/fields">
     </product-filter>
     <div class="item spacer"></div>
 </aside>
