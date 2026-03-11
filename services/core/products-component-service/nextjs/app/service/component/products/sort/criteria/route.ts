@@ -21,7 +21,10 @@ export async function GET(req: Request) {
             <li class="product-sort-criterion input-tree-item item"
                 data-criterion="${ criterion }">
                 <div class="content">
-                    <data id="" class="label hidden">ascending</data>
+                    <data id="sort-product-ascending-${ index }-label"
+                        class="sort-product-ascending-label label hidden">ascending</data>
+                    <data id="sort-product-ascending-${ index }-label"
+                        class="sort-product-ascending-label label hidden">descending</data>
                     <data class="value">${ label }</data>
                 </div>
                 <button id="sort-product-descending-${ index }-control"
