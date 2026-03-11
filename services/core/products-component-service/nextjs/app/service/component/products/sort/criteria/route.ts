@@ -21,10 +21,10 @@ export async function GET(req: Request) {
             <li class="product-sort-criterion input-tree-item item"
                 data-criterion="${ criterion }">
                 <div class="content">
+                    <data id="sort-product-descending-${ index }-label"
+                        class="sort-product-descending-label label hidden">descending</data>
                     <data id="sort-product-ascending-${ index }-label"
                         class="sort-product-ascending-label label hidden">ascending</data>
-                    <data id="sort-product-ascending-${ index }-label"
-                        class="sort-product-ascending-label label hidden">descending</data>
                     <data class="value">${ label }</data>
                 </div>
                 <button id="sort-product-descending-${ index }-control"
@@ -38,6 +38,8 @@ export async function GET(req: Request) {
                             remove .hidden from .sort-product-ascending-control
                             add .hidden to .active-sort-product-spacer
                             add .hidden to .clear-sort-product-control
+                            add .hidden to .sort-product-descending-label
+                            add .hidden to .sort-product-ascending-label
 
                             add .hidden to #sort-product-descending-${ index }-control
                             add .hidden to #sort-product-ascending-${ index }-control
