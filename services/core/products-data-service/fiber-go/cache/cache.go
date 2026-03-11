@@ -83,7 +83,8 @@ func (db *Cache) Close() error {
 
 // PushProduct stores a product in the cache using its cache identifier as the key.
 // The product is serialized to JSON and stored in a thread-safe transaction.
-// If a product with the same cache identifier already exists, it will be overwritten.
+// If a product with the same cache identifier already exists, it will be
+// overwritten.
 //
 // Parameters:
 //   - product: The product to store in the cache
@@ -99,9 +100,11 @@ func (db *Cache) PushProduct(product model.Product) error {
 
     // Store in cache with transaction safety
     return db.products.Update(func(tx *buntdb.Tx) error {
-        _, _, err := tx.Set(product.CacheIdentifier.Value, string(data), nil)
+        _, _, err := tx.Set(product.CacheIdentifier.Value,
+            string(data), nil)
         if err != nil {
-            return fmt.Errorf("failed to store product in cache: %w", err)
+            return fmt.Errorf(
+                "failed to store product in cache: %w", err)
         }
 
         return nil
@@ -113,7 +116,8 @@ func (db *Cache) PushProduct(product model.Product) error {
 // If the product doesn't exist, an error is returned.
 //
 // Parameters:
-//   - key: The cache key to remove (typically the product's cache identifier value)
+//   - key: The cache key to remove
+//          (typically the product's cache identifier value)
 //
 // Returns:
 //   - error: Any error that occurred during the removal operation
@@ -125,7 +129,8 @@ func (db *Cache) PopProduct(key string) error {
 	return db.products.Update(func(tx *buntdb.Tx) error {
 		_, err := tx.Delete(key)
 		if err != nil {
-			return fmt.Errorf("failed to remove product with key %s: %w", key, err)
+			return fmt.Errorf(
+                "failed to remove product with key %s: %w", key, err)
 		}
 
 		return nil
@@ -136,7 +141,8 @@ func (db *Cache) PopProduct(key string) error {
 // The product data is deserialized from JSON and returned as a Product struct.
 //
 // Parameters:
-//   - key: The cache key to look up (typically the product's cache identifier value)
+//   - key: The cache key to look up
+//          (typically the product's cache identifier value)
 //
 // Returns:
 //   - *model.Product: The retrieved product, or nil if not found or error occurred
@@ -157,11 +163,13 @@ func (db *Cache) GetProduct(key string) (*model.Product, error) {
 		val, err := tx.Get(key)
 
 		if err != nil {
-			return fmt.Errorf("product not found for key %s: %w", key, err)
+			return fmt.Errorf(
+                "product not found for key %s: %w", key, err)
 		}
 
         if err := json.Unmarshal([]byte(val), &product); err != nil {
-            return fmt.Errorf("failed to unmarshal product data: %w", err)
+            return fmt.Errorf(
+                "failed to unmarshal product data: %w", err)
         }
 
         return nil
@@ -220,7 +228,9 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 
 			var product model.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
-				unmarshalErr = fmt.Errorf("failed to unmarshal product at key %s: %w", key, err)
+				unmarshalErr = fmt.Errorf(
+                    "failed to unmarshal product at key %s: %w",
+                    key, err)
 
                 return false
 			}
