@@ -9,23 +9,29 @@ export async function GET(req: Request) {
 
     const dataService = `${process.env.PRODUCT_DATA_SERVICE_ADDRESS}${searchParams.get("data")}`
 
-    const dataProducts = await fetch(dataService).then(response => response.json())
+    const dataSortCriteria = await fetch(dataService)
+        .then(response => response.json())
 
-    const products = dataProducts.products || []
+    const sortCriteria = dataSortCriteria.sortCriteria || []
 
-    const productList = products.map((product: Product) => {
-        const thumbnail = `${process.env.IMAGES_FILE_SERVICE_ADDRESS}${product.thumbnail}`
+    const criteria = sortCriteria.map((criterion: string) => {
+        const label = criterion.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
 
         return `
-            <li class="input-tree-item item"
+            <li class="product-sort-criterion input-tree-item item"
                 _="">
-                <data class="content"></data>
+                <div class="content value">${ label }</div>
             </li>
             <li class="normal-spacing item spacer"></li>
         `
     }).join("")
 
-    const html = `<ol class="product-list input-tree-list list">${productList}</ol>`
+    const html = `
+        <ol id="product-sort-criteria"
+            class="product-sort-criteria input-tree-list list">
+            ${criteria}
+        </ol>
+    `
 
     return new Response(html, {
         headers: {
