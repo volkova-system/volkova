@@ -48,7 +48,8 @@
 }
 
 .concise-component dd,
-.concise-component data {
+.concise-component data,
+.concise-component input {
     font-size: var(--concise-text-value-size);
     line-height: var(--concise-text-value-line-height);
     font-weight: normal;
