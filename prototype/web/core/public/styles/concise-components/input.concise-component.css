@@ -1,0 +1,7 @@
+.concise-component input {
+    height: var(--concise-unit-base);
+    min-height: var(--concise-unit-base);
+    max-height: var(--concise-unit-base);
+
+    width: auto;
+}
