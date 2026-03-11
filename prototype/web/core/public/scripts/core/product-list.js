@@ -1,6 +1,6 @@
 class ProductList extends HTMLElement {
     static get observedAttributes() {
-        return ["data-component", "data-service"];
+        return ["data-state", "data-component", "data-service"];
     }
 
     constructor() {
@@ -28,6 +28,13 @@ class ProductList extends HTMLElement {
     }
 
     render() {
+        let _dataService = ""
+
+        const state = this.getAttribute("data-state")
+        if (state === "list") {
+            _dataService = "/service/data/products"
+        }
+
         const componentService = this.getAttribute("data-component")
         if (!componentService) return
 
@@ -37,7 +44,10 @@ class ProductList extends HTMLElement {
         if (!componentServiceAddress) return
 
         if (!this.getAttribute("data-service")) return
-        const dataService = encodeURIComponent(this.getAttribute("data-service"))
+        const dataService = encodeURIComponent(
+            _dataService ||
+            this.getAttribute("data-service")
+        )
 
         const targetId = this.getAttribute("target")
         if (!targetId) return
