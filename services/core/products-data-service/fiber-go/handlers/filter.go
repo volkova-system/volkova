@@ -125,13 +125,19 @@ func getFilterCount(cache *cache.Cache, field, value string) (int, error) {
 // with filter criteria and pagination metadata.
 func sendFilterResponse(c fiber.Ctx, products interface{},
 	field, value string, skip, limit, total int) error {
-	return c.JSON(fiber.Map{
+    pages, page := computePageData(total, skip, limit)
+
+    return c.JSON(fiber.Map{
 		"status":   "success",
+
 		"products": products,
 		"field":    field,
 		"value":    value,
+
 		"skip":     skip,
 		"limit":    limit,
 		"total":    total,
+        "pages":    pages,
+        "page":     page,
 	})
 }
