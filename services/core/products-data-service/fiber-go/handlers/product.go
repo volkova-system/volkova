@@ -24,13 +24,17 @@ func GetProductHandler(cache *cache.Cache) fiber.Handler {
 func getProductFromCache(c fiber.Ctx, cache *cache.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest, "reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest, "reference cannot be empty"))
+		return sendError(c, fiber.StatusBadRequest,
+            "reference parameter required",
+
+			fiber.NewError(fiber.StatusBadRequest,
+                "reference cannot be empty"))
 	}
 
 	product, err := cache.GetProduct("product:" + reference)
 	if err != nil {
-		return sendError(c, fiber.StatusNotFound, "product not found", err)
+		return sendError(c, fiber.StatusNotFound,
+            "product not found", err)
 	}
 
 	return sendProductResponse(c, product)
