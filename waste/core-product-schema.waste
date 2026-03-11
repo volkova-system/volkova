@@ -9,6 +9,7 @@
 	"description": "product_description",
 	"url": "/pages/products/product_name-product_reference",
 	"ratingValue": 4.5,
+    "brandName": "product_brand_name",
 
 	"priceCurrency": "usd",
     "price": 100.00
@@ -37,7 +38,7 @@
 
     "filterFields": [
         "keywords",
-        "brand.name"
+        "brandName"
     ],
 
 	"cacheIdentifier": {
