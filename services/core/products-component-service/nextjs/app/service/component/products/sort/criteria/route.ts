@@ -14,7 +14,7 @@ export async function GET(req: Request) {
 
     const sortCriteria = dataSortCriteria.sortCriteria || []
 
-    const criteria = sortCriteria.map((criterion: string) => {
+    const criteria = sortCriteria.map((criterion: string, index: number) => {
         const label = criterion.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
 
         return `
@@ -23,7 +23,8 @@ export async function GET(req: Request) {
                 <div class="content">
                     <data class="value">${ label }</data>
                 </div>
-                <button class="icon-control control"
+                <button id="sort-product-descending-${ index }-control"
+                    class="icon-control control"
                     aria-label="sort ${ label } descending"
                     _="
                         on click
@@ -37,7 +38,24 @@ export async function GET(req: Request) {
                         <use href="/assets/images/feather-sprite.svg#chevrons-down" />
                     </svg>
                 </button>
-                <button class="icon-control control"
+                <button id="sort-product-ascending-${ index }-control"
+                    class="icon-control control"
+                    aria-label="sort ${ label } ascending"
+                    _="
+                        on click
+                            add .hidden to #product-preview-tree
+
+                            set criterion to '${ criterion }'
+                            set @data-state of <product-list/> to 'sort'
+                            set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
+                    ">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevrons-up" />
+                    </svg>
+                </button>
+                <div id="active-sort-spacer-${ index }" class="spacer hidden"></div>
+                <button id="clear-sort-product-${ index }-control"
+                    class="icon-control control"
                     aria-label="sort ${ label } ascending"
                     _="
                         on click
