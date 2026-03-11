@@ -32,6 +32,15 @@ export const IconWithLetter: Story = {
   `
 };
 
+export const IconAndNumber: Story = {
+  render: () => `
+    <span hx-get="/stories/concise/basic/icon/icon-and-number.component.html"
+        hx-trigger="load"
+        hx-swap="outerHTML">
+    </span>
+  `
+};
+
 export const IconWithColor: Story = {
   render: () => `
     <span hx-get="/stories/concise/basic/icon/icon-with-color.component.html"
