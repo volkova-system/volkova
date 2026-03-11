@@ -110,6 +110,48 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 		return nil, err
 	}
 
+	err = conn.CreateIndex(
+        "discountPercentage",
+        "product:*",
+        func(a, b string) bool {
+            var productA, productB model.Product
+            json.Unmarshal([]byte(a), &productA)
+            json.Unmarshal([]byte(b), &productB)
+            return productA.DiscountPercentage < productB.DiscountPercentage
+        },
+    )
+	if err != nil {
+		return nil, err
+	}
+
+	err = conn.CreateIndex(
+        "ratingValue",
+        "product:*",
+        func(a, b string) bool {
+            var productA, productB model.Product
+            json.Unmarshal([]byte(a), &productA)
+            json.Unmarshal([]byte(b), &productB)
+            return productA.RatingValue < productB.RatingValue
+        },
+    )
+	if err != nil {
+		return nil, err
+	}
+
+	err = conn.CreateIndex(
+        "netPrice",
+        "product:*",
+        func(a, b string) bool {
+            var productA, productB model.Product
+            json.Unmarshal([]byte(a), &productA)
+            json.Unmarshal([]byte(b), &productB)
+            return productA.NetPrice < productB.NetPrice
+        },
+    )
+	if err != nil {
+		return nil, err
+	}
+
 	return &Cache{name: defaultCacheName, products: conn}, nil
 }
 
@@ -491,6 +533,111 @@ func (db *Cache) SearchProducts(query string,
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to search products: %w", err)
+	}
+
+	return products, nil
+}
+
+// SortProducts retrieves a paginated list of products from the cache sorted by the
+// specified criterion.
+// The criterion can be prefixed with a hyphen (-) to indicate descending order.
+// Supported criteria: "reference", "headline". Default order is ascending.
+//
+// Parameters:
+//   - skip:        Number of products to skip (offset). Negative values are
+//                  treated as 0
+//
+//   - limit:       Maximum number of products to return. Values <= 0 default to 10
+//
+//   - criterion:   Sort field, optionally prefixed with "-" for descending order
+//                  (e.g., "reference", "-reference", "headline", "-headline")
+//
+// Returns:
+//   - []model.Product: Slice of products sorted by the specified criterion
+//   - error:           Any error that occurred during retrieval or unmarshaling
+//
+func (db *Cache) SortProducts(skip, limit int, criterion string) ([]model.Product, error) {
+	if skip < 0 {
+		skip = 0
+	}
+
+	if limit <= 0 {
+		limit = 10
+	}
+
+	// Parse criterion to determine sort order and field
+	descending := false
+	sortField := criterion
+
+	if len(criterion) > 0 && criterion[0] == '-' {
+		descending = true
+		sortField = criterion[1:]
+	}
+
+	// Validate sort field
+	var indexName string
+	switch sortField {
+	case "discountPercentage":
+		indexName = "discountPercentage"
+	case "ratingValue":
+		indexName = "ratingValue"
+    case "netPrice":
+		indexName = "netPrice"
+	case "":
+		// Default to products index (natural order)
+		indexName = defaultCacheName
+	default:
+		return nil, fmt.Errorf("unsupported sort criterion: %s", sortField)
+	}
+
+	var products []model.Product
+
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		count := 0
+		collected := 0
+
+		var unmarshalErr error
+
+		// Choose ascending or descending iteration
+		iterateFunc := func(key, value string) bool {
+			// Skip items until we reach the skip offset
+			if count < skip {
+				count++
+				return true
+			}
+
+			// Stop if we've collected enough items
+			if collected >= limit {
+				return false
+			}
+
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w", key, err)
+
+				return false
+			}
+
+			products = append(products, product)
+
+			collected++
+			count++
+
+			return true
+		}
+
+		if descending {
+			tx.Descend(indexName, iterateFunc)
+		} else {
+			tx.Ascend(indexName, iterateFunc)
+		}
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to sort products: %w", err)
 	}
 
 	return products, nil
