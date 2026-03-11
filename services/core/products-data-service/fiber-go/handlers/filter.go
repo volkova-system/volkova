@@ -40,8 +40,7 @@ func FilterProductHandler(cache *cache.Cache) fiber.Handler {
 func filterProductsInCache(c fiber.Ctx, cache *cache.Cache) error {
 	field, value, skip, limit, err := parseFilterParams(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid parameters", err)
+		return sendError(c, fiber.StatusBadRequest, "invalid parameters", err)
 	}
 
 	products, err := filterProductsFromCache(cache, field, value, skip, limit)
@@ -118,7 +117,7 @@ func getFilterCount(cache *cache.Cache, field, value string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-    
+
 	return len(products), nil
 }
 
