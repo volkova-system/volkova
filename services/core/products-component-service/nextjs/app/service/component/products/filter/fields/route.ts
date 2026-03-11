@@ -24,7 +24,7 @@ export async function GET(req: Request) {
                         <div class="spacer"></div>
                         <dl class="content">
                             <dt class="label">${ label }</dt>
-                            <dd class="title value">${ value.split(/\-/).join(" ") }</dd>
+                            <dd class="value">${ value.split(/\-/).join(" ") }</dd>
                         </dl>
                         <div class="spacer"></div>
                     </li>
