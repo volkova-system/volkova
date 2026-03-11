@@ -9,6 +9,7 @@
         </ol>
         <product-list
             target="product-list"
+            data-state="list"
             data-component-service-address="http://localhost:6039"
             data-component="/service/component/products"
             data-service="/service/data/products">
@@ -41,18 +42,27 @@
             <button class="icon-control control"
                 aria-label="expand product search panel"
                 _="
-                    on click add .hidden to #product-search-tree
-                    on click remove .hidden from #product-search-tree-idle
+                    on click
+                        add .hidden to #product-search-tree
+                        remove .hidden from #product-search-tree-idle
+                        set @data-state of <product-list/> to 'list'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#chevron-right" />
                 </svg>
             </button>
             <div class="content">
-                <input type="text" placeholder="Search products"/>
+                <input id="search-product-query" type="text"
+                    placeholder="Search products"/>
             </div>
             <button class="icon-control control"
-                aria-label="search product">
+                aria-label="search products"
+                _="
+                    on click
+                        set query to #search-product-query.value
+                        set @data-state of <product-list/> to 'search'
+                        set @data-service of <product-list/> to '/service/data/products/search?query=' + query
+                ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#search" />
                 </svg>
