@@ -19,9 +19,14 @@ export async function GET(req: Request) {
         return `
             <li class="picture-item content-tree-item item level-2"
                 _="
-                    on click remove .hidden from #product-preview-tree
-                    on click add .hidden to #product-search-tree
-                    on click remove .hidden from #product-search-tree-idle
+                    on click
+                        remove .hidden from #product-preview-tree
+
+                        if <product-list/>@data-state != 'search'
+                            add .hidden to #product-search-tree
+                            remove .hidden from #product-search-tree-idle
+                        end
+
                     then tell <product-card/>
                         set @data-state to 'active'
                         set @data-component to '/service/component/products/${product.reference}/preview'
