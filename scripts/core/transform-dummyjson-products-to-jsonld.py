@@ -298,11 +298,13 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
     }
 
     if 'brand' in product:
-        jsonld_product["brand" ] = {
+        jsonld_product["brand"] = {
             "@type": "Brand",
 
-            "name": str(product["brand"]).lower()
+            "name": str(product["brand"])
         }
+
+        jsonld_product["brandName"] = str(product["brand"])
 
     # Add additional properties if available
     additional_props = cast(list[JsonDict], jsonld_product["additionalProperty"])
