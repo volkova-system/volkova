@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "e6ed54e3-2cca-4af0-80f7-142f94cb9653",
+    "name": "Core",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2532434"
+  },
+  "item": [
+    {
+      "name": "Core Images",
+      "item": [
+        {
+          "name": "404 Image",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5173/assets/images/this-image-does-not-exists.png",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5173",
+              "path": [
+                "assets",
+                "images",
+                "this-image-does-not-exists.png"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Image",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5173/assets/images/vs.logo.svg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5173",
+              "path": [
+                "assets",
+                "images",
+                "vs.logo.svg"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Thumbnail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5173/assets/images/products/thumbnails/amazon-echo-plus-mob-ama-ama-099.webp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5173",
+              "path": [
+                "assets",
+                "images",
+                "products",
+                "thumbnails",
+                "amazon-echo-plus-mob-ama-ama-099.webp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Picture",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5173/assets/images/products/amazon-echo-plus-mob-ama-ama-099/picture-0.webp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5173",
+              "path": [
+                "assets",
+                "images",
+                "products",
+                "amazon-echo-plus-mob-ama-ama-099",
+                "picture-0.webp"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Core Products",
+      "item": [
+        {
+          "name": "404 Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/this/request/does/not/exists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "this",
+                "request",
+                "does",
+                "not",
+                "exists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products",
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products/amazon-echo-plus-mob-ama-ama-099",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products",
+                "amazon-echo-plus-mob-ama-ama-099"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products Sort Criteria",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products/sort/criteria",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products",
+                "sort",
+                "criteria"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products Filter Fields",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products/filter/fields",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products",
+                "filter",
+                "fields"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products With Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products?skip=5&limit=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "skip",
+                  "value": "5"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4979/service/data/products/search?query=laptop",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4979",
+              "path": [
+                "service",
+                "data",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "laptop"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DummyJSON Products",
+      "item": [
+        {
+          "name": "Get Products",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dummyjson.com/products",
+              "protocol": "https",
+              "host": [
+                "dummyjson",
+                "com"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dummyjson.com/products/1",
+              "protocol": "https",
+              "host": [
+                "dummyjson",
+                "com"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
