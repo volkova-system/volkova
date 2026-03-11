@@ -87,7 +87,7 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
 				"limit must be integer")
 		}
-        
+
 		limit = parsedLimit
 	}
 
@@ -106,12 +106,18 @@ func sortProductsFromCache(cache *cache.Cache,
 //
 func sendSortResponse(c fiber.Ctx, products interface{},
 	criterion string, skip, limit, total int) error {
+    pages, page := computePageData(total, skip, limit)
+
 	return c.JSON(fiber.Map{
-		"status":    "success",
-		"products":  products,
-		"criterion": criterion,
-		"skip":      skip,
-		"limit":     limit,
-		"total":     total,
+		"status":       "success",
+
+		"products":     products,
+		"criterion":    criterion,
+
+        "skip":         skip,
+		"limit":        limit,
+		"total":        total,
+        "pages":        pages,
+        "page":         page,
 	})
 }
