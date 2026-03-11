@@ -13,6 +13,7 @@ import (
 // Response: JSON product data or error details
 //
 // Fails fast on missing reference or cache retrieval error.
+//
 func GetProductHandler(cache *cache.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getProductFromCache(c, cache)
@@ -21,6 +22,7 @@ func GetProductHandler(cache *cache.Cache) fiber.Handler {
 
 // getProductFromCache processes the single product retrieval request.
 // Extracts reference from URL parameter and retrieves product from cache.
+//
 func getProductFromCache(c fiber.Ctx, cache *cache.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
