@@ -16,11 +16,16 @@ export async function GET(req: Request) {
     const filters = Object.entries( filterFields )
         .map(([field, values]) => {
             return values.map((value)=> {
+                const label = field.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+
                 return `
                     <li class="product-filter-field input-tree-item item"
                         _="">
                         <div class="spacer"></div>
-                        <div class="content">${ value.split(/\-/).join(" ") }</div>
+                        <dl class="content">
+                            <dt class="label">${ label }</dt>
+                            <dd class="title value">${ value.split(/\-/).join(" ") }</dd>
+                        </dl>
                         <div class="spacer"></div>
                     </li>
                     <li class="normal-spacing item spacer"></li>
