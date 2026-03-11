@@ -19,6 +19,7 @@
     line-height: var(--concise-text-description-value-line-height);
 }
 
+.concise-component .input.value,
 .concise-component .subtitle.value {
     text-transform: uppercase;
 }
