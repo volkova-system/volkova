@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 
 	"github.com/tidwall/buntdb"
 
@@ -722,6 +723,7 @@ func (db *Cache) GetFilterFieldValues() (map[string][]string, error) {
 		for value := range valuesMap {
 			values = append(values, value)
 		}
+		sort.Strings(values)
 
 		result[fieldName] = values
 	}
