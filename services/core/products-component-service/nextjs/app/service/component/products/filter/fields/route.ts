@@ -16,19 +16,35 @@ export async function GET(req: Request) {
     const filters = Object.entries( filterFields )
         .map(([field, values]) => {
             return values.map((value)=> {
-                const label = field.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+                const label = field.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+                const encodedValue = encodeURIComponent(value)
 
                 return `
                     <li class="product-filter-field input-tree-item item"
                         data-field="${ field }"
-                        data-value="${ value }"
-                        _="">
+                        data-value="${ value }">
                         <dl class="content">
-                            <dt class="label">${ label }</dt>
-                            <dd class="value">${ value.split(/\-/).join(" ") }</dd>
+                            <dt class="label">
+                                ${ label }
+                            </dt>
+                            <dd class="value">
+                                ${ value.split(/\-/).join(" ") }
+                            </dd>
                         </dl>
                         <div class="spacer"></div>
-                        <div class="spacer"></div>
+                        <button class="icon-control control"
+                            aria-label="filter ${ label } by ${ value }"
+                            _="
+                                on click
+                                    set field to '${ field }'
+                                    set value to '${ encodedValue }'
+                                    set @data-state of <product-list/> to 'filter'
+                                    set @data-service of <product-list/> to '/service/data/products/filter?field=' + field + '&value=' + value
+                            ">
+                            <svg class="icon">
+                                <use href="/assets/images/feather-sprite.svg#filter" />
+                            </svg>
+                        </button>
                     </li>
                     <li class="normal-spacing item spacer"></li>
                 `
