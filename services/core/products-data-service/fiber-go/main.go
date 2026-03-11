@@ -38,6 +38,7 @@ func main() {
 	products.Get("/", handlers.GetProductsHandler(cache))
     products.Get("/search", handlers.SearchProductHandler(cache))
     products.Get("/sort/criteria", handlers.GetSortCriteriaProductHandler(cache))
+    products.Get("/filter/fields", handlers.GetFilterFieldsProductHandler(cache))
 
     products.Post("/push", handlers.PushProductHandler(cache))
 	products.Delete("/pop/:reference", handlers.PopProductHandler(cache))
