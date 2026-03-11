@@ -126,7 +126,7 @@ func (db *Cache) Close() error {
 // PushProduct stores a product in the cache using its cache identifier as the key.
 // The product is serialized to JSON and stored in a thread-safe transaction.
 // If a product with the same cache identifier already exists, it will be
-// overwritten.
+// overwritten. This operation invalidates cached metadata.
 //
 // Parameters:
 //   - product: The product to store in the cache
@@ -150,13 +150,17 @@ func (db *Cache) PushProduct(product model.Product) error {
                 "failed to store product in cache: %w", err)
         }
 
+        // Invalidate cached metadata
+        db.invalidateMetadataCache(tx)
+
         return nil
     })
 }
 
 // PopProduct removes a product from the cache by its key.
 // The product is deleted from the cache in a thread-safe transaction.
-// If the product doesn't exist, an error is returned.
+// If the product doesn't exist, an error is returned. This operation
+// invalidates cached metadata.
 //
 // Parameters:
 //   - key: The cache key to remove
@@ -176,6 +180,9 @@ func (db *Cache) PopProduct(key string) error {
 			return fmt.Errorf(
                 "failed to remove product with key %s: %w", key, err)
 		}
+
+		// Invalidate cached metadata
+		db.invalidateMetadataCache(tx)
 
 		return nil
 	})
@@ -486,4 +493,249 @@ func (db *Cache) SearchProducts(query string,
 	}
 
 	return products, nil
+}
+
+// GetSortCriteria returns all unique values of the sortCriteria field
+// from all products stored in the cache. This is useful for providing
+// available sorting options to clients. Results are cached for performance.
+//
+// Returns:
+//   - []string:    Slice of unique sortCriteria values found in all products
+//
+//   - error:       Any error that occurred during retrieval or unmarshaling
+//
+func (db *Cache) GetSortCriteria() ([]string, error) {
+	const cacheKey = "products:sortCriteria"
+
+	// Try to get cached result first
+	var cachedCriteria []string
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		val, err := tx.Get(cacheKey)
+		if err == nil {
+			// Cache hit - unmarshal and return
+			return json.Unmarshal([]byte(val), &cachedCriteria)
+		}
+		return err
+	})
+
+	// If cache hit and no unmarshal error, return cached result
+	if err == nil {
+		return cachedCriteria, nil
+	}
+
+	// Cache miss - compute the result
+	criteriaMap := make(map[string]bool)
+
+	err = db.products.View(func(tx *buntdb.Tx) error {
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			// Skip the cache key itself
+			if key == cacheKey {
+				return true
+			}
+
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w", key, err)
+
+				return false
+			}
+
+			// Add each sortCriteria to map if slice is not empty
+			for _, criterion := range product.SortCriteria {
+				if criterion != "" {
+					criteriaMap[criterion] = true
+				}
+			}
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve sort criteria: %w", err)
+	}
+
+	// Convert map keys to slice
+	criteria := make([]string, 0, len(criteriaMap))
+	for criterion := range criteriaMap {
+		criteria = append(criteria, criterion)
+	}
+
+	// Cache the result
+	err = db.products.Update(func(tx *buntdb.Tx) error {
+		data, err := json.Marshal(criteria)
+		if err != nil {
+			return fmt.Errorf("failed to marshal sort criteria: %w", err)
+		}
+
+		_, _, err = tx.Set(cacheKey, string(data), nil)
+		if err != nil {
+			return fmt.Errorf("failed to cache sort criteria: %w", err)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		// Log the caching error but don't fail the request
+		// Return the computed result anyway
+		return criteria, nil
+	}
+
+	return criteria, nil
+}
+
+// GetFilterFields returns all unique values of the filterFields field
+// from all products stored in the cache. This is useful for providing
+// available filtering options to clients.
+//
+// Returns:
+//   - []string: Slice of unique filterFields values found in all products
+//
+//   - error:    Any error that occurred during retrieval or unmarshaling
+//
+func (db *Cache) GetFilterFields() ([]string, error) {
+	fieldsMap := make(map[string]bool)
+
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w", key, err)
+
+				return false
+			}
+
+			// Add each filterField to map if slice is not empty
+			for _, field := range product.FilterFields {
+				if field != "" {
+					fieldsMap[field] = true
+				}
+			}
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve filter fields: %w", err)
+	}
+
+	// Convert map keys to slice
+	fields := make([]string, 0, len(fieldsMap))
+	for field := range fieldsMap {
+		fields = append(fields, field)
+	}
+
+	return fields, nil
+}
+
+// GetFilterFieldValues returns all unique values for each filter field
+// from all products stored in the cache. This is useful for providing
+// available filter options with their possible values to clients.
+// Filter fields can be either first-level Product fields or in AdditionalProperty.
+//
+// Returns:
+//   - map[string][]string: Map where keys are filter field names and values are
+//                          slices of unique values for each field
+//
+//   - error:               Any error that occurred during retrieval or
+//                          unmarshaling
+//
+func (db *Cache) GetFilterFieldValues() (map[string][]string, error) {
+	// Get unique filter fields first
+	filterFields, err := db.GetFilterFields()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get filter fields: %w", err)
+	}
+
+	// Create a map to store field values
+	fieldValuesMap := make(map[string]map[string]bool)
+	for _, field := range filterFields {
+		fieldValuesMap[field] = make(map[string]bool)
+	}
+
+	err = db.products.View(func(tx *buntdb.Tx) error {
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w", key, err)
+
+				return false
+			}
+
+			// Extract values for each filter field
+			for _, fieldName := range filterFields {
+				if valuesMap, exists := fieldValuesMap[fieldName]; exists {
+					// Check first-level Product fields explicitly
+					switch fieldName {
+					case "brandName":
+						if product.BrandName != "" {
+							valuesMap[product.BrandName] = true
+						}
+
+					case "keywords":
+						for _, keyword := range product.Keywords {
+							if keyword != "" {
+								valuesMap[keyword] = true
+							}
+						}
+
+					default:
+						// Check AdditionalProperty for custom fields
+						for _, prop := range product.AdditionalProperty {
+							if prop.Name == fieldName && prop.Value != "" {
+								valuesMap[prop.Value] = true
+							}
+						}
+					}
+				}
+			}
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve filter field values: %w", err)
+	}
+
+	// Convert maps to slices
+	result := make(map[string][]string)
+	for fieldName, valuesMap := range fieldValuesMap {
+		values := make([]string, 0, len(valuesMap))
+		for value := range valuesMap {
+			values = append(values, value)
+		}
+
+		result[fieldName] = values
+	}
+
+	return result, nil
+}
+
+// invalidateMetadataCache removes cached metadata that becomes stale
+// when products are added or removed from the cache.
+func (db *Cache) invalidateMetadataCache(tx *buntdb.Tx) {
+	// Remove cached sort criteria
+	tx.Delete("products:sortCriteria")
+	// Remove cached filter fields (when we add caching for it)
+	tx.Delete("products:filterFields")
+	// Remove cached filter field values (when we add caching for it)
+	tx.Delete("products:filterFieldValues")
 }
