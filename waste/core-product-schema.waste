@@ -29,6 +29,17 @@
 		"category_3"
 	],
 
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+
+    "filterFields": [
+        "keywords",
+        "brand.name"
+    ],
+
 	"cacheIdentifier": {
 		"@type": "PropertyValue",
 		"propertyID": "cache:key",
