@@ -1,5 +1,5 @@
+<div class="leftbar sidebar spacer"></div>
 <section class="page">
-    <div class="leftbar sidebar spacer"></div>
     <div class="sidebar spacer"></div>
     <main id="product-list-tree"
         class="content-tree tree list">
@@ -32,3 +32,46 @@
         <div class="item spacer"></div>
     </article>
 </section>
+<aside id="product-search-tree"
+    class="input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <ol id="product-search-list"
+        class="input-tree-list list">
+        <li class="input-tree-item item">
+            <button class="icon-control control"
+                aria-label="expand product search panel"
+                _="
+                    on click add .hidden to #product-search-tree
+                    on click remove .hidden from #product-search-tree-idle
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#chevron-right" />
+                </svg>
+            </button>
+            <div class="content">
+            </div>
+            <button class="icon-control control"
+                aria-label="search product">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#search" />
+                </svg>
+            </button>
+        </li>
+    </ol>
+    <div class="item spacer"></div>
+</aside>
+<div id="product-search-tree-idle"
+    class="sidebar">
+    <div class="spacer"></div>
+    <button class="icon-control control"
+        aria-label="expand product search panel"
+        _="
+            on click remove .hidden from #product-search-tree
+            on click add .hidden to #product-search-tree-idle
+        ">
+        <svg class="icon">
+            <use href="/assets/images/feather-sprite.svg#search" />
+        </svg>
+    </button>
+</div>
+<div class="rightbar sidebar spacer"></div>
