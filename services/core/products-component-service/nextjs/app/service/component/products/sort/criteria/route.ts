@@ -25,7 +25,7 @@ export async function GET(req: Request) {
                 </div>
                 <button id="sort-product-descending-${ index }-control"
                     class="icon-control control"
-                    aria-label="sort ${ label } descending"
+                    aria-label="sort products by ${ label } in descending"
                     _="
                         on click
                             add .hidden to #product-preview-tree
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
                 </button>
                 <button id="sort-product-ascending-${ index }-control"
                     class="icon-control control"
-                    aria-label="sort ${ label } ascending"
+                    aria-label="sort products by ${ label } in ascending"
                     _="
                         on click
                             add .hidden to #product-preview-tree
@@ -56,7 +56,7 @@ export async function GET(req: Request) {
                 <div id="active-sort-spacer-${ index }" class="spacer hidden"></div>
                 <button id="clear-sort-product-${ index }-control"
                     class="icon-control control"
-                    aria-label="sort ${ label } ascending"
+                    aria-label="clear sort ${ label } of products"
                     _="
                         on click
                             add .hidden to #product-preview-tree
