@@ -26,17 +26,20 @@ func PushProductHandler(cache *cache.Cache) fiber.Handler {
 func pushProductToCache(c fiber.Ctx, cache *cache.Cache) error {
 	product, err := parseProductFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "invalid product data", err)
+		return sendError(c, fiber.StatusBadRequest,
+            "invalid product data", err)
 	}
 
 	err = validateProductData(product)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "validation failed", err)
+		return sendError(c, fiber.StatusBadRequest,
+            "validation failed", err)
 	}
 
 	err = storeProductInCache(cache, product)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
+		return sendError(c, fiber.StatusInternalServerError,
+            "cache error", err)
 	}
 
 	return sendSuccess(c, "product pushed successfully")
@@ -57,11 +60,13 @@ func parseProductFromRequest(c fiber.Ctx) (*model.Product, error) {
 // validateProductData ensures required fields are present.
 func validateProductData(product *model.Product) error {
 	if product.CacheIdentifier.Value == "" {
-		return fiber.NewError(fiber.StatusBadRequest, "cache identifier required")
+		return fiber.NewError(fiber.StatusBadRequest,
+            "cache identifier required")
 	}
 
 	if product.SKU == "" {
-		return fiber.NewError(fiber.StatusBadRequest, "sku required")
+		return fiber.NewError(fiber.StatusBadRequest,
+            "sku required")
 	}
 
 	return nil
