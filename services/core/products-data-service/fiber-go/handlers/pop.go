@@ -24,13 +24,17 @@ func PopProductHandler(cache *cache.Cache) fiber.Handler {
 func popProductFromCache(c fiber.Ctx, cache *cache.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest, "reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest, "reference cannot be empty"))
+		return sendError(c, fiber.StatusBadRequest,
+            "reference parameter required",
+
+			fiber.NewError(fiber.StatusBadRequest,
+                "reference cannot be empty"))
 	}
 
 	err := cache.PopProduct("product:" + reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
+		return sendError(c, fiber.StatusInternalServerError,
+            "cache error", err)
 	}
 
 	return sendSuccess(c, "product removed successfully")
