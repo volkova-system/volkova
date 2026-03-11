@@ -7,15 +7,24 @@ This script fetches product data from https://dummyjson.com/products API
 and saves it to a JSON file in a specified directory structure.
 
 Usage:
-    python save-dummyjson-products-to-json.py --directory <directory_path> [--skip <skip>] [--limit <limit>]
+    python save-dummyjson-products-to-json.py
+        --directory <directory_path>
+        [--skip <skip>]
+        [--limit <limit>]
 
 Arguments:
-    --directory: Target directory where dummyjson-products will be created
-    --skip: Number of products to skip (optional, default: 0)
-    --limit: Maximum number of products to fetch (optional, default: 100)
+    --directory:    Target directory where dummyjson-products will be created
+
+    --skip:         Number of products to skip (optional, default: 0)
+
+    --limit:        Maximum number of products to fetch (optional, default: 100)
 
 Example:
-    python save-dummyjson-products-to-json.py --directory ./data --skip 10 --limit 20
+    python save-dummyjson-products-to-json.py
+        --directory ./data
+        --skip 10
+        --limit 20
+
 """
 
 import sys
