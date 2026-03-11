@@ -34,7 +34,7 @@
     </article>
 </section>
 <aside id="product-search-tree"
-    class="input-tree tree list hidden">
+    class="product-search-tree input-tree tree list hidden">
     <div class="item spacer"></div>
     <ol id="product-search-list"
         class="input-tree-list list">
@@ -68,7 +68,65 @@
                 </svg>
             </button>
         </li>
+        <li class="normal-spacing item spacer"></li>
+        <li class="input-tree-item item">
+            <div class="spacer"></div>
+            <div class="content">
+                Sort products
+            </div>
+            <button class="icon-control control"
+                aria-label="sort products"
+                _="">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#more-vertical" />
+                </svg>
+            </button>
+        </li>
+        <li class="normal-spacing item spacer"></li>
+        <li class="input-tree-item item">
+            <div class="spacer"></div>
+            <div class="content">
+                Filter products
+            </div>
+            <button class="icon-control control"
+                aria-label="sort products"
+                _="">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#more-vertical" />
+                </svg>
+            </button>
+        </li>
     </ol>
+    <div class="item spacer"></div>
+</aside>
+<aside id="product-sort-tree"
+    class="product-sort-tree input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <ol id="product-sort-list"
+        class="input-tree-list list">
+    </ol>
+    <product-sort
+        target="product-sort-list"
+        data-state="idle"
+        data-component-service-address="http://localhost:6039"
+        data-component="/service/component/products/sort/criteria"
+        data-service="/service/data/products/sort">
+    </product-sort>
+    <div class="item spacer"></div>
+</aside>
+<aside id="product-filter-tree"
+    class="product-filter-tree input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <ol id="product-filter-list"
+        class="input-tree-list list">
+    </ol>
+    <product-filter
+        target="product-filter-list"
+        data-state="idle"
+        data-component-service-address="http://localhost:6039"
+        data-component="/service/component/products/filter/fields"
+        data-service="/service/data/products/filter">
+    </product-filter>
     <div class="item spacer"></div>
 </aside>
 <div id="product-search-tree-idle"
