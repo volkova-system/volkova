@@ -556,7 +556,8 @@ func (db *Cache) SearchProducts(query string,
 //   - []model.Product: Slice of products sorted by the specified criterion
 //   - error:           Any error that occurred during retrieval or unmarshaling
 //
-func (db *Cache) SortProducts(skip, limit int, criterion string) ([]model.Product, error) {
+func (db *Cache) SortProducts(skip, limit int,
+    criterion string) ([]model.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
