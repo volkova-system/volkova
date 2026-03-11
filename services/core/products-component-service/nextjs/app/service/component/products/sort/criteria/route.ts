@@ -19,14 +19,24 @@ export async function GET(req: Request) {
 
         return `
             <li class="product-sort-criterion input-tree-item item"
-                data-value="${ criterion }"
-                _="
-                ">
-                <div class="spacer"></div>
+                data-value="${ criterion }">
                 <div class="content">
                     <data class="value">${ label }</data>
                 </div>
-                <div class="spacer"></div>
+                <button class="icon-control control"
+                    aria-label="sort ${ label } descending"
+                    _="">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevrons-down" />
+                    </svg>
+                </button>
+                <button class="icon-control control"
+                    aria-label="sort ${ label } ascending"
+                    _="">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevrons-up" />
+                    </svg>
+                </button>
             </li>
             <li class="normal-spacing item spacer"></li>
         `
