@@ -44,6 +44,9 @@ type Product struct {
 	// Categorization and search
 	Keywords []string `json:"keywords"` // Search keywords and tags
 
+    SortCriteria []string `json:"sortCriteria"`
+    FilterFields []string `json:"filterFields"`
+
 	// Related entities and structured data
 	CacheIdentifier    Identifier        `json:"cacheIdentifier"`            // Cache storage identifier
 	Brand              *Brand            `json:"brand,omitempty"`            // Product brand information
