@@ -244,6 +244,17 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
         "keywords": [str(product.get('category', ''))],
 
+        "sortCriteria": [
+            "ratingValue",
+            "netPrice",
+            "discountPercentage"
+        ],
+
+        "filterFields": [
+            "keywords",
+            "brand.name"
+        ],
+
         "cacheIdentifier": {
             "@type": "PropertyValue",
 
