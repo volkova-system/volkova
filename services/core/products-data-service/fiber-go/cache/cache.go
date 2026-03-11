@@ -554,6 +554,7 @@ func (db *Cache) SearchProducts(query string,
 //
 // Returns:
 //   - []model.Product: Slice of products sorted by the specified criterion
+//
 //   - error:           Any error that occurred during retrieval or unmarshaling
 //
 func (db *Cache) SortProducts(skip, limit int,
@@ -580,13 +581,17 @@ func (db *Cache) SortProducts(skip, limit int,
 	switch sortField {
 	case "discountPercentage":
 		indexName = "discountPercentage"
+
 	case "ratingValue":
 		indexName = "ratingValue"
+
     case "netPrice":
 		indexName = "netPrice"
+
 	case "":
 		// Default to products index (natural order)
 		indexName = defaultCacheName
+
 	default:
 		return nil, fmt.Errorf("unsupported sort criterion: %s", sortField)
 	}
@@ -639,6 +644,123 @@ func (db *Cache) SortProducts(skip, limit int,
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to sort products: %w", err)
+	}
+
+	return products, nil
+}
+// FilterProducts retrieves a paginated list of products from the cache filtered by
+// the specified field and value.
+// The function supports filtering by first-level Product fields or
+// AdditionalProperty fields.
+// Supported first-level fields: "brandName", "keywords"
+//
+// Parameters:
+//   - skip:    Number of products to skip (offset). Negative values are
+//              treated as 0
+//
+//   - limit:   Maximum number of products to return.
+//              Values <= 0 default to 10
+//
+//   - field:   Field name to filter by
+//              (e.g., "brandName", "keywords", or custom field)
+//
+//   - value:   Value to match against the specified field
+//
+// Returns:
+//   - []model.Product: Slice of products matching the filter criteria
+//
+//   - error:           Any error that occurred during retrieval or unmarshaling
+//
+func (db *Cache) FilterProducts(skip, limit int,
+    field, value string) ([]model.Product, error) {
+	if skip < 0 {
+		skip = 0
+	}
+
+	if limit <= 0 {
+		limit = 10
+	}
+
+	if field == "" {
+		return nil, fmt.Errorf("field cannot be empty")
+	}
+
+	if value == "" {
+		return nil, fmt.Errorf("value cannot be empty")
+	}
+
+	var products []model.Product
+
+	err := db.products.View(func(tx *buntdb.Tx) error {
+		count := 0
+		collected := 0
+
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, val string) bool {
+			var product model.Product
+			if err := json.Unmarshal([]byte(val), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w", key, err)
+
+				return false
+			}
+
+			// Check if product matches the filter criteria
+			matches := false
+
+			// Check first-level Product fields
+			switch field {
+			case "brandName":
+				matches = product.BrandName == value
+
+			case "keywords":
+				for _, keyword := range product.Keywords {
+					if keyword == value {
+						matches = true
+						break
+					}
+				}
+
+			default:
+				// Check AdditionalProperty for custom fields
+				for _, prop := range product.AdditionalProperty {
+					if prop.Name == field && prop.Value == value {
+						matches = true
+						break
+					}
+				}
+			}
+
+			// If product doesn't match filter, continue to next product
+			if !matches {
+				return true
+			}
+
+			// Skip items until we reach the skip offset
+			if count < skip {
+				count++
+				return true
+			}
+
+			// Stop if we've collected enough items
+			if collected >= limit {
+				return false
+			}
+
+			products = append(products, product)
+
+			collected++
+			count++
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to filter products: %w", err)
 	}
 
 	return products, nil
