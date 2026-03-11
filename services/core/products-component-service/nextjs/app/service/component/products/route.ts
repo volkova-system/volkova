@@ -22,7 +22,9 @@ export async function GET(req: Request) {
                     on click
                         remove .hidden from #product-preview-tree
 
-                        if <product-list/>@data-state != 'search'
+                        if  <product-list/>@data-state != 'search' and
+                            <product-list/>@data-state != 'sort' and
+                            <product-list/>@data-state != 'filter'
                             add .hidden to #product-search-tree
                             remove .hidden from #product-search-tree-idle
                         end
@@ -37,15 +39,23 @@ export async function GET(req: Request) {
                     src="${thumbnail}"
                     alt="${product.headline} product thumbnail picture">
                 <dl class="main-content content">
-                    <dt class="title label">${product.headline}</dt>
-                    <dd class="subtitle discount value">${Math.ceil(product.discountPercentage)}</dd>
+                    <dt class="title label">
+                        ${ product.headline }
+                    </dt>
+                    <dd class="subtitle discount value">
+                        ${ Math.ceil(product.discountPercentage) }
+                    </dd>
                 </dl>
             </li>
             <li class="normal-spacing item spacer"></li>
         `
     }).join("")
 
-    const html = `<ol class="product-list content-tree-list list">${productList}</ol>`
+    const html = `
+        <ol class="product-list content-tree-list list">
+            ${ productList }
+        </ol>
+    `
 
     return new Response(html, {
         headers: {
