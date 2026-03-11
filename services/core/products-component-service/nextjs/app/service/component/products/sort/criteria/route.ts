@@ -27,6 +27,8 @@ export async function GET(req: Request) {
                     aria-label="sort ${ label } descending"
                     _="
                         on click
+                            add .hidden to #product-preview-tree
+
                             set criterion to '-${ criterion }'
                             set @data-state of <product-list/> to 'sort'
                             set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
@@ -39,6 +41,8 @@ export async function GET(req: Request) {
                     aria-label="sort ${ label } ascending"
                     _="
                         on click
+                            add .hidden to #product-preview-tree
+
                             set criterion to '${ criterion }'
                             set @data-state of <product-list/> to 'sort'
                             set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
