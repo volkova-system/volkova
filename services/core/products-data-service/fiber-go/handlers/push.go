@@ -77,13 +77,7 @@ func storeProductInCache(cache *cache.Cache, product *model.Product) error {
 	return cache.PushProduct(*product)
 }
 
-// sendError returns standardized error response.
-func sendError(c fiber.Ctx, status int, message string, err error) error {
-	return c.Status(status).JSON(fiber.Map{
-		"error":   message,
-		"details": err.Error(),
-	})
-}
+
 
 // sendSuccess returns standardized success response.
 func sendSuccess(c fiber.Ctx, message string) error {
