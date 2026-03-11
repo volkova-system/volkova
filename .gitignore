@@ -85,6 +85,10 @@
 !assets/*/images/**/*.webp
 
 !containers/
+!containers/*/
+!containers/*/**/data/
+!containers/*/**/*.docker-compose.yml
+
 !containers/terminusdb/
 !containers/terminusdb/data/
 !containers/terminusdb/*.docker-compose.yml
