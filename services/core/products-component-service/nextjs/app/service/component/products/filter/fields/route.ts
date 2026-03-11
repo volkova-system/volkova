@@ -24,9 +24,7 @@ export async function GET(req: Request) {
                         data-field="${ field }"
                         data-value="${ value }">
                         <dl class="content">
-                            <dt class="label">
-                                ${ label }
-                            </dt>
+                            <dt class="label">${ label }</dt>
                             <dd class="value">
                                 ${ value.split(/\-/).join(" ") }
                             </dd>
