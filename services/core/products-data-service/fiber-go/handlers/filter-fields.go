@@ -50,7 +50,7 @@ func sendFilterFieldsResponse(c fiber.Ctx, fieldValues interface{}) error {
 
 	return c.JSON(fiber.Map{
 		"status":       "success",
-		"filterValues": fieldValues,
+		"filterFields": fieldValues,
 		"count":        count,
 	})
 }
