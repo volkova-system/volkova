@@ -19,20 +19,30 @@ export async function GET(req: Request) {
 
         return `
             <li class="product-sort-criterion input-tree-item item"
-                data-value="${ criterion }">
+                data-criterion="${ criterion }">
                 <div class="content">
                     <data class="value">${ label }</data>
                 </div>
                 <button class="icon-control control"
                     aria-label="sort ${ label } descending"
-                    _="">
+                    _="
+                        on click
+                            set criterion to '-${ criterion }'
+                            set @data-state of <product-list/> to 'sort'
+                            set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
+                    ">
                     <svg class="icon">
                         <use href="/assets/images/feather-sprite.svg#chevrons-down" />
                     </svg>
                 </button>
                 <button class="icon-control control"
                     aria-label="sort ${ label } ascending"
-                    _="">
+                    _="
+                        on click
+                            set criterion to '${ criterion }'
+                            set @data-state of <product-list/> to 'sort'
+                            set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
+                    ">
                     <svg class="icon">
                         <use href="/assets/images/feather-sprite.svg#chevrons-up" />
                     </svg>
