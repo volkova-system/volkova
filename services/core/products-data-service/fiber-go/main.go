@@ -37,8 +37,10 @@ func main() {
 
 	products.Get("/", handlers.GetProductsHandler(cache))
     products.Get("/search", handlers.SearchProductHandler(cache))
+
     products.Get("/sort", handlers.SortProductHandler(cache))
     products.Get("/sort/criteria", handlers.GetSortCriteriaProductHandler(cache))
+
     products.Get("/filter", handlers.FilterProductHandler(cache))
     products.Get("/filter/fields", handlers.GetFilterFieldsProductHandler(cache))
 
