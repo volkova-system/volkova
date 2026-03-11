@@ -45,6 +45,7 @@ export async function GET(req: Request) {
                             add .hidden to #sort-product-ascending-${ index }-control
                             remove .hidden from #active-sort-product-spacer-${ index }
                             remove .hidden from #clear-sort-product-${ index }-control
+                            remove .hidden from #sort-product-descending-${ index }-label
 
                             set criterion to '-${ criterion }'
                             set @data-state of <product-list/> to 'sort'
@@ -65,11 +66,14 @@ export async function GET(req: Request) {
                             remove .hidden from .sort-product-ascending-control
                             add .hidden to .active-sort-product-spacer
                             add .hidden to .clear-sort-product-control
+                            add .hidden to .sort-product-descending-label
+                            add .hidden to .sort-product-ascending-label
 
                             add .hidden to #sort-product-descending-${ index }-control
                             add .hidden to #sort-product-ascending-${ index }-control
                             remove .hidden from #active-sort-product-spacer-${ index }
                             remove .hidden from #clear-sort-product-${ index }-control
+                            remove .hidden from #sort-product-ascending-${ index }-label
 
                             set criterion to '${ criterion }'
                             set @data-state of <product-list/> to 'sort'
@@ -90,6 +94,8 @@ export async function GET(req: Request) {
                             remove .hidden from .sort-product-ascending-control
                             add .hidden to .active-sort-product-spacer
                             add .hidden to .clear-sort-product-control
+                            add .hidden to .sort-product-descending-label
+                            add .hidden to .sort-product-ascending-label
 
                             add .hidden to #active-sort-product-spacer-${ index }
                             add .hidden to #clear-sort-product-${ index }-control
