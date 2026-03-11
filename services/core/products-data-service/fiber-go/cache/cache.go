@@ -6,6 +6,8 @@ package cache
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
 	"regexp"
 
 	"github.com/tidwall/buntdb"
@@ -26,7 +28,7 @@ type Cache struct {
 
 // Open creates and initializes a new in-memory cache instance.
 // It sets up the BuntDB database with necessary indexes for efficient
-// product querying by key and SKU.
+// product querying by key, reference, and headline.
 //
 // Returns:
 //   - *Cache:  A new cache instance ready for use
@@ -34,37 +36,75 @@ type Cache struct {
 //
 // The cache creates two indexes:
 //   - "products":  General index for all product keys matching "product:*" pattern
-//   - "sku":       Custom index for SKU-based lookups with string comparison
+//   - "reference": Custom index for reference-based lookups with string comparison
+//
 func Open() (*Cache, error) {
-	conn, err := buntdb.Open(":memory:")
-
-	if err != nil {
-		return nil, err
+	if path := os.Getenv("PRODUCTS_CACHE_PATH"); path != "" {
+		return OpenWithPath(path)
 	}
 
-	// Create indexes for efficient querying
+	return OpenWithPath(":memory:")
+}
+
+func OpenWithPath(dbPath string) (*Cache, error) {
+	if dbPath == "" {
+		dbPath = ":memory:"
+	}
+
+	var conn *buntdb.DB
+	var err error
+
+	if dbPath == ":memory:" {
+		conn, err = buntdb.Open(":memory:")
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		if err := os.MkdirAll(filepath.Dir(dbPath), 0755);
+            err != nil {
+			return nil, fmt.Errorf(
+                "failed to create directory for db: %w", err)
+		}
+
+		conn, err = buntdb.Open(dbPath)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	err = conn.CreateIndex(
         defaultCacheName,
         "product:*",
         buntdb.IndexString,
     )
-
 	if err != nil {
 		return nil, err
 	}
 
-	// Index by SKU for unique lookups
 	err = conn.CreateIndex(
-        "sku",
+        "reference",
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
-            return productA.SKU < productB.SKU
+            return productA.Reference < productB.Reference
         },
     )
+	if err != nil {
+		return nil, err
+	}
 
+    err = conn.CreateIndex(
+        "headline",
+        "product:*",
+        func(a, b string) bool {
+            var productA, productB model.Product
+            json.Unmarshal([]byte(a), &productA)
+            json.Unmarshal([]byte(b), &productB)
+            return productA.Headline < productB.Headline
+        },
+    )
 	if err != nil {
 		return nil, err
 	}
