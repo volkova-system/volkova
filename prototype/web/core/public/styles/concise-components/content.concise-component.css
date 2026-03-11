@@ -24,7 +24,9 @@
 
 .concise-component .list > .item > .content:has(.value):has(.label),
 .concise-component .list > .item > .content:has(.value),
-.concise-component .list > .item > .content.value {
+.concise-component .list > .item > .content.value,
+.concise-component .list > .item > .content:has(.label),
+.concise-component .list > .item > .content.label {
     justify-content: center;
 }
 
