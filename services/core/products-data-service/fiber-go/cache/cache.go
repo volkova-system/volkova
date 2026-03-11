@@ -6,6 +6,7 @@ package cache
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
 
 	"github.com/tidwall/buntdb"
 
@@ -277,4 +278,88 @@ func (db *Cache) GetProductCount() (int, error) {
 	}
 
 	return count, nil
+}
+
+// SearchProducts searches for products by headline using regex pattern matching.
+// Products are returned in ascending order based on the default cache index.
+// Supports pagination through skip and limit parameters.
+//
+// Parameters:
+//   - searchValue: Regex pattern to match against product headlines. Empty string returns all products
+//   - skip: Number of matching products to skip (offset). Negative values are treated as 0
+//   - limit: Maximum number of products to return. Values <= 0 default to 10
+//
+// Returns:
+//   - []model.Product: Slice of products with headlines matching the search pattern
+//   - error: Any error that occurred during retrieval, regex compilation, or unmarshaling
+//
+// The function compiles the search value as a regex pattern and matches it against
+// each product's headline field. If searchValue is empty, all products are returned.
+func (db *Cache) SearchProducts(searchValue string, skip, limit int) ([]model.Product, error) {
+	if skip < 0 {
+		skip = 0
+	}
+
+	if limit <= 0 {
+		limit = 10
+	}
+
+	// Compile regex pattern if search value is provided
+	var searchRegex *regexp.Regexp
+	var err error
+	if searchValue != "" {
+		searchRegex, err = regexp.Compile("(?i)" + searchValue) // Case-insensitive search
+		if err != nil {
+			return nil, fmt.Errorf("invalid regex pattern '%s': %w", searchValue, err)
+		}
+	}
+
+	var products []model.Product
+
+	err = db.products.View(func(tx *buntdb.Tx) error {
+		count := 0
+		collected := 0
+
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w",
+					key, err)
+				return false
+			}
+
+			// If search value is provided, check if headline matches the regex
+			if searchRegex != nil && !searchRegex.MatchString(product.Headline) {
+				return true // Continue to next product without incrementing counters
+			}
+
+			// Skip items until we reach the skip offset
+			if count < skip {
+				count++
+				return true
+			}
+
+			// Stop if we've collected enough items
+			if collected >= limit {
+				return false
+			}
+
+			products = append(products, product)
+			collected++
+			count++
+
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to search products: %w", err)
+	}
+
+	return products, nil
 }
