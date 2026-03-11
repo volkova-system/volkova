@@ -77,6 +77,7 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
 				"skip must be integer")
 		}
+
 		skip = parsedSkip
 	}
 
@@ -86,6 +87,7 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
 				"limit must be integer")
 		}
+        
 		limit = parsedLimit
 	}
 
