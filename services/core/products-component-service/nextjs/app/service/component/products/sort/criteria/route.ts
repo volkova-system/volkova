@@ -24,11 +24,21 @@ export async function GET(req: Request) {
                     <data class="value">${ label }</data>
                 </div>
                 <button id="sort-product-descending-${ index }-control"
-                    class="icon-control control"
+                    class="sort-product-descending-control icon-control control"
                     aria-label="sort products by ${ label } in descending"
                     _="
                         on click
                             add .hidden to #product-preview-tree
+
+                            remove .hidden from .sort-product-descending-control
+                            remove .hidden from .sort-product-ascending-control
+                            add .hidden to .active-sort-product-spacer
+                            add .hidden to .clear-sort-product-control
+
+                            add .hidden to #sort-product-descending-${ index }-control
+                            add .hidden to #sort-product-ascending-${ index }-control
+                            remove .hidden from #active-sort-product-spacer-${ index }
+                            remove .hidden from #clear-sort-product-${ index }-control
 
                             set criterion to '-${ criterion }'
                             set @data-state of <product-list/> to 'sort'
@@ -39,11 +49,21 @@ export async function GET(req: Request) {
                     </svg>
                 </button>
                 <button id="sort-product-ascending-${ index }-control"
-                    class="icon-control control"
+                    class="sort-product-ascending-control icon-control control"
                     aria-label="sort products by ${ label } in ascending"
                     _="
                         on click
                             add .hidden to #product-preview-tree
+
+                            remove .hidden from .sort-product-descending-control
+                            remove .hidden from .sort-product-ascending-control
+                            add .hidden to .active-sort-product-spacer
+                            add .hidden to .clear-sort-product-control
+
+                            add .hidden to #sort-product-descending-${ index }-control
+                            add .hidden to #sort-product-ascending-${ index }-control
+                            remove .hidden from #active-sort-product-spacer-${ index }
+                            remove .hidden from #clear-sort-product-${ index }-control
 
                             set criterion to '${ criterion }'
                             set @data-state of <product-list/> to 'sort'
@@ -53,20 +73,27 @@ export async function GET(req: Request) {
                         <use href="/assets/images/feather-sprite.svg#chevrons-up" />
                     </svg>
                 </button>
-                <div id="active-sort-spacer-${ index }" class="spacer hidden"></div>
+                <div id="active-sort-product-spacer-${ index }"
+                    class="active-sort-product-spacer spacer hidden"></div>
                 <button id="clear-sort-product-${ index }-control"
-                    class="icon-control control"
+                    class="clear-sort-product-control icon-control control hidden"
                     aria-label="clear sort ${ label } of products"
                     _="
                         on click
-                            add .hidden to #product-preview-tree
+                            remove .hidden from .sort-product-descending-control
+                            remove .hidden from .sort-product-ascending-control
+                            add .hidden to .active-sort-product-spacer
+                            add .hidden to .clear-sort-product-control
 
-                            set criterion to '${ criterion }'
-                            set @data-state of <product-list/> to 'sort'
-                            set @data-service of <product-list/> to '/service/data/products/sort?criterion=' + criterion
+                            add .hidden to #active-sort-product-spacer-${ index }
+                            add .hidden to #clear-sort-product-${ index }-control
+                            remove .hidden from #sort-product-descending-${ index }-control
+                            remove .hidden from #sort-product-ascending-${ index }-control
+
+                            set @data-state of <product-list/> to 'list'
                     ">
                     <svg class="icon">
-                        <use href="/assets/images/feather-sprite.svg#chevrons-up" />
+                        <use href="/assets/images/feather-sprite.svg#x" />
                     </svg>
                 </button>
             </li>
