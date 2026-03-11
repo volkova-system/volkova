@@ -37,8 +37,11 @@ func main() {
 
 	products.Get("/", handlers.GetProductsHandler(cache))
     products.Get("/search", handlers.SearchProductHandler(cache))
-	products.Post("/push", handlers.PushProductHandler(cache))
+    products.Get("/sort/criteria", handlers.GetSortCriteriaProductHandler(cache))
+
+    products.Post("/push", handlers.PushProductHandler(cache))
 	products.Delete("/pop/:reference", handlers.PopProductHandler(cache))
+
     products.Get("/:reference", handlers.GetProductHandler(cache))
 
 	server.Use(func(c fiber.Ctx) error {
