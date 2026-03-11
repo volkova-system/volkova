@@ -199,7 +199,10 @@
             ],
             "isBackground": true,
             "options": {
-                "cwd": "${workspaceFolder}/services/core/products-data-service/fiber-go"
+                "cwd": "${workspaceFolder}/services/core/products-data-service/fiber-go",
+                "env": {
+                    "PRODUCTS_CACHE_PATH": "${workspaceFolder}/services/core/products-data-service/fiber-go/data/products-cache.db"
+                }
             },
             "presentation": {
                 "reveal": "always",
