@@ -36,6 +36,10 @@
     font-size: var(--concise-icon-letter-size);
 }
 
+.concise-component .number-icon.icon {
+    font-size: var(--concise-icon-number-size);
+}
+
 .concise-component .color-icon.icon {
     background-color: var(--concise-color-orange-base);
 }
