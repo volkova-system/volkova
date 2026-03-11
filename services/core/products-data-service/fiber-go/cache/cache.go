@@ -29,12 +29,12 @@ type Cache struct {
 // product querying by key and SKU.
 //
 // Returns:
-//   - *Cache: A new cache instance ready for use
-//   - error: Any error that occurred during initialization
+//   - *Cache:  A new cache instance ready for use
+//   - error:   Any error that occurred during initialization
 //
 // The cache creates two indexes:
-//   - "products": General index for all product keys matching "product:*" pattern
-//   - "sku": Custom index for SKU-based lookups with string comparison
+//   - "products":  General index for all product keys matching "product:*" pattern
+//   - "sku":       Custom index for SKU-based lookups with string comparison
 func Open() (*Cache, error) {
 	conn, err := buntdb.Open(":memory:")
 
@@ -77,7 +77,8 @@ func Open() (*Cache, error) {
 // when the cache is no longer needed to prevent resource leaks.
 //
 // Returns:
-//   - error: Any error that occurred during the close operation
+//   - error:   Any error that occurred during the close operation
+//
 func (db *Cache) Close() error {
 	return db.products.Close()
 }
@@ -91,7 +92,8 @@ func (db *Cache) Close() error {
 //   - product: The product to store in the cache
 //
 // Returns:
-//   - error: Any error that occurred during marshaling or storage
+//   - error:   Any error that occurred during marshaling or storage
+//
 func (db *Cache) PushProduct(product model.Product) error {
     // Marshal product to JSON with error context
     data, err := json.Marshal(product)
@@ -121,7 +123,8 @@ func (db *Cache) PushProduct(product model.Product) error {
 //          (typically the product's cache identifier value)
 //
 // Returns:
-//   - error: Any error that occurred during the removal operation
+//   - error:   Any error that occurred during the removal operation
+//
 func (db *Cache) PopProduct(key string) error {
 	if key == "" {
 		return fmt.Errorf("key cannot be empty")
@@ -146,13 +149,16 @@ func (db *Cache) PopProduct(key string) error {
 //          (typically the product's cache identifier value)
 //
 // Returns:
-//   - *model.Product: The retrieved product, or nil if not found or error occurred
-//   - error: Any error that occurred during retrieval or unmarshaling
+//   - *model.Product:  The retrieved product, or nil if not found or error
+//                      occurred
+//
+//   - error:           Any error that occurred during retrieval or unmarshaling
 //
 // Returns an error if:
 //   - The key is empty
 //   - The product is not found in the cache
 //   - JSON unmarshaling fails
+//
 func (db *Cache) GetProduct(key string) (*model.Product, error) {
 	if key == "" {
         return nil, fmt.Errorf("key cannot be empty")
@@ -188,15 +194,18 @@ func (db *Cache) GetProduct(key string) (*model.Product, error) {
 // Supports pagination through skip and limit parameters.
 //
 // Parameters:
-//   - skip: Number of products to skip (offset). Negative values are treated as 0
-//   - limit: Maximum number of products to return. Values <= 0 default to 10
+//   - skip:    Number of products to skip (offset). Negative values are treated as 0
+//
+//   - limit:   Maximum number of products to return. Values <= 0 default to 10
 //
 // Returns:
 //   - []model.Product: Slice of products matching the pagination criteria
-//   - error: Any error that occurred during retrieval or unmarshaling
+//
+//   - error:           Any error that occurred during retrieval or unmarshaling
 //
 // The function uses the BuntDB Ascend method to iterate through products
 // in index order, applying skip/limit logic for pagination.
+//
 func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 	if skip < 0 {
 		skip = 0
@@ -258,8 +267,10 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 // This is useful for pagination calculations and providing total count metadata.
 //
 // Returns:
-//   - int: The total number of products in the cache
-//   - error: Any error that occurred during the count operation
+//   - int:     The total number of products in the cache
+//
+//   - error:   Any error that occurred during the count operation
+//
 func (db *Cache) GetProductCount() (int, error) {
 	var count int
 
@@ -280,22 +291,90 @@ func (db *Cache) GetProductCount() (int, error) {
 	return count, nil
 }
 
+// GetSearchCount returns the total number of products matching a search query.
+// This is useful for pagination calculations when searching products by headline.
+//
+// Parameters:
+//   - query: Regex pattern to match against product headlines.
+//            Empty string counts all products
+//
+// Returns:
+//   - int:     The total number of products matching the search criteria
+//
+//   - error:   Any error that occurred during the count operation or
+//              regex compilation
+//
+func (db *Cache) GetSearchCount(query string) (int, error) {
+	// Compile regex pattern if search value is provided
+	var searchRegex *regexp.Regexp
+	var err error
+	if query != "" {
+		// Case-insensitive search
+		searchRegex, err = regexp.Compile("(?i)" + query)
+		if err != nil {
+			return 0, fmt.Errorf(
+				"invalid regex pattern '%s': %w", query, err)
+		}
+	}
+
+	var count int
+
+	err = db.products.View(func(tx *buntdb.Tx) error {
+		var unmarshalErr error
+
+		tx.Ascend(defaultCacheName, func(key, value string) bool {
+			var product model.Product
+			if err := json.Unmarshal([]byte(value), &product); err != nil {
+				unmarshalErr = fmt.Errorf(
+					"failed to unmarshal product at key %s: %w",
+					key, err)
+				return false
+			}
+
+			// If search value is provided, check if headline matches the regex
+			if searchRegex != nil && !searchRegex.MatchString(product.Headline) {
+				return true // Continue to next product without counting
+			}
+
+			count++
+			return true
+		})
+
+		return unmarshalErr
+	})
+
+	if err != nil {
+		return 0, fmt.Errorf("failed to count search results: %w", err)
+	}
+
+	return count, nil
+}
+
 // SearchProducts searches for products by headline using regex pattern matching.
 // Products are returned in ascending order based on the default cache index.
 // Supports pagination through skip and limit parameters.
 //
 // Parameters:
-//   - searchValue: Regex pattern to match against product headlines. Empty string returns all products
-//   - skip: Number of matching products to skip (offset). Negative values are treated as 0
-//   - limit: Maximum number of products to return. Values <= 0 default to 10
+//   - query:   Regex pattern to match against product headlines.
+//              Empty string returns all products
+//
+//   - skip:    Number of matching products to skip (offset).
+//              Negative values are treated as 0
+//
+//   - limit:   Maximum number of products to return. Values <= 0 default to 10
 //
 // Returns:
-//   - []model.Product: Slice of products with headlines matching the search pattern
-//   - error: Any error that occurred during retrieval, regex compilation, or unmarshaling
+//   - []model.Product: Slice of products with headlines
+//                      matching the search pattern
+//
+//   - error:           Any error that occurred during retrieval,
+//                      regex compilation, or unmarshaling
 //
 // The function compiles the search value as a regex pattern and matches it against
-// each product's headline field. If searchValue is empty, all products are returned.
-func (db *Cache) SearchProducts(searchValue string, skip, limit int) ([]model.Product, error) {
+// each product's headline field. If query is empty, all products are returned.
+//
+func (db *Cache) SearchProducts(query string,
+    skip, limit int) ([]model.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
@@ -307,10 +386,12 @@ func (db *Cache) SearchProducts(searchValue string, skip, limit int) ([]model.Pr
 	// Compile regex pattern if search value is provided
 	var searchRegex *regexp.Regexp
 	var err error
-	if searchValue != "" {
-		searchRegex, err = regexp.Compile("(?i)" + searchValue) // Case-insensitive search
+	if query != "" {
+        // Case-insensitive search
+		searchRegex, err = regexp.Compile("(?i)" + query)
 		if err != nil {
-			return nil, fmt.Errorf("invalid regex pattern '%s': %w", searchValue, err)
+			return nil, fmt.Errorf(
+                "invalid regex pattern '%s': %w", query, err)
 		}
 	}
 
@@ -328,12 +409,14 @@ func (db *Cache) SearchProducts(searchValue string, skip, limit int) ([]model.Pr
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w",
 					key, err)
+
 				return false
 			}
 
 			// If search value is provided, check if headline matches the regex
 			if searchRegex != nil && !searchRegex.MatchString(product.Headline) {
-				return true // Continue to next product without incrementing counters
+                // Continue to next product without incrementing counters
+				return true
 			}
 
 			// Skip items until we reach the skip offset
@@ -348,6 +431,7 @@ func (db *Cache) SearchProducts(searchValue string, skip, limit int) ([]model.Pr
 			}
 
 			products = append(products, product)
+
 			collected++
 			count++
 
