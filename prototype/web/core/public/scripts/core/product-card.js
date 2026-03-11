@@ -2,6 +2,7 @@ class ProductCard extends HTMLElement {
     static get observedAttributes() {
         return ["data-component", "data-service"];
     }
+
     constructor() {
         super();
 
