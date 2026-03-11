@@ -20,7 +20,9 @@ export async function GET(req: Request) {
         return `
             <li class="product-sort-criterion input-tree-item item"
                 _="">
+                <div class="spacer"></div>
                 <div class="content value">${ label }</div>
+                <div class="spacer"></div>
             </li>
             <li class="normal-spacing item spacer"></li>
         `
