@@ -252,7 +252,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
 
         "filterFields": [
             "keywords",
-            "brand.name"
+            "brandName"
         ],
 
         "cacheIdentifier": {
