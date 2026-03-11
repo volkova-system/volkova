@@ -46,6 +46,14 @@
                         add .hidden to #product-search-tree
                         remove .hidden from #product-search-tree-idle
                         set @data-state of <product-list/> to 'list'
+
+                        add .hidden to #product-sort-tree
+                        add .hidden to #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'idle'
+
+                        add .hidden to #product-filter-tree
+                        add .hidden to #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'idle'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#chevron-right" />
@@ -81,6 +89,10 @@
                         remove .hidden from #product-sort-tree
                         remove .hidden from #product-sort-tree-divider
                         set @data-state of <product-sort/> to 'list'
+
+                        add .hidden to #product-filter-tree
+                        add .hidden to #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'idle'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#more-vertical" />
@@ -100,6 +112,10 @@
                         remove .hidden from #product-filter-tree
                         remove .hidden from #product-filter-tree-divider
                         set @data-state of <product-filter/> to 'list'
+
+                        add .hidden to #product-sort-tree
+                        add .hidden to #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'idle'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#more-vertical" />
@@ -113,6 +129,22 @@
 <aside id="product-sort-tree"
     class="product-sort-tree input-tree tree list hidden">
     <div class="item spacer"></div>
+    <header class="item">
+        <div class="spacer"></div>
+        <div class="content">Sort By</div>
+        <button class="icon-control control"
+            aria-label="sort products"
+            _="
+                on click
+                    add .hidden to #product-sort-tree
+                    add .hidden to #product-sort-tree-divider
+                    set @data-state of <product-sort/> to 'idle'
+            ">
+            <svg class="icon">
+                <use href="/assets/images/feather-sprite.svg#chevron-left" />
+            </svg>
+        </button>
+    </header>
     <ol id="product-sort-criteria"
         class="product-sort-criteria input-tree-list list">
     </ol>
@@ -129,6 +161,22 @@
 <aside id="product-filter-tree"
     class="product-filter-tree input-tree tree list hidden">
     <div class="item spacer"></div>
+    <header class="item">
+        <div class="spacer"></div>
+        <div class="content">Filter By</div>
+        <button class="icon-control control"
+            aria-label="sort products"
+            _="
+                on click
+                    add .hidden to #product-filter-tree
+                    add .hidden to #product-filter-tree-divider
+                    set @data-state of <product-filter/> to 'idle'
+            ">
+            <svg class="icon">
+                <use href="/assets/images/feather-sprite.svg#chevron-left" />
+            </svg>
+        </button>
+    </header>
     <ol id="product-filter-fields"
         class="product-filter-fields input-tree-list list">
     </ol>
