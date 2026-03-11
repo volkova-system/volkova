@@ -23,8 +23,15 @@ export async function GET(req: Request) {
                     alt="${product.headline} product picture">
             </li>
             <li class="normal-spacing item spacer"></li>
-            <li class="card-item-title focus-tree-item item level-2">
-                <div class="spacer"></div>
+            <li class="card-item-title focus-tree-item item">
+                <span class="number-icon icon"
+                    role="img"
+                    aria-label="rating">
+                    <span aria-hidden="true">${ Math.ceil(product.ratingValue).toFixed(0) }</span>
+                    <svg class="icon" role="img" aria-label="rating icon">
+                        <use href="/assets/images/feather-sprite.svg#star" />
+                    </svg>
+                </span>
                 <div class="main-content content">
                     <data class="value"
                         _="on load if my.innerHTML.trim() is empty add .hidden"
