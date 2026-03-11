@@ -9,12 +9,12 @@
     "description": "The Annibale Colombo Bed is a luxurious and elegant bed frame, crafted with high-quality materials for a comfortable and stylish bedroom.",
     "url": "/service/data/products/annibale-colombo-bed-fur-ann-ann-011",
     "ratingValue": 4.77,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1899.99,
     "netPrice": 1737.160857,
     "discountPercentage": 8.57,
-    "dateCreated": "2026-03-10T17:04:08.383440Z",
-    "dateModified": "2026-03-10T17:04:08.383440Z",
+    "dateCreated": "2026-03-11T13:00:54.792444Z",
+    "dateModified": "2026-03-11T13:00:54.792444Z",
     "thumbnail": "/assets/images/products/thumbnails/annibale-colombo-bed-fur-ann-ann-011.webp",
     "images": [
         "/assets/images/products/annibale-colombo-bed-fur-ann-ann-011/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "furniture"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1899.99,
         "netPrice": 1737.160857,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1899.99
         },
         "discountPercentage": 8.57
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "annibale colombo"
-    }
+        "name": "Annibale Colombo"
+    },
+    "brandName": "Annibale Colombo"
 }

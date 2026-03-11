@@ -9,12 +9,12 @@
     "description": "Fresh and tender chicken meat, suitable for various culinary preparations.",
     "url": "/service/data/products/chicken-meat-gro-brd-chi-019",
     "ratingValue": 3.19,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 9.99,
     "netPrice": 8.62137,
     "discountPercentage": 13.7,
-    "dateCreated": "2026-03-10T17:04:08.388704Z",
-    "dateModified": "2026-03-10T17:04:08.388704Z",
+    "dateCreated": "2026-03-11T13:00:54.797942Z",
+    "dateModified": "2026-03-11T13:00:54.797942Z",
     "thumbnail": "/assets/images/products/thumbnails/chicken-meat-gro-brd-chi-019.webp",
     "images": [
         "/assets/images/products/chicken-meat-gro-brd-chi-019/picture-0.webp",
@@ -22,6 +22,15 @@
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -38,13 +47,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 9.99,
         "netPrice": 8.62137,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 9.99
         },
         "discountPercentage": 13.7

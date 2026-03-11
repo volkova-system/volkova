@@ -9,12 +9,12 @@
     "description": "The Rolex Cellini Date with Black Dial is a classic and prestigious watch. With a black dial and date complication, it exudes sophistication and is a symbol of Rolex's heritage.",
     "url": "/service/data/products/rolex-cellini-date-black-dial-men-rol-rol-095",
     "ratingValue": 4.97,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 8999.99,
     "netPrice": 8200.790888,
     "discountPercentage": 8.88,
-    "dateCreated": "2026-03-10T17:04:08.439796Z",
-    "dateModified": "2026-03-10T17:04:08.439796Z",
+    "dateCreated": "2026-03-11T13:00:54.849382Z",
+    "dateModified": "2026-03-11T13:00:54.849382Z",
     "thumbnail": "/assets/images/products/thumbnails/rolex-cellini-date-black-dial-men-rol-rol-095.webp",
     "images": [
         "/assets/images/products/rolex-cellini-date-black-dial-men-rol-rol-095/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mens-watches"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 8999.99,
         "netPrice": 8200.790888,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 8999.99
         },
         "discountPercentage": 8.88
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "rolex"
-    }
+        "name": "Rolex"
+    },
+    "brandName": "Rolex"
 }

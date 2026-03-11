@@ -9,12 +9,12 @@
     "description": "Nike Baseball Cleats are designed for maximum traction and performance on the baseball field. They provide stability and support for players during games and practices.",
     "url": "/service/data/products/nike-baseball-cleats-men-nik-nik-089",
     "ratingValue": 3.88,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 79.99,
     "netPrice": 65.559804,
     "discountPercentage": 18.04,
-    "dateCreated": "2026-03-10T17:04:08.435376Z",
-    "dateModified": "2026-03-10T17:04:08.435376Z",
+    "dateCreated": "2026-03-11T13:00:54.845365Z",
+    "dateModified": "2026-03-11T13:00:54.845365Z",
     "thumbnail": "/assets/images/products/thumbnails/nike-baseball-cleats-men-nik-nik-089.webp",
     "images": [
         "/assets/images/products/nike-baseball-cleats-men-nik-nik-089/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shoes"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 79.99,
         "netPrice": 65.559804,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 79.99
         },
         "discountPercentage": 18.04
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "nike"
-    }
+        "name": "Nike"
+    },
+    "brandName": "Nike"
 }

@@ -9,18 +9,27 @@
     "description": "The Family Tree Photo Frame is a sentimental and stylish way to display your cherished family memories. With multiple photo slots, it tells the story of your loved ones.",
     "url": "/service/data/products/family-tree-photo-frame-hom-brd-fam-044",
     "ratingValue": 4.53,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 29.99,
     "netPrice": 25.530487,
     "discountPercentage": 14.87,
-    "dateCreated": "2026-03-10T17:04:08.406560Z",
-    "dateModified": "2026-03-10T17:04:08.406560Z",
+    "dateCreated": "2026-03-11T13:00:54.814798Z",
+    "dateModified": "2026-03-11T13:00:54.814798Z",
     "thumbnail": "/assets/images/products/thumbnails/family-tree-photo-frame-hom-brd-fam-044.webp",
     "images": [
         "/assets/images/products/family-tree-photo-frame-hom-brd-fam-044/picture-0.webp"
     ],
     "keywords": [
         "home-decoration"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 29.99,
         "netPrice": 25.530487,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 29.99
         },
         "discountPercentage": 14.87

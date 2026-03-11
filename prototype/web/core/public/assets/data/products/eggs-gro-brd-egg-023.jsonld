@@ -9,18 +9,27 @@
     "description": "Fresh eggs, a versatile ingredient for baking, cooking, or breakfast.",
     "url": "/service/data/products/eggs-gro-brd-egg-023",
     "ratingValue": 2.53,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 2.99,
     "netPrice": 2.659605,
     "discountPercentage": 11.05,
-    "dateCreated": "2026-03-10T17:04:08.391605Z",
-    "dateModified": "2026-03-10T17:04:08.391605Z",
+    "dateCreated": "2026-03-11T13:00:54.800448Z",
+    "dateModified": "2026-03-11T13:00:54.800448Z",
     "thumbnail": "/assets/images/products/thumbnails/eggs-gro-brd-egg-023.webp",
     "images": [
         "/assets/images/products/eggs-gro-brd-egg-023/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 2.99,
         "netPrice": 2.659605,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 2.99
         },
         "discountPercentage": 11.05

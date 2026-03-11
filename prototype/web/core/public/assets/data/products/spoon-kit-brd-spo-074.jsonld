@@ -9,18 +9,27 @@
     "description": "The Spoon is a versatile kitchen utensil for stirring, serving, and tasting. Its ergonomic design and durable construction make it an essential tool for every kitchen.",
     "url": "/service/data/products/spoon-kit-brd-spo-074",
     "ratingValue": 4.03,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 4.99,
     "netPrice": 4.913653,
     "discountPercentage": 1.53,
-    "dateCreated": "2026-03-10T17:04:08.425770Z",
-    "dateModified": "2026-03-10T17:04:08.425770Z",
+    "dateCreated": "2026-03-11T13:00:54.834937Z",
+    "dateModified": "2026-03-11T13:00:54.834937Z",
     "thumbnail": "/assets/images/products/thumbnails/spoon-kit-brd-spo-074.webp",
     "images": [
         "/assets/images/products/spoon-kit-brd-spo-074/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 4.99,
         "netPrice": 4.913653,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 4.99
         },
         "discountPercentage": 1.53

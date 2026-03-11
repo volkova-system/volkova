@@ -9,12 +9,12 @@
     "description": "The Man Plaid Shirt is a timeless and versatile men's shirt with a classic plaid pattern. Its comfortable fit and casual style make it a wardrobe essential for various occasions.",
     "url": "/service/data/products/man-plaid-shirt-men-cla-pla-085",
     "ratingValue": 3.46,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 34.99,
     "netPrice": 28.16695,
     "discountPercentage": 19.5,
-    "dateCreated": "2026-03-10T17:04:08.433041Z",
-    "dateModified": "2026-03-10T17:04:08.433041Z",
+    "dateCreated": "2026-03-11T13:00:54.842676Z",
+    "dateModified": "2026-03-11T13:00:54.842676Z",
     "thumbnail": "/assets/images/products/thumbnails/man-plaid-shirt-men-cla-pla-085.webp",
     "images": [
         "/assets/images/products/man-plaid-shirt-men-cla-pla-085/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shirts"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 34.99,
         "netPrice": 28.16695,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 34.99
         },
         "discountPercentage": 19.5
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "classic wear"
-    }
+        "name": "Classic Wear"
+    },
+    "brandName": "Classic Wear"
 }

@@ -9,18 +9,27 @@
     "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
     "url": "/service/data/products/eyeshadow-palette-with-mirror-bea-gla-eye-002",
     "ratingValue": 2.86,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 19.99,
     "netPrice": 16.353818999999998,
     "discountPercentage": 18.19,
-    "dateCreated": "2026-03-10T17:04:08.377550Z",
-    "dateModified": "2026-03-10T17:04:08.377550Z",
+    "dateCreated": "2026-03-11T13:00:54.786233Z",
+    "dateModified": "2026-03-11T13:00:54.786233Z",
     "thumbnail": "/assets/images/products/thumbnails/eyeshadow-palette-with-mirror-bea-gla-eye-002.webp",
     "images": [
         "/assets/images/products/eyeshadow-palette-with-mirror-bea-gla-eye-002/picture-0.webp"
     ],
     "keywords": [
         "beauty"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 19.99,
         "netPrice": 16.353818999999998,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 19.99
         },
         "discountPercentage": 18.19
@@ -148,6 +157,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "glamour beauty"
-    }
+        "name": "Glamour Beauty"
+    },
+    "brandName": "Glamour Beauty"
 }

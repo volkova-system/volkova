@@ -9,12 +9,12 @@
     "description": "The Blue & Black Check Shirt is a stylish and comfortable men's shirt featuring a classic check pattern. Made from high-quality fabric, it's suitable for both casual and semi-formal occasions.",
     "url": "/service/data/products/blue-black-check-shirt-men-fas-blu-083",
     "ratingValue": 3.64,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 29.99,
     "netPrice": 25.386535,
     "discountPercentage": 15.35,
-    "dateCreated": "2026-03-10T17:04:08.431827Z",
-    "dateModified": "2026-03-10T17:04:08.431827Z",
+    "dateCreated": "2026-03-11T13:00:54.841079Z",
+    "dateModified": "2026-03-11T13:00:54.841079Z",
     "thumbnail": "/assets/images/products/thumbnails/blue-black-check-shirt-men-fas-blu-083.webp",
     "images": [
         "/assets/images/products/blue-black-check-shirt-men-fas-blu-083/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shirts"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 29.99,
         "netPrice": 25.386535,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 29.99
         },
         "discountPercentage": 15.35
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "fashion trends"
-    }
+        "name": "Fashion Trends"
+    },
+    "brandName": "Fashion Trends"
 }

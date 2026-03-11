@@ -9,18 +9,27 @@
     "description": "The Lunch Box is a convenient and portable container for packing and carrying your meals. With compartments for different foods, it's perfect for on-the-go dining.",
     "url": "/service/data/products/lunch-box-kit-brd-lun-065",
     "ratingValue": 4.93,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 12.99,
     "netPrice": 11.646834,
     "discountPercentage": 10.34,
-    "dateCreated": "2026-03-10T17:04:08.419391Z",
-    "dateModified": "2026-03-10T17:04:08.419391Z",
+    "dateCreated": "2026-03-11T13:00:54.828518Z",
+    "dateModified": "2026-03-11T13:00:54.828518Z",
     "thumbnail": "/assets/images/products/thumbnails/lunch-box-kit-brd-lun-065.webp",
     "images": [
         "/assets/images/products/lunch-box-kit-brd-lun-065/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 12.99,
         "netPrice": 11.646834,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 12.99
         },
         "discountPercentage": 10.34

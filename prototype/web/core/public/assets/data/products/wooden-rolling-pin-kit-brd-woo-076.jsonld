@@ -9,18 +9,27 @@
     "description": "The Wooden Rolling Pin is a classic kitchen tool for rolling out dough for baking. Its smooth surface and sturdy handles make it easy to achieve uniform thickness.",
     "url": "/service/data/products/wooden-rolling-pin-kit-brd-woo-076",
     "ratingValue": 2.92,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 11.99,
     "netPrice": 10.820975,
     "discountPercentage": 9.75,
-    "dateCreated": "2026-03-10T17:04:08.427142Z",
-    "dateModified": "2026-03-10T17:04:08.427142Z",
+    "dateCreated": "2026-03-11T13:00:54.836090Z",
+    "dateModified": "2026-03-11T13:00:54.836090Z",
     "thumbnail": "/assets/images/products/thumbnails/wooden-rolling-pin-kit-brd-woo-076.webp",
     "images": [
         "/assets/images/products/wooden-rolling-pin-kit-brd-woo-076/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 11.99,
         "netPrice": 10.820975,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 11.99
         },
         "discountPercentage": 9.75

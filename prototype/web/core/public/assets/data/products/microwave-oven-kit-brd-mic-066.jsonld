@@ -9,12 +9,12 @@
     "description": "The Microwave Oven is a versatile kitchen appliance for quick and efficient cooking, reheating, and defrosting. Its compact size makes it suitable for various kitchen setups.",
     "url": "/service/data/products/microwave-oven-kit-brd-mic-066",
     "ratingValue": 4.82,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 89.99,
     "netPrice": 79.074213,
     "discountPercentage": 12.13,
-    "dateCreated": "2026-03-10T17:04:08.420017Z",
-    "dateModified": "2026-03-10T17:04:08.420017Z",
+    "dateCreated": "2026-03-11T13:00:54.829142Z",
+    "dateModified": "2026-03-11T13:00:54.829142Z",
     "thumbnail": "/assets/images/products/thumbnails/microwave-oven-kit-brd-mic-066.webp",
     "images": [
         "/assets/images/products/microwave-oven-kit-brd-mic-066/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 89.99,
         "netPrice": 79.074213,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 89.99
         },
         "discountPercentage": 12.13

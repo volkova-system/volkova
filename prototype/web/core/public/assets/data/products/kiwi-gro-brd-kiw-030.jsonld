@@ -9,18 +9,27 @@
     "description": "Nutrient-rich kiwi, perfect for snacking or adding a tropical twist to your dishes.",
     "url": "/service/data/products/kiwi-gro-brd-kiw-030",
     "ratingValue": 4.93,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 2.49,
     "netPrice": 2.111022,
     "discountPercentage": 15.22,
-    "dateCreated": "2026-03-10T17:04:08.395813Z",
-    "dateModified": "2026-03-10T17:04:08.395813Z",
+    "dateCreated": "2026-03-11T13:00:54.805268Z",
+    "dateModified": "2026-03-11T13:00:54.805268Z",
     "thumbnail": "/assets/images/products/thumbnails/kiwi-gro-brd-kiw-030.webp",
     "images": [
         "/assets/images/products/kiwi-gro-brd-kiw-030/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 2.49,
         "netPrice": 2.111022,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 2.49
         },
         "discountPercentage": 15.22

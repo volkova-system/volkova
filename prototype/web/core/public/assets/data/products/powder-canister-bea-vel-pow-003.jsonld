@@ -9,18 +9,27 @@
     "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
     "url": "/service/data/products/powder-canister-bea-vel-pow-003",
     "ratingValue": 4.64,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 14.99,
     "netPrice": 13.514984,
     "discountPercentage": 9.84,
-    "dateCreated": "2026-03-10T17:04:08.378221Z",
-    "dateModified": "2026-03-10T17:04:08.378221Z",
+    "dateCreated": "2026-03-11T13:00:54.786896Z",
+    "dateModified": "2026-03-11T13:00:54.786896Z",
     "thumbnail": "/assets/images/products/thumbnails/powder-canister-bea-vel-pow-003.webp",
     "images": [
         "/assets/images/products/powder-canister-bea-vel-pow-003/picture-0.webp"
     ],
     "keywords": [
         "beauty"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 14.99,
         "netPrice": 13.514984,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 14.99
         },
         "discountPercentage": 9.84
@@ -148,6 +157,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "velvet touch"
-    }
+        "name": "Velvet Touch"
+    },
+    "brandName": "Velvet Touch"
 }

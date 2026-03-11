@@ -9,12 +9,12 @@
     "description": "The Amazon Echo Plus is a smart speaker with built-in Alexa voice control. It features premium sound quality and serves as a hub for controlling smart home devices.",
     "url": "/service/data/products/amazon-echo-plus-mob-ama-ama-099",
     "ratingValue": 4.99,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 99.99,
     "netPrice": 87.921207,
     "discountPercentage": 12.07,
-    "dateCreated": "2026-03-10T17:04:08.442505Z",
-    "dateModified": "2026-03-10T17:04:08.442505Z",
+    "dateCreated": "2026-03-11T13:00:54.851880Z",
+    "dateModified": "2026-03-11T13:00:54.851880Z",
     "thumbnail": "/assets/images/products/thumbnails/amazon-echo-plus-mob-ama-ama-099.webp",
     "images": [
         "/assets/images/products/amazon-echo-plus-mob-ama-ama-099/picture-0.webp",
@@ -22,6 +22,15 @@
     ],
     "keywords": [
         "mobile-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -38,13 +47,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 99.99,
         "netPrice": 87.921207,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 99.99
         },
         "discountPercentage": 12.07
@@ -150,6 +159,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "amazon"
-    }
+        "name": "Amazon"
+    },
+    "brandName": "Amazon"
 }

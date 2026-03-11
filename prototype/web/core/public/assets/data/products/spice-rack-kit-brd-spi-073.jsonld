@@ -9,18 +9,27 @@
     "description": "The Spice Rack is a convenient organizer for your spices and seasonings. Keep your kitchen essentials within reach and neatly arranged with this stylish spice rack.",
     "url": "/service/data/products/spice-rack-kit-brd-spi-073",
     "ratingValue": 4.87,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 19.99,
     "netPrice": 17.573209,
     "discountPercentage": 12.09,
-    "dateCreated": "2026-03-10T17:04:08.425071Z",
-    "dateModified": "2026-03-10T17:04:08.425071Z",
+    "dateCreated": "2026-03-11T13:00:54.834303Z",
+    "dateModified": "2026-03-11T13:00:54.834303Z",
     "thumbnail": "/assets/images/products/thumbnails/spice-rack-kit-brd-spi-073.webp",
     "images": [
         "/assets/images/products/spice-rack-kit-brd-spi-073/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 19.99,
         "netPrice": 17.573209,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 19.99
         },
         "discountPercentage": 12.09

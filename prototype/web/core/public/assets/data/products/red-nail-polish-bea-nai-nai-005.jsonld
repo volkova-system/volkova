@@ -9,18 +9,27 @@
     "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
     "url": "/service/data/products/red-nail-polish-bea-nai-nai-005",
     "ratingValue": 4.32,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 8.99,
     "netPrice": 7.961544,
     "discountPercentage": 11.44,
-    "dateCreated": "2026-03-10T17:04:08.379630Z",
-    "dateModified": "2026-03-10T17:04:08.379630Z",
+    "dateCreated": "2026-03-11T13:00:54.788318Z",
+    "dateModified": "2026-03-11T13:00:54.788318Z",
     "thumbnail": "/assets/images/products/thumbnails/red-nail-polish-bea-nai-nai-005.webp",
     "images": [
         "/assets/images/products/red-nail-polish-bea-nai-nai-005/picture-0.webp"
     ],
     "keywords": [
         "beauty"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 8.99,
         "netPrice": 7.961544,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 8.99
         },
         "discountPercentage": 11.44
@@ -148,6 +157,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "nail couture"
-    }
+        "name": "Nail Couture"
+    },
+    "brandName": "Nail Couture"
 }

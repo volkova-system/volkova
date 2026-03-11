@@ -9,18 +9,27 @@
     "description": "High-quality beef steak, great for grilling or cooking to your preferred level of doneness.",
     "url": "/service/data/products/beef-steak-gro-brd-bee-017",
     "ratingValue": 4.47,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 12.99,
     "netPrice": 11.741661,
     "discountPercentage": 9.61,
-    "dateCreated": "2026-03-10T17:04:08.387372Z",
-    "dateModified": "2026-03-10T17:04:08.387372Z",
+    "dateCreated": "2026-03-11T13:00:54.796514Z",
+    "dateModified": "2026-03-11T13:00:54.796514Z",
     "thumbnail": "/assets/images/products/thumbnails/beef-steak-gro-brd-bee-017.webp",
     "images": [
         "/assets/images/products/beef-steak-gro-brd-bee-017/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 12.99,
         "netPrice": 11.741661,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 12.99
         },
         "discountPercentage": 9.61

@@ -9,18 +9,27 @@
     "description": "Quality fish steak, suitable for grilling, baking, or pan-searing.",
     "url": "/service/data/products/fish-steak-gro-brd-fis-024",
     "ratingValue": 3.78,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 14.99,
     "netPrice": 14.355923,
     "discountPercentage": 4.23,
-    "dateCreated": "2026-03-10T17:04:08.392364Z",
-    "dateModified": "2026-03-10T17:04:08.392364Z",
+    "dateCreated": "2026-03-11T13:00:54.801233Z",
+    "dateModified": "2026-03-11T13:00:54.801233Z",
     "thumbnail": "/assets/images/products/thumbnails/fish-steak-gro-brd-fis-024.webp",
     "images": [
         "/assets/images/products/fish-steak-gro-brd-fis-024/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 14.99,
         "netPrice": 14.355923,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 14.99
         },
         "discountPercentage": 4.23

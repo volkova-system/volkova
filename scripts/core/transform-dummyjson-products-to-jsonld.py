@@ -44,6 +44,12 @@ def parse_arguments() -> argparse.Namespace:
         help="Output directory path where JSON-LD files will be saved"
     )
 
+    _ = parser.add_argument(
+        "--currency",
+        default="usd",
+        help="Currency code for product prices (default: usd)"
+    )
+
     return parser.parse_args()
 
 
@@ -195,12 +201,13 @@ def calculate_net_price(price: float, discount_percentage: float) -> float:
 
     return max(0.0, net_price)
 
-def map_product_to_jsonld(product: JsonDict) -> JsonDict:
+def map_product_to_jsonld(product: JsonDict, currency: str = "php") -> JsonDict:
     """
     Map DummyJSON product data to JSON-LD schema format.
 
     Args:
         product: DummyJSON product data
+        currency: Currency code for product prices
 
     Returns:
         Dict containing JSON-LD formatted product data
@@ -228,7 +235,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "url": f"/service/data/products/{product_id}",
         "ratingValue": safe_float(product.get('rating', 0)),
 
-        "priceCurrency": "php",
+        "priceCurrency": currency,
         "price": price,
         "netPrice": net_price,
         "discountPercentage": discount_percentage,
@@ -276,7 +283,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
         "offers": {
             "@type": "Offer",
 
-            "priceCurrency": "php",
+            "priceCurrency": currency,
             "price": price,
             "netPrice": net_price,
 
@@ -285,7 +292,7 @@ def map_product_to_jsonld(product: JsonDict) -> JsonDict:
             "priceSpecification": {
                 "@type": "PriceSpecification",
 
-                "priceCurrency": "php",
+                "priceCurrency": currency,
                 "price": price
             },
 
@@ -399,13 +406,15 @@ def save_jsonld_file(product_data: JsonDict,
 
 
 def process_products(products_data: JsonDict,
-                     products_dir: Path) -> None:
+                     products_dir: Path,
+                     currency: str = "php") -> None:
     """
     Process all products and convert to JSON-LD format.
 
     Args:
         products_data: DummyJSON products data
         products_dir: Directory to save JSON-LD files
+        currency: Currency code for product prices
 
     Raises:
         SystemExit: If processing fails
@@ -424,7 +433,7 @@ def process_products(products_data: JsonDict,
         for product in products:
             if isinstance(product, dict):
                 product_dict = cast(JsonDict, product)
-                jsonld_product = map_product_to_jsonld(product_dict)
+                jsonld_product = map_product_to_jsonld(product_dict, currency)
 
                 save_jsonld_file(jsonld_product, products_dir)
 
@@ -450,7 +459,7 @@ def main() -> None:
         products_dir = create_products_directory(cast(str, args.directory))
 
         # Process and save products
-        process_products(products_data, products_dir)
+        process_products(products_data, products_dir, cast(str, args.currency))
 
     except KeyboardInterrupt:
         print("\nOperation cancelled by user")

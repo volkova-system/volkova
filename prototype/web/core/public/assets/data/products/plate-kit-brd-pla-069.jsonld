@@ -9,18 +9,27 @@
     "description": "The Plate is a classic and essential dishware item for serving meals. Its durable and stylish design makes it suitable for everyday use or special occasions.",
     "url": "/service/data/products/plate-kit-brd-pla-069",
     "ratingValue": 3.65,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 3.99,
     "netPrice": 3.698331,
     "discountPercentage": 7.31,
-    "dateCreated": "2026-03-10T17:04:08.422139Z",
-    "dateModified": "2026-03-10T17:04:08.422139Z",
+    "dateCreated": "2026-03-11T13:00:54.831100Z",
+    "dateModified": "2026-03-11T13:00:54.831100Z",
     "thumbnail": "/assets/images/products/thumbnails/plate-kit-brd-pla-069.webp",
     "images": [
         "/assets/images/products/plate-kit-brd-pla-069/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 3.99,
         "netPrice": 3.698331,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 3.99
         },
         "discountPercentage": 7.31

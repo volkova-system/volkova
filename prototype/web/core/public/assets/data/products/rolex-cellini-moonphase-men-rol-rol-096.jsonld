@@ -9,12 +9,12 @@
     "description": "The Rolex Cellini Moonphase is a masterpiece of horology, featuring a moon phase complication and exquisite design. It reflects Rolex's commitment to precision and elegance.",
     "url": "/service/data/products/rolex-cellini-moonphase-men-rol-rol-096",
     "ratingValue": 2.58,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 12999.99,
     "netPrice": 10722.391752,
     "discountPercentage": 17.52,
-    "dateCreated": "2026-03-10T17:04:08.440523Z",
-    "dateModified": "2026-03-10T17:04:08.440523Z",
+    "dateCreated": "2026-03-11T13:00:54.850008Z",
+    "dateModified": "2026-03-11T13:00:54.850008Z",
     "thumbnail": "/assets/images/products/thumbnails/rolex-cellini-moonphase-men-rol-rol-096.webp",
     "images": [
         "/assets/images/products/rolex-cellini-moonphase-men-rol-rol-096/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mens-watches"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 12999.99,
         "netPrice": 10722.391752,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 12999.99
         },
         "discountPercentage": 17.52
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "rolex"
-    }
+        "name": "Rolex"
+    },
+    "brandName": "Rolex"
 }

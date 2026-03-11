@@ -9,12 +9,12 @@
     "description": "The Annibale Colombo Sofa is a sophisticated and comfortable seating option, featuring exquisite design and premium upholstery for your living room.",
     "url": "/service/data/products/annibale-colombo-sofa-fur-ann-ann-012",
     "ratingValue": 3.92,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 2499.99,
     "netPrice": 2139.99144,
     "discountPercentage": 14.4,
-    "dateCreated": "2026-03-10T17:04:08.384057Z",
-    "dateModified": "2026-03-10T17:04:08.384057Z",
+    "dateCreated": "2026-03-11T13:00:54.793091Z",
+    "dateModified": "2026-03-11T13:00:54.793091Z",
     "thumbnail": "/assets/images/products/thumbnails/annibale-colombo-sofa-fur-ann-ann-012.webp",
     "images": [
         "/assets/images/products/annibale-colombo-sofa-fur-ann-ann-012/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "furniture"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 2499.99,
         "netPrice": 2139.99144,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 2499.99
         },
         "discountPercentage": 14.4
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "annibale colombo"
-    }
+        "name": "Annibale Colombo"
+    },
+    "brandName": "Annibale Colombo"
 }

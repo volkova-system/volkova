@@ -9,18 +9,27 @@
     "description": "The Fine Mesh Strainer is a versatile tool for straining liquids and sifting dry ingredients. Its fine mesh ensures efficient filtering for smooth cooking and baking.",
     "url": "/service/data/products/fine-mesh-strainer-kit-brd-fin-057",
     "ratingValue": 3.04,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 9.99,
     "netPrice": 9.64035,
     "discountPercentage": 3.5,
-    "dateCreated": "2026-03-10T17:04:08.414542Z",
-    "dateModified": "2026-03-10T17:04:08.414542Z",
+    "dateCreated": "2026-03-11T13:00:54.823463Z",
+    "dateModified": "2026-03-11T13:00:54.823463Z",
     "thumbnail": "/assets/images/products/thumbnails/fine-mesh-strainer-kit-brd-fin-057.webp",
     "images": [
         "/assets/images/products/fine-mesh-strainer-kit-brd-fin-057/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 9.99,
         "netPrice": 9.64035,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 9.99
         },
         "discountPercentage": 3.5

@@ -9,18 +9,27 @@
     "description": "Sweet and succulent strawberries, great for snacking, desserts, or blending into smoothies.",
     "url": "/service/data/products/strawberry-gro-brd-str-040",
     "ratingValue": 3.08,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 3.99,
     "netPrice": 3.9453120000000004,
     "discountPercentage": 1.12,
-    "dateCreated": "2026-03-10T17:04:08.403110Z",
-    "dateModified": "2026-03-10T17:04:08.403110Z",
+    "dateCreated": "2026-03-11T13:00:54.812038Z",
+    "dateModified": "2026-03-11T13:00:54.812038Z",
     "thumbnail": "/assets/images/products/thumbnails/strawberry-gro-brd-str-040.webp",
     "images": [
         "/assets/images/products/strawberry-gro-brd-str-040/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 3.99,
         "netPrice": 3.9453120000000004,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 3.99
         },
         "discountPercentage": 1.12

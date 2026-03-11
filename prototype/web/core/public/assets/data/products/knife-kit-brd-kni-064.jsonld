@@ -9,18 +9,27 @@
     "description": "The Knife is an essential kitchen tool for chopping, slicing, and dicing. Its sharp blade and ergonomic handle make it a reliable choice for food preparation.",
     "url": "/service/data/products/knife-kit-brd-kni-064",
     "ratingValue": 3.26,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 14.99,
     "netPrice": 12.162886,
     "discountPercentage": 18.86,
-    "dateCreated": "2026-03-10T17:04:08.418771Z",
-    "dateModified": "2026-03-10T17:04:08.418771Z",
+    "dateCreated": "2026-03-11T13:00:54.827875Z",
+    "dateModified": "2026-03-11T13:00:54.827875Z",
     "thumbnail": "/assets/images/products/thumbnails/knife-kit-brd-kni-064.webp",
     "images": [
         "/assets/images/products/knife-kit-brd-kni-064/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 14.99,
         "netPrice": 12.162886,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 14.99
         },
         "discountPercentage": 18.86

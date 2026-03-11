@@ -9,12 +9,12 @@
     "description": "The Boxed Blender is a powerful and compact blender perfect for smoothies, shakes, and more. Its convenient design and multiple functions make it a versatile kitchen appliance.",
     "url": "/service/data/products/boxed-blender-kit-brd-box-051",
     "ratingValue": 4.56,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 39.99,
     "netPrice": 37.086726,
     "discountPercentage": 7.26,
-    "dateCreated": "2026-03-10T17:04:08.410904Z",
-    "dateModified": "2026-03-10T17:04:08.410904Z",
+    "dateCreated": "2026-03-11T13:00:54.819598Z",
+    "dateModified": "2026-03-11T13:00:54.819598Z",
     "thumbnail": "/assets/images/products/thumbnails/boxed-blender-kit-brd-box-051.webp",
     "images": [
         "/assets/images/products/boxed-blender-kit-brd-box-051/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 39.99,
         "netPrice": 37.086726,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 39.99
         },
         "discountPercentage": 7.26

@@ -9,18 +9,27 @@
     "description": "The Citrus Squeezer in Yellow is a handy tool for extracting juice from citrus fruits. Its vibrant color adds a cheerful touch to your kitchen gadgets.",
     "url": "/service/data/products/citrus-squeezer-yellow-kit-brd-cit-054",
     "ratingValue": 4.63,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 8.99,
     "netPrice": 7.90221,
     "discountPercentage": 12.1,
-    "dateCreated": "2026-03-10T17:04:08.412719Z",
-    "dateModified": "2026-03-10T17:04:08.412719Z",
+    "dateCreated": "2026-03-11T13:00:54.821413Z",
+    "dateModified": "2026-03-11T13:00:54.821413Z",
     "thumbnail": "/assets/images/products/thumbnails/citrus-squeezer-yellow-kit-brd-cit-054.webp",
     "images": [
         "/assets/images/products/citrus-squeezer-yellow-kit-brd-cit-054/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 8.99,
         "netPrice": 7.90221,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 8.99
         },
         "discountPercentage": 12.1

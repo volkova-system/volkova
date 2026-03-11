@@ -9,12 +9,12 @@
     "description": "The Apple Airpods offer a seamless wireless audio experience. With easy pairing, high-quality sound, and Siri integration, they are perfect for on-the-go listening.",
     "url": "/service/data/products/apple-airpods-mob-app-app-100",
     "ratingValue": 4.15,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 129.99,
     "netPrice": 109.78955400000001,
     "discountPercentage": 15.54,
-    "dateCreated": "2026-03-10T17:04:08.443107Z",
-    "dateModified": "2026-03-10T17:04:08.443107Z",
+    "dateCreated": "2026-03-11T13:00:54.852491Z",
+    "dateModified": "2026-03-11T13:00:54.852491Z",
     "thumbnail": "/assets/images/products/thumbnails/apple-airpods-mob-app-app-100.webp",
     "images": [
         "/assets/images/products/apple-airpods-mob-app-app-100/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mobile-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 129.99,
         "netPrice": 109.78955400000001,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 129.99
         },
         "discountPercentage": 15.54
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "apple"
-    }
+        "name": "Apple"
+    },
+    "brandName": "Apple"
 }

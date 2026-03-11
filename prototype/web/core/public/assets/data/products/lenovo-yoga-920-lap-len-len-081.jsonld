@@ -9,12 +9,12 @@
     "description": "The Lenovo Yoga 920 is a 2-in-1 convertible laptop with a flexible hinge, allowing you to use it as a laptop or tablet, offering versatility and portability.",
     "url": "/service/data/products/lenovo-yoga-920-lap-len-len-081",
     "ratingValue": 2.86,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1099.99,
     "netPrice": 1027.940655,
     "discountPercentage": 6.55,
-    "dateCreated": "2026-03-10T17:04:08.430576Z",
-    "dateModified": "2026-03-10T17:04:08.430576Z",
+    "dateCreated": "2026-03-11T13:00:54.839432Z",
+    "dateModified": "2026-03-11T13:00:54.839432Z",
     "thumbnail": "/assets/images/products/thumbnails/lenovo-yoga-920-lap-len-len-081.webp",
     "images": [
         "/assets/images/products/lenovo-yoga-920-lap-len-len-081/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "laptops"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1099.99,
         "netPrice": 1027.940655,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1099.99
         },
         "discountPercentage": 6.55
@@ -151,6 +160,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "lenovo"
-    }
+        "name": "Lenovo"
+    },
+    "brandName": "Lenovo"
 }

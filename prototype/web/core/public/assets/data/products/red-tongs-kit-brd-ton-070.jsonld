@@ -9,18 +9,27 @@
     "description": "The Red Tongs are versatile kitchen tongs suitable for various cooking and serving tasks. Their vibrant color adds a pop of excitement to your kitchen utensils.",
     "url": "/service/data/products/red-tongs-kit-brd-ton-070",
     "ratingValue": 4.42,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 6.99,
     "netPrice": 5.975052,
     "discountPercentage": 14.52,
-    "dateCreated": "2026-03-10T17:04:08.422946Z",
-    "dateModified": "2026-03-10T17:04:08.422946Z",
+    "dateCreated": "2026-03-11T13:00:54.832024Z",
+    "dateModified": "2026-03-11T13:00:54.832024Z",
     "thumbnail": "/assets/images/products/thumbnails/red-tongs-kit-brd-ton-070.webp",
     "images": [
         "/assets/images/products/red-tongs-kit-brd-ton-070/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 6.99,
         "netPrice": 5.975052,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 6.99
         },
         "discountPercentage": 14.52

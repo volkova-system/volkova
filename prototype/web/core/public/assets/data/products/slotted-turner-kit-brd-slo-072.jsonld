@@ -9,18 +9,27 @@
     "description": "The Slotted Turner is a kitchen utensil designed for flipping and turning food items. Its slotted design allows excess liquid to drain, making it ideal for frying and sautéing.",
     "url": "/service/data/products/slotted-turner-kit-brd-slo-072",
     "ratingValue": 3.4,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 8.99,
     "netPrice": 7.789835,
     "discountPercentage": 13.35,
-    "dateCreated": "2026-03-10T17:04:08.424235Z",
-    "dateModified": "2026-03-10T17:04:08.424235Z",
+    "dateCreated": "2026-03-11T13:00:54.833554Z",
+    "dateModified": "2026-03-11T13:00:54.833554Z",
     "thumbnail": "/assets/images/products/thumbnails/slotted-turner-kit-brd-slo-072.webp",
     "images": [
         "/assets/images/products/slotted-turner-kit-brd-slo-072/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 8.99,
         "netPrice": 7.789835,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 8.99
         },
         "discountPercentage": 13.35

@@ -9,12 +9,12 @@
     "description": "The Nike Air Jordan 1 in Red and Black is an iconic basketball sneaker known for its stylish design and high-performance features, making it a favorite among sneaker enthusiasts and athletes.",
     "url": "/service/data/products/nike-air-jordan-1-red-and-black-men-nik-nik-088",
     "ratingValue": 4.77,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 149.99,
     "netPrice": 143.810412,
     "discountPercentage": 4.12,
-    "dateCreated": "2026-03-10T17:04:08.434789Z",
-    "dateModified": "2026-03-10T17:04:08.434789Z",
+    "dateCreated": "2026-03-11T13:00:54.844623Z",
+    "dateModified": "2026-03-11T13:00:54.844623Z",
     "thumbnail": "/assets/images/products/thumbnails/nike-air-jordan-1-red-and-black-men-nik-nik-088.webp",
     "images": [
         "/assets/images/products/nike-air-jordan-1-red-and-black-men-nik-nik-088/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shoes"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 149.99,
         "netPrice": 143.810412,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 149.99
         },
         "discountPercentage": 4.12
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "nike"
-    }
+        "name": "Nike"
+    },
+    "brandName": "Nike"
 }

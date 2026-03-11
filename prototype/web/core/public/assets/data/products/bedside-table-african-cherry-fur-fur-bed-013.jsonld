@@ -9,12 +9,12 @@
     "description": "The Bedside Table in African Cherry is a stylish and functional addition to your bedroom, providing convenient storage space and a touch of elegance.",
     "url": "/service/data/products/bedside-table-african-cherry-fur-fur-bed-013",
     "ratingValue": 2.87,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 299.99,
     "netPrice": 242.721909,
     "discountPercentage": 19.09,
-    "dateCreated": "2026-03-10T17:04:08.384664Z",
-    "dateModified": "2026-03-10T17:04:08.384664Z",
+    "dateCreated": "2026-03-11T13:00:54.793782Z",
+    "dateModified": "2026-03-11T13:00:54.793782Z",
     "thumbnail": "/assets/images/products/thumbnails/bedside-table-african-cherry-fur-fur-bed-013.webp",
     "images": [
         "/assets/images/products/bedside-table-african-cherry-fur-fur-bed-013/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "furniture"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 299.99,
         "netPrice": 242.721909,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 299.99
         },
         "discountPercentage": 19.09
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "furniture co."
-    }
+        "name": "Furniture Co."
+    },
+    "brandName": "Furniture Co."
 }

@@ -9,12 +9,12 @@
     "description": "The Man Short Sleeve Shirt is a breezy and stylish option for warm days. With a comfortable fit and short sleeves, it's perfect for a laid-back yet polished look.",
     "url": "/service/data/products/man-short-sleeve-shirt-men-cas-sho-086",
     "ratingValue": 2.9,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 19.99,
     "netPrice": 18.624682999999997,
     "discountPercentage": 6.83,
-    "dateCreated": "2026-03-10T17:04:08.433621Z",
-    "dateModified": "2026-03-10T17:04:08.433621Z",
+    "dateCreated": "2026-03-11T13:00:54.843329Z",
+    "dateModified": "2026-03-11T13:00:54.843329Z",
     "thumbnail": "/assets/images/products/thumbnails/man-short-sleeve-shirt-men-cas-sho-086.webp",
     "images": [
         "/assets/images/products/man-short-sleeve-shirt-men-cas-sho-086/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shirts"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 19.99,
         "netPrice": 18.624682999999997,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 19.99
         },
         "discountPercentage": 6.83
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "casual comfort"
-    }
+        "name": "Casual Comfort"
+    },
+    "brandName": "Casual Comfort"
 }

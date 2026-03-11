@@ -9,12 +9,12 @@
     "description": "The Black Aluminium Cup is a stylish and durable cup suitable for both hot and cold beverages. Its sleek black design adds a modern touch to your drinkware collection.",
     "url": "/service/data/products/black-aluminium-cup-kit-brd-bla-049",
     "ratingValue": 4.46,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 5.99,
     "netPrice": 5.052565,
     "discountPercentage": 15.65,
-    "dateCreated": "2026-03-10T17:04:08.409749Z",
-    "dateModified": "2026-03-10T17:04:08.409749Z",
+    "dateCreated": "2026-03-11T13:00:54.818312Z",
+    "dateModified": "2026-03-11T13:00:54.818312Z",
     "thumbnail": "/assets/images/products/thumbnails/black-aluminium-cup-kit-brd-bla-049.webp",
     "images": [
         "/assets/images/products/black-aluminium-cup-kit-brd-bla-049/picture-0.webp",
@@ -22,6 +22,15 @@
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -38,13 +47,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 5.99,
         "netPrice": 5.052565,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 5.99
         },
         "discountPercentage": 15.65

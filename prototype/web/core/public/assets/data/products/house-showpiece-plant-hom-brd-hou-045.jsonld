@@ -9,12 +9,12 @@
     "description": "The House Showpiece Plant is an artificial plant that brings a touch of nature to your home without the need for maintenance. It adds greenery and style to any space.",
     "url": "/service/data/products/house-showpiece-plant-hom-brd-hou-045",
     "ratingValue": 4.67,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 39.99,
     "netPrice": 37.006746,
     "discountPercentage": 7.46,
-    "dateCreated": "2026-03-10T17:04:08.407181Z",
-    "dateModified": "2026-03-10T17:04:08.407181Z",
+    "dateCreated": "2026-03-11T13:00:54.815384Z",
+    "dateModified": "2026-03-11T13:00:54.815384Z",
     "thumbnail": "/assets/images/products/thumbnails/house-showpiece-plant-hom-brd-hou-045.webp",
     "images": [
         "/assets/images/products/house-showpiece-plant-hom-brd-hou-045/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "home-decoration"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 39.99,
         "netPrice": 37.006746,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 39.99
         },
         "discountPercentage": 7.46

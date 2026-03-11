@@ -9,18 +9,27 @@
     "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
     "url": "/service/data/products/cucumber-gro-brd-cuc-021",
     "ratingValue": 4.07,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1.49,
     "netPrice": 1.487616,
     "discountPercentage": 0.16,
-    "dateCreated": "2026-03-10T17:04:08.390321Z",
-    "dateModified": "2026-03-10T17:04:08.390321Z",
+    "dateCreated": "2026-03-11T13:00:54.799250Z",
+    "dateModified": "2026-03-11T13:00:54.799250Z",
     "thumbnail": "/assets/images/products/thumbnails/cucumber-gro-brd-cuc-021.webp",
     "images": [
         "/assets/images/products/cucumber-gro-brd-cuc-021/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1.49,
         "netPrice": 1.487616,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1.49
         },
         "discountPercentage": 0.16

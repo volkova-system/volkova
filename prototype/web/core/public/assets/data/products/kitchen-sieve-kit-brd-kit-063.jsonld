@@ -9,18 +9,27 @@
     "description": "The Kitchen Sieve is a versatile tool for sifting and straining dry and wet ingredients. Its fine mesh design ensures smooth results in your cooking and baking.",
     "url": "/service/data/products/kitchen-sieve-kit-brd-kit-063",
     "ratingValue": 3.09,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 7.99,
     "netPrice": 6.479091,
     "discountPercentage": 18.91,
-    "dateCreated": "2026-03-10T17:04:08.418147Z",
-    "dateModified": "2026-03-10T17:04:08.418147Z",
+    "dateCreated": "2026-03-11T13:00:54.827249Z",
+    "dateModified": "2026-03-11T13:00:54.827249Z",
     "thumbnail": "/assets/images/products/thumbnails/kitchen-sieve-kit-brd-kit-063.webp",
     "images": [
         "/assets/images/products/kitchen-sieve-kit-brd-kit-063/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 7.99,
         "netPrice": 6.479091,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 7.99
         },
         "discountPercentage": 18.91

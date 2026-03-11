@@ -9,18 +9,27 @@
     "description": "Zesty and tangy lemons, versatile for cooking, baking, or making refreshing beverages.",
     "url": "/service/data/products/lemon-gro-brd-lem-031",
     "ratingValue": 3.53,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 0.79,
     "netPrice": 0.7133700000000001,
     "discountPercentage": 9.7,
-    "dateCreated": "2026-03-10T17:04:08.396444Z",
-    "dateModified": "2026-03-10T17:04:08.396444Z",
+    "dateCreated": "2026-03-11T13:00:54.805871Z",
+    "dateModified": "2026-03-11T13:00:54.805871Z",
     "thumbnail": "/assets/images/products/thumbnails/lemon-gro-brd-lem-031.webp",
     "images": [
         "/assets/images/products/lemon-gro-brd-lem-031/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 0.79,
         "netPrice": 0.7133700000000001,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 0.79
         },
         "discountPercentage": 9.7

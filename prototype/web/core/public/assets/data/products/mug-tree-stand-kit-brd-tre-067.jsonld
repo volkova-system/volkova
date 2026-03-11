@@ -9,12 +9,12 @@
     "description": "The Mug Tree Stand is a stylish and space-saving solution for organizing your mugs. Keep your favorite mugs easily accessible and neatly displayed in your kitchen.",
     "url": "/service/data/products/mug-tree-stand-kit-brd-tre-067",
     "ratingValue": 2.64,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 15.99,
     "netPrice": 14.510925,
     "discountPercentage": 9.25,
-    "dateCreated": "2026-03-10T17:04:08.420684Z",
-    "dateModified": "2026-03-10T17:04:08.420684Z",
+    "dateCreated": "2026-03-11T13:00:54.829823Z",
+    "dateModified": "2026-03-11T13:00:54.829823Z",
     "thumbnail": "/assets/images/products/thumbnails/mug-tree-stand-kit-brd-tre-067.webp",
     "images": [
         "/assets/images/products/mug-tree-stand-kit-brd-tre-067/picture-0.webp",
@@ -22,6 +22,15 @@
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -38,13 +47,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 15.99,
         "netPrice": 14.510925,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 15.99
         },
         "discountPercentage": 9.25

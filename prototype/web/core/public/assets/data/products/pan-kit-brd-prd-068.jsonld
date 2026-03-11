@@ -9,18 +9,27 @@
     "description": "The Pan is a versatile and essential cookware item for frying, sautéing, and cooking various dishes. Its non-stick coating ensures easy food release and cleanup.",
     "url": "/service/data/products/pan-kit-brd-prd-068",
     "ratingValue": 2.79,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 24.99,
     "netPrice": 24.240299999999998,
     "discountPercentage": 3.0,
-    "dateCreated": "2026-03-10T17:04:08.421273Z",
-    "dateModified": "2026-03-10T17:04:08.421273Z",
+    "dateCreated": "2026-03-11T13:00:54.830445Z",
+    "dateModified": "2026-03-11T13:00:54.830445Z",
     "thumbnail": "/assets/images/products/thumbnails/pan-kit-brd-prd-068.webp",
     "images": [
         "/assets/images/products/pan-kit-brd-prd-068/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 24.99,
         "netPrice": 24.240299999999998,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 24.99
         },
         "discountPercentage": 3.0

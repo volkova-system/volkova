@@ -9,18 +9,27 @@
     "description": "The Black Whisk is a kitchen essential for whisking and beating ingredients. Its ergonomic handle and sleek design make it a practical and stylish tool.",
     "url": "/service/data/products/black-whisk-kit-brd-bla-050",
     "ratingValue": 3.9,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 9.99,
     "netPrice": 8.967024,
     "discountPercentage": 10.24,
-    "dateCreated": "2026-03-10T17:04:08.410332Z",
-    "dateModified": "2026-03-10T17:04:08.410332Z",
+    "dateCreated": "2026-03-11T13:00:54.819003Z",
+    "dateModified": "2026-03-11T13:00:54.819003Z",
     "thumbnail": "/assets/images/products/thumbnails/black-whisk-kit-brd-bla-050.webp",
     "images": [
         "/assets/images/products/black-whisk-kit-brd-bla-050/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 9.99,
         "netPrice": 8.967024,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 9.99
         },
         "discountPercentage": 10.24

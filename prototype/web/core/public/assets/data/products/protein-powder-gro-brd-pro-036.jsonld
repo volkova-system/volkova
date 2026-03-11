@@ -9,18 +9,27 @@
     "description": "Nutrient-packed protein powder, ideal for supplementing your diet with essential proteins.",
     "url": "/service/data/products/protein-powder-gro-brd-pro-036",
     "ratingValue": 4.18,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 19.99,
     "netPrice": 18.472759,
     "discountPercentage": 7.59,
-    "dateCreated": "2026-03-10T17:04:08.399807Z",
-    "dateModified": "2026-03-10T17:04:08.399807Z",
+    "dateCreated": "2026-03-11T13:00:54.809047Z",
+    "dateModified": "2026-03-11T13:00:54.809047Z",
     "thumbnail": "/assets/images/products/thumbnails/protein-powder-gro-brd-pro-036.webp",
     "images": [
         "/assets/images/products/protein-powder-gro-brd-pro-036/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 19.99,
         "netPrice": 18.472759,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 19.99
         },
         "discountPercentage": 7.59

@@ -9,12 +9,12 @@
     "description": "The Puma Future Rider Trainers offer a blend of retro style and modern comfort. Perfect for casual wear, these trainers provide a fashionable and comfortable option for everyday use.",
     "url": "/service/data/products/puma-future-rider-trainers-men-pum-pum-090",
     "ratingValue": 4.9,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 89.99,
     "netPrice": 86.21042,
     "discountPercentage": 4.2,
-    "dateCreated": "2026-03-10T17:04:08.436067Z",
-    "dateModified": "2026-03-10T17:04:08.436067Z",
+    "dateCreated": "2026-03-11T13:00:54.846059Z",
+    "dateModified": "2026-03-11T13:00:54.846059Z",
     "thumbnail": "/assets/images/products/thumbnails/puma-future-rider-trainers-men-pum-pum-090.webp",
     "images": [
         "/assets/images/products/puma-future-rider-trainers-men-pum-pum-090/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shoes"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 89.99,
         "netPrice": 86.21042,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 89.99
         },
         "discountPercentage": 4.2
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "puma"
-    }
+        "name": "Puma"
+    },
+    "brandName": "Puma"
 }

@@ -9,12 +9,12 @@
     "description": "The Knoll Saarinen Executive Conference Chair is a modern and ergonomic chair, perfect for your office or conference room with its timeless design.",
     "url": "/service/data/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014",
     "ratingValue": 4.88,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 499.99,
     "netPrice": 489.940201,
     "discountPercentage": 2.01,
-    "dateCreated": "2026-03-10T17:04:08.385306Z",
-    "dateModified": "2026-03-10T17:04:08.385306Z",
+    "dateCreated": "2026-03-11T13:00:54.794480Z",
+    "dateModified": "2026-03-11T13:00:54.794480Z",
     "thumbnail": "/assets/images/products/thumbnails/knoll-saarinen-executive-conference-chair-fur-kno-kno-014.webp",
     "images": [
         "/assets/images/products/knoll-saarinen-executive-conference-chair-fur-kno-kno-014/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "furniture"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 499.99,
         "netPrice": 489.940201,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 499.99
         },
         "discountPercentage": 2.01
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "knoll"
-    }
+        "name": "Knoll"
+    },
+    "brandName": "Knoll"
 }

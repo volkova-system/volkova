@@ -9,12 +9,12 @@
     "description": "Creamy and delicious ice cream, available in various flavors for a delightful treat.",
     "url": "/service/data/products/ice-cream-gro-brd-cre-028",
     "ratingValue": 3.39,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 5.49,
     "netPrice": 5.012919,
     "discountPercentage": 8.69,
-    "dateCreated": "2026-03-10T17:04:08.394674Z",
-    "dateModified": "2026-03-10T17:04:08.394674Z",
+    "dateCreated": "2026-03-11T13:00:54.803867Z",
+    "dateModified": "2026-03-11T13:00:54.803867Z",
     "thumbnail": "/assets/images/products/thumbnails/ice-cream-gro-brd-cre-028.webp",
     "images": [
         "/assets/images/products/ice-cream-gro-brd-cre-028/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 5.49,
         "netPrice": 5.012919,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 5.49
         },
         "discountPercentage": 8.69

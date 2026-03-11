@@ -9,12 +9,12 @@
     "description": "The Rolex Submariner is a legendary dive watch with a rich history. Known for its durability and water resistance, it's a symbol of adventure and exploration.",
     "url": "/service/data/products/rolex-submariner-watch-men-rol-rol-098",
     "ratingValue": 2.69,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 13999.99,
     "netPrice": 13292.990505,
     "discountPercentage": 5.05,
-    "dateCreated": "2026-03-10T17:04:08.441844Z",
-    "dateModified": "2026-03-10T17:04:08.441844Z",
+    "dateCreated": "2026-03-11T13:00:54.851268Z",
+    "dateModified": "2026-03-11T13:00:54.851268Z",
     "thumbnail": "/assets/images/products/thumbnails/rolex-submariner-watch-men-rol-rol-098.webp",
     "images": [
         "/assets/images/products/rolex-submariner-watch-men-rol-rol-098/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mens-watches"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 13999.99,
         "netPrice": 13292.990505,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 13999.99
         },
         "discountPercentage": 5.05
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "rolex"
-    }
+        "name": "Rolex"
+    },
+    "brandName": "Rolex"
 }

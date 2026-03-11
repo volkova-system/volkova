@@ -9,18 +9,27 @@
     "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
     "url": "/service/data/products/nescafe-coffee-gro-brd-nes-034",
     "ratingValue": 4.82,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 7.99,
     "netPrice": 7.862959,
     "discountPercentage": 1.59,
-    "dateCreated": "2026-03-10T17:04:08.398465Z",
-    "dateModified": "2026-03-10T17:04:08.398465Z",
+    "dateCreated": "2026-03-11T13:00:54.807808Z",
+    "dateModified": "2026-03-11T13:00:54.807808Z",
     "thumbnail": "/assets/images/products/thumbnails/nescafe-coffee-gro-brd-nes-034.webp",
     "images": [
         "/assets/images/products/nescafe-coffee-gro-brd-nes-034/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 7.99,
         "netPrice": 7.862959,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 7.99
         },
         "discountPercentage": 1.59

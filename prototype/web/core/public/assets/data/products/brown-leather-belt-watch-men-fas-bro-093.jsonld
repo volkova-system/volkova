@@ -9,12 +9,12 @@
     "description": "The Brown Leather Belt Watch is a stylish timepiece with a classic design. Featuring a genuine leather strap and a sleek dial, it adds a touch of sophistication to your look.",
     "url": "/service/data/products/brown-leather-belt-watch-men-fas-bro-093",
     "ratingValue": 4.19,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 89.99,
     "netPrice": 84.599599,
     "discountPercentage": 5.99,
-    "dateCreated": "2026-03-10T17:04:08.438293Z",
-    "dateModified": "2026-03-10T17:04:08.438293Z",
+    "dateCreated": "2026-03-11T13:00:54.848101Z",
+    "dateModified": "2026-03-11T13:00:54.848101Z",
     "thumbnail": "/assets/images/products/thumbnails/brown-leather-belt-watch-men-fas-bro-093.webp",
     "images": [
         "/assets/images/products/brown-leather-belt-watch-men-fas-bro-093/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mens-watches"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 89.99,
         "netPrice": 84.599599,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 89.99
         },
         "discountPercentage": 5.99
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "fashion timepieces"
-    }
+        "name": "Fashion Timepieces"
+    },
+    "brandName": "Fashion Timepieces"
 }

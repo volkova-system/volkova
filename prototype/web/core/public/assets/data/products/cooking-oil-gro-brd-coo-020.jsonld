@@ -9,18 +9,27 @@
     "description": "Versatile cooking oil suitable for frying, sautéing, and various culinary applications.",
     "url": "/service/data/products/cooking-oil-gro-brd-coo-020",
     "ratingValue": 4.8,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 4.99,
     "netPrice": 4.524433,
     "discountPercentage": 9.33,
-    "dateCreated": "2026-03-10T17:04:08.389406Z",
-    "dateModified": "2026-03-10T17:04:08.389406Z",
+    "dateCreated": "2026-03-11T13:00:54.798656Z",
+    "dateModified": "2026-03-11T13:00:54.798656Z",
     "thumbnail": "/assets/images/products/thumbnails/cooking-oil-gro-brd-coo-020.webp",
     "images": [
         "/assets/images/products/cooking-oil-gro-brd-coo-020/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 4.99,
         "netPrice": 4.524433,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 4.99
         },
         "discountPercentage": 9.33

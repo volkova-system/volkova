@@ -9,18 +9,27 @@
     "description": "Assorted soft drinks in various flavors, perfect for refreshing beverages.",
     "url": "/service/data/products/soft-drinks-gro-brd-sof-039",
     "ratingValue": 4.75,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1.99,
     "netPrice": 1.642148,
     "discountPercentage": 17.48,
-    "dateCreated": "2026-03-10T17:04:08.401820Z",
-    "dateModified": "2026-03-10T17:04:08.401820Z",
+    "dateCreated": "2026-03-11T13:00:54.811139Z",
+    "dateModified": "2026-03-11T13:00:54.811139Z",
     "thumbnail": "/assets/images/products/thumbnails/soft-drinks-gro-brd-sof-039.webp",
     "images": [
         "/assets/images/products/soft-drinks-gro-brd-sof-039/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1.99,
         "netPrice": 1.642148,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1.99
         },
         "discountPercentage": 17.48

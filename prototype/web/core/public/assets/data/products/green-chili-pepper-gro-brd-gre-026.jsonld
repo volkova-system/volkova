@@ -9,18 +9,27 @@
     "description": "Spicy green chili pepper, ideal for adding heat to your favorite recipes.",
     "url": "/service/data/products/green-chili-pepper-gro-brd-gre-026",
     "ratingValue": 3.66,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 0.99,
     "netPrice": 0.9801,
     "discountPercentage": 1.0,
-    "dateCreated": "2026-03-10T17:04:08.393519Z",
-    "dateModified": "2026-03-10T17:04:08.393519Z",
+    "dateCreated": "2026-03-11T13:00:54.802455Z",
+    "dateModified": "2026-03-11T13:00:54.802455Z",
     "thumbnail": "/assets/images/products/thumbnails/green-chili-pepper-gro-brd-gre-026.webp",
     "images": [
         "/assets/images/products/green-chili-pepper-gro-brd-gre-026/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 0.99,
         "netPrice": 0.9801,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 0.99
         },
         "discountPercentage": 1.0

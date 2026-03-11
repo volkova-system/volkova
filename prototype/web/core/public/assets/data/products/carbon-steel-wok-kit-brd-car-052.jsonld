@@ -9,18 +9,27 @@
     "description": "The Carbon Steel Wok is a versatile cooking pan suitable for stir-frying, sautéing, and deep frying. Its sturdy construction ensures even heat distribution for delicious meals.",
     "url": "/service/data/products/carbon-steel-wok-kit-brd-car-052",
     "ratingValue": 4.05,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 29.99,
     "netPrice": 28.031653,
     "discountPercentage": 6.53,
-    "dateCreated": "2026-03-10T17:04:08.411478Z",
-    "dateModified": "2026-03-10T17:04:08.411478Z",
+    "dateCreated": "2026-03-11T13:00:54.820200Z",
+    "dateModified": "2026-03-11T13:00:54.820200Z",
     "thumbnail": "/assets/images/products/thumbnails/carbon-steel-wok-kit-brd-car-052.webp",
     "images": [
         "/assets/images/products/carbon-steel-wok-kit-brd-car-052/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 29.99,
         "netPrice": 28.031653,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 29.99
         },
         "discountPercentage": 6.53

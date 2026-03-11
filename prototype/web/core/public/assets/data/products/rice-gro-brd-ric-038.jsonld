@@ -9,18 +9,27 @@
     "description": "High-quality rice, a staple for various cuisines and a versatile base for many dishes.",
     "url": "/service/data/products/rice-gro-brd-ric-038",
     "ratingValue": 3.18,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 5.99,
     "netPrice": 5.433529,
     "discountPercentage": 9.29,
-    "dateCreated": "2026-03-10T17:04:08.401243Z",
-    "dateModified": "2026-03-10T17:04:08.401243Z",
+    "dateCreated": "2026-03-11T13:00:54.810342Z",
+    "dateModified": "2026-03-11T13:00:54.810342Z",
     "thumbnail": "/assets/images/products/thumbnails/rice-gro-brd-ric-038.webp",
     "images": [
         "/assets/images/products/rice-gro-brd-ric-038/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 5.99,
         "netPrice": 5.433529,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 5.99
         },
         "discountPercentage": 9.29

@@ -9,18 +9,27 @@
     "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
     "url": "/service/data/products/green-bell-pepper-gro-brd-gre-025",
     "ratingValue": 3.25,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1.29,
     "netPrice": 1.287936,
     "discountPercentage": 0.16,
-    "dateCreated": "2026-03-10T17:04:08.392941Z",
-    "dateModified": "2026-03-10T17:04:08.392941Z",
+    "dateCreated": "2026-03-11T13:00:54.801845Z",
+    "dateModified": "2026-03-11T13:00:54.801845Z",
     "thumbnail": "/assets/images/products/thumbnails/green-bell-pepper-gro-brd-gre-025.webp",
     "images": [
         "/assets/images/products/green-bell-pepper-gro-brd-gre-025/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1.29,
         "netPrice": 1.287936,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1.29
         },
         "discountPercentage": 0.16

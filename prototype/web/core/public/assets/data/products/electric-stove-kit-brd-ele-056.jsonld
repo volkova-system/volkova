@@ -9,12 +9,12 @@
     "description": "The Electric Stove provides a portable and efficient cooking solution. Ideal for small kitchens or as an additional cooking surface for various culinary needs.",
     "url": "/service/data/products/electric-stove-kit-brd-ele-056",
     "ratingValue": 4.11,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 49.99,
     "netPrice": 42.971404,
     "discountPercentage": 14.04,
-    "dateCreated": "2026-03-10T17:04:08.413960Z",
-    "dateModified": "2026-03-10T17:04:08.413960Z",
+    "dateCreated": "2026-03-11T13:00:54.822867Z",
+    "dateModified": "2026-03-11T13:00:54.822867Z",
     "thumbnail": "/assets/images/products/thumbnails/electric-stove-kit-brd-ele-056.webp",
     "images": [
         "/assets/images/products/electric-stove-kit-brd-ele-056/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 49.99,
         "netPrice": 42.971404,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 49.99
         },
         "discountPercentage": 14.04

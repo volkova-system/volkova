@@ -9,12 +9,12 @@
     "description": "Another variant of the Sports Sneakers in Off White Red, featuring a unique design. These sneakers offer style and comfort for casual occasions.",
     "url": "/service/data/products/sports-sneakers-off-white-red-men-off-spo-092",
     "ratingValue": 4.69,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 109.99,
     "netPrice": 109.94600399999999,
     "discountPercentage": 0.04,
-    "dateCreated": "2026-03-10T17:04:08.437461Z",
-    "dateModified": "2026-03-10T17:04:08.437461Z",
+    "dateCreated": "2026-03-11T13:00:54.847488Z",
+    "dateModified": "2026-03-11T13:00:54.847488Z",
     "thumbnail": "/assets/images/products/thumbnails/sports-sneakers-off-white-red-men-off-spo-092.webp",
     "images": [
         "/assets/images/products/sports-sneakers-off-white-red-men-off-spo-092/picture-0.webp",
@@ -24,6 +24,15 @@
     ],
     "keywords": [
         "mens-shoes"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -40,13 +49,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 109.99,
         "netPrice": 109.94600399999999,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 109.99
         },
         "discountPercentage": 0.04
@@ -154,6 +163,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "off white"
-    }
+        "name": "Off White"
+    },
+    "brandName": "Off White"
 }

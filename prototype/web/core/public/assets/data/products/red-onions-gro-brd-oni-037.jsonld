@@ -9,18 +9,27 @@
     "description": "Flavorful and aromatic red onions, perfect for adding depth to your savory dishes.",
     "url": "/service/data/products/red-onions-gro-brd-oni-037",
     "ratingValue": 4.2,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1.99,
     "netPrice": 1.79299,
     "discountPercentage": 9.9,
-    "dateCreated": "2026-03-10T17:04:08.400613Z",
-    "dateModified": "2026-03-10T17:04:08.400613Z",
+    "dateCreated": "2026-03-11T13:00:54.809733Z",
+    "dateModified": "2026-03-11T13:00:54.809733Z",
     "thumbnail": "/assets/images/products/thumbnails/red-onions-gro-brd-oni-037.webp",
     "images": [
         "/assets/images/products/red-onions-gro-brd-oni-037/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1.99,
         "netPrice": 1.79299,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1.99
         },
         "discountPercentage": 9.9

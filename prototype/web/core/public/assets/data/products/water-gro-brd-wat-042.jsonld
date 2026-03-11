@@ -9,18 +9,27 @@
     "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
     "url": "/service/data/products/water-gro-brd-wat-042",
     "ratingValue": 4.96,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 0.99,
     "netPrice": 0.842292,
     "discountPercentage": 14.92,
-    "dateCreated": "2026-03-10T17:04:08.405008Z",
-    "dateModified": "2026-03-10T17:04:08.405008Z",
+    "dateCreated": "2026-03-11T13:00:54.813271Z",
+    "dateModified": "2026-03-11T13:00:54.813271Z",
     "thumbnail": "/assets/images/products/thumbnails/water-gro-brd-wat-042.webp",
     "images": [
         "/assets/images/products/water-gro-brd-wat-042/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 0.99,
         "netPrice": 0.842292,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 0.99
         },
         "discountPercentage": 14.92

@@ -9,12 +9,12 @@
     "description": "The MacBook Pro 14 Inch in Space Grey is a powerful and sleek laptop, featuring Apple's M1 Pro chip for exceptional performance and a stunning Retina display.",
     "url": "/service/data/products/apple-macbook-pro-14-inch-space-grey-lap-app-app-078",
     "ratingValue": 3.65,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1999.99,
     "netPrice": 1906.1904690000001,
     "discountPercentage": 4.69,
-    "dateCreated": "2026-03-10T17:04:08.428294Z",
-    "dateModified": "2026-03-10T17:04:08.428294Z",
+    "dateCreated": "2026-03-11T13:00:54.837250Z",
+    "dateModified": "2026-03-11T13:00:54.837250Z",
     "thumbnail": "/assets/images/products/thumbnails/apple-macbook-pro-14-inch-space-grey-lap-app-app-078.webp",
     "images": [
         "/assets/images/products/apple-macbook-pro-14-inch-space-grey-lap-app-app-078/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "laptops"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1999.99,
         "netPrice": 1906.1904690000001,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1999.99
         },
         "discountPercentage": 4.69
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "apple"
-    }
+        "name": "Apple"
+    },
+    "brandName": "Apple"
 }

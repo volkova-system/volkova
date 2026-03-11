@@ -9,18 +9,27 @@
     "description": "The Hand Blender is a versatile kitchen appliance for blending, pureeing, and mixing. Its compact design and powerful motor make it a convenient tool for various recipes.",
     "url": "/service/data/products/hand-blender-kit-brd-han-061",
     "ratingValue": 3.86,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 34.99,
     "netPrice": 29.034702000000003,
     "discountPercentage": 17.02,
-    "dateCreated": "2026-03-10T17:04:08.416992Z",
-    "dateModified": "2026-03-10T17:04:08.416992Z",
+    "dateCreated": "2026-03-11T13:00:54.826075Z",
+    "dateModified": "2026-03-11T13:00:54.826075Z",
     "thumbnail": "/assets/images/products/thumbnails/hand-blender-kit-brd-han-061.webp",
     "images": [
         "/assets/images/products/hand-blender-kit-brd-han-061/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 34.99,
         "netPrice": 29.034702000000003,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 34.99
         },
         "discountPercentage": 17.02

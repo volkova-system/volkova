@@ -9,12 +9,12 @@
     "description": "The Longines Master Collection is an elegant and refined watch known for its precision and craftsmanship. With a timeless design, it's a symbol of luxury and sophistication.",
     "url": "/service/data/products/longines-master-collection-men-lon-lon-094",
     "ratingValue": 3.87,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 1499.99,
     "netPrice": 1241.391724,
     "discountPercentage": 17.24,
-    "dateCreated": "2026-03-10T17:04:08.439056Z",
-    "dateModified": "2026-03-10T17:04:08.439056Z",
+    "dateCreated": "2026-03-11T13:00:54.848720Z",
+    "dateModified": "2026-03-11T13:00:54.848720Z",
     "thumbnail": "/assets/images/products/thumbnails/longines-master-collection-men-lon-lon-094.webp",
     "images": [
         "/assets/images/products/longines-master-collection-men-lon-lon-094/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "mens-watches"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 1499.99,
         "netPrice": 1241.391724,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 1499.99
         },
         "discountPercentage": 17.24
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "longines"
-    }
+        "name": "Longines"
+    },
+    "brandName": "Longines"
 }

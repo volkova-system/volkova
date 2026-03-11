@@ -9,18 +9,27 @@
     "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
     "url": "/service/data/products/juice-gro-brd-jui-029",
     "ratingValue": 3.94,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 3.99,
     "netPrice": 3.5088060000000003,
     "discountPercentage": 12.06,
-    "dateCreated": "2026-03-10T17:04:08.395254Z",
-    "dateModified": "2026-03-10T17:04:08.395254Z",
+    "dateCreated": "2026-03-11T13:00:54.804585Z",
+    "dateModified": "2026-03-11T13:00:54.804585Z",
     "thumbnail": "/assets/images/products/thumbnails/juice-gro-brd-jui-029.webp",
     "images": [
         "/assets/images/products/juice-gro-brd-jui-029/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 3.99,
         "netPrice": 3.5088060000000003,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 3.99
         },
         "discountPercentage": 12.06

@@ -9,18 +9,27 @@
     "description": "Nutritious cat food formulated to meet the dietary needs of your feline friend.",
     "url": "/service/data/products/cat-food-gro-brd-foo-018",
     "ratingValue": 3.13,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 8.99,
     "netPrice": 8.128758,
     "discountPercentage": 9.58,
-    "dateCreated": "2026-03-10T17:04:08.388038Z",
-    "dateModified": "2026-03-10T17:04:08.388038Z",
+    "dateCreated": "2026-03-11T13:00:54.797149Z",
+    "dateModified": "2026-03-11T13:00:54.797149Z",
     "thumbnail": "/assets/images/products/thumbnails/cat-food-gro-brd-foo-018.webp",
     "images": [
         "/assets/images/products/cat-food-gro-brd-foo-018/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 8.99,
         "netPrice": 8.128758,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 8.99
         },
         "discountPercentage": 9.58

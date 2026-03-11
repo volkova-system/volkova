@@ -9,18 +9,27 @@
     "description": "Specially formulated dog food designed to provide essential nutrients for your canine companion.",
     "url": "/service/data/products/dog-food-gro-brd-foo-022",
     "ratingValue": 4.55,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 10.99,
     "netPrice": 9.861327,
     "discountPercentage": 10.27,
-    "dateCreated": "2026-03-10T17:04:08.391032Z",
-    "dateModified": "2026-03-10T17:04:08.391032Z",
+    "dateCreated": "2026-03-11T13:00:54.799859Z",
+    "dateModified": "2026-03-11T13:00:54.799859Z",
     "thumbnail": "/assets/images/products/thumbnails/dog-food-gro-brd-foo-022.webp",
     "images": [
         "/assets/images/products/dog-food-gro-brd-foo-022/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 10.99,
         "netPrice": 9.861327,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 10.99
         },
         "discountPercentage": 10.27

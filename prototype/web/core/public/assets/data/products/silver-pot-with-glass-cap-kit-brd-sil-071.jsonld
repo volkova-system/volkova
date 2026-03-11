@@ -9,18 +9,27 @@
     "description": "The Silver Pot with Glass Cap is a stylish and functional cookware item for boiling, simmering, and preparing delicious meals. Its glass cap allows you to monitor cooking progress.",
     "url": "/service/data/products/silver-pot-with-glass-cap-kit-brd-sil-071",
     "ratingValue": 3.22,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 39.99,
     "netPrice": 37.710570000000004,
     "discountPercentage": 5.7,
-    "dateCreated": "2026-03-10T17:04:08.423574Z",
-    "dateModified": "2026-03-10T17:04:08.423574Z",
+    "dateCreated": "2026-03-11T13:00:54.832677Z",
+    "dateModified": "2026-03-11T13:00:54.832677Z",
     "thumbnail": "/assets/images/products/thumbnails/silver-pot-with-glass-cap-kit-brd-sil-071.webp",
     "images": [
         "/assets/images/products/silver-pot-with-glass-cap-kit-brd-sil-071/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 39.99,
         "netPrice": 37.710570000000004,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 39.99
         },
         "discountPercentage": 5.7

@@ -9,18 +9,27 @@
     "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
     "url": "/service/data/products/milk-gro-brd-mil-032",
     "ratingValue": 2.61,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 3.49,
     "netPrice": 3.0104740000000003,
     "discountPercentage": 13.74,
-    "dateCreated": "2026-03-10T17:04:08.397221Z",
-    "dateModified": "2026-03-10T17:04:08.397221Z",
+    "dateCreated": "2026-03-11T13:00:54.806597Z",
+    "dateModified": "2026-03-11T13:00:54.806597Z",
     "thumbnail": "/assets/images/products/thumbnails/milk-gro-brd-mil-032.webp",
     "images": [
         "/assets/images/products/milk-gro-brd-mil-032/picture-0.webp"
     ],
     "keywords": [
         "groceries"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 3.49,
         "netPrice": 3.0104740000000003,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 3.49
         },
         "discountPercentage": 13.74

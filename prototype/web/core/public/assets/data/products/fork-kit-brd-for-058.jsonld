@@ -9,18 +9,27 @@
     "description": "The Fork is a classic utensil for various dining and serving purposes. Its durable and ergonomic design makes it a reliable choice for everyday use.",
     "url": "/service/data/products/fork-kit-brd-for-058",
     "ratingValue": 3.11,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 3.99,
     "netPrice": 3.6680070000000002,
     "discountPercentage": 8.07,
-    "dateCreated": "2026-03-10T17:04:08.415121Z",
-    "dateModified": "2026-03-10T17:04:08.415121Z",
+    "dateCreated": "2026-03-11T13:00:54.824067Z",
+    "dateModified": "2026-03-11T13:00:54.824067Z",
     "thumbnail": "/assets/images/products/thumbnails/fork-kit-brd-for-058.webp",
     "images": [
         "/assets/images/products/fork-kit-brd-for-058/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 3.99,
         "netPrice": 3.6680070000000002,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 3.99
         },
         "discountPercentage": 8.07

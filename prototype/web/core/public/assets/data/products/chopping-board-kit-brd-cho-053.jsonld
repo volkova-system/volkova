@@ -9,18 +9,27 @@
     "description": "The Chopping Board is an essential kitchen accessory for food preparation. Made from durable material, it provides a safe and hygienic surface for cutting and chopping.",
     "url": "/service/data/products/chopping-board-kit-brd-cho-053",
     "ratingValue": 3.7,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 12.99,
     "netPrice": 11.946903,
     "discountPercentage": 8.03,
-    "dateCreated": "2026-03-10T17:04:08.412094Z",
-    "dateModified": "2026-03-10T17:04:08.412094Z",
+    "dateCreated": "2026-03-11T13:00:54.820779Z",
+    "dateModified": "2026-03-11T13:00:54.820779Z",
     "thumbnail": "/assets/images/products/thumbnails/chopping-board-kit-brd-cho-053.webp",
     "images": [
         "/assets/images/products/chopping-board-kit-brd-cho-053/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 12.99,
         "netPrice": 11.946903,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 12.99
         },
         "discountPercentage": 8.03

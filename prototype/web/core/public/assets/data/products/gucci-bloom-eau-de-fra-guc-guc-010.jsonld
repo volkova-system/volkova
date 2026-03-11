@@ -9,12 +9,12 @@
     "description": "Gucci Bloom by Gucci is a floral and captivating fragrance, with notes of tuberose, jasmine, and Rangoon creeper. It's a modern and romantic scent.",
     "url": "/service/data/products/gucci-bloom-eau-de-fra-guc-guc-010",
     "ratingValue": 2.74,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 79.99,
     "netPrice": 68.479439,
     "discountPercentage": 14.39,
-    "dateCreated": "2026-03-10T17:04:08.382861Z",
-    "dateModified": "2026-03-10T17:04:08.382861Z",
+    "dateCreated": "2026-03-11T13:00:54.791617Z",
+    "dateModified": "2026-03-11T13:00:54.791617Z",
     "thumbnail": "/assets/images/products/thumbnails/gucci-bloom-eau-de-fra-guc-guc-010.webp",
     "images": [
         "/assets/images/products/gucci-bloom-eau-de-fra-guc-guc-010/picture-0.webp",
@@ -23,6 +23,15 @@
     ],
     "keywords": [
         "fragrances"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -39,13 +48,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 79.99,
         "netPrice": 68.479439,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 79.99
         },
         "discountPercentage": 14.39
@@ -152,6 +161,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "gucci"
-    }
+        "name": "Gucci"
+    },
+    "brandName": "Gucci"
 }

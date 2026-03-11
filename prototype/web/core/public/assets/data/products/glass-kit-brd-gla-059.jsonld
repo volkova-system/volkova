@@ -9,18 +9,27 @@
     "description": "The Glass is a versatile and elegant drinking vessel suitable for a variety of beverages. Its clear design allows you to enjoy the colors and textures of your drinks.",
     "url": "/service/data/products/glass-kit-brd-gla-059",
     "ratingValue": 4.02,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 4.99,
     "netPrice": 4.594792,
     "discountPercentage": 7.92,
-    "dateCreated": "2026-03-10T17:04:08.415712Z",
-    "dateModified": "2026-03-10T17:04:08.415712Z",
+    "dateCreated": "2026-03-11T13:00:54.824654Z",
+    "dateModified": "2026-03-11T13:00:54.824654Z",
     "thumbnail": "/assets/images/products/thumbnails/glass-kit-brd-gla-059.webp",
     "images": [
         "/assets/images/products/glass-kit-brd-gla-059/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 4.99,
         "netPrice": 4.594792,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 4.99
         },
         "discountPercentage": 7.92

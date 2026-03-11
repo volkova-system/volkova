@@ -9,18 +9,27 @@
     "description": "The Egg Slicer is a convenient tool for slicing boiled eggs evenly. It's perfect for salads, sandwiches, and other dishes where sliced eggs are desired.",
     "url": "/service/data/products/egg-slicer-kit-brd-sli-055",
     "ratingValue": 3.09,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 6.99,
     "netPrice": 5.958276,
     "discountPercentage": 14.76,
-    "dateCreated": "2026-03-10T17:04:08.413372Z",
-    "dateModified": "2026-03-10T17:04:08.413372Z",
+    "dateCreated": "2026-03-11T13:00:54.822201Z",
+    "dateModified": "2026-03-11T13:00:54.822201Z",
     "thumbnail": "/assets/images/products/thumbnails/egg-slicer-kit-brd-sli-055.webp",
     "images": [
         "/assets/images/products/egg-slicer-kit-brd-sli-055/picture-0.webp"
     ],
     "keywords": [
         "kitchen-accessories"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 6.99,
         "netPrice": 5.958276,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 6.99
         },
         "discountPercentage": 14.76

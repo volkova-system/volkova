@@ -9,18 +9,27 @@
     "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
     "url": "/service/data/products/red-lipstick-bea-chi-lip-004",
     "ratingValue": 4.36,
-    "priceCurrency": "php",
+    "priceCurrency": "usd",
     "price": 12.99,
     "netPrice": 11.410416,
     "discountPercentage": 12.16,
-    "dateCreated": "2026-03-10T17:04:08.379001Z",
-    "dateModified": "2026-03-10T17:04:08.379001Z",
+    "dateCreated": "2026-03-11T13:00:54.787655Z",
+    "dateModified": "2026-03-11T13:00:54.787655Z",
     "thumbnail": "/assets/images/products/thumbnails/red-lipstick-bea-chi-lip-004.webp",
     "images": [
         "/assets/images/products/red-lipstick-bea-chi-lip-004/picture-0.webp"
     ],
     "keywords": [
         "beauty"
+    ],
+    "sortCriteria": [
+        "ratingValue",
+        "netPrice",
+        "discountPercentage"
+    ],
+    "filterFields": [
+        "keywords",
+        "brandName"
     ],
     "cacheIdentifier": {
         "@type": "PropertyValue",
@@ -37,13 +46,13 @@
     },
     "offers": {
         "@type": "Offer",
-        "priceCurrency": "php",
+        "priceCurrency": "usd",
         "price": 12.99,
         "netPrice": 11.410416,
         "availability": "https://schema.org/InStock",
         "priceSpecification": {
             "@type": "PriceSpecification",
-            "priceCurrency": "php",
+            "priceCurrency": "usd",
             "price": 12.99
         },
         "discountPercentage": 12.16
@@ -148,6 +157,7 @@
     },
     "brand": {
         "@type": "Brand",
-        "name": "chic cosmetics"
-    }
+        "name": "Chic Cosmetics"
+    },
+    "brandName": "Chic Cosmetics"
 }
