@@ -1,5 +1,33 @@
 class ProductList extends HTMLElement {
+    static get observedAttributes() {
+        return ["data-component", "data-service"];
+    }
+
+    constructor() {
+        super();
+
+        this._renderTimeout = null;
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue && oldValue !== null) {
+            this.requestRender();
+        }
+    }
+
     connectedCallback() {
+        this.requestRender();
+    }
+
+    requestRender() {
+        if (this._renderTimeout) {
+            cancelAnimationFrame(this._renderTimeout);
+        }
+
+        this._renderTimeout = requestAnimationFrame(() => this.render());
+    }
+
+    render() {
         const componentService = this.getAttribute("data-component")
         if (!componentService) return
 
