@@ -19,7 +19,9 @@ export async function GET(req: Request) {
                 return `
                     <li class="product-filter-field input-tree-item item"
                         _="">
-                        <div class="content">${ value }</div>
+                        <div class="spacer"></div>
+                        <div class="content">${ value.split(/\-/).join(" ") }</div>
+                        <div class="spacer"></div>
                     </li>
                     <li class="normal-spacing item spacer"></li>
                 `
