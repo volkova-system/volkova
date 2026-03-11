@@ -1,0 +1,24 @@
+.concise-component aside.input-tree.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+}
+
+.concise-component aside.input-tree > ul.input-tree-list.list,
+.concise-component aside.input-tree > ol.input-tree-list.list {
+    width: var(--concise-list-width);
+    min-width: var(--concise-list-width);
+    max-width: var(--concise-list-width);
+
+    height: auto;
+
+    overflow-y: auto;
+}
+
+.concise-component li.input-tree-item.item {
+    flex-direction: row;
+}
