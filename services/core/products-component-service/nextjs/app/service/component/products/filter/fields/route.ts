@@ -9,23 +9,29 @@ export async function GET(req: Request) {
 
     const dataService = `${process.env.PRODUCT_DATA_SERVICE_ADDRESS}${searchParams.get("data")}`
 
-    const dataProducts = await fetch(dataService).then(response => response.json())
+    const dataFilterFields = await fetch(dataService).then(response => response.json())
 
-    const products = dataProducts.products || []
+    const filterFields: Record<string, string[]> = dataFilterFields.filterFields || {}
 
-    const productList = products.map((product: Product) => {
-        const thumbnail = `${process.env.IMAGES_FILE_SERVICE_ADDRESS}${product.thumbnail}`
+    const filters = Object.entries( filterFields )
+        .map(([field, values]) => {
+            return values.map((value)=> {
+                return `
+                    <li class="product-filter-field input-tree-item item"
+                        _="">
+                        <div class="content">${ value }</div>
+                    </li>
+                    <li class="normal-spacing item spacer"></li>
+                `
+            }).join("")
+        }).join("")
 
-        return `
-            <li class="input-tree-item item"
-                _="">
-                <data class="content"></data>
-            </li>
-            <li class="normal-spacing item spacer"></li>
-        `
-    }).join("")
-
-    const html = `<ol class="product-list input-tree-list list">${productList}</ol>`
+    const html = `
+        <ol id="product-filter-fields"
+            class="product-filter-fields input-tree-list list">
+            ${ filters }
+        </ol>
+    `
 
     return new Response(html, {
         headers: {
