@@ -36,6 +36,8 @@ export async function GET(req: Request) {
                             aria-label="filter ${ label } by ${ value }"
                             _="
                                 on click
+                                    add .hidden to #product-preview-tree
+
                                     set field to '${ field }'
                                     set value to '${ encodedValue }'
                                     set @data-state of <product-list/> to 'filter'
