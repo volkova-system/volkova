@@ -45,7 +45,6 @@
                     on click
                         add .hidden to #product-search-tree
                         remove .hidden from #product-search-tree-idle
-                        set @data-state of <product-list/> to 'list'
 
                         add .hidden to #product-sort-tree
                         add .hidden to #product-sort-tree-divider
@@ -60,19 +59,40 @@
                 </svg>
             </button>
             <div class="content">
-                <input id="search-product-query" type="text"
-                    placeholder="Search products"/>
+                <input id="search-products-query"
+                    type="text"
+                    class="input title value"
+                    placeholder="search products"/>
             </div>
-            <button class="icon-control control"
+            <button id="search-products-control"
+                class="icon-control control"
                 aria-label="search products"
                 _="
                     on click
-                        set query to #search-product-query.value
+                        add .hidden to #search-products-control
+                        remove .hidden from #clear-search-products-control
+
+                        set query to #search-products-query.value
                         set @data-state of <product-list/> to 'search'
                         set @data-service of <product-list/> to '/service/data/products/search?query=' + query
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#search" />
+                </svg>
+            </button>
+            <button id="clear-search-products-control"
+                class="icon-control control hidden"
+                aria-label="clear search"
+                _="
+                    on click
+                        add .hidden to #clear-search-products-control
+                        remove .hidden from #search-products-control
+
+                        set #search-products-query.value to ''
+                        set @data-state of <product-list/> to 'list'
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#x" />
                 </svg>
             </button>
         </li>
