@@ -211,8 +211,11 @@
     <button class="icon-control control"
         aria-label="expand product search panel"
         _="
-            on click remove .hidden from #product-search-tree
-            on click add .hidden to #product-search-tree-idle
+            on click
+                remove .hidden from #product-search-tree
+                add .hidden to #product-search-tree-idle
+
+                add .hidden to #product-preview-tree
         ">
         <svg class="icon">
             <use href="/assets/images/feather-sprite.svg#search" />
