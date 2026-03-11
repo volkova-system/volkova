@@ -87,8 +87,10 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
+
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
+
             return productA.Reference < productB.Reference
         },
     )
@@ -101,8 +103,10 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
+
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
+
             return productA.Headline < productB.Headline
         },
     )
@@ -115,8 +119,10 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
+
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
+
             return productA.DiscountPercentage < productB.DiscountPercentage
         },
     )
@@ -129,8 +135,10 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
+
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
+
             return productA.RatingValue < productB.RatingValue
         },
     )
@@ -143,8 +151,10 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "product:*",
         func(a, b string) bool {
             var productA, productB model.Product
+
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
+
             return productA.NetPrice < productB.NetPrice
         },
     )
@@ -186,8 +196,7 @@ func (db *Cache) PushProduct(product model.Product) error {
 
     // Store in cache with transaction safety
     return db.products.Update(func(tx *buntdb.Tx) error {
-        _, _, err := tx.Set(product.CacheIdentifier.Value,
-            string(data), nil)
+        _, _, err := tx.Set(product.CacheIdentifier.Value, string(data), nil)
         if err != nil {
             return fmt.Errorf(
                 "failed to store product in cache: %w", err)
@@ -329,8 +338,7 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 			var product model.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
-                    "failed to unmarshal product at key %s: %w",
-                    key, err)
+                    "failed to unmarshal product at key %s: %w", key, err)
 
                 return false
 			}
@@ -416,8 +424,8 @@ func (db *Cache) GetSearchCount(query string) (int, error) {
 			var product model.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
-					"failed to unmarshal product at key %s: %w",
-					key, err)
+					"failed to unmarshal product at key %s: %w", key, err)
+
 				return false
 			}
 
@@ -427,6 +435,7 @@ func (db *Cache) GetSearchCount(query string) (int, error) {
 			}
 
 			count++
+
 			return true
 		})
 
@@ -497,8 +506,7 @@ func (db *Cache) SearchProducts(query string,
 			var product model.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
-					"failed to unmarshal product at key %s: %w",
-					key, err)
+					"failed to unmarshal product at key %s: %w", key, err)
 
 				return false
 			}
@@ -512,6 +520,7 @@ func (db *Cache) SearchProducts(query string,
 			// Skip items until we reach the skip offset
 			if count < skip {
 				count++
+
 				return true
 			}
 
@@ -609,6 +618,7 @@ func (db *Cache) SortProducts(skip, limit int,
 			// Skip items until we reach the skip offset
 			if count < skip {
 				count++
+
 				return true
 			}
 
@@ -635,6 +645,7 @@ func (db *Cache) SortProducts(skip, limit int,
 
 		if descending {
 			tx.Descend(indexName, iterateFunc)
+
 		} else {
 			tx.Ascend(indexName, iterateFunc)
 		}
@@ -648,6 +659,7 @@ func (db *Cache) SortProducts(skip, limit int,
 
 	return products, nil
 }
+
 // FilterProducts retrieves a paginated list of products from the cache filtered by
 // the specified field and value.
 // The function supports filtering by first-level Product fields or
@@ -718,6 +730,7 @@ func (db *Cache) FilterProducts(skip, limit int,
 				for _, keyword := range product.Keywords {
 					if keyword == value {
 						matches = true
+
 						break
 					}
 				}
@@ -727,6 +740,7 @@ func (db *Cache) FilterProducts(skip, limit int,
 				for _, prop := range product.AdditionalProperty {
 					if prop.Name == field && prop.Value == value {
 						matches = true
+
 						break
 					}
 				}
@@ -786,6 +800,7 @@ func (db *Cache) GetSortCriteria() ([]string, error) {
 			// Cache hit - unmarshal and return
 			return json.Unmarshal([]byte(val), &cachedCriteria)
 		}
+
 		return err
 	})
 
@@ -993,8 +1008,8 @@ func (db *Cache) GetFilterFieldValues() (map[string][]string, error) {
 		for value := range valuesMap {
 			values = append(values, value)
 		}
-		sort.Strings(values)
 
+		sort.Strings(values)
 		result[fieldName] = values
 	}
 
@@ -1006,8 +1021,10 @@ func (db *Cache) GetFilterFieldValues() (map[string][]string, error) {
 func (db *Cache) invalidateMetadataCache(tx *buntdb.Tx) {
 	// Remove cached sort criteria
 	tx.Delete("products:sortCriteria")
+
 	// Remove cached filter fields (when we add caching for it)
 	tx.Delete("products:filterFields")
+
 	// Remove cached filter field values (when we add caching for it)
 	tx.Delete("products:filterFieldValues")
 }
