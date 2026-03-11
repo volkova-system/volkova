@@ -25,8 +25,7 @@ func GetFilterFieldsProductHandler(cache *cache.Cache) fiber.Handler {
 func getFilterFieldsFromCache(c fiber.Ctx, cache *cache.Cache) error {
 	fieldValues, err := retrieveFilterFieldsFromCache(cache)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
 	}
 
 	return sendFilterFieldsResponse(c, fieldValues)
