@@ -35,7 +35,9 @@ export async function GET(req: Request) {
                 <button class="icon-control control"
                     aria-label="close ${product.headline} product preview"
                     _="
-                        on click add .hidden to #product-preview-tree
+                        on click
+                            add .hidden to #product-preview-tree
+
                         then tell <product-card/>
                             set @data-state to 'idle'
                         end
