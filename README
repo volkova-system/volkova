@@ -172,6 +172,121 @@ AUTOMATED SCRIPTS DETECT AND PREVENT UNAUTHORIZED CHANGES.
         - Modular default.conf files enable live configuration updates.
         - Volume mounts enable live development without rebuilds.
 
+    - Manual Bootstrapping (All Platforms):
+
+        - Prerequisites (install once):
+
+            - Windows (PowerShell):
+                - winget install Microsoft.PowerShell
+                - winget install Volta.Volta
+                - winget install GoLang.Go
+                - winget install Nginx.Nginx
+                - winget install Git.Git
+                - volta install node@24.14.0 npm@11.11.0
+
+            - macOS (Homebrew):
+                - brew install volta go nginx git
+                - volta install node@24.14.0 npm@11.11.0
+
+            - Linux (Debian/Ubuntu):
+                - sudo apt update
+                - sudo apt install -y golang-go git nginx curl
+                - curl -fsSL https://get.volta.sh | bash
+                - exec $SHELL -l
+                - volta install node@24.14.0 npm@11.11.0
+
+        - Start services in separate terminals (order matters):
+
+            - Windows (PowerShell 7+), from repo root:
+
+                - $REPO = (Get-Location).Path
+
+                - Storybook (3690):
+                    - cd prototype\web\core
+                    - npm ci
+                    - npm run storybook
+
+                - Images File Service (5173) via nginx:
+                    - $PUB = "$REPO\prototype\web\core\public"
+                    - $CFG = "$env:TEMP\vs-images.conf"
+                    - $SRC = ".\services\core\images-file-service\nginx"
+                    - Copy-Item "$SRC\default.conf" $CFG
+                    - (Get-Content $CFG) -replace '/usr/share/nginx/html',$PUB | `
+                      Set-Content $CFG
+                    - nginx -c $CFG -g "daemon off;"
+
+                - Products Data Service (4979):
+                    - $PDS = "$REPO\services\core\products-data-service\fiber-go"
+                    - $env:PRODUCTS_CACHE_PATH = "$PDS\data\products-cache.db"
+                    - cd services\core\products-data-service\fiber-go
+                    - go mod tidy
+                    - go run main.go
+
+                - Products Component Service (6039):
+                    - cd services\core\products-component-service\nextjs
+                    - $env:PRODUCT_DATA_SERVICE_ADDRESS = "http://localhost:4979"
+                    - $env:IMAGES_FILE_SERVICE_ADDRESS = "http://localhost:5173"
+                    - npm ci
+                    - npm run dev
+
+                - Prototype Service (9630) via nginx:
+                    - $CFG2 = "$env:TEMP\vs-proxy.conf"
+                    - $SRC2 = ".\services\core\prototype-service\nginx"
+                    - Copy-Item "$SRC2\default.conf" $CFG2
+                    - $c = Get-Content $CFG2
+                    - $c = $c -replace 'server storybook:3690;', 'server 127.0.0.1:3690;'
+                    - $c = $c -replace 'server images-file-service:5173;', `
+                      'server 127.0.0.1:5173;'
+                    - $c = $c -replace 'server products-data-service:4979;', `
+                      'server 127.0.0.1:4979;'
+                    - $c = $c -replace 'server products-component-service:6039;', `
+                      'server 127.0.0.1:6039;'
+                    - Set-Content -Path $CFG2 -Value $c
+                    - nginx -c $CFG2 -g "daemon off;"
+
+            - macOS/Linux (bash), from repo root:
+
+                - REPO="$(pwd)"
+
+                - Storybook (3690):
+                    - cd prototype/web/core
+                    - npm ci
+                    - npm run storybook
+
+                - Images File Service (5173) via nginx:
+                    - PUB="$REPO/prototype/web/core/public"
+                    - CFG="/tmp/vs-images.conf"
+                    - cp services/core/images-file-service/nginx/default.conf "$CFG"
+                    - sed -i.bak "s|/usr/share/nginx/html|$PUB|g" "$CFG"
+                    - nginx -c "$CFG" -g "daemon off;"
+
+                - Products Data Service (4979):
+                    - PDS="$REPO/services/core/products-data-service/fiber-go"
+                    - export PRODUCTS_CACHE_PATH="$PDS/data/products-cache.db"
+                    - cd services/core/products-data-service/fiber-go
+                    - go mod tidy
+                    - go run main.go
+
+                - Products Component Service (6039):
+                    - cd services/core/products-component-service/nextjs
+                    - export PRODUCT_DATA_SERVICE_ADDRESS="http://localhost:4979"
+                    - export IMAGES_FILE_SERVICE_ADDRESS="http://localhost:5173"
+                    - npm ci
+                    - npm run dev
+
+                - Prototype Service (9630) via nginx:
+                    - CFG2="/tmp/vs-proxy.conf"
+                    - cp services/core/prototype-service/nginx/default.conf "$CFG2"
+                    - sed -i.bak "s|server storybook:3690;|server 127.0.0.1:3690;|" "$CFG2"
+                    - sed -i.bak "s|server images-file-service:5173;|server 127.0.0.1:5173;|" "$CFG2"
+                    - sed -i.bak "s|server products-data-service:4979;|server 127.0.0.1:4979;|" "$CFG2"
+                    - sed -i.bak "s|server products-component-service:6039;|server 127.0.0.1:6039;|" "$CFG2"
+                    - nginx -c "$CFG2" -g "daemon off;"
+
+        - Stop services:
+            - Press Ctrl+C in each terminal.
+            - Confirm ports 3690, 4979, 5173, 6039, 9630 are free.
+
 A.  Compliance:
 
     - Agents MUST use PowerShell 7.5.4 or later for .ps1 scripts.
