@@ -34,6 +34,24 @@ export async function GET(req: Request) {
                             aria-label="filter ${ label } by ${ value }"
                             _="
                                 on click
+                                    add .hidden to me
+                                    add .hidden to #product-preview-tree
+                                    remove .hidden from #product-filter-tree-divider
+
+                                    set field to '${ field }'
+                                    set value to '${ encodedValue }'
+                                    set @data-state of <product-list/> to 'filter'
+                                    set @data-service of <product-list/> to '/service/data/products/filter?field=' + field + '&value=' + value
+                            ">
+                            <svg class="icon">
+                                <use href="/assets/images/feather-sprite.svg#filter" />
+                            </svg>
+                        </button>
+                        <button class="icon-control control"
+                            aria-label="clear filter ${ label } by ${ value }"
+                            _="
+                                on click
+                                    add .hidden to me
                                     add .hidden to #product-preview-tree
 
                                     set field to '${ field }'
