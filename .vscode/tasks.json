@@ -404,6 +404,7 @@
         {
             "label": "Start All Windows Core Services",
             "dependsOn": [
+                "Run Core Background Storybook",
                 "Start Windows Prototype Core Images File Service",
                 "Start Windows Prototype Core Products Data Service",
                 "Start Windows Prototype Core Products Component Service",
@@ -415,10 +416,11 @@
         {
             "label": "Stop All Windows Core Services",
             "dependsOn": [
+                "Stop Windows Prototype Core Prototype Service",
                 "Stop Windows Prototype Core Products Component Service",
                 "Stop Windows Prototype Core Products Data Service",
                 "Stop Windows Prototype Core Images File Service",
-                "Stop Windows Prototype Core Prototype Service"
+                "Stop Core Background Storybook"
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
