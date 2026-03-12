@@ -1,79 +1,300 @@
 #!/usr/bin/env pwsh
-# Start All Core Services - Docker Compose Version
-# This script replicates the "Start All Windows Core Services" task from tasks.json
+# Consolidated Core Services Startup Script
+# Handles validation, diagnostics, fixes, and service startup automatically
 # Requires PowerShell 7.5.4 or later
 
 #Requires -Version 7.5.4
 
-Write-Host "🚀 Starting All Core Services with Docker Compose..." -ForegroundColor Green
+Write-Host "🚀 Starting Core Services" -ForegroundColor Green
+Write-Host "=========================" -ForegroundColor Green
 
-# Change to the directory containing docker-compose.yml
 Set-Location $PSScriptRoot
 
-# Build and start all services
-Write-Host "📦 Building and starting services..." -ForegroundColor Yellow
-docker-compose up --build -d
+# Function: Check if running as Administrator
+function Test-Administrator {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
 
-# Wait for services to be ready
-Write-Host "⏳ Waiting for services to be ready..." -ForegroundColor Yellow
-Start-Sleep -Seconds 10
+# Function: Restart as Administrator if needed
+function Restart-AsAdmin {
+    if (-not (Test-Administrator)) {
+        Write-Host "🔐 Restarting as Administrator..." -ForegroundColor Yellow
+        Start-Process -FilePath "pwsh" -ArgumentList "-File", $PSCommandPath -Verb RunAs
+        exit 0
+    }
+}
 
-# Check service health
-Write-Host "🔍 Checking service health..." -ForegroundColor Yellow
+# Function: Stop Docker Desktop completely
+function Stop-DockerDesktop {
+    Write-Host "🛑 Stopping Docker Desktop..." -ForegroundColor Yellow
 
-$services = @(
-    @{Name="storybook"; Port=3690},
-    @{Name="images-file-service"; Port=5173},
-    @{Name="products-data-service"; Port=4979},
-    @{Name="products-component-service"; Port=6039},
-    @{Name="prototype-service"; Port=9630}
-)
+    $dockerProcesses = Get-Process | Where-Object {
+        $_.ProcessName -like "*Docker*" -and $_.ProcessName -ne "dockerd"
+    }
 
-foreach ($service in $services) {
-    Write-Host "Checking $($service.Name) on port $($service.Port)..." -ForegroundColor Cyan
-
-    # Wait up to 60 seconds for service to be ready
-    $timeout = 60
-    $ready = $false
-
-    while ($timeout -gt 0 -and -not $ready) {
+    foreach ($process in $dockerProcesses) {
         try {
-            $response = Invoke-WebRequest -Uri "http://localhost:$($service.Port)" -TimeoutSec 5 -UseBasicParsing -ErrorAction Stop
-            Write-Host "✅ $($service.Name) is ready" -ForegroundColor Green
-            $ready = $true
+            $process.CloseMainWindow() | Out-Null
+            Start-Sleep -Seconds 1
+            if (-not $process.HasExited) { $process.Kill() }
+        } catch { }
+    }
+
+    $dockerServices = Get-Service | Where-Object { $_.Name -like "*docker*" }
+    foreach ($service in $dockerServices) {
+        if ($service.Status -eq "Running") {
+            try { Stop-Service -Name $service.Name -Force -ErrorAction SilentlyContinue } catch { }
         }
-        catch {
+    }
+    Start-Sleep -Seconds 3
+}
+# Function: Start Docker Desktop
+function Start-DockerDesktop {
+    Write-Host "🚀 Starting Docker Desktop..." -ForegroundColor Yellow
+
+    $dockerPaths = @(
+        "${env:ProgramFiles}\Docker\Docker\Docker Desktop.exe",
+        "${env:LOCALAPPDATA}\Programs\Docker\Docker\Docker Desktop.exe"
+    )
+
+    $dockerExe = $dockerPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
+
+    if ($dockerExe) {
+        Start-Process -FilePath $dockerExe -WindowStyle Hidden
+
+        # Wait for Docker to initialize
+        Write-Host "⏳ Waiting for Docker to initialize..." -ForegroundColor Yellow
+        $timeout = 90
+        while ($timeout -gt 0) {
             try {
-                $response = Invoke-WebRequest -Uri "http://localhost:$($service.Port)/health" -TimeoutSec 5 -UseBasicParsing -ErrorAction Stop
+                if (docker info 2>$null) {
+                    Write-Host "✅ Docker is ready" -ForegroundColor Green
+                    return $true
+                }
+            } catch { }
+            Start-Sleep -Seconds 2
+            $timeout -= 2
+        }
+        return $false
+    }
+    return $false
+}
+
+# Function: Clean Docker system
+function Clean-DockerSystem {
+    Write-Host "🧹 Cleaning Docker system..." -ForegroundColor Yellow
+    try {
+        docker system prune -f 2>$null | Out-Null
+        docker context use default 2>$null | Out-Null
+    } catch { }
+}
+
+# Function: Free required ports
+function Free-RequiredPorts {
+    Write-Host "🔓 Freeing required ports..." -ForegroundColor Yellow
+    $ports = @(3690, 4979, 5173, 6039, 9630)
+
+    foreach ($port in $ports) {
+        try {
+            $connections = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue
+            foreach ($conn in $connections) {
+                $process = Get-Process -Id $conn.OwningProcess -ErrorAction SilentlyContinue
+                if ($process) {
+                    Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+                }
+            }
+        } catch { }
+    }
+}
+# Function: Validate prerequisites
+function Test-Prerequisites {
+    Write-Host "🔍 Validating prerequisites..." -ForegroundColor Yellow
+
+    # Check Docker installation
+    if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+        Write-Host "❌ Docker not found. Please install Docker Desktop." -ForegroundColor Red
+        exit 1
+    }
+
+    # Check Docker Compose
+    if (-not (Get-Command docker-compose -ErrorAction SilentlyContinue)) {
+        Write-Host "❌ Docker Compose not found. Please install Docker Desktop." -ForegroundColor Red
+        exit 1
+    }
+
+    # Check required files
+    $requiredFiles = @(
+        "docker-compose.yml",
+        "dockerfiles\Dockerfile.storybook",
+        "dockerfiles\Dockerfile.images-file-service",
+        "dockerfiles\Dockerfile.products-data-service",
+        "dockerfiles\Dockerfile.products-component-service",
+        "dockerfiles\Dockerfile.prototype-service"
+    )
+
+    foreach ($file in $requiredFiles) {
+        if (-not (Test-Path $file)) {
+            Write-Host "❌ Missing required file: $file" -ForegroundColor Red
+            exit 1
+        }
+    }
+
+    Write-Host "✅ Prerequisites validated" -ForegroundColor Green
+}
+
+# Function: Ensure Docker is working
+function Ensure-DockerWorking {
+    Write-Host "🔧 Ensuring Docker is working..." -ForegroundColor Yellow
+
+    # Test if Docker is accessible
+    if (docker info 2>$null) {
+        Write-Host "✅ Docker is already working" -ForegroundColor Green
+        return $true
+    }
+
+    # Restart as admin if needed
+    Restart-AsAdmin
+
+    # Stop Docker completely
+    Stop-DockerDesktop
+
+    # Clean system
+    Clean-DockerSystem
+
+    # Free ports
+    Free-RequiredPorts
+
+    # Restart Docker services
+    $dockerServices = Get-Service | Where-Object { $_.Name -like "*docker*" }
+    foreach ($service in $dockerServices) {
+        try { Restart-Service -Name $service.Name -Force -ErrorAction SilentlyContinue } catch { }
+    }
+
+    # Start Docker Desktop
+    if (-not (Start-DockerDesktop)) {
+        Write-Host "❌ Failed to start Docker Desktop" -ForegroundColor Red
+        exit 1
+    }
+
+    return $true
+}
+# Function: Start services with retry
+function Start-Services {
+    Write-Host "📦 Starting services..." -ForegroundColor Yellow
+
+    $maxRetries = 3
+    $retryCount = 0
+
+    while ($retryCount -lt $maxRetries) {
+        try {
+            $output = docker-compose up --build -d 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "✅ Services started successfully" -ForegroundColor Green
+                return $true
+            } else {
+                $retryCount++
+                if ($retryCount -lt $maxRetries) {
+                    Write-Host "⚠️  Attempt $retryCount failed, retrying..." -ForegroundColor Yellow
+                    Start-Sleep -Seconds 5
+                    Clean-DockerSystem
+                } else {
+                    Write-Host "❌ Failed to start services after $maxRetries attempts" -ForegroundColor Red
+                    Write-Host $output -ForegroundColor Red
+                    return $false
+                }
+            }
+        } catch {
+            $retryCount++
+            if ($retryCount -ge $maxRetries) {
+                Write-Host "❌ Failed to start services: $($_.Exception.Message)" -ForegroundColor Red
+                return $false
+            }
+        }
+    }
+    return $false
+}
+
+# Function: Wait for services to be healthy
+function Wait-ForServices {
+    Write-Host "⏳ Waiting for services to be ready..." -ForegroundColor Yellow
+
+    $services = @(
+        @{Name="Storybook"; Port=3690; Path="/"},
+        @{Name="Images Service"; Port=5173; Path="/health"},
+        @{Name="Products Data"; Port=4979; Path="/service/data/products/health"},
+        @{Name="Products Component"; Port=6039; Path="/"},
+        @{Name="Prototype Service"; Port=9630; Path="/"}
+    )
+
+    Start-Sleep -Seconds 15
+
+    foreach ($service in $services) {
+        $timeout = 60
+        $ready = $false
+
+        while ($timeout -gt 0 -and -not $ready) {
+            try {
+                $response = Invoke-WebRequest -Uri "http://localhost:$($service.Port)$($service.Path)" -TimeoutSec 5 -UseBasicParsing -ErrorAction Stop
                 Write-Host "✅ $($service.Name) is ready" -ForegroundColor Green
                 $ready = $true
-            }
-            catch {
+            } catch {
                 Start-Sleep -Seconds 2
                 $timeout -= 2
             }
         }
-    }
 
-    if (-not $ready) {
-        Write-Host "⚠️  $($service.Name) may not be ready yet (timeout reached)" -ForegroundColor Yellow
+        if (-not $ready) {
+            Write-Host "⚠️  $($service.Name) may not be ready yet" -ForegroundColor Yellow
+        }
     }
 }
+# Main execution
+try {
+    # Step 1: Validate prerequisites
+    Test-Prerequisites
 
-Write-Host ""
-Write-Host "🎉 All Core Services Started!" -ForegroundColor Green
-Write-Host ""
-Write-Host "📋 Service URLs:" -ForegroundColor Cyan
-Write-Host "   • Storybook:                http://localhost:3690"
-Write-Host "   • Images File Service:      http://localhost:5173"
-Write-Host "   • Products Data Service:    http://localhost:4979"
-Write-Host "   • Products Component Service: http://localhost:6039"
-Write-Host "   • Prototype Service (Main): http://localhost:9630"
-Write-Host ""
-Write-Host "🔧 Management Commands:" -ForegroundColor Cyan
-Write-Host "   • View logs:    docker-compose logs -f"
-Write-Host "   • Stop services: docker-compose down"
-Write-Host "   • Restart:      docker-compose restart"
-Write-Host ""
+    # Step 2: Ensure Docker is working
+    Ensure-DockerWorking
 
-Read-Host "Press Enter to continue"
+    # Step 3: Start services
+    if (-not (Start-Services)) {
+        Write-Host "❌ Failed to start services" -ForegroundColor Red
+        exit 1
+    }
+
+    # Step 4: Wait for services to be ready
+    Wait-ForServices
+
+    # Success message
+    Write-Host ""
+    Write-Host "🎉 All Core Services Started Successfully!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "📋 Service URLs:" -ForegroundColor Cyan
+    Write-Host "   • Main Application:         http://localhost:9630" -ForegroundColor White
+    Write-Host "   • Storybook:               http://localhost:3690" -ForegroundColor White
+    Write-Host "   • Images Service:          http://localhost:5173" -ForegroundColor White
+    Write-Host "   • Products Data API:       http://localhost:4979" -ForegroundColor White
+    Write-Host "   • Products Component API:  http://localhost:6039" -ForegroundColor White
+    Write-Host ""
+    Write-Host "🔧 Management Commands:" -ForegroundColor Cyan
+    Write-Host "   • View logs:    docker-compose logs -f" -ForegroundColor White
+    Write-Host "   • Stop services: docker-compose down" -ForegroundColor White
+    Write-Host "   • Restart:      .\start-services.ps1" -ForegroundColor White
+    Write-Host ""
+
+} catch {
+    Write-Host "❌ Unexpected error: $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
+}
+
+# Keep window open only if run directly from Windows Explorer (not from terminal)
+if ($Host.Name -eq "ConsoleHost" -and [Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+    # Only pause if launched by double-clicking (not from command line)
+    $parentProcess = (Get-WmiObject Win32_Process -Filter "ProcessId=$PID").ParentProcessId
+    $parent = Get-Process -Id $parentProcess -ErrorAction SilentlyContinue
+    if ($parent -and $parent.ProcessName -eq "explorer") {
+        Read-Host "Press Enter to exit"
+    }
+}
