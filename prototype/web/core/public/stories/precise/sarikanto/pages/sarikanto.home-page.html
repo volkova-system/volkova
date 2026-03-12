@@ -57,7 +57,7 @@
         class="input-tree-list list">
         <li class="input-tree-item item">
             <button class="icon-control control"
-                aria-label="expand product search panel"
+                aria-label="collapse product search panel"
                 _="
                     on click
                         add .hidden to #product-search-tree
@@ -70,6 +70,12 @@
                         add .hidden to #product-filter-tree
                         add .hidden to #product-filter-tree-divider
                         set @data-state of <product-filter/> to 'idle'
+
+                        set #search-products-query.value to ''
+                        trigger input on #search-products-query
+
+                        set @data-state of <product-list/> to 'list'
+                        set @data-service of <product-list/> to '/service/data/products'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#chevron-right" />
@@ -128,6 +134,7 @@
 
                         set #search-products-query.value to ''
                         trigger input on #search-products-query
+
                         set @data-state of <product-list/> to 'list'
                         set @data-service of <product-list/> to '/service/data/products'
                 ">
