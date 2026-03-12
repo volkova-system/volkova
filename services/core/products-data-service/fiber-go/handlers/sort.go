@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"strconv"
 
 	"github.com/gofiber/fiber/v3"
@@ -37,29 +38,38 @@ func SortProductHandler(cache *cache.Cache) fiber.Handler {
 // cache.
 //
 func sortProductsInCache(c fiber.Ctx, cache *cache.Cache) error {
+	log.Printf("Processing sort request with query params: %v", c.Queries())
+
 	criterion, skip, limit, err := parseSortParams(c)
 	if err != nil {
+		log.Printf("Parameter parsing failed: %v", err)
 		return sendError(c, fiber.StatusBadRequest,
 			"invalid parameters", err)
 	}
 
+	log.Printf("Sort params - criterion: %s, skip: %d, limit: %d", criterion, skip, limit)
+
 	products, err := sortProductsFromCache(cache, criterion, skip, limit)
 	if err != nil {
+		log.Printf("Cache sort operation failed: %v", err)
 		return sendError(c, fiber.StatusInternalServerError,
 			"cache sort error", err)
 	}
 
 	total, err := cache.GetProductCount()
 	if err != nil {
+		log.Printf("Failed to get product count: %v", err)
 		return sendError(c, fiber.StatusInternalServerError,
 			"cache count error", err)
 	}
 
+	log.Printf("Sort successful - total products in cache: %d", total)
 	return sendSortResponse(c, products, criterion, skip, limit, total)
 }
 
 // parseSortParams extracts criterion, skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10. Criterion parameter is required.
+// Validates that skip and limit are non-negative integers.
 //
 func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 	criterion := c.Query("criterion")
@@ -78,6 +88,11 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 				"skip must be integer")
 		}
 
+		if parsedSkip < 0 {
+			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"skip must be non-negative")
+		}
+
 		skip = parsedSkip
 	}
 
@@ -86,6 +101,11 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 		if err != nil {
 			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
 				"limit must be integer")
+		}
+
+		if parsedLimit <= 0 {
+			return "", 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit must be positive")
 		}
 
 		limit = parsedLimit
@@ -106,7 +126,7 @@ func sortProductsFromCache(cache *cache.Cache,
 //
 func sendSortResponse(c fiber.Ctx, products interface{},
 	criterion string, skip, limit, total int) error {
-    pages, page := computePageData(total, skip, limit)
+    pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
 		"status":       "success",
