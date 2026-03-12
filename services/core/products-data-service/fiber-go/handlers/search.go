@@ -99,7 +99,7 @@ func searchProductsFromCache(cache *cache.Cache, query string, skip, limit int) 
 // with search criteria and pagination metadata.
 func sendSearchResponse(c fiber.Ctx, products interface{},
 	query string, skip, limit, total int) error {
-    pages, page := computePageData(total, skip, limit)
+    pages, page := computePageData(skip, limit, total)
 
     return c.JSON(fiber.Map{
 		"status":   "success",
