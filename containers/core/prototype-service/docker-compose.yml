@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Storybook Service (port 3690)
   storybook:
