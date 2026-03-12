@@ -125,10 +125,10 @@ AUTOMATED SCRIPTS DETECT AND PREVENT UNAUTHORIZED CHANGES.
     - Management Scripts:
         - start-services.ps1 for Windows PowerShell execution.
         - start-services.sh for Linux/macOS bash execution.
-        - stop-services.ps1 for Windows service termination.
         - stop-services.sh for Linux/macOS service termination.
-        - validate-setup.ps1 for Windows environment validation.
-        - validate-setup.sh for Linux/macOS environment validation.
+        - Consolidated script handles validation, diagnostics, and fixes.
+        - No separate validation or troubleshooting scripts needed.
+        - Automatic elevation and Docker issue resolution.
 
     - Docker Configuration:
         - docker-compose.yml orchestrates all services.
@@ -143,21 +143,18 @@ AUTOMATED SCRIPTS DETECT AND PREVENT UNAUTHORIZED CHANGES.
 
     - Starting Services:
         - Navigate to containers/core/prototype-service directory.
-        - Validate environment using validate-setup script.
-        - Windows: Execute ".\validate-setup.ps1" in PowerShell.
-        - Linux/macOS: Execute "./validate-setup.sh" in terminal.
-        - If validation passes, proceed to start services.
         - Windows: Execute ".\start-services.ps1" in PowerShell.
         - Linux/macOS: Execute "./start-services.sh" in terminal.
-        - Alternative: Execute "docker-compose up --build -d" directly.
+        - Script automatically validates prerequisites and fixes issues.
+        - Script elevates to Administrator privileges when needed.
+        - Script ensures Docker is working and starts all services.
         - Wait for all services to report healthy status.
         - Access main application at http://localhost:9630.
 
     - Stopping Services:
         - Navigate to containers/core/prototype-service directory.
-        - Windows: Execute ".\stop-services.ps1" in PowerShell.
         - Linux/macOS: Execute "./stop-services.sh" in terminal.
-        - Alternative: Execute "docker-compose down" directly.
+        - Windows: Execute "docker-compose down" directly.
         - Verify all containers are stopped and removed.
 
     - Service Management:
@@ -179,17 +176,16 @@ A.  Compliance:
 
     - Agents MUST use PowerShell 7.5.4 or later for .ps1 scripts.
     - Agents MUST ensure Docker and Docker Compose are installed.
-    - Agents MUST verify all required ports are available.
-    - Agents MUST validate setup before starting services.
-    - Agents MUST follow the documented service startup sequence.
+    - Agents MUST run start-services.ps1 which handles all requirements.
+    - Agents MUST allow elevation to Administrator when prompted.
+    - Agents MUST follow the automated service startup sequence.
     - Agents MUST NOT modify core service configurations without approval.
 
 B.  References:
 
     - ./containers/core/prototype-service/docker-compose.yml
     - ./containers/core/prototype-service/start-services.ps1
-    - ./containers/core/prototype-service/stop-services.ps1
-    - ./containers/core/prototype-service/validate-setup.ps1
+    - ./containers/core/prototype-service/start-services.sh
     - ./.vscode/tasks.json
     - ./services/core/images-file-service/nginx/default.conf
     - ./services/core/prototype-service/nginx/default.conf
