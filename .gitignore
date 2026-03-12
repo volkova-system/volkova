@@ -86,8 +86,12 @@
 
 !containers/
 !containers/*/
-!containers/*/**/data/
-!containers/*/**/*.docker-compose.yml
+!containers/*/**/
+!containers/**/docker-compose.yml
+!containers/**/Dockerfile.*
+!containers/**/*.sh
+!containers/**/*.ps1
+!containers/**/.dockerignore
 
 !containers/terminusdb/
 !containers/terminusdb/data/
