@@ -28,12 +28,12 @@ class ProductList extends HTMLElement {
     }
 
     render() {
-        let _dataService = ""
+        // let _dataService = ""
 
         const state = this.getAttribute("data-state")
-        if (state === "list") {
-            _dataService = "/service/data/products"
-        }
+        // if (state === "list") {
+        //     _dataService = "/service/data/products"
+        // }
 
         const componentService = this.getAttribute("data-component")
         if (!componentService) return
@@ -45,7 +45,7 @@ class ProductList extends HTMLElement {
 
         if (!this.getAttribute("data-service")) return
         const dataService = encodeURIComponent(
-            _dataService ||
+            // _dataService ||
             this.getAttribute("data-service")
         )
 
