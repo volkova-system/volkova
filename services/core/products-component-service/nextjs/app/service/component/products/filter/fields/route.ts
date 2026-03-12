@@ -31,13 +31,16 @@ export async function GET(req: Request) {
                         </dl>
                         <div class="spacer"></div>
                         <button id="filter-product-${ fieldIndex }-${ valueIndex }-control"
-                            class="icon-control control"
+                            class="filter-product-control icon-control control"
                             aria-label="filter ${ label } by ${ value }"
                             _="
                                 on click
+                                    remove .hidden from .filter-product-control
+                                    add .hidden to .clear-filter-product-control
+
                                     add .hidden to me
                                     add .hidden to #product-preview-tree
-                                    remove .hidden from #product-filter-tree-divider
+                                    remove .hidden from #clear-filter-product-${ fieldIndex }-${ valueIndex }-control
 
                                     set field to '${ field }'
                                     set value to '${ encodedValue }'
@@ -53,8 +56,12 @@ export async function GET(req: Request) {
                             aria-label="clear filter ${ label } by ${ value }"
                             _="
                                 on click
+                                    remove .hidden from .filter-product-control
+                                    add .hidden to .clear-filter-product-control
+
                                     add .hidden to me
                                     add .hidden to #product-preview-tree
+                                    remove .hidden from #filter-product-${ fieldIndex }-${ valueIndex }-control
 
                                     set field to '${ field }'
                                     set value to '${ encodedValue }'
@@ -62,7 +69,7 @@ export async function GET(req: Request) {
                                     set @data-service of <product-list/> to '/service/data/products/filter?field=' + field + '&value=' + value
                             ">
                             <svg class="icon">
-                                <use href="/assets/images/feather-sprite.svg#filter" />
+                                <use href="/assets/images/feather-sprite.svg#x" />
                             </svg>
                         </button>
                     </li>
