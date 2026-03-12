@@ -85,7 +85,12 @@
                 class="icon-control control"
                 aria-label="search products"
                 _="
+                    on load or input from #search-products-query
+                        toggle .disabled if #search-products-query.value.trim() is empty
+
                     on click
+                        if #search-products-query.value.trim() is empty halt end
+
                         add .hidden to #search-products-control
                         remove .hidden from #clear-search-products-control
 
