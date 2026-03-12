@@ -10,6 +10,70 @@ Write-Host "=========================" -ForegroundColor Green
 
 Set-Location $PSScriptRoot
 
+# Ensure we're in the correct directory and fix Docker context issues
+Write-Host "🔧 Verifying working directory..." -ForegroundColor Yellow
+$currentPath = Get-Location
+Write-Host "Current directory: $currentPath" -ForegroundColor Cyan
+
+# Set Docker Compose environment variables to fix path resolution
+$env:COMPOSE_PROJECT_DIR = $currentPath.Path
+$env:COMPOSE_FILE = "docker-compose.yml"
+$env:DOCKER_BUILDKIT = "1"
+$env:COMPOSE_DOCKER_CLI_BUILD = "1"
+
+Write-Host "✅ Working directory verified" -ForegroundColor Green
+
+# Function: Reset Docker Desktop to factory defaults
+function Reset-DockerDesktopFactory {
+    Write-Host "🏭 Performing Docker Desktop factory reset..." -ForegroundColor Yellow
+
+    try {
+        # Stop Docker Desktop completely
+        Stop-DockerDesktop
+        Start-Sleep -Seconds 5
+
+        # Remove Docker Desktop data directories
+        $dockerPaths = @(
+            "$env:APPDATA\Docker",
+            "$env:LOCALAPPDATA\Docker",
+            "$env:PROGRAMDATA\Docker",
+            "$env:USERPROFILE\.docker"
+        )
+
+        foreach ($path in $dockerPaths) {
+            if (Test-Path $path) {
+                Write-Host "   Removing $path..." -ForegroundColor Cyan
+                Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+
+        # Remove Docker services
+        $dockerServices = Get-Service -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "*docker*" }
+        foreach ($service in $dockerServices) {
+            try {
+                Stop-Service -Name $service.Name -Force -ErrorAction SilentlyContinue
+                sc.exe delete $service.Name 2>$null | Out-Null
+            } catch { }
+        }
+
+        # Clean registry entries
+        try {
+            Remove-Item -Path "HKCU:\Software\Docker Inc." -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "HKLM:\SOFTWARE\Docker Inc." -Recurse -Force -ErrorAction SilentlyContinue
+        } catch { }
+
+        Write-Host "✅ Factory reset completed" -ForegroundColor Green
+
+        # Restart Docker Desktop
+        Start-Sleep -Seconds 3
+        return Start-DockerDesktop
+
+    } catch {
+        Write-Host "❌ Factory reset failed: $($_.Exception.Message)" -ForegroundColor Red
+        return $false
+    }
+}
+
 # Function: Check if running as Administrator
 function Test-Administrator {
     $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -42,7 +106,7 @@ function Stop-DockerDesktop {
         } catch { }
     }
 
-    $dockerServices = Get-Service | Where-Object { $_.Name -like "*docker*" }
+    $dockerServices = Get-Service -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "*docker*" }
     foreach ($service in $dockerServices) {
         if ($service.Status -eq "Running") {
             try { Stop-Service -Name $service.Name -Force -ErrorAction SilentlyContinue } catch { }
@@ -137,8 +201,49 @@ function Test-Prerequisites {
     foreach ($file in $requiredFiles) {
         if (-not (Test-Path $file)) {
             Write-Host "❌ Missing required file: $file" -ForegroundColor Red
+            Write-Host "Current directory: $(Get-Location)" -ForegroundColor Yellow
             exit 1
         }
+    }
+
+    # Validate Docker Compose file paths
+    Write-Host "🔍 Validating Docker Compose paths..." -ForegroundColor Yellow
+    try {
+        $composeContent = Get-Content "docker-compose.yml" -Raw
+
+        # Check for incorrect path references
+        if ($composeContent -match "services/containers") {
+            Write-Host "❌ Found incorrect path reference in docker-compose.yml" -ForegroundColor Red
+            Write-Host "The docker-compose.yml file contains 'services/containers' which should be 'containers/core/prototype-service'" -ForegroundColor Yellow
+            exit 1
+        }
+
+        # Validate all context paths exist
+        $contextPaths = @(
+            "../../../prototype/web/core",
+            "../../../services/core/images-file-service",
+            "../../../services/core/products-data-service/fiber-go",
+            "../../../services/core/products-component-service/nextjs",
+            "../../../services/core/prototype-service"
+        )
+
+        foreach ($contextPath in $contextPaths) {
+            if (-not (Test-Path $contextPath)) {
+                Write-Host "❌ Missing context path: $contextPath" -ForegroundColor Red
+                Write-Host "Current directory: $(Get-Location)" -ForegroundColor Yellow
+                exit 1
+            }
+        }
+
+        Write-Host "✅ All paths validated" -ForegroundColor Green
+
+        # Fix Docker Compose working directory issue
+        Write-Host "🔧 Setting Docker Compose project directory..." -ForegroundColor Yellow
+        $env:COMPOSE_PROJECT_DIR = $PWD.Path
+        $env:COMPOSE_FILE = "docker-compose.yml"
+
+    } catch {
+        Write-Host "⚠️  Could not validate docker-compose.yml paths" -ForegroundColor Yellow
     }
 
     Write-Host "✅ Prerequisites validated" -ForegroundColor Green
@@ -222,10 +327,37 @@ function Ensure-DockerWorking {
         if (Test-Path $dockerDataPath) {
             Remove-Item -Path "$dockerDataPath\settings.json" -Force -ErrorAction SilentlyContinue
         }
-    } catch { }
+
+        # Automated Docker Desktop settings configuration
+        Write-Host "⚙️  Configuring Docker Desktop settings..." -ForegroundColor Yellow
+
+        # Create optimized Docker Desktop settings
+        $dockerSettings = @{
+            "useWindowsContainers" = $false
+            "exposeDockerAPIOnTCP2375" = $false
+            "useWSL2" = $true
+            "wslEngineEnabled" = $true
+            "useVirtualizationFramework" = $true
+            "useVirtualizationFrameworkVirtioFS" = $true
+            "useVirtualizationFrameworkRosetta" = $false
+            "autoStart" = $true
+            "openUIOnStartupDisabled" = $true
+            "settingsVersion" = 1
+        }
+
+        # Write settings file
+        $settingsPath = "$dockerDataPath\settings.json"
+        New-Item -Path $dockerDataPath -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+        $dockerSettings | ConvertTo-Json -Depth 10 | Set-Content -Path $settingsPath -Force -ErrorAction SilentlyContinue
+
+        Write-Host "✅ Docker Desktop settings configured" -ForegroundColor Green
+
+    } catch {
+        Write-Host "⚠️  Could not configure Docker Desktop settings automatically" -ForegroundColor Yellow
+    }
 
     # Restart Docker services
-    $dockerServices = Get-Service | Where-Object { $_.Name -like "*docker*" }
+    $dockerServices = Get-Service -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "*docker*" }
     foreach ($service in $dockerServices) {
         try { Restart-Service -Name $service.Name -Force -ErrorAction SilentlyContinue } catch { }
     }
