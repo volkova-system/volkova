@@ -82,7 +82,8 @@ export async function GET(req: Request) {
         <ol class="product-list content-tree-list list">
             ${ productList }
              <li id="product-list-pagination"
-                class="content-tree-item item ">
+                class="content-tree-item item
+                    ${ dataProducts.pages === 1 ? 'hidden': '' }">
                 <div class="spacer hidden"></div>
                 <button class="icon-control control"
                     aria-label="go back last page"
