@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
+	"github.com/gofiber/fiber/v3/middleware/recover"
 
 	"products-data-service/cache"
 	"products-data-service/handlers"
@@ -20,8 +21,24 @@ func main() {
 
 	server := fiber.New(fiber.Config{
 		AppName: "core-product-data-service",
+		ErrorHandler: func(c fiber.Ctx, err error) error {
+			code := fiber.StatusInternalServerError
+			if e, ok := err.(*fiber.Error); ok {
+				code = e.Code
+			}
+
+			log.Printf("Fiber error [%d]: %v", code, err)
+
+			return c.Status(code).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		},
 	})
 
+	// Add recovery middleware to catch panics
+	server.Use(recover.New(recover.Config{
+		EnableStackTrace: true,
+	}))
 	server.Use(logger.New())
 	server.Use(cors.New())
 
