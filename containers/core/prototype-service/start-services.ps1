@@ -154,6 +154,51 @@ function Ensure-DockerWorking {
         return $true
     }
 
+    # Check Docker Desktop context and engine mode
+    Write-Host "🔍 Checking Docker Desktop configuration..." -ForegroundColor Yellow
+
+    # Try to switch to Linux containers if in Windows mode
+    try {
+        $dockerInfo = docker version --format json 2>$null | ConvertFrom-Json
+        if ($dockerInfo.Server.Os -eq "windows") {
+            Write-Host "⚠️  Docker is in Windows container mode, switching to Linux..." -ForegroundColor Yellow
+
+            # Find Docker Desktop executable
+            $dockerPaths = @(
+                "${env:ProgramFiles}\Docker\Docker\Docker Desktop.exe",
+                "${env:LOCALAPPDATA}\Programs\Docker\Docker\Docker Desktop.exe"
+            )
+
+            $dockerExe = $dockerPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
+
+            if ($dockerExe) {
+                # Switch to Linux containers
+                & $dockerExe -SwitchLinuxEngine
+                Start-Sleep -Seconds 10
+
+                # Wait for switch to complete
+                $timeout = 60
+                while ($timeout -gt 0) {
+                    try {
+                        $newInfo = docker version --format json 2>$null | ConvertFrom-Json
+                        if ($newInfo.Server.Os -eq "linux") {
+                            Write-Host "✅ Switched to Linux containers" -ForegroundColor Green
+                            break
+                        }
+                    } catch { }
+                    Start-Sleep -Seconds 2
+                    $timeout -= 2
+                }
+            }
+        }
+    } catch { }
+
+    # Test again after potential switch
+    if (docker info 2>$null) {
+        Write-Host "✅ Docker is now working" -ForegroundColor Green
+        return $true
+    }
+
     # Restart as admin if needed
     Restart-AsAdmin
 
@@ -165,6 +210,19 @@ function Ensure-DockerWorking {
 
     # Free ports
     Free-RequiredPorts
+
+    # Reset Docker Desktop settings
+    Write-Host "🔄 Resetting Docker Desktop settings..." -ForegroundColor Yellow
+    try {
+        # Reset Docker context
+        docker context use default 2>$null | Out-Null
+
+        # Remove Docker Desktop data (forces clean restart)
+        $dockerDataPath = "$env:APPDATA\Docker"
+        if (Test-Path $dockerDataPath) {
+            Remove-Item -Path "$dockerDataPath\settings.json" -Force -ErrorAction SilentlyContinue
+        }
+    } catch { }
 
     # Restart Docker services
     $dockerServices = Get-Service | Where-Object { $_.Name -like "*docker*" }
@@ -189,19 +247,50 @@ function Start-Services {
 
     while ($retryCount -lt $maxRetries) {
         try {
+            # Check Docker daemon before attempting to start services
+            if (-not (docker info 2>$null)) {
+                Write-Host "⚠️  Docker daemon not accessible, attempting to fix..." -ForegroundColor Yellow
+                Ensure-DockerWorking
+            }
+
             $output = docker-compose up --build -d 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "✅ Services started successfully" -ForegroundColor Green
                 return $true
             } else {
                 $retryCount++
+
+                # Check for specific Docker engine errors
+                if ($output -match "docker_engine" -or $output -match "dockerDesktopLinuxEngine") {
+                    Write-Host "⚠️  Docker engine connection issue detected..." -ForegroundColor Yellow
+
+                    # Try to fix Docker engine issue
+                    Write-Host "🔄 Attempting to fix Docker engine connection..." -ForegroundColor Yellow
+                    Stop-DockerDesktop
+                    Start-Sleep -Seconds 5
+                    Start-DockerDesktop
+                    Start-Sleep -Seconds 10
+                }
+
                 if ($retryCount -lt $maxRetries) {
                     Write-Host "⚠️  Attempt $retryCount failed, retrying..." -ForegroundColor Yellow
                     Start-Sleep -Seconds 5
                     Clean-DockerSystem
                 } else {
                     Write-Host "❌ Failed to start services after $maxRetries attempts" -ForegroundColor Red
+                    Write-Host "Error details:" -ForegroundColor Yellow
                     Write-Host $output -ForegroundColor Red
+
+                    # Provide specific troubleshooting for this error
+                    Write-Host "`n🔧 Specific troubleshooting for this error:" -ForegroundColor Yellow
+                    Write-Host "1. Try switching Docker Desktop engine mode:" -ForegroundColor Cyan
+                    Write-Host "   - Open Docker Desktop Settings" -ForegroundColor White
+                    Write-Host "   - Go to General → Use WSL 2 based engine" -ForegroundColor White
+                    Write-Host "   - Toggle this setting and restart Docker Desktop" -ForegroundColor White
+                    Write-Host "2. Reset Docker Desktop to factory defaults:" -ForegroundColor Cyan
+                    Write-Host "   - Docker Desktop → Troubleshoot → Reset to factory defaults" -ForegroundColor White
+                    Write-Host "3. Reinstall Docker Desktop if the issue persists" -ForegroundColor Cyan
+
                     return $false
                 }
             }
