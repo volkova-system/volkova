@@ -14,8 +14,8 @@ export async function GET(req: Request) {
     const filterFields: Record<string, string[]> = dataFilterFields.filterFields || {}
 
     const filters = Object.entries( filterFields )
-        .map(([field, values]) => {
-            return values.map((value)=> {
+        .map(([field, values], fieldIndex: number) => {
+            return values.map((value, valueIndex: number)=> {
                 const label = field.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
                 const encodedValue = encodeURIComponent(value)
 
@@ -30,7 +30,8 @@ export async function GET(req: Request) {
                             </dd>
                         </dl>
                         <div class="spacer"></div>
-                        <button class="icon-control control"
+                        <button id="filter-product-${ index }-control"
+                            class="icon-control control"
                             aria-label="filter ${ label } by ${ value }"
                             _="
                                 on click
