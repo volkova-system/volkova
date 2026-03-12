@@ -52,9 +52,64 @@ export async function GET(req: Request) {
         `
     }).join("")
 
+    let dataServicePathNext = searchParams.get("data") || ""
+    let skipNext = dataProducts.skip + dataProducts.limit
+    if ((dataProducts.page + 1) > dataProducts.pages) skipNext = 0
+    if (dataServicePathNext.includes("&skip="))
+        dataServicePathNext = dataServicePathNext
+        ?.replace(/\&skip\=\d+/,`&skip=${ skipNext }`)
+    else if (dataServicePathNext.includes("?skip="))
+        dataServicePathNext = dataServicePathNext
+        ?.replace(/\?skip\=\d+/,`?skip=${ skipNext }`)
+    else if (dataServicePathNext.includes("?"))
+        dataServicePathNext += `&skip=${ skipNext }`
+    else dataServicePathNext += `?skip=${ skipNext }`
+
+    let dataServicePathBack = searchParams.get("data") || ""
+    let skipBack = dataProducts.skip - dataProducts.limit
+    if (skipBack < 0) skipBack = dataProducts.limit * (dataProducts.pages - 1)
+    if (dataServicePathBack.includes("&skip="))
+        dataServicePathBack = dataServicePathBack
+        ?.replace(/\&skip\=\d+/,`&skip=${ skipBack }`)
+    else if (dataServicePathBack.includes("?skip="))
+        dataServicePathBack = dataServicePathBack
+        ?.replace(/\?skip\=\d+/,`?skip=${ skipBack }`)
+    else if (dataServicePathBack.includes("?"))
+        dataServicePathBack += `&skip=${ skipBack }`
+    else dataServicePathBack += `?skip=${ skipBack }`
+
     const html = `
         <ol class="product-list content-tree-list list">
             ${ productList }
+             <li id="product-list-pagination"
+                class="content-tree-item item ">
+                <div class="spacer hidden"></div>
+                <button class="icon-control control"
+                    aria-label="go back last page"
+                    _="
+                        on click
+                            set @data-service of <product-list/> to '${ dataServicePathBack }'
+                    ">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevron-up" />
+                    </svg>
+                </button>
+                <div class="spacer hidden"></div>
+                <div class="content">
+                    <data class="value"
+                        >${ dataProducts.page } / ${ dataProducts.pages }</data>
+                </div>
+                <button class="icon-control control"
+                    aria-label="go to next page"
+                    _="
+                        on click
+                            set @data-service of <product-list/> to '${ dataServicePathNext }'
+                    ">
+                    <svg class="icon">
+                        <use href="/assets/images/feather-sprite.svg#chevron-down" />
+                    </svg>
+                </button>
+             </li>
         </ol>
     `
 
