@@ -1,0 +1,42 @@
+# Docker ignore file for optimized builds
+
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Dependencies (will be installed in container)
+node_modules/
+.npm/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Cache
+.cache/
+*.cache
+
+# Environment
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
