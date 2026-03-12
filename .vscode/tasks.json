@@ -351,11 +351,63 @@
             }
         },
         {
+            "label": "Start Windows Prototype Core Prototype Service",
+            "type": "shell",
+            "command": "caddy.exe",
+            "args": [
+                "run",
+                "--config",
+                "Caddyfile"
+            ],
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/services/core/prototype-service/caddy"
+            },
+            "presentation": {
+                "reveal": "always",
+                "echo": true,
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": [
+                {
+                    "owner": "caddy",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*)$",
+                        "file": 1,
+                        "message": 1
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*starting.*",
+                        "endsPattern": ".*(serving|started|listening).*"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Stop Windows Prototype Core Prototype Service",
+            "type": "shell",
+            "command": "echo ${input:stopWindowsPrototypeCorePrototypeService}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
             "label": "Start All Windows Core Services",
             "dependsOn": [
                 "Start Windows Prototype Core Images File Service",
                 "Start Windows Prototype Core Products Data Service",
-                "Start Windows Prototype Core Products Component Service"
+                "Start Windows Prototype Core Products Component Service",
+                "Start Windows Prototype Core Prototype Service"
             ],
             "dependsOrder": "parallel",
             "problemMatcher": []
@@ -365,7 +417,8 @@
             "dependsOn": [
                 "Stop Windows Prototype Core Products Component Service",
                 "Stop Windows Prototype Core Products Data Service",
-                "Stop Windows Prototype Core Images File Service"
+                "Stop Windows Prototype Core Images File Service",
+                "Stop Windows Prototype Core Prototype Service"
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
@@ -405,6 +458,12 @@
             "type": "command",
             "command": "workbench.action.tasks.terminate",
             "args": "Start Windows Prototype Core Products Component Service"
+        },
+        {
+            "id": "stopWindowsPrototypeCorePrototypeService",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "Start Windows Prototype Core Prototype Service"
         }
     ]
 }
