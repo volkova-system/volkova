@@ -94,7 +94,7 @@ func retrieveProductsFromCache(cache *cache.Cache, skip, limit int) (
 //
 func sendProductsResponse(c fiber.Ctx, products interface{},
     skip, limit, total int) error {
-    pages, page := computePageData(total, skip, limit)
+    pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
 		"status":   "success",
