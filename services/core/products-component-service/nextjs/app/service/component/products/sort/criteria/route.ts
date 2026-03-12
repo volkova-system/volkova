@@ -103,6 +103,7 @@ export async function GET(req: Request) {
                             remove .hidden from #sort-product-ascending-${ index }-control
 
                             set @data-state of <product-list/> to 'list'
+                            set @data-service of <product-list/> to '/service/data/products'
                     ">
                     <svg class="icon">
                         <use href="/assets/images/feather-sprite.svg#x" />
