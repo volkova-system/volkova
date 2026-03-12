@@ -1,0 +1,119 @@
+version: '3.8'
+
+services:
+  # Storybook Service (port 3690)
+  storybook:
+    build:
+      context: ../../../prototype/web/core
+      dockerfile: ../../../containers/core/prototype-service/dockerfiles/Dockerfile.storybook
+    ports:
+      - "3690:3690"
+    volumes:
+      - ../../../prototype/web/core:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3690"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Images File Service (port 5173) - nginx instead of caddy
+  images-file-service:
+    build:
+      context: ../../../services/core/images-file-service
+      dockerfile: ../../../containers/core/prototype-service/dockerfiles/Dockerfile.images-file-service
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../../../prototype/web/core/public/assets/images:/usr/share/nginx/html/assets/images:ro
+      - ../../../services/core/images-file-service/nginx:/etc/nginx/conf.d:ro
+    environment:
+      - IMAGE_ASSETS_DIRECTORY_PATH=/usr/share/nginx/html/assets/images
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173/assets/images/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Products Data Service (port 4979) - Go/Fiber
+  products-data-service:
+    build:
+      context: ../../../services/core/products-data-service/fiber-go
+      dockerfile: ../../../containers/core/prototype-service/dockerfiles/Dockerfile.products-data-service
+    ports:
+      - "4979:4979"
+    volumes:
+      - ../../../services/core/products-data-service/fiber-go:/app
+      - products-cache:/app/data
+    environment:
+      - PRODUCTS_CACHE_PATH=/app/data/products-cache.db
+      - CGO_ENABLED=1
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4979/service/data/products/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Products Component Service (port 6039) - Next.js
+  products-component-service:
+    build:
+      context: ../../../services/core/products-component-service/nextjs
+      dockerfile: ../../../containers/core/prototype-service/dockerfiles/Dockerfile.products-component-service
+    ports:
+      - "6039:6039"
+    volumes:
+      - ../../../services/core/products-component-service/nextjs:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - PRODUCT_DATA_SERVICE_ADDRESS=http://products-data-service:4979
+      - IMAGES_FILE_SERVICE_ADDRESS=http://images-file-service:5173
+    networks:
+      - core-network
+    depends_on:
+      - products-data-service
+      - images-file-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6039"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Prototype Service (port 9630) - nginx reverse proxy instead of caddy
+  prototype-service:
+    build:
+      context: ../../../services/core/prototype-service
+      dockerfile: ../../../containers/core/prototype-service/dockerfiles/Dockerfile.prototype-service
+    ports:
+      - "9630:9630"
+    volumes:
+      - ../../../services/core/prototype-service/nginx:/etc/nginx/conf.d:ro
+    networks:
+      - core-network
+    depends_on:
+      - storybook
+      - images-file-service
+      - products-data-service
+      - products-component-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9630"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  core-network:
+    driver: bridge
+
+volumes:
+  products-cache:
+    driver: local
