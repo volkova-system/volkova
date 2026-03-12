@@ -85,13 +85,20 @@
                 class="icon-control control"
                 aria-label="search products"
                 _="
-                    on load or input from #search-products-query
-                        toggle .disabled if #search-products-query.value.trim() is empty
-
+                    on input from #search-products-query
+                        if #search-products-query.value.trim() is empty
+                            add .disabled to me
+                            set @disabled to 'disabled'
+                        else
+                            remove .disabled from me
+                            remove [@disabled] from me
+                        end
                     on click
-                        if #search-products-query.value.trim() is empty halt end
+                        if @disabled
+                            halt
+                        end
 
-                        add .hidden to #search-products-control
+                        add .hidden to me
                         remove .hidden from #clear-search-products-control
 
                         set query to #search-products-query.value
@@ -106,12 +113,23 @@
                 class="icon-control control hidden"
                 aria-label="clear search"
                 _="
+                    on input from #search-products-query
+                        if #search-products-query.value.trim() is empty
+                            add .hidden to me
+                            remove .hidden from #search-products-control
+
+                            set #search-products-query.value to ''
+                            set @data-state of <product-list/> to 'list'
+                            set @data-service of <product-list/> to '/service/data/products'
+                        end
                     on click
-                        add .hidden to #clear-search-products-control
+                        add .hidden to me
                         remove .hidden from #search-products-control
 
                         set #search-products-query.value to ''
+                        trigger input on #search-products-query
                         set @data-state of <product-list/> to 'list'
+                        set @data-service of <product-list/> to '/service/data/products'
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#x" />
@@ -141,6 +159,9 @@
                         add .hidden to #product-filter-tree
                         add .hidden to #product-filter-tree-divider
                         set @data-state of <product-filter/> to 'idle'
+
+                        set #search-products-query.value to ''
+                        trigger input on #search-products-query
                 ">
                 <svg class="icon">
                     <use href="/assets/images/feather-sprite.svg#more-vertical" />
