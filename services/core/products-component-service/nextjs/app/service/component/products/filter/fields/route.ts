@@ -30,7 +30,7 @@ export async function GET(req: Request) {
                             </dd>
                         </dl>
                         <div class="spacer"></div>
-                        <button id="filter-product-${ index }-control"
+                        <button id="filter-product-${ fieldIndex }-${ valueIndex }-control"
                             class="icon-control control"
                             aria-label="filter ${ label } by ${ value }"
                             _="
@@ -48,7 +48,8 @@ export async function GET(req: Request) {
                                 <use href="/assets/images/feather-sprite.svg#filter" />
                             </svg>
                         </button>
-                        <button class="icon-control control"
+                        <button id="clear-filter-product-${ fieldIndex }-${ valueIndex }-control"
+                            class="clear-filter-product-control icon-control control"
                             aria-label="clear filter ${ label } by ${ value }"
                             _="
                                 on click
