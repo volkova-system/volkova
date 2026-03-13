@@ -19,4 +19,3 @@
     fetch = +refs/heads/*:refs/remotes/origin/*
     pushurl = git@github.com:volkova-system/volkova.git
     pushurl = git@github.com:volkova-system/volkova-system.github.io.git
-    pushurl = git@github.com:sarikanto/sarikanto-system.git
