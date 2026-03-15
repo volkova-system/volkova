@@ -23,11 +23,3 @@ vite --save-dev --prefix ./prototype/web/core
 @storybook/addon-vitest --save-dev --prefix ./prototype/web/core
 @storybook/addon-a11y --save-dev --prefix ./prototype/web/core
 @chromatic-com/storybook --save-dev --prefix ./prototype/web/core
-
-storybook --save-dev --prefix ./prototype/web/sarikanto
-@storybook/html-vite --save-dev --prefix ./prototype/web/sarikanto
-typescript --save-dev --prefix ./prototype/web/sarikanto
-vite --save-dev --prefix ./prototype/web/sarikanto
-@storybook/addon-vitest --save-dev --prefix ./prototype/web/sarikanto
-@storybook/addon-a11y --save-dev --prefix ./prototype/web/sarikanto
-@chromatic-com/storybook --save-dev --prefix ./prototype/web/sarikanto
