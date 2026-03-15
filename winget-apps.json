@@ -32,12 +32,17 @@
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.1.1",
+                    "Version": "12.1.2",
                     "Source": "winget"
                 },
                 {
                     "PackageIdentifier": "CaddyServer.Caddy",
                     "Version": "2.11.2",
+                    "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "GNU.Wget2",
+                    "Version": "2.1.0",
                     "Source": "winget"
                 }
             ]
