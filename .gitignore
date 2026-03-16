@@ -170,9 +170,10 @@ containers/*/data/**/*.*
 !services/core/*-service/fastify-node/*.*
 # END SERVICES
 
-# SETTINGS
+# START SETTINGS
 !settings/
 !settings/**/*.setting
+# END SETTINGS
 
 !templates/
 !templates/**/*.template
