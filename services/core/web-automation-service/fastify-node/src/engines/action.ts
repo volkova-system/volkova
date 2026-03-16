@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import type { Browser, BrowserContext, Page, StorageState } from 'playwright';
 import { Action,
     GOTO_ACTION,
     CLICK_ACTION,
@@ -9,36 +10,51 @@ import { Action,
     CUSTOM_ACTION
 } from '@/models/action.js';
 
-export async function executeTasks(tasks: Action[]) {
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext();
-  const page = await context.newPage();
 
-  try {
-    for (const task of tasks) {
-      try {
-        switch (task.action) {
-          case GOTO_ACTION:
-            await page.goto(task.address);
 
-            break;
+export async function executeTasks(tasks: Action[],
+    storageState: StorageState): Promise<PageState> {
+    const browser: Browser = await chromium.launch({ headless: true })
 
-          case CLICK_ACTION:
-            await page.click(task.selector);
+    const context: BrowserContext = await browser.newContext({ storageState })
 
-            break;
+    const page: Page = await context.newPage()
 
-          case FILL_ACTION:
-            await page.fill(task.selector, task.value);
-
-            break;
-        }
-      } catch (error: unknown) {
-
-        break;
-      }
+    const pageState: PageState = {
+        browser,
+        context,
+        page,
+        storage: null
     }
-  } finally {
-    await browser.close();
-  }
+
+    try {
+        for (const task of tasks) {
+            try {
+                switch (task.action) {
+                    case GOTO_ACTION:
+                        await page.goto(task.address)
+
+                    break
+
+                    case CLICK_ACTION:
+                        await page.click(task.selector)
+
+                    break
+
+                    case FILL_ACTION:
+                        await page.fill(task.selector, task.value)
+
+                    break
+                }
+            } catch (error: unknown) {
+                throw error
+            }
+        }
+    } finally {
+        pageState.storage = await context.storageState()
+
+        await browser.close()
+    }
+
+    return pageState
 }
