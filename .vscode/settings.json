@@ -49,7 +49,26 @@
         "SETUP": "text",
         "VERSION": "text",
         "WEBSITE": "text",
+        ".gitignore": "gitignore"
     },
+    "[gitignore]": {
+        "editor.foldingStrategy": "auto"
+    },
+    "explicitFolding.rules": {
+        "plaintext": [
+            {
+                "beginRegex": "^# START (.+)$",
+                "endRegex": "^# END \\1$"
+            }
+        ],
+        "gitignore": [
+            {
+                "beginRegex": "^# START (.+)$",
+                "endRegex": "^# END \\1$"
+            }
+        ]
+    },
+    "explicitFolding.debug": true,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1000,
     "files.insertFinalNewline": true,
