@@ -134,6 +134,7 @@ containers/*/data/**/*.*
 !public/
 !public/**/*
 
+# START SCRIPTS
 !scripts/
 !scripts/core/
 !scripts/core/*-service/
@@ -149,6 +150,7 @@ containers/*/data/**/*.*
 !scripts/**/*.bash
 !scripts/**/*.zig
 !scripts/**/*.py
+# END SCRIPTS
 
 # START SERVICES
 !services/
