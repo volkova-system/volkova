@@ -9,13 +9,6 @@ feather-icons --save
 htmx.org --save
 hyperscript.org --save
 
-next --save --prefix ./services/core/products-component-service/nextjs
-react --save --prefix ./services/core/products-component-service/nextjs
-react-dom --save --prefix ./services/core/products-component-service/nextjs
-typescript --save-dev --prefix ./services/core/products-component-service/nextjs
-@types/node --save-dev --prefix ./services/core/products-component-service/nextjs
-@types/react --save-dev --prefix ./services/core/products-component-service/nextjs
-
 storybook --save-dev --prefix ./prototype/web/core
 @storybook/html-vite --save-dev --prefix ./prototype/web/core
 typescript --save-dev --prefix ./prototype/web/core
@@ -23,3 +16,10 @@ vite --save-dev --prefix ./prototype/web/core
 @storybook/addon-vitest --save-dev --prefix ./prototype/web/core
 @storybook/addon-a11y --save-dev --prefix ./prototype/web/core
 @chromatic-com/storybook --save-dev --prefix ./prototype/web/core
+
+fastify --save --prefix ./services/core/web-automation-service/fastify-node
+playwright --save --prefix ./services/core/web-automation-service/fastify-node
+zod --save --prefix ./services/core/web-automation-service/fastify-node
+typescript --save-dev --prefix ./services/core/web-automation-service/fastify-node
+@types/node --save-dev --prefix ./services/core/web-automation-service/fastify-node
+tsx --save-dev --prefix ./services/core/web-automation-service/fastify-node
