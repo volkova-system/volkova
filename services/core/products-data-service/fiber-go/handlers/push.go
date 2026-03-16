@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 
 	"products-data-service/cache"
-	"products-data-service/model"
+	"products-data-service/models"
 )
 
 // PushProductHandler handles POST /service/products/push endpoint.
@@ -46,8 +46,8 @@ func pushProductToCache(c fiber.Ctx, cache *cache.Cache) error {
 }
 
 // parseProductFromRequest extracts product data from request body.
-func parseProductFromRequest(c fiber.Ctx) (*model.Product, error) {
-	var product model.Product
+func parseProductFromRequest(c fiber.Ctx) (*models.Product, error) {
+	var product models.Product
 
 	err := c.Bind().JSON(&product)
 	if err != nil {
@@ -58,7 +58,7 @@ func parseProductFromRequest(c fiber.Ctx) (*model.Product, error) {
 }
 
 // validateProductData ensures required fields are present.
-func validateProductData(product *model.Product) error {
+func validateProductData(product *models.Product) error {
 	if product.CacheIdentifier.Value == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
             "cache identifier required")
@@ -73,7 +73,7 @@ func validateProductData(product *model.Product) error {
 }
 
 // storeProductInCache saves product to cache storage.
-func storeProductInCache(cache *cache.Cache, product *model.Product) error {
+func storeProductInCache(cache *cache.Cache, product *models.Product) error {
 	return cache.PushProduct(*product)
 }
 
