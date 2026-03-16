@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // FilterProductHandler handles GET /service/products/filter endpoint.
@@ -27,7 +27,7 @@ import (
 //
 // Fails fast on missing field/value parameters or any cache retrieval error.
 //
-func FilterProductHandler(cache *cache.Cache) fiber.Handler {
+func FilterProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return filterProductsInCache(c, cache)
 	}
@@ -37,7 +37,7 @@ func FilterProductHandler(cache *cache.Cache) fiber.Handler {
 // Parses field, value and pagination parameters and retrieves filtered products
 // from cache.
 //
-func filterProductsInCache(c fiber.Ctx, cache *cache.Cache) error {
+func filterProductsInCache(c fiber.Ctx, cache *data.Cache) error {
 	field, value, skip, limit, err := parseFilterParams(c)
 	if err != nil {
 		return sendError(c, fiber.StatusBadRequest, "invalid parameters", err)
@@ -102,7 +102,7 @@ func parseFilterParams(c fiber.Ctx) (string, string, int, int, error) {
 
 // filterProductsFromCache filters products in cache with pagination.
 //
-func filterProductsFromCache(cache *cache.Cache,
+func filterProductsFromCache(cache *data.Cache,
     field, value string, skip, limit int) (interface{}, error) {
 	return cache.FilterProducts(skip, limit, field, value)
 }
@@ -111,7 +111,7 @@ func filterProductsFromCache(cache *cache.Cache,
 // Since there's no dedicated GetFilterCount method in cache, we use FilterProducts
 // with a large limit to get all matching products and count them.
 //
-func getFilterCount(cache *cache.Cache, field, value string) (int, error) {
+func getFilterCount(cache *data.Cache, field, value string) (int, error) {
 	// Get all matching products to count them
 	products, err := cache.FilterProducts(0, 10000, field, value)
 	if err != nil {
