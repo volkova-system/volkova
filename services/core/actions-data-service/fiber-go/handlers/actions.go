@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 
 	"actions-data-service/data"
+	"actions-data-service/engines"
 )
 
 // GetActionsHandler handles GET /service/data/actions endpoint.
@@ -39,7 +40,7 @@ func getActionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 			"cache error", err)
 	}
 
-	total, err := cache.GetActionCount()
+	total, err := engines.GetActionsCount(cache)
 	if err != nil {
 		return sendError(c, fiber.StatusInternalServerError,
 			"cache count error", err)
@@ -80,7 +81,7 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 // retrieveActionsFromCache gets actions from cache with pagination.
 func retrieveActionsFromCache(cache *data.Cache, skip, limit int) (
 	interface{}, error) {
-	return cache.GetActions(skip, limit)
+	return engines.GetActions(cache, skip, limit)
 }
 
 // sendActionsResponse returns actions list as JSON response with pagination metadata.
