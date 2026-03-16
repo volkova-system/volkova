@@ -6,6 +6,7 @@ type Job struct {
     Reference   string      `json:"reference"`
     Name        string      `json:"name"`
     Description string      `json:"description"`
+
     Tasks       []Task      `json:"tasks"`
 
     // Schedule must be a valid cron expression
@@ -14,6 +15,8 @@ type Job struct {
     CreatedAt   time.Time   `json:"created_at"`
     UpdatedAt   time.Time   `json:"updated_at"`
 }
+
+
 
 type Task struct {
     Reference   string      `json:"reference"`
