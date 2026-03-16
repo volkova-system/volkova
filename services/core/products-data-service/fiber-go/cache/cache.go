@@ -13,7 +13,7 @@ import (
 
 	"github.com/tidwall/buntdb"
 
-	"products-data-service/model"
+	"products-data-service/models"
 )
 
 // defaultCacheName is the default index name used for product storage.
@@ -86,7 +86,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "reference",
         "product:*",
         func(a, b string) bool {
-            var productA, productB model.Product
+            var productA, productB models.Product
 
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
@@ -102,7 +102,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "headline",
         "product:*",
         func(a, b string) bool {
-            var productA, productB model.Product
+            var productA, productB models.Product
 
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
@@ -118,7 +118,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "discountPercentage",
         "product:*",
         func(a, b string) bool {
-            var productA, productB model.Product
+            var productA, productB models.Product
 
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
@@ -134,7 +134,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "ratingValue",
         "product:*",
         func(a, b string) bool {
-            var productA, productB model.Product
+            var productA, productB models.Product
 
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
@@ -150,7 +150,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
         "netPrice",
         "product:*",
         func(a, b string) bool {
-            var productA, productB model.Product
+            var productA, productB models.Product
 
             json.Unmarshal([]byte(a), &productA)
             json.Unmarshal([]byte(b), &productB)
@@ -187,7 +187,7 @@ func (db *Cache) Close() error {
 // Returns:
 //   - error:   Any error that occurred during marshaling or storage
 //
-func (db *Cache) PushProduct(product model.Product) error {
+func (db *Cache) PushProduct(product models.Product) error {
     // Marshal product to JSON with error context
     data, err := json.Marshal(product)
     if err != nil {
@@ -258,12 +258,12 @@ func (db *Cache) PopProduct(key string) error {
 //   - The product is not found in the cache
 //   - JSON unmarshaling fails
 //
-func (db *Cache) GetProduct(key string) (*model.Product, error) {
+func (db *Cache) GetProduct(key string) (*models.Product, error) {
 	if key == "" {
         return nil, fmt.Errorf("key cannot be empty")
     }
 
-    var product model.Product
+    var product models.Product
 
 	err := db.products.View(func(tx *buntdb.Tx) error {
 		val, err := tx.Get(key)
@@ -305,7 +305,7 @@ func (db *Cache) GetProduct(key string) (*model.Product, error) {
 // The function uses the BuntDB Ascend method to iterate through products
 // in index order, applying skip/limit logic for pagination.
 //
-func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
+func (db *Cache) GetProducts(skip, limit int) ([]models.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
@@ -314,7 +314,7 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 		limit = 10
 	}
 
-	var products []model.Product
+	var products []models.Product
 
 	err := db.products.View(func(tx *buntdb.Tx) error {
 		count := 0
@@ -335,7 +335,7 @@ func (db *Cache) GetProducts(skip, limit int) ([]model.Product, error) {
 				return false
 			}
 
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
                     "failed to unmarshal product at key %s: %w", key, err)
@@ -421,7 +421,7 @@ func (db *Cache) GetSearchCount(query string) (int, error) {
 		var unmarshalErr error
 
 		tx.Ascend(defaultCacheName, func(key, value string) bool {
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -473,7 +473,7 @@ func (db *Cache) GetSearchCount(query string) (int, error) {
 // each product's headline field. If query is empty, all products are returned.
 //
 func (db *Cache) SearchProducts(query string,
-    skip, limit int) ([]model.Product, error) {
+    skip, limit int) ([]models.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
@@ -494,7 +494,7 @@ func (db *Cache) SearchProducts(query string,
 		}
 	}
 
-	var products []model.Product
+	var products []models.Product
 
 	err = db.products.View(func(tx *buntdb.Tx) error {
 		count := 0
@@ -503,7 +503,7 @@ func (db *Cache) SearchProducts(query string,
 		var unmarshalErr error
 
 		tx.Ascend(defaultCacheName, func(key, value string) bool {
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -567,7 +567,7 @@ func (db *Cache) SearchProducts(query string,
 //   - error:           Any error that occurred during retrieval or unmarshaling
 //
 func (db *Cache) SortProducts(skip, limit int,
-    criterion string) ([]model.Product, error) {
+    criterion string) ([]models.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
@@ -605,7 +605,7 @@ func (db *Cache) SortProducts(skip, limit int,
 		return nil, fmt.Errorf("unsupported sort criterion: %s", sortField)
 	}
 
-	var products []model.Product
+	var products []models.Product
 
 	err := db.products.View(func(tx *buntdb.Tx) error {
 		count := 0
@@ -627,7 +627,7 @@ func (db *Cache) SortProducts(skip, limit int,
 				return false
 			}
 
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -684,7 +684,7 @@ func (db *Cache) SortProducts(skip, limit int,
 //   - error:           Any error that occurred during retrieval or unmarshaling
 //
 func (db *Cache) FilterProducts(skip, limit int,
-    field, value string) ([]model.Product, error) {
+    field, value string) ([]models.Product, error) {
 	if skip < 0 {
 		skip = 0
 	}
@@ -701,7 +701,7 @@ func (db *Cache) FilterProducts(skip, limit int,
 		return nil, fmt.Errorf("value cannot be empty")
 	}
 
-	var products []model.Product
+	var products []models.Product
 
 	err := db.products.View(func(tx *buntdb.Tx) error {
 		count := 0
@@ -710,7 +710,7 @@ func (db *Cache) FilterProducts(skip, limit int,
 		var unmarshalErr error
 
 		tx.Ascend(defaultCacheName, func(key, val string) bool {
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(val), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -821,7 +821,7 @@ func (db *Cache) GetSortCriteria() ([]string, error) {
 				return true
 			}
 
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -892,7 +892,7 @@ func (db *Cache) GetFilterFields() ([]string, error) {
 		var unmarshalErr error
 
 		tx.Ascend(defaultCacheName, func(key, value string) bool {
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
@@ -955,7 +955,7 @@ func (db *Cache) GetFilterFieldValues() (map[string][]string, error) {
 		var unmarshalErr error
 
 		tx.Ascend(defaultCacheName, func(key, value string) bool {
-			var product model.Product
+			var product models.Product
 			if err := json.Unmarshal([]byte(value), &product); err != nil {
 				unmarshalErr = fmt.Errorf(
 					"failed to unmarshal product at key %s: %w", key, err)
