@@ -192,6 +192,23 @@ containers/*/data/**/*.*
 !settings/**/*.setting
 # END SETTINGS
 
+# START SYSTEMS
+!systems/
+!systems/*-system/
+!systems/*-system/*-service/
+
+!services/*-system/*-service/fastify-node/
+!services/*-system/*-service/fastify-node/logs/
+!services/*-system/*-service/fastify-node/dist/
+!services/*-system/*-service/fastify-node/src/
+!services/*-system/*-service/fastify-node/src/data/
+!services/*-system/*-service/fastify-node/src/engines/
+!services/*-system/*-service/fastify-node/src/handlers/
+!services/*-system/*-service/fastify-node/src/models/
+!services/*-system/*-service/fastify-node/**/*.ts
+!services/*-system/*-service/fastify-node/**/*.json
+# END SYSTEMS
+
 !templates/
 !templates/**/*.template
 
