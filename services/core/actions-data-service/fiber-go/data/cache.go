@@ -19,53 +19,56 @@ const defaultCacheName = "actions"
 
 // Cache represents an in-memory cache for action data using BuntDB.
 type Cache struct {
-	name    string
-	actions *buntdb.DB
+	name        string
+	actions     *buntdb.DB
+	persistPath string
 }
 
 // Open creates and initializes a new in-memory cache instance.
 func Open() (*Cache, error) {
-	if path := os.Getenv("ACTIONS_CACHE_PATH"); path != "" {
-		return OpenWithPath(path)
-	}
-
-	return OpenWithPath(":memory:")
+	return OpenWithPath(os.Getenv("ACTIONS_CACHE_PATH"))
 }
 
 func OpenWithPath(dbPath string) (*Cache, error) {
-	if dbPath == "" {
-		dbPath = ":memory:"
-	}
-
-	var conn *buntdb.DB
-	var err error
-
-	if dbPath == ":memory:" {
-		conn, err = buntdb.Open(":memory:")
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		if err := os.MkdirAll(filepath.Dir(dbPath), 0755); err != nil {
-			return nil, fmt.Errorf("failed to create directory for db: %w", err)
-		}
-
-		conn, err = buntdb.Open(dbPath)
-		if err != nil {
-			return nil, err
+	persistPath := ""
+	if dbPath != "" && dbPath != ":memory:" {
+		persistPath = dbPath
+		if err := os.MkdirAll(filepath.Dir(persistPath),
+            0755); err != nil {
+			return nil, fmt.Errorf(
+                "failed to create directory for db: %w", err)
 		}
 	}
 
-	err = conn.CreateIndex(
-		defaultCacheName,
-		"action:*",
-		buntdb.IndexString,
-	)
+	conn, err := buntdb.Open(":memory:")
 	if err != nil {
 		return nil, err
 	}
 
-	err = conn.CreateIndex(
+	if persistPath != "" {
+		if _, err := os.Stat(persistPath); err == nil {
+			f, err := os.Open(persistPath)
+			if err != nil {
+				return nil, fmt.Errorf(
+                    "failed to open db file for load: %w", err)
+			}
+			defer f.Close()
+			if err := conn.Load(f); err != nil {
+				return nil, fmt.Errorf(
+                    "failed to load db snapshot: %w", err)
+			}
+		}
+	}
+
+	if err := conn.CreateIndex(
+		defaultCacheName,
+		"action:*",
+		buntdb.IndexString,
+	); err != nil {
+		return nil, err
+	}
+
+	if err := conn.CreateIndex(
 		"reference",
 		"action:*",
 		func(a, b string) bool {
@@ -76,12 +79,12 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 
 			return actionA.Reference < actionB.Reference
 		},
-	)
-	if err != nil {
+	); err != nil {
 		return nil, err
 	}
 
-	return &Cache{name: defaultCacheName, actions: conn}, nil
+	return &Cache{name: defaultCacheName, actions: conn,
+        persistPath: persistPath}, nil
 }
 
 // DB returns the underlying BuntDB instance.
@@ -91,5 +94,25 @@ func (db *Cache) DB() *buntdb.DB {
 
 // Close gracefully shuts down the cache and releases all resources.
 func (db *Cache) Close() error {
+	if db.persistPath != "" {
+		if err := os.MkdirAll(filepath.Dir(db.persistPath),
+            0755); err != nil {
+			return fmt.Errorf(
+                "failed to create directory for db: %w", err)
+		}
+
+		f, err := os.Create(db.persistPath)
+		if err != nil {
+			return fmt.Errorf(
+                "failed to create db file: %w", err)
+		}
+		defer f.Close()
+
+		if err := db.actions.Save(f); err != nil {
+			return fmt.Errorf(
+                "failed to save db snapshot: %w", err)
+		}
+	}
+
 	return db.actions.Close()
 }
