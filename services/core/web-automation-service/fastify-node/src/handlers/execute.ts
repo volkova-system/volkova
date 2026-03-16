@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { ExecuteTasksRequest } from '@/models/action.js';
 import { executeTasks } from '@/engines/action.js';
+import { PageState } from '@/models/page.js';
 
 export async function executeTasksHandler(fastify: FastifyInstance) {
     fastify.get('/health', async () => ({
@@ -23,7 +24,7 @@ export async function executeTasksHandler(fastify: FastifyInstance) {
         try {
             const { tasks } = parseResult.data;
 
-            await executeTasks(tasks);
+            const pageState: PageState = await executeTasks(tasks);
 
         } catch (error: unknown) {
             request.log.error({ error }, 'error while executing tasks');
