@@ -6,7 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // SortProductHandler handles GET /service/products/sort endpoint.
@@ -27,7 +27,7 @@ import (
 //
 // Fails fast on missing criterion parameter or any cache retrieval error.
 //
-func SortProductHandler(cache *cache.Cache) fiber.Handler {
+func SortProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return sortProductsInCache(c, cache)
 	}
@@ -37,7 +37,7 @@ func SortProductHandler(cache *cache.Cache) fiber.Handler {
 // Parses criterion and pagination parameters and retrieves sorted products from
 // cache.
 //
-func sortProductsInCache(c fiber.Ctx, cache *cache.Cache) error {
+func sortProductsInCache(c fiber.Ctx, cache *data.Cache) error {
 	log.Printf("Processing sort request with query params: %v", c.Queries())
 
 	criterion, skip, limit, err := parseSortParams(c)
@@ -116,7 +116,7 @@ func parseSortParams(c fiber.Ctx) (string, int, int, error) {
 
 // sortProductsFromCache sorts products in cache with pagination.
 //
-func sortProductsFromCache(cache *cache.Cache,
+func sortProductsFromCache(cache *data.Cache,
     criterion string, skip, limit int) (interface{}, error) {
 	return cache.SortProducts(skip, limit, criterion)
 }
