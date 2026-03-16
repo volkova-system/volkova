@@ -30,39 +30,45 @@ export async function executeTasks(tasks: Action[],
     try {
         for (const task of tasks) {
             try {
-                switch (task.action) {
+                switch (task.action_type) {
                     case GOTO_ACTION:
-                        await page.goto(task.address)
+                        await page.goto(task.action_address)
 
                         break
 
                     case CLICK_ACTION:
-                        await page.click(task.selector)
+                        await page.click(task.action_selector)
 
                         break
 
                     case SELECT_ACTION:
-                        await page.selectOption(task.selector, task.value)
+                        await page.selectOption(
+                            task.action_selector,
+                            task.action_value
+                        )
 
                         break
 
                     case FILL_ACTION:
-                        await page.fill(task.selector, task.value)
+                        await page.fill(task.action_selector, task.action_value)
 
                         break
 
                     case CUSTOM_ACTION:
-                        if (task.address && task.address !== page.url()) {
+                        if (task.action_address
+                            && task.action_address !== page.url()) {
                             throw new Error(
-                                `page address does not match: ${ task.address }`
+                                `page address does not match:
+                                    ${ task.action_address }`
                             )
                         }
 
                         try{
-                            if (!await page.evaluate<boolean>(task.script)) {
+                            if (!await page
+                                .evaluate<boolean>(task.action_script)) {
                                 throw new Error(
                                     `custom script did not return true:
-                                        ${ task.script }`
+                                        ${ task.action_script }`
                                 )
                             }
                         } catch (error: unknown) {
@@ -82,36 +88,39 @@ export async function executeTasks(tasks: Action[],
                         break
 
                     case VERIFY_ACTION:
-                        if (task.address && task.address !== page.url()) {
+                        if (task.action_address
+                            && task.action_address !== page.url()) {
                             throw new Error(
-                                `page address does not match: ${ task.address }`
+                                `page address does not match: ${ task.action_address }`
                             )
                         }
 
-                        if (task.selector) {
-                            const element = await page.$(task.selector)
+                        if (task.action_selector) {
+                            const element = await page.$(task.action_selector)
 
                             if (!element) {
                                 throw new Error(
-                                    `element not found: ${task.selector}`
+                                    `element not found: ${task.action_selector}`
                                 )
                             }
 
-                            if (task.value) {
+                            if (task.action_value) {
                                 const text = await element.textContent()
 
                                 const value = await element.inputValue()
 
-                                if (![text, value].includes(task.value)) {
+                                if (![text, value].includes(task.action_value)) {
                                     throw new Error(
                                         `element text or value does not match:
-                                            ${ task.selector }`
+                                            ${ task.action_selector }`
                                     )
                                 }
                             }
                         }
 
-                        if( !task.address && !task.selector && !task.value ) {
+                        if( !task.action_address
+                            && !task.action_selector
+                            && !task.action_value ) {
                             throw new Error(
                                 'action criteria are required to verify action'
                             )
@@ -120,42 +129,46 @@ export async function executeTasks(tasks: Action[],
                         break
 
                     case WAIT_UNTIL_VERIFIED_ACTION:
-                        if (task.address && task.address !== page.url()) {
+                        if (task.action_address
+                            && task.action_address !== page.url()) {
                             throw new Error(
-                                `page address does not match: ${ task.address }`
+                                `page address does not match:
+                                    ${ task.action_address }`
                             )
                         }
 
-                        if (task.selector) {
+                        if (task.action_selector) {
                             const element = await page.waitForSelector(
-                                task.selector,
+                                task.action_selector,
                                 {
                                     state: 'visible',
-                                    timeout: task.delay
+                                    timeout: task.action_delay
                                 }
                             )
 
                             if (!element) {
                                 throw new Error(
-                                    `element not found: ${ task.selector }`
+                                    `element not found: ${ task.action_selector }`
                                 )
                             }
 
-                            if (task.value) {
+                            if (task.action_value) {
                                 const text = await element.textContent()
 
                                 const value = await element.inputValue()
 
-                                if (![text, value].includes(task.value)) {
+                                if (![text, value].includes(task.action_value)) {
                                     throw new Error(
                                         `element text or value does not match:
-                                            ${ task.selector }`
+                                            ${ task.action_selector }`
                                     )
                                 }
                             }
                         }
 
-                        if( !task.address && !task.selector && !task.value ) {
+                        if( !task.action_address
+                            && !task.action_selector
+                            && !task.action_value ) {
                             throw new Error(
                                 'action criteria are required to verify action'
                             )
