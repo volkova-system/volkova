@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 
 	"actions-data-service/data"
+	"actions-data-service/engines"
 )
 
 // GetActionHandler handles GET /service/data/actions/:reference endpoint.
@@ -28,7 +29,7 @@ func getActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 			fiber.NewError(fiber.StatusBadRequest, "reference cannot be empty"))
 	}
 
-	action, err := cache.GetAction("action:" + reference)
+	action, err := engines.GetAction(cache, "action:"+reference)
 	if err != nil {
 		return sendError(c, fiber.StatusNotFound,
 			"action not found", err)
