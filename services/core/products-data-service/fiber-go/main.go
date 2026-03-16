@@ -8,12 +8,12 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 	"products-data-service/handlers"
 )
 
 func main() {
-	cache, err := cache.Open()
+	cache, err := data.Open()
 	if err != nil {
 		log.Fatal("cannot open cache:", err)
 	}
