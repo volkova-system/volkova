@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
@@ -63,5 +67,19 @@ func main() {
 		})
 	})
 
-	log.Fatal(server.Listen(":4980"))
+	ctx, stop := signal.NotifyContext(context.Background(),
+        os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	go func() {
+		if err := server.Listen(":4980"); err != nil {
+			log.Printf("server listen error: %v", err)
+		}
+	}()
+
+	<-ctx.Done()
+	log.Println("shutting down data service...")
+	if err := server.Shutdown(); err != nil {
+		log.Printf("server shutdown error: %v", err)
+	}
 }
