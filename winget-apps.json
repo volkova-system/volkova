@@ -17,7 +17,7 @@
                 },
                 {
                     "PackageIdentifier": "Microsoft.PowerShell",
-                    "Version": "7.5.4.0",
+                    "Version": "7.5.5.0",
                     "Source": "winget"
                 },
                 {
@@ -32,7 +32,7 @@
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.1.2",
+                    "Version": "12.1.4",
                     "Source": "winget"
                 },
                 {
