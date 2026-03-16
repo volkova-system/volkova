@@ -26,7 +26,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-03-03
     Platform: Windows only
-    Requirements: pwsh 7.5.4, npm
+    Requirements: pwsh 7.5.5, npm
 
 .EXAMPLE
     # Installs Simple Icons and copies files to assets/icons directory.

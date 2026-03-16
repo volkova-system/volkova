@@ -28,7 +28,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-05
     Platform: Windows only
-    Requirements: pwsh 7.5.4, npm
+    Requirements: pwsh 7.5.5, npm
 
 .EXAMPLE
     # Installs HTMX and copies minified file to assets/js directory.

@@ -20,7 +20,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-01-26
     Platform: Windows only
-    Requirements: pwsh 7.5.4, Docker, docker-compose
+    Requirements: pwsh 7.5.5, Docker, docker-compose
 
 .EXAMPLE
     # Starts the TerminusDB container if not already running.

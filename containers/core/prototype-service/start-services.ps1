@@ -1,9 +1,9 @@
 #!/usr/bin/env pwsh
 # Consolidated Core Services Startup Script
 # Handles validation, diagnostics, fixes, and service startup automatically
-# Requires PowerShell 7.5.4 or later
+# Requires PowerShell 7.5.5 or later
 
-#Requires -Version 7.5.4
+#Requires -Version 7.5.5
 
 Write-Host "🚀 Starting Core Services" -ForegroundColor Green
 Write-Host "=========================" -ForegroundColor Green

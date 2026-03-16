@@ -28,7 +28,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-16
     Platform: Windows only
-    Requirements: pwsh 7.5.4, npm, node, package.json
+    Requirements: pwsh 7.5.5, npm, node, package.json
 
 .EXAMPLE
     # Processes the default PACKAGES file and installs all specified packages.

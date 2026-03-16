@@ -14,7 +14,7 @@
     Version: 0.0.0
     Last Modified: 2026-01-21
     Platform: Windows only
-    Requirements: pwsh 7.5.4
+    Requirements: pwsh 7.5.5
 
 .EXAMPLE
     # Import-Module -Name concise-log

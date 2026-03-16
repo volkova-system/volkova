@@ -12,7 +12,7 @@
     Version: 1.0.0
     Last Modified: 2026-02-27
     Platform: Windows only
-    Requirements: pwsh 7.5.4
+    Requirements: pwsh 7.5.5
     Dependencies: concise-log.psm1
 
 .EXIT CODES

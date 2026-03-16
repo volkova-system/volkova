@@ -28,7 +28,7 @@
     Version: 0.0.0
     Last Modified: 2026-01-26
     Platform: Windows only
-    Requirements: pwsh 7.5.4
+    Requirements: pwsh 7.5.5
     Dependencies: concise-log.psm1
 
 .EXAMPLE
@@ -237,8 +237,8 @@ function Invoke-PowerShellCoreTransition {
 
     .DESCRIPTION
         Checks if the current PowerShell host is Windows PowerShell
-        (powershell.exe) or if the pwsh version doesn't match 7.5.4. If
-        transition is needed, relaunches the script in pwsh 7.5.4 with the
+        (powershell.exe) or if the pwsh version doesn't match 7.5.5. If
+        transition is needed, relaunches the script in pwsh 7.5.5 with the
         same arguments and exits the current process.
 
     .OUTPUTS
@@ -270,9 +270,9 @@ function Invoke-PowerShellCoreTransition {
             exit $LASTEXITCODE
         }
 
-        # Check if pwsh version matches 7.5.4
+        # Check if pwsh version matches 7.5.5
         $currentVersion = $PSVersionTable.PSVersion
-        $requiredVersion = [version]'7.5.4'
+        $requiredVersion = [version]'7.5.5'
 
         if ($currentVersion -ne $requiredVersion) {
             Write-WarningLog -Scope "PWSH-TRANSITION" `
@@ -291,10 +291,10 @@ function Invoke-PowerShellCoreTransition {
 function Assert-PowerShellVersionStrict {
     <#
     .SYNOPSIS
-        Enforces exact PowerShell version 7.5.4.
+        Enforces exact PowerShell version 7.5.5.
 
     .DESCRIPTION
-        Validates that the current PowerShell version is exactly 7.5.4.
+        Validates that the current PowerShell version is exactly 7.5.5.
         Throws an error if the version doesn't match exactly. This is
         stricter than Invoke-PowerShellCoreTransition and is used when exact
         version matching is required.
@@ -304,20 +304,20 @@ function Assert-PowerShellVersionStrict {
 
     .EXAMPLE
         Assert-PowerShellVersionStrict
-        Enforces exact PowerShell version 7.5.4.
+        Enforces exact PowerShell version 7.5.5.
 
     .NOTES
         Context: Both elevated and non-elevated scripts
         This function should be called when exact version matching is
         required. It checks $PSVersionTable.PSVersion against the required
-        version 7.5.4.
+        version 7.5.5.
     #>
     [CmdletBinding()]
     param()
 
     try {
         $currentVersion = $PSVersionTable.PSVersion
-        $requiredVersion = [version]'7.5.4'
+        $requiredVersion = [version]'7.5.5'
 
         if ($currentVersion -ne $requiredVersion) {
             throw ("PowerShell version mismatch. Current: " +

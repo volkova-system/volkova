@@ -6,7 +6,7 @@
     CompanyName          = 'vs-scripts'
     Copyright            = '(c) 2026 Richeve Bebedor. All rights reserved.'
     Description          = 'Core functions for elevated and non-elevated executable PowerShell scripts.'
-    PowerShellVersion    = '7.5.4'
+    PowerShellVersion    = '7.5.5'
     FunctionsToExport    = @(
         'Initialize-ScriptEnvironment'
         'Assert-WindowsPlatform'

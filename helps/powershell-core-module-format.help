@@ -135,7 +135,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
             Version: 0.0.0
             Last Modified: [Date]
             Platform: Windows only
-            Requirements: pwsh 7.5.4
+            Requirements: pwsh 7.5.5
             Dependencies: concise-log.psm1
 
         .EXAMPLE
@@ -175,7 +175,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
     - Manifest MUST declare Author with contact information.
     - Manifest MUST declare Description with clear module purpose.
     - Manifest MUST declare FunctionsToExport with all public functions.
-    - Manifest MUST declare PowerShellVersion requirement 7.5.4.
+    - Manifest MUST declare PowerShellVersion requirement 7.5.5.
     - Manifest MUST declare RootModule pointing to .psm1 file.
 
 8.5 Core Module Structure Requirements
@@ -419,7 +419,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
         Version: 0.0.0
         Last Modified: [Date]
         Platform: Windows only
-        Requirements: pwsh 7.5.4
+        Requirements: pwsh 7.5.5
     #>
 
     Set-StrictMode -Version Latest
@@ -525,7 +525,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
         CompanyName          = 'Company Name'
         Copyright            = '(c) 2026 Author Name. All rights reserved.'
         Description          = 'Brief description of module purpose.'
-        PowerShellVersion    = '7.5.4'
+        PowerShellVersion    = '7.5.5'
         FunctionsToExport    = @(
             'Initialize-ScriptEnvironment'
             'Assert-WindowsPlatform'
@@ -617,7 +617,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
         .NOTES
             Requires: Administrative privileges
             Platform: Windows only
-            Requirements: pwsh 7.5.4
+            Requirements: pwsh 7.5.5
         #>
 
         [CmdletBinding()]
@@ -691,7 +691,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
 
         .NOTES
             Platform: Windows only
-            Requirements: pwsh 7.5.4
+            Requirements: pwsh 7.5.5
         #>
 
         [CmdletBinding()]

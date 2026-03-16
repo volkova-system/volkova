@@ -25,7 +25,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-27
     Platform: Windows only
-    Requirements: pwsh 7.5.4, Administrator privileges, Erlang/OTP
+    Requirements: pwsh 7.5.5, Administrator privileges, Erlang/OTP
 
 .EXAMPLE
     # Detects OTP version, finds latest Elixir, and installs it.
