@@ -68,7 +68,6 @@
             }
         ]
     },
-    "explicitFolding.debug": true,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1000,
     "files.insertFinalNewline": true,
@@ -105,5 +104,8 @@
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
     }
 }
