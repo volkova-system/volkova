@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // GetFilterFieldsProductHandler handles GET /service/products/filter/fields endpoint.
@@ -13,7 +13,7 @@ import (
 //
 // Fails fast on any cache retrieval error.
 //
-func GetFilterFieldsProductHandler(cache *cache.Cache) fiber.Handler {
+func GetFilterFieldsProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getFilterFieldsFromCache(c, cache)
 	}
@@ -22,7 +22,7 @@ func GetFilterFieldsProductHandler(cache *cache.Cache) fiber.Handler {
 // getFilterFieldsFromCache processes the filter fields request.
 // Retrieves all unique filter fields with their values from cache.
 //
-func getFilterFieldsFromCache(c fiber.Ctx, cache *cache.Cache) error {
+func getFilterFieldsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	fieldValues, err := retrieveFilterFieldsFromCache(cache)
 	if err != nil {
 		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
@@ -33,7 +33,7 @@ func getFilterFieldsFromCache(c fiber.Ctx, cache *cache.Cache) error {
 
 // retrieveFilterFieldsFromCache gets filter field values from cache.
 //
-func retrieveFilterFieldsFromCache(cache *cache.Cache) (interface{}, error) {
+func retrieveFilterFieldsFromCache(cache *data.Cache) (interface{}, error) {
 	return cache.GetFilterFieldValues()
 }
 
