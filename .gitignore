@@ -167,7 +167,11 @@ containers/*/data/**/*.*
 
 !services/core/*-service/fastify-node/
 !services/core/*-service/fastify-node/logs/
-!services/core/*-service/fastify-node/*.*
+!services/core/*-service/fastify-node/dist/
+!services/core/*-service/fastify-node/src/
+!services/core/*-service/fastify-node/src/*/
+!services/core/*-service/fastify-node/**/*.ts
+!services/core/*-service/fastify-node/**/*.json
 # END SERVICES
 
 # START SETTINGS
