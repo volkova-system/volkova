@@ -2,6 +2,8 @@ package models
 
 import "time"
 
+// A job must be executed only once in queue
+// A job is a set of tasks that can be executed immediately or on a schedule
 type Job struct {
     Reference   string      `json:"reference"`
     Name        string      `json:"name"`
@@ -10,13 +12,13 @@ type Job struct {
     Tasks       []Task      `json:"tasks"`
 
     // Schedule must be a valid cron expression
-    Schedule    string      `json:"schedule"`
+    // If schedule is empty then it is immediately executed
+    // else it must follow the schedule
+    Schedule    *string      `json:"schedule,omitempty"`
 
     CreatedAt   time.Time   `json:"created_at"`
     UpdatedAt   time.Time   `json:"updated_at"`
 }
-
-
 
 type Task struct {
     Reference   string      `json:"reference"`
