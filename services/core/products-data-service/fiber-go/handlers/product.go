@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // GetProductHandler handles GET /service/products/:reference endpoint.
@@ -14,7 +14,7 @@ import (
 //
 // Fails fast on missing reference or cache retrieval error.
 //
-func GetProductHandler(cache *cache.Cache) fiber.Handler {
+func GetProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getProductFromCache(c, cache)
 	}
@@ -23,7 +23,7 @@ func GetProductHandler(cache *cache.Cache) fiber.Handler {
 // getProductFromCache processes the single product retrieval request.
 // Extracts reference from URL parameter and retrieves product from cache.
 //
-func getProductFromCache(c fiber.Ctx, cache *cache.Cache) error {
+func getProductFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
 		return sendError(c, fiber.StatusBadRequest,
