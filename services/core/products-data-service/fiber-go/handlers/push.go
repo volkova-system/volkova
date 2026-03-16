@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 	"products-data-service/models"
 )
 
@@ -15,7 +15,7 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on any validation or storage error.
-func PushProductHandler(cache *cache.Cache) fiber.Handler {
+func PushProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return pushProductToCache(c, cache)
 	}
@@ -23,7 +23,7 @@ func PushProductHandler(cache *cache.Cache) fiber.Handler {
 
 // pushProductToCache processes the product push request.
 // Parses JSON-LD product data and stores it in cache.
-func pushProductToCache(c fiber.Ctx, cache *cache.Cache) error {
+func pushProductToCache(c fiber.Ctx, cache *data.Cache) error {
 	product, err := parseProductFromRequest(c)
 	if err != nil {
 		return sendError(c, fiber.StatusBadRequest,
@@ -73,7 +73,7 @@ func validateProductData(product *models.Product) error {
 }
 
 // storeProductInCache saves product to cache storage.
-func storeProductInCache(cache *cache.Cache, product *models.Product) error {
+func storeProductInCache(cache *data.Cache, product *models.Product) error {
 	return cache.PushProduct(*product)
 }
 
