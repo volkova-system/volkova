@@ -169,9 +169,22 @@ containers/*/data/**/*.*
 !services/core/*-service/fastify-node/logs/
 !services/core/*-service/fastify-node/dist/
 !services/core/*-service/fastify-node/src/
-!services/core/*-service/fastify-node/src/*/
+!services/core/*-service/fastify-node/src/data/
+!services/core/*-service/fastify-node/src/engines/
+!services/core/*-service/fastify-node/src/handlers/
+!services/core/*-service/fastify-node/src/models/
 !services/core/*-service/fastify-node/**/*.ts
 !services/core/*-service/fastify-node/**/*.json
+
+!services/core/*-service/fiber-go/
+!services/core/*-service/fiber-go/logs/
+!services/core/*-service/fiber-go/data/
+!services/core/*-service/fiber-go/engines/
+!services/core/*-service/fiber-go/handlers/
+!services/core/*-service/fiber-go/models/
+!services/core/*-service/fiber-go/**/*.go
+!services/core/*-service/fiber-go/**/*.mod
+!services/core/*-service/fiber-go/**/*.sum
 # END SERVICES
 
 # START SETTINGS
