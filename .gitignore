@@ -135,7 +135,11 @@ containers/*/data/**/*.*
 !public/**/*
 
 !scripts/
-!scripts/*/
+!scripts/core/
+!scripts/core/*-service/
+!scripts/core/*-service/python/
+!scripts/core/*-service/python/*.py
+
 !scripts/**/*.js
 !scripts/**/*.mjs
 !scripts/**/*.ps1
@@ -146,11 +150,25 @@ containers/*/data/**/*.*
 !scripts/**/*.zig
 !scripts/**/*.py
 
+# START SERVICES
 !services/
-!services/*/
-!services/*/*-service/
-!services/*/*-service/**/*
+!services/core/
+!services/core/*-service/
 
+!services/core/*-service/caddy/
+!services/core/*-service/caddy/logs/
+!services/core/*-service/caddy/Caddyfile*
+
+!services/core/*-service/nginx/
+!services/core/*-service/nginx/logs/
+!services/core/*-service/nginx/*.conf
+
+!services/core/*-service/fastify-node/
+!services/core/*-service/fastify-node/logs/
+!services/core/*-service/fastify-node/*.*
+# END SERVICES
+
+# SETTINGS
 !settings/
 !settings/**/*.setting
 
