@@ -9,8 +9,7 @@ import { Action,
     WAIT_UNTIL_VERIFIED_ACTION,
     CUSTOM_ACTION
 } from '@/models/action.js';
-
-
+import { PageState } from '@/models/page.js';
 
 export async function executeTasks(tasks: Action[],
     storageState: StorageState): Promise<PageState> {
