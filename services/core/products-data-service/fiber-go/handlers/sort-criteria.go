@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // GetSortCriteriaProductHandler handles GET /service/products/sort/criteria endpoint.
@@ -13,7 +13,7 @@ import (
 //
 // Fails fast on any cache retrieval error.
 //
-func GetSortCriteriaProductHandler(cache *cache.Cache) fiber.Handler {
+func GetSortCriteriaProductHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getSortCriteriaFromCache(c, cache)
 	}
@@ -22,7 +22,7 @@ func GetSortCriteriaProductHandler(cache *cache.Cache) fiber.Handler {
 // getSortCriteriaFromCache processes the sort criteria request.
 // Retrieves all unique sort criteria from cache.
 //
-func getSortCriteriaFromCache(c fiber.Ctx, cache *cache.Cache) error {
+func getSortCriteriaFromCache(c fiber.Ctx, cache *data.Cache) error {
 	criteria, err := retrieveSortCriteriaFromCache(cache)
 	if err != nil {
 		return sendError(c, fiber.StatusInternalServerError,
@@ -34,7 +34,7 @@ func getSortCriteriaFromCache(c fiber.Ctx, cache *cache.Cache) error {
 
 // retrieveSortCriteriaFromCache gets sort criteria from cache.
 //
-func retrieveSortCriteriaFromCache(cache *cache.Cache) (interface{}, error) {
+func retrieveSortCriteriaFromCache(cache *data.Cache) (interface{}, error) {
 	return cache.GetSortCriteria()
 }
 
