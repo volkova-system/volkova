@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 
-	"products-data-service/cache"
+	"products-data-service/data"
 )
 
 // GetProductsHandler handles GET /service/products endpoint.
@@ -21,7 +21,7 @@ import (
 //
 // Fails fast on any cache retrieval error.
 //
-func GetProductsHandler(cache *cache.Cache) fiber.Handler {
+func GetProductsHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getProductsFromCache(c, cache)
 	}
@@ -30,7 +30,7 @@ func GetProductsHandler(cache *cache.Cache) fiber.Handler {
 // getProductsFromCache processes the products list request.
 // Parses pagination parameters and retrieves products from cache.
 //
-func getProductsFromCache(c fiber.Ctx, cache *cache.Cache) error {
+func getProductsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
 		return sendError(c, fiber.StatusBadRequest,
@@ -84,7 +84,7 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 
 // retrieveProductsFromCache gets products from cache with pagination.
 //
-func retrieveProductsFromCache(cache *cache.Cache, skip, limit int) (
+func retrieveProductsFromCache(cache *data.Cache, skip, limit int) (
 	interface{}, error) {
 	return cache.GetProducts(skip, limit)
 }
