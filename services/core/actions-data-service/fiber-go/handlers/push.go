@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 
 	"actions-data-service/data"
+	"actions-data-service/engines"
 	"actions-data-service/models"
 )
 
@@ -74,5 +75,5 @@ func validateActionData(action *models.Action) error {
 
 // storeActionInCache saves action to cache storage.
 func storeActionInCache(cache *data.Cache, action *models.Action) error {
-	return cache.PushAction(*action)
+	return engines.PushAction(cache, *action)
 }
