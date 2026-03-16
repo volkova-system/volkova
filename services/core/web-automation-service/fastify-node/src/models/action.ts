@@ -49,7 +49,9 @@ export type Action = {
     task_reference: string;
     task_description: string;
     action: 'custom';
+    address: string;
     script: string;
+    delay: number;
 }
 
 export const ActionSchema = z.discriminatedUnion('action', [
@@ -94,13 +96,15 @@ export const ActionSchema = z.discriminatedUnion('action', [
         selector: z.string(),
         value: z.string(),
         address: z.string(),
-        delay: z.number().default(300),
+        delay: z.number().default(0),
     }),
     z.object({
         task_reference: z.string(),
         task_description: z.string(),
         action: z.literal(CUSTOM_ACTION),
+        address: z.string(),
         script: z.string(),
+        delay: z.number().default(0),
     }),
 ]);
 
