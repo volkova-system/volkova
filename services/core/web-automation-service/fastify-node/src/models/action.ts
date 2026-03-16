@@ -9,114 +9,128 @@ export const WAIT_UNTIL_VERIFIED_ACTION = 'wait-until-verified';
 export const CUSTOM_ACTION = 'custom';
 
 export type Action = {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'goto';
-    address: string;
+    action_type: 'goto';
+    action_address: string;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'click';
-    selector: string;
+    action_type: 'click';
+    action_selector: string;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'select';
-    selector: string;
-    value: string;
+    action_type: 'select';
+    action_selector: string;
+    action_value: string;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'fill';
-    selector: string;
-    value: string;
+    action_type: 'fill';
+    action_selector: string;
+    action_value: string;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'verify';
-    selector?: string;
-    value?: string;
-    address?: string;
+    action_type: 'verify';
+    action_selector?: string;
+    action_value?: string;
+    action_address?: string;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'wait-until-verified';
-    selector?: string;
-    value?: string;
-    address?: string;
-    delay: number;
+    action_type: 'wait-until-verified';
+    action_selector?: string;
+    action_value?: string;
+    action_address?: string;
+    action_delay: number;
 } | {
+    job_reference: string;
     task_reference: string;
     action_reference: string;
     action_description: string;
-    action: 'custom';
-    address: string;
-    script: string;
+    action_type: 'custom';
+    action_address: string;
+    action_script: string;
 }
 
 export const ActionSchema = z.discriminatedUnion('action', [
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(GOTO_ACTION),
-        address: z.string(),
+        action_type: z.literal(GOTO_ACTION),
+        action_address: z.string(),
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(CLICK_ACTION),
-        selector: z.string(),
+        action_type: z.literal(CLICK_ACTION),
+        action_selector: z.string(),
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(SELECT_ACTION),
-        selector: z.string(),
-        value: z.string(),
+        action_type: z.literal(SELECT_ACTION),
+        action_selector: z.string(),
+        action_value: z.string(),
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(FILL_ACTION),
-        selector: z.string(),
-        value: z.string(),
+        action_type: z.literal(FILL_ACTION),
+        action_selector: z.string(),
+        action_value: z.string(),
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(CUSTOM_ACTION),
-        address: z.string(),
-        script: z.string()
+        action_type: z.literal(CUSTOM_ACTION),
+        action_address: z.string(),
+        action_script: z.string()
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(VERIFY_ACTION),
-        selector: z.string().optional(),
-        value: z.string().optional(),
-        address: z.string().optional(),
+        action_type: z.literal(VERIFY_ACTION),
+        action_selector: z.string().optional(),
+        action_value: z.string().optional(),
+        action_address: z.string().optional(),
     }),
     z.object({
+        job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
         action_description: z.string(),
-        action: z.literal(WAIT_UNTIL_VERIFIED_ACTION),
-        selector: z.string().optional(),
-        value: z.string().optional(),
-        address: z.string().optional(),
-        delay: z.number().default(300),
+        action_type: z.literal(WAIT_UNTIL_VERIFIED_ACTION),
+        action_selector: z.string().optional(),
+        action_value: z.string().optional(),
+        action_address: z.string().optional(),
+        action_delay: z.number().default(300),
     }),
 ]);
 
