@@ -14,6 +14,7 @@
         "ms-azuretools.vscode-docker",
         "matthewpi.caddyfile-support",
         "golang.go",
-        "rangav.vscode-thunder-client"
+        "rangav.vscode-thunder-client",
+        "zokugun.explicit-folding"
     ]
 }
