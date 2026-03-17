@@ -9,6 +9,7 @@ export const WAIT_UNTIL_VERIFIED_ACTION = 'wait-until-verified';
 export const CUSTOM_ACTION = 'custom';
 
 export type Action = {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -16,6 +17,7 @@ export type Action = {
     action_type: 'goto';
     action_address: string;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -23,6 +25,7 @@ export type Action = {
     action_type: 'click';
     action_selector: string;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -31,6 +34,7 @@ export type Action = {
     action_selector: string;
     action_value: string;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -39,6 +43,7 @@ export type Action = {
     action_selector: string;
     action_value: string;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -48,6 +53,7 @@ export type Action = {
     action_value?: string;
     action_address?: string;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -58,6 +64,7 @@ export type Action = {
     action_address?: string;
     action_delay: number;
 } | {
+    queue_reference: string;
     job_reference: string;
     task_reference: string;
     action_reference: string;
@@ -69,6 +76,7 @@ export type Action = {
 
 export const ActionSchema = z.discriminatedUnion('action', [
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -77,6 +85,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_address: z.string(),
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -85,6 +94,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_selector: z.string(),
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -94,6 +104,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_value: z.string(),
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -103,6 +114,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_value: z.string(),
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -112,6 +124,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_script: z.string()
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
@@ -122,6 +135,7 @@ export const ActionSchema = z.discriminatedUnion('action', [
         action_address: z.string().optional(),
     }),
     z.object({
+        queue_reference: z.string(),
         job_reference: z.string(),
         task_reference: z.string(),
         action_reference: z.string(),
