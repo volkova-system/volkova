@@ -55,10 +55,17 @@ func main() {
 		})
 	})
 
-	actions.Get("/", handlers.GetActionsHandler(cache))
-	actions.Post("/push", handlers.PushActionHandler(cache))
-	actions.Delete("/pop/:reference", handlers.PopActionHandler(cache))
-	actions.Get("/:reference", handlers.GetActionHandler(cache))
+	actions.Get("/",
+        handlers.GetActionsHandler(cache))
+
+	actions.Post("/push",
+        handlers.PushActionHandler(cache))
+
+	actions.Delete("/pop/:reference",
+        handlers.PopActionHandler(cache))
+
+	actions.Get("/:reference",
+        handlers.GetActionHandler(cache))
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
