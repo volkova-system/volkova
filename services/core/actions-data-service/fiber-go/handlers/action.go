@@ -14,6 +14,7 @@ import (
 // Response: JSON action data or error details
 //
 // Fails fast on missing reference or cache retrieval error.
+//
 func GetActionHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getActionFromCache(c, cache)
@@ -21,12 +22,14 @@ func GetActionHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getActionFromCache processes the single action retrieval request.
+//
 func getActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
 		return sendError(c, fiber.StatusBadRequest,
 			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest, "reference cannot be empty"))
+			fiber.NewError(fiber.StatusBadRequest,
+                "reference cannot be empty"))
 	}
 
 	action, err := engines.GetAction(cache, "action:"+reference)
@@ -39,6 +42,7 @@ func getActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 }
 
 // sendActionResponse returns single action as JSON response.
+//
 func sendActionResponse(c fiber.Ctx, action interface{}) error {
 	return c.JSON(fiber.Map{
 		"status": "success",
