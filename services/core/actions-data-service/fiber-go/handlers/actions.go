@@ -15,11 +15,13 @@ import (
 //
 // Query Parameters:
 //   - skip:    Number of actions to skip (default: 0)
+//
 //   - limit:   Maximum actions to return (default: 10)
 //
 // Response: JSON array of actions or error details
 //
 // Fails fast on any cache retrieval error.
+//
 func GetActionsHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getActionsFromCache(c, cache)
@@ -27,6 +29,7 @@ func GetActionsHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getActionsFromCache processes the actions list request.
+//
 func getActionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
@@ -51,6 +54,7 @@ func getActionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 
 // parsePaginationParams extracts skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10.
+//
 func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 	skip := 0
 	limit := 10
@@ -79,12 +83,15 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 }
 
 // retrieveActionsFromCache gets actions from cache with pagination.
+//
 func retrieveActionsFromCache(cache *data.Cache, skip, limit int) (
 	interface{}, error) {
 	return engines.GetActions(cache, skip, limit)
 }
 
-// sendActionsResponse returns actions list as JSON response with pagination metadata.
+// sendActionsResponse returns actions list as JSON response
+// with pagination metadata.
+//
 func sendActionsResponse(c fiber.Ctx, actions interface{},
 	skip, limit, total int) error {
 	pages, page := computePageData(skip, limit, total)
