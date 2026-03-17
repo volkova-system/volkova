@@ -4,14 +4,11 @@
 package data
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/tidwall/buntdb"
-
-	"actions-data-service/models"
 )
 
 // defaultCacheName is the default index name used for action storage.
@@ -72,26 +69,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 		}
 	}
 
-	if err := conn.CreateIndex(
-		defaultCacheName,
-		"action:*",
-		buntdb.IndexString,
-	); err != nil {
-		return nil, err
-	}
-
-	if err := conn.CreateIndex(
-		"reference",
-		"action:*",
-		func(a, b string) bool {
-			var actionA, actionB models.Action
-
-			json.Unmarshal([]byte(a), &actionA)
-			json.Unmarshal([]byte(b), &actionB)
-
-			return actionA.Reference < actionB.Reference
-		},
-	); err != nil {
+	if err := SetupIndexes(conn); err != nil {
 		return nil, err
 	}
 
