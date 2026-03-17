@@ -7,6 +7,7 @@ import (
 )
 
 // sendError returns standardized error response with logging.
+//
 func sendError(c fiber.Ctx, status int, message string, err error) error {
 	log.Printf("ERROR [%d] %s: %v", status, message, err)
 
@@ -17,6 +18,7 @@ func sendError(c fiber.Ctx, status int, message string, err error) error {
 }
 
 // sendSuccess returns standardized success response.
+//
 func sendSuccess(c fiber.Ctx, message string) error {
 	return c.JSON(fiber.Map{
 		"status":  "success",
