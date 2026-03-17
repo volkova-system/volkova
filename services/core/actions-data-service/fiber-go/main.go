@@ -13,7 +13,6 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 
 	"actions-data-service/data"
-	"actions-data-service/handlers"
 )
 
 func main() {
@@ -45,27 +44,18 @@ func main() {
 	server.Use(logger.New())
 	server.Use(cors.New())
 
-	service := server.Group("/service")
-	dataGroup := service.Group("/data")
-	actions := dataGroup.Group("/actions")
+	serviceGroup := server.Group("/service")
+	dataGroup := serviceGroup.Group("/data")
+	actionsGroup := dataGroup.Group("/actions")
 
-	actions.Get("/health", func(c fiber.Ctx) error {
+    actionsGroup.Get("/health", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status": "ok",
+            "service": "actions-data-service",
 		})
 	})
 
-	actions.Get("/",
-        handlers.GetActionsHandler(cache))
-
-	actions.Post("/push",
-        handlers.PushActionHandler(cache))
-
-	actions.Delete("/pop/:reference",
-        handlers.PopActionHandler(cache))
-
-	actions.Get("/:reference",
-        handlers.GetActionHandler(cache))
+	RegisterActionRoutes(actionsGroup, cache)
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
