@@ -21,7 +21,19 @@ const defaultCacheName = "actions"
 type Cache struct {
 	name        string
 	actions     *buntdb.DB
-	persistPath string
+	path        string
+}
+
+func (db *Cache) DB() *buntdb.DB {
+	return db.actions
+}
+
+func (db *Cache) Name() string {
+	return db.name
+}
+
+func (db *Cache) Path() string {
+	return db.path
 }
 
 // Open creates and initializes a new in-memory cache instance.
@@ -84,24 +96,19 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 	}
 
 	return &Cache{name: defaultCacheName, actions: conn,
-        persistPath: persistPath}, nil
-}
-
-// DB returns the underlying BuntDB instance.
-func (db *Cache) DB() *buntdb.DB {
-	return db.actions
+        path: persistPath}, nil
 }
 
 // Close gracefully shuts down the cache and releases all resources.
 func (db *Cache) Close() error {
-	if db.persistPath != "" {
-		if err := os.MkdirAll(filepath.Dir(db.persistPath),
+	if db.path != "" {
+		if err := os.MkdirAll(filepath.Dir(db.path),
             0755); err != nil {
 			return fmt.Errorf(
                 "failed to create directory for db: %w", err)
 		}
 
-		f, err := os.Create(db.persistPath)
+		f, err := os.Create(db.path)
 		if err != nil {
 			return fmt.Errorf(
                 "failed to create db file: %w", err)
