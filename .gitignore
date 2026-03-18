@@ -184,6 +184,13 @@ containers/*/data/**/*.*
 !services/core/*-service/fiber-go/models/
 !services/core/*-service/fiber-go/**/*.go
 !services/core/*-service/fiber-go/**/*.mod
+
+!services/core/*-service/varnish/
+
+!services/core/*-service/nats/
+
+!services/core/*-service/go/
+!services/core/*-service/go/agents
 # END SERVICES
 
 # START SETTINGS
