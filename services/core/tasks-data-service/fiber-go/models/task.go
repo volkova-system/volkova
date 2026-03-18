@@ -25,7 +25,4 @@ type Action struct {
     Address     *string     `json:"address,omitempty"`
     Delay       *int        `json:"delay,omitempty"`
     Script      *string     `json:"script,omitempty"`
-
-    CreatedAt   time.Time   `json:"created_at"`
-    UpdatedAt   time.Time   `json:"updated_at"`
 }
