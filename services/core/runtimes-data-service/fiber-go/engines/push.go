@@ -27,9 +27,11 @@ func PushRuntime(cache *data.Cache, runtime models.Runtime) error {
 	}
 
 	return cache.DB().Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set("runtime:"+runtime.Reference, string(runtimeData), nil)
+		_, _, err := tx.Set("runtime:"+runtime.Reference,
+            string(runtimeData), nil)
 		if err != nil {
-			return fmt.Errorf("failed to store runtime in cache: %w", err)
+			return fmt.Errorf("failed to store runtime in cache: %w",
+                err)
 		}
 
 		return nil
