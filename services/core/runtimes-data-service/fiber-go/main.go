@@ -103,7 +103,7 @@ func main() {
         port := os.Getenv("RUNTIME_DATA_SERVICE_PORT")
 
         if  port == "" {
-            port = "4075"
+            port = "4076"
         }
 
 		if err := server.Listen(":" + port); err != nil {
