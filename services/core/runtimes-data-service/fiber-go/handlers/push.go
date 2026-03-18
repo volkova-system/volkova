@@ -63,11 +63,13 @@ func parseRuntimeFromRequest(c fiber.Ctx) (*models.Runtime, error) {
 //
 func validateRuntimeData(runtime *models.Runtime) error {
 	if runtime.Reference == "" {
-		return fiber.NewError(fiber.StatusBadRequest, "reference required")
+		return fiber.NewError(fiber.StatusBadRequest,
+            "reference required")
 	}
 
 	if runtime.State == "" {
-		return fiber.NewError(fiber.StatusBadRequest, "state required")
+		return fiber.NewError(fiber.StatusBadRequest,
+            "state required")
 	}
 
 	// Validate state values
