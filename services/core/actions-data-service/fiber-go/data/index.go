@@ -2,6 +2,7 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/tidwall/buntdb"
 
@@ -14,7 +15,7 @@ func SetupIndexes(conn *buntdb.DB) error {
 		"action:*",
 		buntdb.IndexString,
 	); err != nil {
-		return err
+		return fmt.Errorf("failed to create default index: %w", err)
 	}
 
 	if err := conn.CreateIndex(
@@ -23,13 +24,17 @@ func SetupIndexes(conn *buntdb.DB) error {
 		func(a, b string) bool {
 			var actionA, actionB models.Action
 
-			json.Unmarshal([]byte(a), &actionA)
-			json.Unmarshal([]byte(b), &actionB)
+			if err := json.Unmarshal([]byte(a), &actionA); err != nil {
+				return false
+			}
+			if err := json.Unmarshal([]byte(b), &actionB); err != nil {
+				return false
+			}
 
 			return actionA.Reference < actionB.Reference
 		},
 	); err != nil {
-		return err
+		return fmt.Errorf("failed to create reference index: %w", err)
 	}
 
 	return nil
