@@ -184,7 +184,6 @@ containers/*/data/**/*.*
 !services/core/*-service/fiber-go/models/
 !services/core/*-service/fiber-go/**/*.go
 !services/core/*-service/fiber-go/**/*.mod
-!services/core/*-service/fiber-go/**/*.sum
 # END SERVICES
 
 # START SETTINGS
