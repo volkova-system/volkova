@@ -42,9 +42,11 @@ func GetRuntimes(cache *data.Cache, skip, limit int) ([]models.Runtime, error) {
 			}
 
 			var runtime models.Runtime
-			if err := json.Unmarshal([]byte(value), &runtime); err != nil {
+			if err := json.Unmarshal([]byte(value), &runtime);
+                err != nil {
 				unmarshalErr = fmt.Errorf(
-					"failed to unmarshal runtime at key %s: %w", key, err)
+					"failed to unmarshal runtime at key %s: %w",
+                        key, err)
 
 				return false
 			}
