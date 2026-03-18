@@ -6,11 +6,13 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
+	"github.com/tidwall/buntdb"
 
 	"actions-data-service/data"
 )
@@ -23,8 +25,14 @@ func main() {
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName: "actions-data-service",
-		ErrorHandler: func(c fiber.Ctx, err error) error {
+		AppName:      "actions-data-service",
+
+        ReadTimeout:  time.Second * 5,
+		WriteTimeout: time.Second * 5,
+		IdleTimeout:  time.Second * 5,
+		BodyLimit:    1 * 1024 * 1024,
+
+        ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
 			if e, ok := err.(*fiber.Error); ok {
 				code = e.Code
@@ -52,14 +60,25 @@ func main() {
 	actionsGroup := dataGroup.Group("/actions")
 
     actionsGroup.Get("/health", func(c fiber.Ctx) error {
+		err := cache.DB().View(func(tx *buntdb.Tx) error {
+			return nil
+		})
+
+		if err != nil {
+			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
+				"status":  "unhealthy",
+				"service": "actions-data-service",
+				"error":   "database connectivity failed",
+			})
+		}
+
 		return c.JSON(fiber.Map{
-			"status": "ok",
+			"status":  "healthy",
             "service": "actions-data-service",
 		})
 	})
 
     actionsGroup.Post("/stop", func(c fiber.Ctx) error {
-		// Trigger graceful shutdown without response
 		go func() {
 			shutdownCh <- struct{}{}
 		}()
