@@ -113,7 +113,9 @@ func sendJobsResponse(c fiber.Ctx, jobs interface{},
 
 	return c.JSON(fiber.Map{
 		"status": "success",
+
 		"jobs":   jobs,
+
 		"skip":   skip,
 		"limit":  limit,
 		"total":  total,
