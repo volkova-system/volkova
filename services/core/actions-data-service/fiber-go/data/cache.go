@@ -12,9 +12,11 @@ import (
 )
 
 // defaultCacheName is the default index name used for action storage.
+//
 const defaultCacheName = "actions"
 
 // Cache represents an in-memory cache for action data using BuntDB.
+//
 type Cache struct {
 	name        string
 	actions     *buntdb.DB
@@ -35,7 +37,18 @@ func (db *Cache) Path() string {
 
 // Open creates and initializes a new in-memory cache instance.
 func Open() (*Cache, error) {
-	return OpenWithPath(os.Getenv("ACTIONS_CACHE_PATH"))
+    dbPath := os.Getenv("ACTIONS_CACHE_PATH")
+
+    if dbPath == "" {
+        absPath, err := filepath.Abs(".")
+        if err != nil {
+            return nil, fmt.Errorf("failed to get absolute path: %w", err)
+        }
+
+        dbPath = filepath.Join(absPath, "actions-cache.db")
+    }
+
+	return OpenWithPath(dbPath)
 }
 
 func OpenWithPath(dbPath string) (*Cache, error) {
