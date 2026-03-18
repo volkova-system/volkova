@@ -86,6 +86,51 @@ func validateRuntimeData(runtime *models.Runtime) error {
 			"state must be one of: idle, doing, done, aborted, failed")
 	}
 
+    if runtime.Session.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "session reference required")
+	}
+
+    if runtime.Queue.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "queue reference required")
+	}
+
+	if runtime.Queue.Name == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "queue name required")
+	}
+
+    if runtime.Job.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "job reference required")
+	}
+
+	if runtime.Job.Name == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "job name required")
+	}
+
+    if runtime.Task.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "task reference required")
+	}
+
+	if runtime.Task.Name == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "task name required")
+	}
+
+    if runtime.Action.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "action reference required")
+	}
+
+	if runtime.Action.Name == "" {
+		return fiber.NewError(fiber.StatusBadRequest,
+            "action name required")
+	}
+
 	return nil
 }
 
