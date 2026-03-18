@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v3"
 
 	"tasks-data-service/data"
@@ -68,6 +70,19 @@ func validateTaskData(task *models.Task) error {
 
 	if task.Name == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "name required")
+	}
+
+    // Validate each Action has required reference and name
+	for a, action := range task.Actions {
+		if action.Reference == "" {
+			return fiber.NewError(fiber.StatusBadRequest,
+				fmt.Sprintf("action[%d]: reference required", a))
+		}
+
+		if action.Name == "" {
+			return fiber.NewError(fiber.StatusBadRequest,
+				fmt.Sprintf("action[%d]: name required", a))
+		}
 	}
 
 	return nil
