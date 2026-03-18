@@ -51,6 +51,7 @@ func getSessionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 
 	return sendSessionsResponse(c, sessions, skip, limit, total)
 }
+
 // parsePaginationParams extracts skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10. Enforces maximum limit of 100.
 //
