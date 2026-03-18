@@ -21,21 +21,6 @@ func PushJob(cache *data.Cache, job models.Job) error {
 	}
 	job.UpdatedAt = now
 
-	// Set timestamps for tasks and actions
-	for i := range job.Tasks {
-		if job.Tasks[i].CreatedAt.IsZero() {
-			job.Tasks[i].CreatedAt = now
-		}
-		job.Tasks[i].UpdatedAt = now
-
-		for j := range job.Tasks[i].Actions {
-			if job.Tasks[i].Actions[j].CreatedAt.IsZero() {
-				job.Tasks[i].Actions[j].CreatedAt = now
-			}
-			job.Tasks[i].Actions[j].UpdatedAt = now
-		}
-	}
-
 	jobData, err := json.Marshal(job)
 	if err != nil {
 		return fmt.Errorf("failed to marshal job data: %w", err)
