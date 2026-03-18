@@ -42,7 +42,8 @@ func Open() (*Cache, error) {
     if dbPath == "" {
         absPath, err := filepath.Abs("./data")
         if err != nil {
-            return nil, fmt.Errorf("failed to get absolute path: %w", err)
+            return nil, fmt.Errorf("failed to get absolute path: %w",
+                err)
         }
 
         dbPath = filepath.Join(absPath, "runtimes-cache.db")
