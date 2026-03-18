@@ -44,6 +44,11 @@
                     "PackageIdentifier": "GNU.Wget2",
                     "Version": "2.1.0",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "Orange-OpenSource.Hurl",
+                    "Version": "7.1.0",
+                    "Source": "winget"
                 }
             ]
         }
