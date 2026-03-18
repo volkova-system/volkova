@@ -45,7 +45,7 @@ func Open() (*Cache, error) {
             return nil, fmt.Errorf("failed to get absolute path: %w", err)
         }
 
-        dbPath = filepath.Join(absPath, "queue-cache.db")
+        dbPath = filepath.Join(absPath, "queues-cache.db")
     }
 
 	return OpenWithPath(dbPath)
