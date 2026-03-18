@@ -9,36 +9,72 @@ import (
 )
 
 // PushTaskHandler handles POST /service/data/tasks/push endpoint.
-// Stores a new task in cache storage.
+// Accepts JSON task document and stores it in cache using reference as the key.
 //
-// Request Body: JSON task object
-//
+// Request: JSON task document
 // Response: Success confirmation or error details
+//
+// Fails fast on any validation or storage error.
 //
 func PushTaskHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
-		var task models.Task
-
-		if err := c.Bind().Body(&task); err != nil {
-			return sendError(c, fiber.StatusBadRequest,
-				"invalid request body", err)
-		}
-
-		if task.Reference == "" {
-			return sendError(c, fiber.StatusBadRequest,
-				"missing reference", fiber.NewError(fiber.StatusBadRequest,
-					"task reference is required"))
-		}
-
-		if err := engines.PushTask(cache, task); err != nil {
-			return sendError(c, fiber.StatusInternalServerError,
-				"failed to store task", err)
-		}
-
-		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-			"status":    "success",
-			"message":   "task stored successfully",
-			"reference": task.Reference,
-		})
+		return pushTaskToCache(c, cache)
 	}
+}
+
+// pushTaskToCache processes the task push request.
+//
+func pushTaskToCache(c fiber.Ctx, cache *data.Cache) error {
+	task, err := parseTaskFromRequest(c)
+	if err != nil {
+		return sendError(c, fiber.StatusBadRequest,
+            "invalid task data", err)
+	}
+
+	err = validateTaskData(task)
+	if err != nil {
+		return sendError(c, fiber.StatusBadRequest,
+            "validation failed", err)
+	}
+
+	err = storeTaskInCache(cache, task)
+	if err != nil {
+		return sendError(c, fiber.StatusInternalServerError,
+            "cache error", err)
+	}
+
+	return sendSuccess(c, "task pushed")
+}
+
+// parseTaskFromRequest extracts task data from request body.
+//
+func parseTaskFromRequest(c fiber.Ctx) (*models.Task, error) {
+	var task models.Task
+
+	err := c.Bind().JSON(&task)
+	if err != nil {
+		return nil, err
+	}
+
+	return &task, nil
+}
+
+// validateTaskData ensures required fields are present and within limits.
+//
+func validateTaskData(task *models.Task) error {
+	if task.Reference == "" {
+		return fiber.NewError(fiber.StatusBadRequest, "reference required")
+	}
+
+	if task.Name == "" {
+		return fiber.NewError(fiber.StatusBadRequest, "name required")
+	}
+
+	return nil
+}
+
+// storeTaskInCache saves task to cache storage.
+//
+func storeTaskInCache(cache *data.Cache, task *models.Task) error {
+	return engines.PushTask(cache, *task)
 }
