@@ -40,7 +40,7 @@ func Open() (*Cache, error) {
     dbPath := os.Getenv("ACTIONS_CACHE_PATH")
 
     if dbPath == "" {
-        absPath, err := filepath.Abs(".")
+        absPath, err := filepath.Abs("./data")
         if err != nil {
             return nil, fmt.Errorf("failed to get absolute path: %w", err)
         }
