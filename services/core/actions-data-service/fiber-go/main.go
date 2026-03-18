@@ -44,6 +44,9 @@ func main() {
 	server.Use(logger.New())
 	server.Use(cors.New())
 
+	// Channel for manual shutdown trigger
+	shutdownCh := make(chan struct{})
+
 	serviceGroup := server.Group("/service")
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
@@ -53,6 +56,15 @@ func main() {
 			"status": "ok",
             "service": "actions-data-service",
 		})
+	})
+
+    actionsGroup.Post("/stop", func(c fiber.Ctx) error {
+		// Trigger graceful shutdown without response
+		go func() {
+			shutdownCh <- struct{}{}
+		}()
+
+		return nil
 	})
 
 	RegisterActionRoutes(actionsGroup, cache)
@@ -69,13 +81,25 @@ func main() {
 	defer stop()
 
 	go func() {
-		if err := server.Listen(":4980"); err != nil {
+        port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
+
+        if  port == "" {
+            port = "4071"
+        }
+
+		if err := server.Listen(":" + port); err != nil {
 			log.Printf("server listen error: %v", err)
 		}
 	}()
 
-	<-ctx.Done()
-	log.Println("shutting down data service...")
+	// Wait for either signal or manual shutdown
+	select {
+	case <-ctx.Done():
+		log.Println("received signal, shutting down data service...")
+	case <-shutdownCh:
+		log.Println("received shutdown request, shutting down data service...")
+	}
+
 	if err := server.Shutdown(); err != nil {
 		log.Printf("server shutdown error: %v", err)
 	}
