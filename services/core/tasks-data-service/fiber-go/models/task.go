@@ -20,9 +20,9 @@ type Action struct {
 
     Type        string      `json:"type"`
 
+    Address     *string     `json:"address,omitempty"`
     Selector    *string     `json:"selector,omitempty"`
     Value       *string     `json:"value,omitempty"`
-    Address     *string     `json:"address,omitempty"`
-    Delay       *int        `json:"delay,omitempty"`
     Script      *string     `json:"script,omitempty"`
+    Delay       *int        `json:"delay,omitempty"`
 }
