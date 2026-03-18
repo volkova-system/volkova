@@ -113,7 +113,9 @@ func sendQueuesResponse(c fiber.Ctx, queues interface{},
 
 	return c.JSON(fiber.Map{
 		"status": "success",
+
 		"queues": queues,
+
 		"skip":   skip,
 		"limit":  limit,
 		"total":  total,
