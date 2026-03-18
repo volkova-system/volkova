@@ -10,8 +10,6 @@ import (
 	"tasks-data-service/models"
 )
 
-const defaultIndexName = "tasks"
-
 // GetTasks retrieves a paginated list of tasks from the cache.
 func GetTasks(cache *data.Cache, skip, limit int) ([]models.Task, error) {
 	if skip < 0 {
