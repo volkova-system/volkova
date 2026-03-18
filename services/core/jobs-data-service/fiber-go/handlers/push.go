@@ -70,24 +70,27 @@ func validateJobData(job *models.Job) error {
 	}
 
 	// Validate tasks
-	for i, task := range job.Tasks {
+	for t, task := range job.Tasks {
 		if task.Reference == "" {
-			return fiber.NewError(fiber.StatusBadRequest, fmt.Sprintf("task reference required at index %d", i))
+			return fiber.NewError(fiber.StatusBadRequest,
+                fmt.Sprintf("task reference required at index %d", t))
 		}
 		if task.Name == "" {
-			return fiber.NewError(fiber.StatusBadRequest, fmt.Sprintf("task name required at index %d", i))
+			return fiber.NewError(fiber.StatusBadRequest,
+                fmt.Sprintf("task name required at index %d", t))
 		}
 
 		// Validate actions within tasks
-		for j, action := range task.Actions {
+		for a, action := range task.Actions {
 			if action.Reference == "" {
-				return fiber.NewError(fiber.StatusBadRequest, fmt.Sprintf("action reference required at task %d, action %d", i, j))
+				return fiber.NewError(fiber.StatusBadRequest,
+                    fmt.Sprintf("action reference required at task %d, action %d",
+                        t, a))
 			}
 			if action.Name == "" {
-				return fiber.NewError(fiber.StatusBadRequest, fmt.Sprintf("action name required at task %d, action %d", i, j))
-			}
-			if action.Type == "" {
-				return fiber.NewError(fiber.StatusBadRequest, fmt.Sprintf("action type required at task %d, action %d", i, j))
+				return fiber.NewError(fiber.StatusBadRequest,
+                    fmt.Sprintf("action name required at task %d, action %d",
+                        t, a))
 			}
 		}
 	}
