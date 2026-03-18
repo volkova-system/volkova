@@ -53,7 +53,7 @@ func getActionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 }
 
 // parsePaginationParams extracts skip and limit from query parameters.
-// Sets defaults: skip=0, limit=10.
+// Sets defaults: skip=0, limit=10. Enforces maximum limit of 100.
 //
 func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 	skip := 0
@@ -66,6 +66,11 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 				"skip must be integer")
 		}
 
+		if parsedSkip < 0 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"skip must be non-negative")
+		}
+
 		skip = parsedSkip
 	}
 
@@ -74,6 +79,16 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 		if err != nil {
 			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
 				"limit must be integer")
+		}
+
+		if parsedLimit <= 0 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit must be positive")
+		}
+
+		if parsedLimit > 100 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit cannot exceed 100")
 		}
 
 		limit = parsedLimit
