@@ -113,7 +113,9 @@ func sendActionsResponse(c fiber.Ctx, actions interface{},
 
 	return c.JSON(fiber.Map{
 		"status":  "success",
+
 		"actions": actions,
+
 		"skip":    skip,
 		"limit":   limit,
 		"total":   total,
