@@ -103,7 +103,7 @@ func main() {
         port := os.Getenv("JOBS_DATA_SERVICE_PORT")
 
         if  port == "" {
-            port = "4072"
+            port = "4073"
         }
 
 		if err := server.Listen(":" + port); err != nil {
