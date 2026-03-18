@@ -21,11 +21,13 @@ func GetRuntime(cache *data.Cache, key string) (*models.Runtime, error) {
 	err := cache.DB().View(func(tx *buntdb.Tx) error {
 		val, err := tx.Get(key)
 		if err != nil {
-			return fmt.Errorf("runtime not found for key %s: %w", key, err)
+			return fmt.Errorf("runtime not found for key %s: %w",
+                key, err)
 		}
 
 		if err := json.Unmarshal([]byte(val), &runtime); err != nil {
-			return fmt.Errorf("failed to unmarshal runtime data: %w", err)
+			return fmt.Errorf("failed to unmarshal runtime data: %w",
+                err)
 		}
 
 		return nil
