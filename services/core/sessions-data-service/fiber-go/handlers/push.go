@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
+	"strings"
+
 	"github.com/gofiber/fiber/v3"
 
 	"sessions-data-service/data"
@@ -45,6 +48,7 @@ func pushSessionToCache(c fiber.Ctx, cache *data.Cache) error {
 
 	return sendSuccess(c, "session pushed")
 }
+
 // parseSessionFromRequest extracts session data from request body.
 //
 func parseSessionFromRequest(c fiber.Ctx) (*models.Session, error) {
@@ -58,11 +62,43 @@ func parseSessionFromRequest(c fiber.Ctx) (*models.Session, error) {
 	return &session, nil
 }
 
+// validateStorageState ensures StorageState is not empty or null JSON.
+//
+func validateStorageState(storageState json.RawMessage) error {
+	if len(storageState) == 0 {
+		return fiber.NewError(fiber.StatusBadRequest, "storage_state is required")
+	}
+
+	// Validate that it's valid JSON first
+	var temp any
+	if err := json.Unmarshal(storageState, &temp); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "storage_state must be valid JSON")
+	}
+
+	// Check if it's null JSON
+	if temp == nil {
+		return fiber.NewError(fiber.StatusBadRequest, "storage_state cannot be null")
+	}
+
+	// Check if it's an empty JSON object or array
+	trimmed := strings.TrimSpace(string(storageState))
+	if trimmed == "{}" || trimmed == "[]" {
+		return fiber.NewError(fiber.StatusBadRequest, "storage_state cannot be empty")
+	}
+
+	return nil
+}
+
 // validateSessionData ensures required fields are present and within limits.
 //
 func validateSessionData(session *models.Session) error {
 	if session.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "reference required")
+	}
+
+	// Validate that session.StorageState must not be an empty json
+	if err := validateStorageState(session.StorageState); err != nil {
+		return err
 	}
 
 	return nil
