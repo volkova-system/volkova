@@ -5,6 +5,7 @@ import "time"
 type Runtime struct {
     Reference       string          `json:"reference"`
 
+    Queue           Queue           `json:"queue"`
     Job             Job             `json:"job"`
     Task            Task            `json:"task"`
     Action          Action          `json:"action"`
@@ -15,6 +16,19 @@ type Runtime struct {
 
     CreatedAt       time.Time       `json:"created_at"`
     UpdatedAt       time.Time       `json:"updated_at"`
+}
+
+type Queue struct {
+    Reference   string      `json:"reference"`
+    Name        string      `json:"name"`
+    Description string      `json:"description"`
+
+    Job         Job         `json:"job"`
+    State       string      `json:"state"`
+    Index       int         `json:"index"`
+
+    CreatedAt   time.Time   `json:"created_at"`
+    UpdatedAt   time.Time   `json:"updated_at"`
 }
 
 type Job struct {
