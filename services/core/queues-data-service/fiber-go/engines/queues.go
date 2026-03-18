@@ -10,8 +10,6 @@ import (
 	"queues-data-service/models"
 )
 
-const defaultIndexName = "queues"
-
 // GetQueues retrieves a paginated list of queues from the cache.
 func GetQueues(cache *data.Cache, skip, limit int) ([]models.Queue, error) {
 	if skip < 0 {
