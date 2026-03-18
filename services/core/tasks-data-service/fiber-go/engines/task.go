@@ -10,26 +10,22 @@ import (
 	"tasks-data-service/models"
 )
 
-// GetTask retrieves a single task by reference from the cache.
-func GetTask(cache *data.Cache, reference string) (*models.Task, error) {
-	if reference == "" {
-		return nil, fmt.Errorf("reference cannot be empty")
+// GetTask retrieves a single task from the cache by its key.
+func GetTask(cache *data.Cache, key string) (*models.Task, error) {
+	if key == "" {
+		return nil, fmt.Errorf("key cannot be empty")
 	}
 
-	key := fmt.Sprintf("task:%s", reference)
 	var task models.Task
 
 	err := cache.DB().View(func(tx *buntdb.Tx) error {
-		value, err := tx.Get(key)
+		val, err := tx.Get(key)
 		if err != nil {
-			if err == buntdb.ErrNotFound {
-				return fmt.Errorf("task not found")
-			}
-			return fmt.Errorf("failed to get task: %w", err)
+			return fmt.Errorf("task not found for key %s: %w", key, err)
 		}
 
-		if err := json.Unmarshal([]byte(value), &task); err != nil {
-			return fmt.Errorf("failed to unmarshal task: %w", err)
+		if err := json.Unmarshal([]byte(val), &task); err != nil {
+			return fmt.Errorf("failed to unmarshal task data: %w", err)
 		}
 
 		return nil
