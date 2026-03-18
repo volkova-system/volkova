@@ -26,9 +26,6 @@ type Task struct {
     Description string      `json:"description"`
 
     Actions     []Action    `json:"actions"`
-
-    CreatedAt   time.Time   `json:"created_at"`
-    UpdatedAt   time.Time   `json:"updated_at"`
 }
 
 type Action struct {
@@ -43,7 +40,4 @@ type Action struct {
     Address     *string     `json:"address,omitempty"`
     Delay       *int        `json:"delay,omitempty"`
     Script      *string     `json:"script,omitempty"`
-
-    CreatedAt   time.Time   `json:"created_at"`
-    UpdatedAt   time.Time   `json:"updated_at"`
 }
