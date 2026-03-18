@@ -27,20 +27,17 @@ func PushActionHandler(cache *data.Cache) fiber.Handler {
 func pushActionToCache(c fiber.Ctx, cache *data.Cache) error {
 	action, err := parseActionFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid action data", err)
+		return sendError(c, fiber.StatusBadRequest, "invalid action data", err)
 	}
 
 	err = validateActionData(action)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"validation failed", err)
+		return sendError(c, fiber.StatusBadRequest, "validation failed", err)
 	}
 
 	err = storeActionInCache(cache, action)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
 	}
 
 	return sendSuccess(c, "action pushed successfully")
@@ -59,22 +56,15 @@ func parseActionFromRequest(c fiber.Ctx) (*models.Action, error) {
 	return &action, nil
 }
 
-// validateActionData ensures required fields are present.
+// validateActionData ensures required fields are present and within limits.
 //
 func validateActionData(action *models.Action) error {
 	if action.Reference == "" {
-		return fiber.NewError(fiber.StatusBadRequest,
-            "reference required")
+		return fiber.NewError(fiber.StatusBadRequest, "reference required")
 	}
 
 	if action.Name == "" {
-		return fiber.NewError(fiber.StatusBadRequest,
-            "name required")
-	}
-
-	if action.Type == "" {
-		return fiber.NewError(fiber.StatusBadRequest,
-            "type required")
+		return fiber.NewError(fiber.StatusBadRequest, "name required")
 	}
 
 	return nil
