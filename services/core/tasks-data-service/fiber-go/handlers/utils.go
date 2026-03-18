@@ -1,23 +1,39 @@
 package handlers
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v3"
 )
 
-// sendError sends a standardized error response.
+// sendError returns standardized error response with logging.
+//
 func sendError(c fiber.Ctx, status int, message string, err error) error {
+	log.Printf("ERROR [%d] %s: %v", status, message, err)
+
 	return c.Status(status).JSON(fiber.Map{
-		"status":  "error",
-		"message": message,
-		"error":   err.Error(),
+		"error":   message,
+		"details": err.Error(),
 	})
 }
 
-// computePageData calculates pagination metadata.
+// sendSuccess returns standardized success response.
+//
+func sendSuccess(c fiber.Ctx, message string) error {
+	return c.JSON(fiber.Map{
+		"status":  "success",
+		"message": message,
+	})
+}
+
 func computePageData(skip, limit, total int) (int, int) {
-	pages := (total + limit - 1) / limit
-	if pages == 0 {
-		pages = 1
+	if limit <= 0 {
+		limit = 1
+	}
+
+	pages := 1
+	if total > limit {
+		pages = (total + limit - 1) / limit
 	}
 
 	page := (skip / limit) + 1
