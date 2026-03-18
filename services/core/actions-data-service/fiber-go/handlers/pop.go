@@ -38,5 +38,5 @@ func popActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 			"cache error", err)
 	}
 
-	return sendSuccess(c, "action removed successfully")
+	return sendSuccess(c, "action popped")
 }
