@@ -1,10 +1,14 @@
 package models
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Runtime struct {
     Reference       string          `json:"reference"`
 
+    Session         Session         `json:"session"`
     Queue           Queue           `json:"queue"`
     Job             Job             `json:"job"`
     Task            Task            `json:"task"`
@@ -21,6 +25,12 @@ type Runtime struct {
 
     CreatedAt       time.Time       `json:"created_at"`
     UpdatedAt       time.Time       `json:"updated_at"`
+}
+
+type Session struct {
+    Reference       string          `json:"reference"`
+
+    StorageState    json.RawMessage `json:"storage_state"`
 }
 
 type Queue struct {
