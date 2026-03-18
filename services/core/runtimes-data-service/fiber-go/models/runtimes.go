@@ -10,7 +10,7 @@ type Runtime struct {
     Task            Task            `json:"task"`
     Action          Action          `json:"action"`
 
-    // State can only be "doing", "done", "aborted", and "failed"
+    // State can only be "idle", "doing", "done", "aborted", and "failed"
     // If the action was aborted means an issue occurred and the runtime
     // was stopped in the middle of the process.
     // If the action failed it means the action finished but it does not
