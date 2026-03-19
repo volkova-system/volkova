@@ -29,23 +29,23 @@ func PushTaskHandler(cache *data.Cache) fiber.Handler {
 func pushTaskToCache(c fiber.Ctx, cache *data.Cache) error {
 	task, err := parseTaskFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "invalid task data", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "invalid task data" })
 	}
 
 	err = validateTaskData(task)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "validation failed", err)
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "task validation failed" })
 	}
 
 	err = storeTaskInCache(cache, task)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-            "cache error", err)
+        return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "task cache error" })
 	}
 
-	return sendSuccess(c, "task pushed")
+	return c.JSON(fiber.Map{ "reference": task.Reference })
 }
 
 // parseTaskFromRequest extracts task data from request body.
