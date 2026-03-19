@@ -115,6 +115,7 @@ containers/*/data/**/*.*
 !prompts/
 !prompts/**/*.prompt
 
+# START PROTOTYPE
 !prototype/
 !prototype/web/
 !prototype/web/*/
@@ -130,6 +131,19 @@ containers/*/data/**/*.*
 
 !prototype/widget/
 !prototype/widget/*/
+
+!prototype/
+!prototype/*-system/
+!prototype/*-system/storybook/
+!prototype/*-system/storybook/.storybook/
+!prototype/*-system/storybook/public/
+!prototype/*-system/storybook/stories/
+!prototype/*-system/storybook/.storybook/**/*
+!prototype/*-system/storybook/public/**/*
+!prototype/*-system/storybook/stories/**/*
+!prototype/*-system/storybook/package.json
+!prototype/*-system/storybook/tsconfig.json
+# END PROTOTYPE
 
 !public/
 !public/**/*

@@ -9,13 +9,13 @@ feather-icons --save
 htmx.org --save
 hyperscript.org --save
 
-storybook --save-dev --prefix ./prototype/web/core
-@storybook/html-vite --save-dev --prefix ./prototype/web/core
-typescript --save-dev --prefix ./prototype/web/core
-vite --save-dev --prefix ./prototype/web/core
-@storybook/addon-vitest --save-dev --prefix ./prototype/web/core
-@storybook/addon-a11y --save-dev --prefix ./prototype/web/core
-@chromatic-com/storybook --save-dev --prefix ./prototype/web/core
+storybook --save-dev --prefix ./prototype/concise-design-system/storybook
+@storybook/html-vite --save-dev --prefix ./prototype/concise-design-system/storybook
+typescript --save-dev --prefix ./prototype/concise-design-system/storybook
+vite --save-dev --prefix ./prototype/concise-design-system/storybook
+@storybook/addon-vitest --save-dev --prefix ./prototype/concise-design-system/storybook
+@storybook/addon-a11y --save-dev --prefix ./prototype/concise-design-system/storybook
+@chromatic-com/storybook --save-dev --prefix ./prototype/concise-design-system/storybook
 
 fastify --save --prefix ./services/core/web-automation-service/fastify-node
 playwright --save --prefix ./services/core/web-automation-service/fastify-node
