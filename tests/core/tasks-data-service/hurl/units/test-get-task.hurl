@@ -1,5 +1,5 @@
 
-POST http://localhost:4071/service/data/tasks/push
+POST http://localhost:4072/service/data/tasks/push
 Content-Type: application/json
 {
   "reference": "test-task-003",
@@ -16,7 +16,7 @@ Content-Type: application/json
   ]
 }
 
-GET http://localhost:4071/service/data/tasks/test-task-003
+GET http://localhost:4072/service/data/tasks/test-task-003
 
 HTTP 200
 [Asserts]
