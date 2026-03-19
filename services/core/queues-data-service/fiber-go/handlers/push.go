@@ -29,20 +29,23 @@ func PushQueueHandler(cache *data.Cache) fiber.Handler {
 func pushQueueToCache(c fiber.Ctx, cache *data.Cache) error {
 	queue, err := parseQueueFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "invalid queue data", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid queue data" })
 	}
 
 	err = validateQueueData(queue)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "validation failed", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "queue validation failed" })
 	}
 
 	err = storeQueueInCache(cache, queue)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "queue cache error" })
 	}
 
-	return sendSuccess(c, "queue pushed successfully")
+	return c.JSON(fiber.Map{ "reference": queue.Reference })
 }
 
 // parseQueueFromRequest extracts queue data from request body.
@@ -69,28 +72,28 @@ func validateQueueData(queue *models.Queue) error {
 		return fiber.NewError(fiber.StatusBadRequest, "name required")
 	}
 
-    // Validate tasks
+	// Validate tasks
 	for t, task := range queue.Job.Tasks {
 		if task.Reference == "" {
 			return fiber.NewError(fiber.StatusBadRequest,
-                fmt.Sprintf("task reference required at index %d", t))
+				fmt.Sprintf("task reference required at index %d", t))
 		}
 		if task.Name == "" {
 			return fiber.NewError(fiber.StatusBadRequest,
-                fmt.Sprintf("task name required at index %d", t))
+				fmt.Sprintf("task name required at index %d", t))
 		}
 
 		// Validate actions within tasks
 		for a, action := range task.Actions {
 			if action.Reference == "" {
 				return fiber.NewError(fiber.StatusBadRequest,
-                    fmt.Sprintf("action reference required at task %d, action %d",
-                        t, a))
+					fmt.Sprintf("action reference required at task %d, action %d",
+						t, a))
 			}
 			if action.Name == "" {
 				return fiber.NewError(fiber.StatusBadRequest,
-                    fmt.Sprintf("action name required at task %d, action %d",
-                        t, a))
+					fmt.Sprintf("action name required at task %d, action %d",
+						t, a))
 			}
 		}
 	}
