@@ -143,6 +143,12 @@ containers/*/data/**/*.*
 !prototype/*-system/storybook/stories/**/*
 !prototype/*-system/storybook/package.json
 !prototype/*-system/storybook/tsconfig.json
+
+!prototype/*-system/zig/
+!prototype/*-system/zig/*-cli/
+!prototype/*-system/zig/*-cli/src/
+!prototype/*-system/zig/*-cli/build/
+!prototype/*-system/zig/*-cli/dist/
 # END PROTOTYPE
 
 !public/
