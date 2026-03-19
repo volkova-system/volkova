@@ -26,26 +26,15 @@ func GetActionHandler(cache *data.Cache) fiber.Handler {
 func getActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "action reference cannot be empty" })
 	}
 
 	action, err := engines.GetAction(cache, "action:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusNotFound,
-			"action not found", err)
+		return c.Status(fiber.StatusNotFound).JSON(
+            fiber.Map{ "error": "action not found" })
 	}
 
-	return sendActionResponse(c, action)
-}
-
-// sendActionResponse returns single action as JSON response.
-//
-func sendActionResponse(c fiber.Ctx, action interface{}) error {
-	return c.JSON(fiber.Map{
-		"status": "success",
-		"action": action,
-	})
+	return c.JSON(fiber.Map{ "action": action })
 }
