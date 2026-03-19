@@ -33,20 +33,20 @@ func GetTasksHandler(cache *data.Cache) fiber.Handler {
 func getTasksFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid parameters", err)
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "invalid tasks request parameters" })
 	}
 
 	tasks, err := retrieveTasksFromCache(cache, skip, limit)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+        return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "task cache error" })
 	}
 
 	total, err := engines.GetTasksCount(cache)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache count error", err)
+        return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "task cache count error" })
 	}
 
 	return sendTasksResponse(c, tasks, skip, limit, total)
@@ -112,8 +112,6 @@ func sendTasksResponse(c fiber.Ctx, tasks interface{},
 	pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
-		"status": "success",
-
 		"tasks":  tasks,
 
 		"skip":   skip,
