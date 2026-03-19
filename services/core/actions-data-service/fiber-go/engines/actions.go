@@ -10,8 +10,6 @@ import (
 	"actions-data-service/models"
 )
 
-const defaultIndexName = "actions"
-
 // GetActions retrieves a paginated list of actions from the cache.
 func GetActions(cache *data.Cache, skip, limit int) ([]models.Action, error) {
 	if skip < 0 {
