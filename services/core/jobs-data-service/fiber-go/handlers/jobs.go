@@ -33,20 +33,20 @@ func GetJobsHandler(cache *data.Cache) fiber.Handler {
 func getJobsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid parameters", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid jobs request parameters" })
 	}
 
 	jobs, err := retrieveJobsFromCache(cache, skip, limit)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "job cache error" })
 	}
 
 	total, err := engines.GetJobsCount(cache)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache count error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "job cache count error" })
 	}
 
 	return sendJobsResponse(c, jobs, skip, limit, total)
@@ -112,14 +112,12 @@ func sendJobsResponse(c fiber.Ctx, jobs interface{},
 	pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
-		"status": "success",
+		"jobs":  jobs,
 
-		"jobs":   jobs,
-
-		"skip":   skip,
-		"limit":  limit,
-		"total":  total,
-		"pages":  pages,
-		"page":   page,
+		"skip":  skip,
+		"limit": limit,
+		"total": total,
+		"pages": pages,
+		"page":  page,
 	})
 }
