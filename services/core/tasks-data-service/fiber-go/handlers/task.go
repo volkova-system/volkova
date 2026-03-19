@@ -26,26 +26,15 @@ func GetTaskHandler(cache *data.Cache) fiber.Handler {
 func getTaskFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "task reference cannot be empty" })
 	}
 
 	task, err := engines.GetTask(cache, "task:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusNotFound,
-			"task not found", err)
+		return c.Status(fiber.StatusNotFound).JSON(
+            fiber.Map{ "error": "task not found" })
 	}
 
-	return sendTaskResponse(c, task)
-}
-
-// sendTaskResponse returns single task as JSON response.
-//
-func sendTaskResponse(c fiber.Ctx, task interface{}) error {
-	return c.JSON(fiber.Map{
-		"status": "success",
-		"task": task,
-	})
+	return c.JSON(fiber.Map{ "task": task })
 }
