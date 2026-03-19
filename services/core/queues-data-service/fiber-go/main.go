@@ -25,7 +25,7 @@ func main() {
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName:      "queue-data-service",
+		AppName:      "queues-data-service",
 
         ReadTimeout:  time.Second * 5,
 		WriteTimeout: time.Second * 5,
@@ -67,14 +67,14 @@ func main() {
 		if err != nil {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
 				"status":  "unhealthy",
-				"service": "queue-data-service",
+				"service": "queues-data-service",
 				"error":   "database connectivity failed",
 			})
 		}
 
 		return c.JSON(fiber.Map{
 			"status":  "healthy",
-            "service": "queue-data-service",
+            "service": "queues-data-service",
 		})
 	})
 
@@ -100,7 +100,7 @@ func main() {
 	defer stop()
 
 	go func() {
-        port := os.Getenv("QUEUE_DATA_SERVICE_PORT")
+        port := os.Getenv("QUEUES_DATA_SERVICE_PORT")
 
         if  port == "" {
             port = "4074"
