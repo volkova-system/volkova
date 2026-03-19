@@ -19,12 +19,12 @@ const defaultCacheName = "queues"
 //
 type Cache struct {
 	name        string
-	actions     *buntdb.DB
+	queues      *buntdb.DB
 	path        string
 }
 
 func (db *Cache) DB() *buntdb.DB {
-	return db.actions
+	return db.queues
 }
 
 func (db *Cache) Name() string {
@@ -37,7 +37,7 @@ func (db *Cache) Path() string {
 
 // Open creates and initializes a new in-memory cache instance.
 func Open() (*Cache, error) {
-    dbPath := os.Getenv("QUEUE_CACHE_PATH")
+    dbPath := os.Getenv("QUEUES_CACHE_PATH")
 
     if dbPath == "" {
         absPath, err := filepath.Abs("./data")
@@ -86,7 +86,7 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 		return nil, err
 	}
 
-	return &Cache{name: defaultCacheName, actions: conn,
+	return &Cache{name: defaultCacheName, queues: conn,
         path: persistPath}, nil
 }
 
@@ -106,11 +106,11 @@ func (db *Cache) Close() error {
 		}
 		defer f.Close()
 
-		if err := db.actions.Save(f); err != nil {
+		if err := db.queues.Save(f); err != nil {
 			return fmt.Errorf(
                 "failed to save db snapshot: %w", err)
 		}
 	}
 
-	return db.actions.Close()
+	return db.queues.Close()
 }
