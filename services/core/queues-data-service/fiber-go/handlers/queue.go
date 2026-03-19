@@ -26,26 +26,15 @@ func GetQueueHandler(cache *data.Cache) fiber.Handler {
 func getQueueFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "queue reference cannot be empty" })
 	}
 
 	queue, err := engines.GetQueue(cache, "queue:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusNotFound,
-			"queue not found", err)
+		return c.Status(fiber.StatusNotFound).JSON(
+			fiber.Map{ "error": "queue not found" })
 	}
 
-	return sendQueueResponse(c, queue)
-}
-
-// sendQueueResponse returns single queue as JSON response.
-//
-func sendQueueResponse(c fiber.Ctx, queue interface{}) error {
-	return c.JSON(fiber.Map{
-		"status": "success",
-		"queue":  queue,
-	})
+	return c.JSON(fiber.Map{ "queue": queue })
 }
