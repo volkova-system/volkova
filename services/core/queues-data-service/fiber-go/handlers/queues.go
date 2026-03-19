@@ -33,20 +33,20 @@ func GetQueuesHandler(cache *data.Cache) fiber.Handler {
 func getQueuesFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid parameters", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid queues request parameters" })
 	}
 
 	queues, err := retrieveQueuesFromCache(cache, skip, limit)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "queue cache error" })
 	}
 
 	total, err := engines.GetQueuesCount(cache)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache count error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "queue cache count error" })
 	}
 
 	return sendQueuesResponse(c, queues, skip, limit, total)
@@ -112,8 +112,6 @@ func sendQueuesResponse(c fiber.Ctx, queues interface{},
 	pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
-		"status": "success",
-
 		"queues": queues,
 
 		"skip":   skip,
