@@ -29,20 +29,23 @@ func PushJobHandler(cache *data.Cache) fiber.Handler {
 func pushJobToCache(c fiber.Ctx, cache *data.Cache) error {
 	job, err := parseJobFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "invalid job data", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid job data" })
 	}
 
 	err = validateJobData(job)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest, "validation failed", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "job validation failed" })
 	}
 
 	err = storeJobInCache(cache, job)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError, "cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "job cache error" })
 	}
 
-	return sendSuccess(c, "job pushed successfully")
+	return c.JSON(fiber.Map{ "reference": job.Reference })
 }
 
 // parseJobFromRequest extracts job data from request body.
@@ -73,24 +76,24 @@ func validateJobData(job *models.Job) error {
 	for t, task := range job.Tasks {
 		if task.Reference == "" {
 			return fiber.NewError(fiber.StatusBadRequest,
-                fmt.Sprintf("task reference required at index %d", t))
+				fmt.Sprintf("task reference required at index %d", t))
 		}
 		if task.Name == "" {
 			return fiber.NewError(fiber.StatusBadRequest,
-                fmt.Sprintf("task name required at index %d", t))
+				fmt.Sprintf("task name required at index %d", t))
 		}
 
 		// Validate actions within tasks
 		for a, action := range task.Actions {
 			if action.Reference == "" {
 				return fiber.NewError(fiber.StatusBadRequest,
-                    fmt.Sprintf("action reference required at task %d, action %d",
-                        t, a))
+					fmt.Sprintf("action reference required at task %d, action %d",
+						t, a))
 			}
 			if action.Name == "" {
 				return fiber.NewError(fiber.StatusBadRequest,
-                    fmt.Sprintf("action name required at task %d, action %d",
-                        t, a))
+					fmt.Sprintf("action name required at task %d, action %d",
+						t, a))
 			}
 		}
 	}
