@@ -8,13 +8,13 @@ Content-Type: application/json
   "tasks": [
     {
       "reference": "test-task-001",
-      "name": "test-task",
-      "description": "A test task",
+      "name": "click-button",
+      "description": "A test task for API testing",
       "actions": [
         {
           "reference": "test-action-001",
           "name": "click-button",
-          "description": "Click the test button",
+          "description": "A test action for API testing",
           "type": "click",
           "selector": "#test-button"
         }
