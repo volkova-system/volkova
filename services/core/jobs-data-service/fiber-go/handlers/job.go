@@ -26,26 +26,15 @@ func GetJobHandler(cache *data.Cache) fiber.Handler {
 func getJobFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "job reference cannot be empty" })
 	}
 
 	job, err := engines.GetJob(cache, "job:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusNotFound,
-			"job not found", err)
+		return c.Status(fiber.StatusNotFound).JSON(
+			fiber.Map{ "error": "job not found" })
 	}
 
-	return sendJobResponse(c, job)
-}
-
-// sendJobResponse returns single job as JSON response.
-//
-func sendJobResponse(c fiber.Ctx, job interface{}) error {
-	return c.JSON(fiber.Map{
-		"status": "success",
-		"job":    job,
-	})
+	return c.JSON(fiber.Map{ "job": job })
 }
