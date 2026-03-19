@@ -26,17 +26,15 @@ func PopTaskHandler(cache *data.Cache) fiber.Handler {
 func popTaskFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "task reference cannot be empty" })
 	}
 
-	err := engines.PopTask(cache, "task:"+reference)
+	task, err := engines.PopTask(cache, "task:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "task cache error" })
 	}
 
-	return sendSuccess(c, "task popped")
+	return c.JSON(fiber.Map{ "task": task })
 }
