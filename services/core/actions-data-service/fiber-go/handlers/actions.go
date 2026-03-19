@@ -33,20 +33,20 @@ func GetActionsHandler(cache *data.Cache) fiber.Handler {
 func getActionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-			"invalid parameters", err)
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "invalid actions request parameters" })
 	}
 
 	actions, err := retrieveActionsFromCache(cache, skip, limit)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+        return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "action cache error" })
 	}
 
 	total, err := engines.GetActionsCount(cache)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache count error", err)
+        return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "action cache count error" })
 	}
 
 	return sendActionsResponse(c, actions, skip, limit, total)
@@ -112,8 +112,6 @@ func sendActionsResponse(c fiber.Ctx, actions interface{},
 	pages, page := computePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
-		"status":  "success",
-
 		"actions": actions,
 
 		"skip":    skip,
