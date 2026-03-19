@@ -1,5 +1,5 @@
 
-POST http://localhost:4071/service/data/tasks/push
+POST http://localhost:4072/service/data/tasks/push
 Content-Type: application/json
 {
   "reference": "test-task-001",
@@ -16,7 +16,7 @@ Content-Type: application/json
   ]
 }
 
-DELETE http://localhost:4071/service/data/tasks/pop/test-task-001
+DELETE http://localhost:4072/service/data/tasks/pop/test-task-001
 
 HTTP 200
 [Asserts]
