@@ -26,17 +26,15 @@ func PopJobHandler(cache *data.Cache) fiber.Handler {
 func popJobFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "job reference cannot be empty" })
 	}
 
-	err := engines.PopJob(cache, "job:"+reference)
+	job, err := engines.PopJob(cache, "job:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "job cache error" })
 	}
 
-	return sendSuccess(c, "job removed successfully")
+	return c.JSON(fiber.Map{ "job": job })
 }
