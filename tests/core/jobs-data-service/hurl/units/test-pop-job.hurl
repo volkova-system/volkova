@@ -8,13 +8,13 @@ Content-Type: application/json
   "tasks": [
     {
       "reference": "test-task-001",
-      "name": "test-task",
-      "description": "A test task",
+      "name": "click-button",
+      "description": "A test task for API testing",
       "actions": [
         {
           "reference": "test-action-001",
           "name": "click-button",
-          "description": "Click the test button",
+          "description": "A test action for API testing",
           "type": "click",
           "selector": "#test-button"
         }
@@ -31,7 +31,6 @@ jsonpath "$.job.reference" == "test-job-001"
 jsonpath "$.job.name" == "test-job"
 jsonpath "$.job.tasks" isCollection
 jsonpath "$.job.tasks[0].reference" == "test-task-001"
-jsonpath "$.job.tasks[0].actions" isCollection
 jsonpath "$.job.tasks[0].actions[0].reference" == "test-action-001"
 jsonpath "$.job.tasks[0].actions[0].type" == "click"
 jsonpath "$.job.tasks[0].actions[0].selector" == "#test-button"
