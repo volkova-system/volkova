@@ -26,17 +26,15 @@ func PopActionHandler(cache *data.Cache) fiber.Handler {
 func popActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+        return c.Status(fiber.StatusBadRequest).JSON(
+            fiber.Map{ "error": "action reference cannot be empty" })
 	}
 
-	err := engines.PopAction(cache, "action:"+reference)
+	action, err := engines.PopAction(cache, "action:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+            fiber.Map{ "error": "action cache error" })
 	}
 
-	return sendSuccess(c, "action popped")
+	return c.JSON(fiber.Map{ "action": action })
 }
