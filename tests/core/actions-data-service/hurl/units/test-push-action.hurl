@@ -3,7 +3,7 @@ POST http://localhost:4071/service/data/actions/push
 Content-Type: application/json
 {
   "reference": "test-action-001",
-  "name": "Test Action",
+  "name": "test-action",
   "description": "A test action for API testing",
   "type": "click",
   "selector": "#test-button"
@@ -11,5 +11,4 @@ Content-Type: application/json
 
 HTTP 200
 [Asserts]
-jsonpath "$.status" == "success"
-jsonpath "$.message" == "action pushed"
+jsonpath "$.reference" == "test-action-001"
