@@ -26,17 +26,15 @@ func PopQueueHandler(cache *data.Cache) fiber.Handler {
 func popQueueFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "queue reference cannot be empty" })
 	}
 
-	err := engines.PopQueue(cache, "queue:"+reference)
+	queue, err := engines.PopQueue(cache, "queue:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "queue cache error" })
 	}
 
-	return sendSuccess(c, "queue removed successfully")
+	return c.JSON(fiber.Map{ "queue": queue })
 }
