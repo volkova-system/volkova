@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/tidwall/buntdb"
+
 	"tasks-data-service/data"
 	"tasks-data-service/models"
-
-	"github.com/tidwall/buntdb"
 )
 
-// PushTask stores a new task in the cache.
+// PushTask stores a task in the cache using its reference as the key.
+//
 func PushTask(cache *data.Cache, task models.Task) error {
 	// Set timestamps for new actions
 	now := time.Now()
@@ -20,21 +21,17 @@ func PushTask(cache *data.Cache, task models.Task) error {
 	}
 	task.UpdatedAt = now
 
-	key := fmt.Sprintf("task:%s", task.Reference)
-
-	taskJSON, err := json.Marshal(task)
+	taskData, err := json.Marshal(task)
 	if err != nil {
-		return fmt.Errorf("failed to marshal task: %w", err)
+		return fmt.Errorf("failed to marshal task data: %w", err)
 	}
 
-	err = cache.DB().Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set(key, string(taskJSON), nil)
-		return err
+	return cache.DB().Update(func(tx *buntdb.Tx) error {
+		_, _, err := tx.Set("task:"+task.Reference, string(taskData), nil)
+		if err != nil {
+			return fmt.Errorf("failed to store task in cache: %w", err)
+		}
+
+		return nil
 	})
-
-	if err != nil {
-		return fmt.Errorf("failed to store task: %w", err)
-	}
-
-	return nil
 }
