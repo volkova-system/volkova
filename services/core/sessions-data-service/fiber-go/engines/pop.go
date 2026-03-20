@@ -1,25 +1,47 @@
 package engines
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/tidwall/buntdb"
 
 	"sessions-data-service/data"
+	"sessions-data-service/models"
 )
 
-// PopSession removes a session from the cache by its key.
-func PopSession(cache *data.Cache, key string) error {
+// PopSession removes a session from the cache by its key and returns
+// the retrieved data.
+//
+func PopSession(cache *data.Cache, key string) (*models.Session, error) {
 	if key == "" {
-		return fmt.Errorf("key cannot be empty")
+		return nil, fmt.Errorf("key cannot be empty")
 	}
 
-	return cache.DB().Update(func(tx *buntdb.Tx) error {
-		_, err := tx.Delete(key)
+	var session models.Session
+	err := cache.DB().Update(func(tx *buntdb.Tx) error {
+		// First retrieve the data
+		val, err := tx.Get(key)
+		if err != nil {
+			return fmt.Errorf("session not found for key %s: %w", key, err)
+		}
+
+		if err := json.Unmarshal([]byte(val), &session); err != nil {
+			return fmt.Errorf("failed to unmarshal session data: %w", err)
+		}
+
+		// Then delete the key
+		_, err = tx.Delete(key)
 		if err != nil {
 			return fmt.Errorf("failed to remove session with key %s: %w", key, err)
 		}
 
 		return nil
 	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &session, nil
 }
