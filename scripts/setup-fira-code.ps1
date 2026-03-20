@@ -28,7 +28,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-17
     Platform: Windows only
-    Requirements: pwsh 7.5.5, npm
+    Requirements: pwsh 7.6.0, npm
 
 .EXAMPLE
     # Installs Fira Code and copies font file to assets/fonts directory.
