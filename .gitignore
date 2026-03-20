@@ -211,6 +211,9 @@ containers/*/data/**/*.*
 
 !services/core/*-service/go/
 !services/core/*-service/go/agents
+
+!services/*-system/
+!services/*-system/*-service/
 # END SERVICES
 
 # START SETTINGS
@@ -231,10 +234,17 @@ containers/*/data/**/*.*
 !templates/
 !templates/**/*.template
 
+# START TESTS
 !tests/
 !tests/*/
 !tests/*/*-service/
 !tests/*/*-service/**/*
+
+!tests/*-system/
+!tests/*-system/*-service/
+!tests/*-system/*-service/*/scenarios
+!tests/*-system/*-service/*/units
+# END TESTS
 
 !todos/
 !todos/**/*.todo
