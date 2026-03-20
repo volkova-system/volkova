@@ -1,5 +1,3 @@
-// main is the executable entry point; delegates entirely to cli.run
-
 const std = @import("std");
 const cli = @import("cli.zig");
 
