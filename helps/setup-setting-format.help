@@ -129,7 +129,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
         - interpreter_version MUST equal the first line of the version string
           emitted by the version command of that interpreter:
 
-          - pwsh: pwsh --version (e.g., PowerShell 7.5.5)
+          - pwsh: pwsh --version (e.g., PowerShell 7.6.0)
           - bash: bash --version
           - sh: sh --version
 
@@ -137,7 +137,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
 
         ["*.ps1"]
         interpreter = "pwsh"
-        interpreter_version = "PowerShell 7.5.5"
+        interpreter_version = "PowerShell 7.6.0"
         command_version = false
         os_platform = "windows"
         windows_dependency = false
@@ -146,7 +146,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
 
         This restricts .ps1 files to:
         - Run only with pwsh interpreter
-        - Require PowerShell version 7.5.5 strictly
+        - Require PowerShell version 7.6.0 strictly
         - Execute only on Windows platform
 
     6.5 Shell Script Examples:
@@ -316,7 +316,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
 
         ["*.ps1"]
         interpreter = "pwsh"
-        interpreter_version = "PowerShell 7.5.5"
+        interpreter_version = "PowerShell 7.6.0"
         command_version = false
         os_platform = "windows"
         windows_dependency = false
@@ -375,7 +375,7 @@ SCRIPTS ARE EMPLOYED TO DETECT AND PREVENT UNAUTHORIZED ALTERATIONS.
 
         ["*.ps1"]
         interpreter = "pwsh"
-        interpreter_version = "PowerShell 7.5.5"
+        interpreter_version = "PowerShell 7.6.0"
         command_version = false
         os_platform = "windows"
         windows_dependency = false
