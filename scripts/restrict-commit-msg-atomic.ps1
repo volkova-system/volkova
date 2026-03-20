@@ -21,7 +21,7 @@ exit /b 1
     Version: 1.0.0
     Last Modified: 2026-01-28
     Platform: Windows only
-    Requirements: pwsh 7.5.5
+    Requirements: pwsh 7.6.0
 
 .EXAMPLE
     # Validates commit message body format
