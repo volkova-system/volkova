@@ -27,7 +27,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-26
     Platform: Windows only
-    Requirements: pwsh 7.5.5 (exact), Administrator privileges
+    Requirements: pwsh 7.6.0 (exact), Administrator privileges
 
 .EXAMPLE
     # Ensures winget is installed, updates versions in winget-apps.json, and
