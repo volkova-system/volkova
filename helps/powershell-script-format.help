@@ -124,7 +124,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
             Version: 0.0.0
             Last Modified: [Date]
             Platform: Windows only
-            Requirements: pwsh 7.5.5
+            Requirements: pwsh 7.6.0
 
         .EXAMPLE
             .\script-name.ps1
@@ -524,7 +524,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
             Author: [Author]
             Version: 0.0.0
             Platform: Windows only
-            Requirements: pwsh 7.5.5
+            Requirements: pwsh 7.6.0
         #>
 
         [CmdletBinding()]
