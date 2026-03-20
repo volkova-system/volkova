@@ -1,6 +1,3 @@
-// this is in charge of building the cli into executables
-// compatible in windows, linux distributions and darwin os platforms
-
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
