@@ -33,7 +33,7 @@ exit /b 1
     Version: 0.2.0
     Last Modified: 2026-02-08
     Platform: Windows only
-    Requirements: pwsh 7.5.5, PSToml module
+    Requirements: pwsh 7.6.0, PSToml module
 
 .EXAMPLE
     # Executes all setup commands from the SETUP file.
@@ -322,7 +322,7 @@ function Get-InterpreterVersion {
         System.String. The interpreter version string.
 
     .EXAMPLE
-        # Returns "PowerShell 7.5.5"
+        # Returns "PowerShell 7.6.0"
         $version = Get-InterpreterVersion
     #>
     [CmdletBinding()]
@@ -363,7 +363,7 @@ function Test-InterpreterVersionMatch {
     .EXAMPLE
         # Returns $true if interpreter version matches exactly.
         $matches = Test-InterpreterVersionMatch `
-            -RequiredVersion 'PowerShell 7.5.5'
+            -RequiredVersion 'PowerShell 7.6.0'
     #>
     [CmdletBinding()]
     [OutputType([bool])]
