@@ -6,7 +6,7 @@
     CompanyName          = 'vs-scripts'
     Copyright            = '(c) 2026 Richeve Bebedor <richeve.bebedor963+vs-scripts@proton.me>. All rights reserved.'
     Description          = 'Collection of winget helper functions.'
-    PowerShellVersion    = '7.5.5'
+    PowerShellVersion    = '7.6.0'
     FunctionsToExport    = @(
         'Get-WingetInstallPath'
     )
