@@ -24,7 +24,7 @@ exit /b 1
     Version: 0.0.0
     Last Modified: 2026-02-27
     Platform: Windows
-    Requires: PowerShell 7.5.5 or later
+    Requires: PowerShell 7.6.0 or later
 
 .EXAMPLE
     .\setup-phoenix.ps1
