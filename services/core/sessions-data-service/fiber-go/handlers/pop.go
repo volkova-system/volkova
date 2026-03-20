@@ -26,17 +26,15 @@ func PopSessionHandler(cache *data.Cache) fiber.Handler {
 func popSessionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return sendError(c, fiber.StatusBadRequest,
-			"reference parameter required",
-			fiber.NewError(fiber.StatusBadRequest,
-                "reference cannot be empty"))
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "session reference cannot be empty" })
 	}
 
-	err := engines.PopSession(cache, "session:"+reference)
+	session, err := engines.PopSession(cache, "session:"+reference)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-			"cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "session cache error" })
 	}
 
-	return sendSuccess(c, "session popped")
+	return c.JSON(fiber.Map{ "session": session })
 }
