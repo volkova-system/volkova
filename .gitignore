@@ -130,6 +130,8 @@ containers/*/data/**/*.*
 !interfaces/*-system/zig/*-cli/src/
 !interfaces/*-system/zig/*-cli/build/
 !interfaces/*-system/zig/*-cli/dist/
+!interfaces/*-system/zig/*-cli/build.zig
+!interfaces/*-system/zig/*-cli/src/*.zig
 # END INTERFACES
 
 !prompts/
