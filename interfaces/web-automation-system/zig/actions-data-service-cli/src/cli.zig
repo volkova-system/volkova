@@ -1,5 +1,3 @@
-// the cli module is in charge of the interface itself
-
 const std = @import("std");
 const handler = @import("handler.zig");
 const engine = @import("engine.zig");
