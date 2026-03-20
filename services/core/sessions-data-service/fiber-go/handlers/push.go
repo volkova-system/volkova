@@ -30,23 +30,23 @@ func PushSessionHandler(cache *data.Cache) fiber.Handler {
 func pushSessionToCache(c fiber.Ctx, cache *data.Cache) error {
 	session, err := parseSessionFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "invalid session data", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid session data" })
 	}
 
 	err = validateSessionData(session)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "validation failed", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "session validation failed" })
 	}
 
 	err = storeSessionInCache(cache, session)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-            "cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "session cache error" })
 	}
 
-	return sendSuccess(c, "session pushed")
+	return c.JSON(fiber.Map{ "reference": session.Reference })
 }
 
 // parseSessionFromRequest extracts session data from request body.
