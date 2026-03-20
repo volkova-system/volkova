@@ -100,7 +100,7 @@ func main() {
 	defer stop()
 
 	go func() {
-        port := os.Getenv("RUNTIME_DATA_SERVICE_PORT")
+        port := os.Getenv("RUNTIMES_DATA_SERVICE_PORT")
 
         if  port == "" {
             port = "4076"
