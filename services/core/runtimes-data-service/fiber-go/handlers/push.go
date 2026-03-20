@@ -27,23 +27,23 @@ func PushRuntimeHandler(cache *data.Cache) fiber.Handler {
 func pushRuntimeToCache(c fiber.Ctx, cache *data.Cache) error {
 	runtime, err := parseRuntimeFromRequest(c)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "invalid runtime data", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "invalid runtime data" })
 	}
 
 	err = validateRuntimeData(runtime)
 	if err != nil {
-		return sendError(c, fiber.StatusBadRequest,
-            "validation failed", err)
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{ "error": "runtime validation failed" })
 	}
 
 	err = storeRuntimeInCache(cache, runtime)
 	if err != nil {
-		return sendError(c, fiber.StatusInternalServerError,
-            "cache error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{ "error": "runtime cache error" })
 	}
 
-	return sendSuccess(c, "runtime pushed")
+	return c.JSON(fiber.Map{ "reference": runtime.Reference })
 }
 
 // parseRuntimeFromRequest extracts runtime data from request body.
@@ -64,12 +64,12 @@ func parseRuntimeFromRequest(c fiber.Ctx) (*models.Runtime, error) {
 func validateRuntimeData(runtime *models.Runtime) error {
 	if runtime.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "reference required")
+			"reference required")
 	}
 
 	if runtime.State == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "state required")
+			"state required")
 	}
 
 	// Validate state values
@@ -86,49 +86,49 @@ func validateRuntimeData(runtime *models.Runtime) error {
 			"state must be one of: idle, doing, done, aborted, failed")
 	}
 
-    if runtime.Session.Reference == "" {
+	if runtime.Session.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "session reference required")
+			"session reference required")
 	}
 
-    if runtime.Queue.Reference == "" {
+	if runtime.Queue.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "queue reference required")
+			"queue reference required")
 	}
 
 	if runtime.Queue.Name == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "queue name required")
+			"queue name required")
 	}
 
-    if runtime.Job.Reference == "" {
+	if runtime.Job.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "job reference required")
+			"job reference required")
 	}
 
 	if runtime.Job.Name == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "job name required")
+			"job name required")
 	}
 
-    if runtime.Task.Reference == "" {
+	if runtime.Task.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "task reference required")
+			"task reference required")
 	}
 
 	if runtime.Task.Name == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "task name required")
+			"task name required")
 	}
 
-    if runtime.Action.Reference == "" {
+	if runtime.Action.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "action reference required")
+			"action reference required")
 	}
 
 	if runtime.Action.Name == "" {
 		return fiber.NewError(fiber.StatusBadRequest,
-            "action name required")
+			"action name required")
 	}
 
 	return nil
