@@ -129,7 +129,7 @@ PREVENT UNAUTHORIZED ALTERATIONS.
             Version: 0.0.0
             Last Modified: [Date]
             Platform: Windows only
-            Requirements: pwsh 7.5.5 (exact), Administrator privileges
+            Requirements: pwsh 7.6.0 (exact), Administrator privileges
 
         .EXAMPLE
             .\script-name.ps1
