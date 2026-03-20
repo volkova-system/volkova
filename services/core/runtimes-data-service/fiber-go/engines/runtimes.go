@@ -10,8 +10,6 @@ import (
 	"runtimes-data-service/models"
 )
 
-const defaultIndexName = "runtimes"
-
 // GetRuntimes retrieves a paginated list of runtimes from the cache.
 func GetRuntimes(cache *data.Cache, skip, limit int) ([]models.Runtime, error) {
 	if skip < 0 {
