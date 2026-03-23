@@ -1,6 +1,7 @@
 const std = @import("std");
 
 // Command enumerates all supported CLI commands.
+//
 pub const Command = enum {
     health,
     stop,
@@ -10,14 +11,17 @@ pub const Command = enum {
     pop,
 };
 
-// ListParams holds validated parameters for the list command.
-pub const ListParams = struct {
+// ListParameters holds validated parameters for the list command.
+//
+pub const ListParameters = struct {
     skip: u32,
     limit: u32,
+    output_directory: ?[]const u8,
 };
 
-// PushParams holds validated parameters for the push command.
-pub const PushParams = struct {
+// PushParameters holds validated parameters for the push command.
+//
+pub const PushParameters = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
@@ -31,56 +35,124 @@ pub const PushParams = struct {
 
 // resolveCommand maps a raw string argument to a Command.
 // Returns error.UnknownCommand when the string is not recognized.
+//
 pub fn resolveCommand(raw: []const u8) !Command {
     if (std.mem.eql(u8, raw, "health")) return .health;
+
     if (std.mem.eql(u8, raw, "stop")) return .stop;
+
     if (std.mem.eql(u8, raw, "list")) return .list;
+
     if (std.mem.eql(u8, raw, "get")) return .get;
+
     if (std.mem.eql(u8, raw, "push")) return .push;
+
     if (std.mem.eql(u8, raw, "pop")) return .pop;
+
     return error.UnknownCommand;
 }
 
 // resolveReference validates that a reference argument is non-empty.
 // Returns error.MissingReference when absent.
-pub fn resolveReference(args: []const []const u8) ![]const u8 {
-    if (args.len < 1 or args[0].len == 0) {
+//
+pub fn resolveReference(arguments: []const []const u8) ![]const u8 {
+    if (arguments.len < 1 or arguments[0].len == 0) {
         return error.MissingReference;
     }
-    return args[0];
+
+    return arguments[0];
 }
 
-// resolveListParams parses optional skip and limit flags.
-// Accepted forms: --skip=N  --limit=N
-// Falls back to defaults: skip=0, limit=10.
-pub fn resolveListParams(args: []const []const u8) !ListParams {
-    var skip: u32 = 0;
-    var limit: u32 = 10;
+// GetParams holds validated parameters for the get command.
+//
+pub const GetParameters = struct {
+    reference: []const u8,
+    output_directory: ?[]const u8,
+};
 
-    for (args) |arg| {
-        if (std.mem.startsWith(u8, arg, "--skip=")) {
-            const raw = arg["--skip=".len..];
-            skip = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidSkip;
-            };
-        } else if (std.mem.startsWith(u8, arg, "--limit=")) {
-            const raw = arg["--limit=".len..];
-            limit = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidLimit;
-            };
-            if (limit == 0 or limit > 100) return error.InvalidLimit;
+// resolveGetParameters parses required reference and optional output flags.
+// Required: reference
+// Optional: --output=DIR
+//
+pub fn resolveGetParameters(arguments: []const []const u8) !GetParameters {
+    var reference: ?[]const u8 = null;
+    var output_directory: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--output=")) {
+            output_directory = argument_value["--output=".len..];
+
+            if (output_directory) |value|
+                if (value.len == 0)
+                    return error.InvalidOutputDir;
+
+        } else if (
+            reference == null and
+            !std.mem.startsWith(u8, argument_value, "--")
+        ) {
+            reference = argument_value;
         }
     }
 
-    return ListParams{ .skip = skip, .limit = limit };
+    if (reference == null or reference.?.len == 0)
+        return error.MissingReference;
+
+    return GetParameters{
+        .reference = reference.?,
+        .output_directory = output_directory,
+    };
+}
+
+// resolveListParameters parses optional skip, limit, and output flags.
+// Accepted forms: --skip=N  --limit=N  --output=DIR
+// Falls back to defaults: skip=0, limit=10, output_dir=null.
+//
+pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
+    var skip: u32 = 0;
+    var limit: u32 = 10;
+    var output_directory: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--skip=")) {
+            const raw = argument_value["--skip=".len..];
+
+            skip = std.fmt.parseInt(u32, raw, 10) catch {
+                return error.InvalidSkip;
+            };
+
+        } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
+            const raw = argument_value["--limit=".len..];
+
+            limit = std.fmt.parseInt(u32, raw, 10) catch {
+                return error.InvalidLimit;
+            };
+
+            if (limit == 0 or limit > 100)
+                return error.InvalidLimit;
+
+        } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
+            output_directory = argument_value["--output=".len..];
+
+            if (output_directory) |value|
+                if (value.len == 0)
+                    return error.InvalidOutputDir;
+        }
+    }
+
+    return ListParameters{
+        .skip = skip,
+        .limit = limit,
+        .output_directory = output_directory,
+    };
 }
 
 // resolvePushParams parses required and optional push flags.
 // Required: --reference=  --name=  --description=  --type=
 // Optional: --address=  --selector=  --value=  --script=  --delay=
-pub fn resolvePushParams(
-    args: []const []const u8,
-) !PushParams {
+//
+pub fn resolvePushParameters(
+    arguments: []const []const u8,
+) !PushParameters {
     var reference: ?[]const u8 = null;
     var name: ?[]const u8 = null;
     var description: ?[]const u8 = null;
@@ -91,25 +163,34 @@ pub fn resolvePushParams(
     var script: ?[]const u8 = null;
     var delay: ?u32 = null;
 
-    for (args) |arg| {
-        if (std.mem.startsWith(u8, arg, "--reference=")) {
-            reference = arg["--reference=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--name=")) {
-            name = arg["--name=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--description=")) {
-            description = arg["--description=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--type=")) {
-            action_type = arg["--type=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--address=")) {
-            address = arg["--address=".len..];
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--reference=")) {
+            reference = argument_value["--reference=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
+            name = argument_value["--name=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--description=")) {
+            description = argument_value["--description=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--type=")) {
+            action_type = argument_value["--type=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--address=")) {
+            address = argument_value["--address=".len..];
+
         } else if (std.mem.startsWith(u8, arg, "--selector=")) {
             selector = arg["--selector=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--value=")) {
-            value = arg["--value=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--script=")) {
-            script = arg["--script=".len..];
-        } else if (std.mem.startsWith(u8, arg, "--delay=")) {
-            const raw = arg["--delay=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--value=")) {
+            value = argument_value["--value=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--script=")) {
+            script = argument_value["--script=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--delay=")) {
+            const raw = argument_value["--delay=".len..];
+
             delay = std.fmt.parseInt(u32, raw, 10) catch {
                 return error.InvalidDelay;
             };
@@ -118,10 +199,13 @@ pub fn resolvePushParams(
 
     if (reference == null or reference.?.len == 0)
         return error.MissingReference;
+
     if (name == null or name.?.len == 0)
         return error.MissingName;
+
     if (description == null or description.?.len == 0)
         return error.MissingDescription;
+
     if (action_type == null or action_type.?.len == 0)
         return error.MissingType;
 
