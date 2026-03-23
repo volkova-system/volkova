@@ -153,9 +153,9 @@ fn printUsage() void {
         \\  stop
         \\  list   [--skip=N] [--limit=N] [--output=DIR]
         \\  get    <reference> [--output=DIR]
-        \\  push   --reference=  --name=  --description=  --type=
-        \\         [--address=] [--selector=] [--value=]
-        \\         [--script=] [--delay=N]
+        \\  push   --action=FILE
+        \\         | --reference=  --name=  --description=  --type=
+        \\           [--address=] [--selector=] [--value=] [--script=] [--delay=N]
         \\  pop    <reference>
         \\
     ) catch {};
