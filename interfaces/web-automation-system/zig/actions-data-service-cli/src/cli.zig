@@ -17,10 +17,9 @@ pub fn run(allocator: std.mem.Allocator) !void {
         return printUsage();
     }
 
-    const command = handler.resolveCommand(arguments[1])
-        catch {
-            return printUsage();
-        };
+    const command = handler.resolveCommand(arguments[1]) catch {
+        return printUsage();
+    };
 
     const allocated_setting = setting.load(allocator);
 
@@ -37,18 +36,12 @@ pub fn run(allocator: std.mem.Allocator) !void {
         .list => {
             const parameters = try handler.resolveListParameters(rest);
 
-            const response = try engine.fetchActions(
-                allocator,
-                allocated_setting,
-                parameters
-            );
+            const response = try engine.fetchActions(allocator, allocated_setting, parameters);
 
             if (parameters.output_directory) |directory_value| {
-                var directory = std.fs.openDirAbsolute(directory_value, .{})
-                    catch std.fs.cwd().openDir(directory_value, .{})
-                    catch {
-                        return error.InvalidOutputDir;
-                    };
+                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
+                    return error.InvalidOutputDir;
+                };
 
                 defer directory.close();
 
@@ -56,16 +49,10 @@ pub fn run(allocator: std.mem.Allocator) !void {
                 const file_name = std.fmt.bufPrint(
                     &file_name_buffer,
                     "actions-{d}-{d}.json",
-                    .{
-                        parameters.skip,
-                        parameters.limit
-                    },
+                    .{ parameters.skip, parameters.limit },
                 ) catch "actions.json";
 
-                var file = try directory.createFile(
-                    file_name,
-                    .{ .truncate = true }
-                );
+                var file = try directory.createFile(file_name, .{ .truncate = true });
 
                 defer file.close();
 
@@ -77,34 +64,21 @@ pub fn run(allocator: std.mem.Allocator) !void {
         .get => {
             const parameters = try handler.resolveGetParameters(rest);
 
-            const response = try engine.fetchAction(
-                allocator,
-                allocated_setting,
-                parameters.reference
-            );
+            const response = try engine.fetchAction(allocator, allocated_setting, parameters.reference);
 
             const action = response.body;
 
             if (parameters.output_directory) |directory_value| {
-                var directory = std.fs.openDirAbsolute(directory_value, .{})
-                    catch std.fs.cwd().openDir(directory_value, .{})
-                    catch {
-                        return error.InvalidOutputDir;
-                    };
+                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
+                    return error.InvalidOutputDir;
+                };
 
                 defer directory.close();
 
                 var file_name_buffer: [256]u8 = undefined;
-                const file_name = std.fmt.bufPrint(
-                    &file_name_buffer,
-                    "action-{s}.json",
-                    .{ parameters.reference }
-                ) catch "action.json";
+                const file_name = std.fmt.bufPrint(&file_name_buffer, "action-{s}.json", .{parameters.reference}) catch "action.json";
 
-                var file = try directory.createFile(
-                    file_name,
-                    .{ .truncate = true }
-                );
+                var file = try directory.createFile(file_name, .{ .truncate = true });
 
                 defer file.close();
 
@@ -114,22 +88,14 @@ pub fn run(allocator: std.mem.Allocator) !void {
             result = response;
         },
         .push => {
-            var parameters = try handler.resolvePushParameters(rest);
+            const parameters = try handler.resolvePushParameters(allocator, rest);
 
-            result = try engine.pushAction(
-                allocator,
-                allocated_setting,
-                parameters
-            );
+            result = try engine.pushAction(allocator, allocated_setting, parameters);
         },
         .pop => {
             const reference = try handler.resolveReference(rest);
 
-            result = try engine.popAction(
-                allocator,
-                allocated_setting,
-                reference
-            );
+            result = try engine.popAction(allocator, allocated_setting, reference);
         },
     }
 
