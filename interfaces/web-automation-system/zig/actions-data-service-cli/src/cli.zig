@@ -17,13 +17,27 @@ pub fn run(allocator: std.mem.Allocator) !void {
         return printUsage();
     }
 
+    // Handle global help and version flags
+    if (std.mem.eql(u8, arguments[1], "--help") or std.mem.eql(u8, arguments[1], "-h")) {
+        return printHelp();
+    }
+
+    if (std.mem.eql(u8, arguments[1], "--version") or std.mem.eql(u8, arguments[1], "-v")) {
+        return printVersion();
+    }
+
     const command = handler.resolveCommand(arguments[1]) catch {
         return printUsage();
     };
 
-    const allocated_setting = setting.load(allocator);
-
     const rest = arguments[2..];
+
+    // Check for command-specific help
+    if (handler.checkForHelpFlag(rest)) {
+        return handler.printCommandHelp(command);
+    }
+
+    const allocated_setting = setting.load(allocator);
 
     var result: engine.Response = undefined;
     switch (command) {
@@ -101,28 +115,82 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
     defer allocator.free(result.body);
 
-    const stdout = std.io.getStdOut().writer();
-
-    try stdout.print("{s}\n", .{result.body});
+    std.debug.print("{s}\n", .{result.body});
 }
 
-// printUsage writes the command reference to stderr.
+// printUsage writes a brief usage message to stderr.
 //
 fn printUsage() void {
-    const stderr = std.io.getStdErr().writer();
+    std.debug.print(
+        \\actions-data-service-cli - Web automation actions data service CLI
+        \\
+        \\Usage:
+        \\  actions-data-service-cli [global options] <command> [command options] [arguments]
+        \\
+        \\Use 'actions-data-service-cli --help' for more information.
+        \\
+    , .{});
+}
 
-    stderr.writeAll(
-        \\usage: actions-data-service-cli <command> [options]
+// printHelp writes the full help message to stdout.
+//
+fn printHelp() void {
+    std.debug.print(
+        \\actions-data-service-cli - Web automation actions data service CLI
         \\
-        \\commands:
-        \\  health
-        \\  stop
-        \\  list   [--skip=N] [--limit=N] [--output=DIR]
-        \\  get    <reference> [--output=DIR]
-        \\  push   --action=FILE
-        \\         | --reference=  --name=  --description=  --type=
-        \\           [--address=] [--selector=] [--value=] [--script=] [--delay=N]
-        \\  pop    <reference>
+        \\Usage:
+        \\  actions-data-service-cli [global options] <command> [command options] [arguments]
         \\
-    ) catch {};
+        \\Commands:
+        \\  health        Check service health status
+        \\  stop          Stop the service
+        \\  list          List actions with optional filtering
+        \\  get           Get a specific action by reference
+        \\  push          Push a new action to the service
+        \\  pop           Remove an action by reference
+        \\
+        \\Options:
+        \\  -h, --help       Show this help message
+        \\  -v, --version    Show version information
+        \\
+        \\Command Options:
+        \\  list:
+        \\    --skip=N       Skip N actions (default: 0)
+        \\    --limit=N      Limit to N actions (default: 10)
+        \\    --output=DIR   Save output to directory
+        \\
+        \\  get:
+        \\    --output=DIR   Save output to directory
+        \\
+        \\  push:
+        \\    --action=FILE  Load action from JSON file
+        \\    OR specify inline:
+        \\    --reference=   Action reference (required)
+        \\    --name=        Action name (required)
+        \\    --description= Action description (required)
+        \\    --type=        Action type (required)
+        \\    --address=     Target address (optional)
+        \\    --selector=    Element selector (optional)
+        \\    --value=       Input value (optional)
+        \\    --script=      Script to execute (optional)
+        \\    --delay=N      Delay in milliseconds (optional)
+        \\
+        \\Examples:
+        \\  actions-data-service-cli health
+        \\  actions-data-service-cli list --limit=20 --skip=10
+        \\  actions-data-service-cli get my-action-ref
+        \\  actions-data-service-cli push --action=action.json
+        \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --type=click --selector="#submit"
+        \\  actions-data-service-cli pop my-action-ref
+        \\
+    , .{});
+}
+
+// printVersion writes version information to stdout.
+//
+fn printVersion() void {
+    std.debug.print(
+        \\actions-data-service-cli version 1.0.0
+        \\
+    , .{});
 }
