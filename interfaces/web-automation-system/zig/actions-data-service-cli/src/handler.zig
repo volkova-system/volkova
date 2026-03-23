@@ -154,6 +154,7 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
 // Optional: --address=  --selector=  --value=  --script=  --delay=
 //
 pub fn resolvePushParameters(
+    allocator: std.mem.Allocator,
     arguments: []const []const u8,
 ) !PushParameters {
     var action_file: ?[]const u8 = null;
@@ -179,8 +180,8 @@ pub fn resolvePushParameters(
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
 
-            if (reference) |value|
-                if (value.len == 0)
+            if (reference) |reference_value|
+                if (reference_value.len == 0)
                     return error.InvalidReference;
         } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
             name = argument_value["--name=".len..];
@@ -256,6 +257,10 @@ fn resolvePushParametersFromFile(
             if (object_value.get("reference")) |key_value| {
                 if (key_value.* == .string)
                     reference = try allocator.dupe(u8, key_value.*.string);
+
+                if (reference) |reference_value|
+                    if (reference_value.len == 0)
+                        return error.InvalidReference;
             }
 
             if (object_value.get("name")) |key_value| {
@@ -298,10 +303,6 @@ fn resolvePushParametersFromFile(
                     delay = std.fmt.parseInt(u32, key_value.*.string, 10) catch return error.InvalidDelay;
                 }
             }
-
-            if (reference) |value|
-                if (value.len == 0)
-                    return error.InvalidReference;
 
             return PushParameters{
                 .reference = reference.?,
