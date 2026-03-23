@@ -14,20 +14,18 @@ pub const Response = struct {
 //
 pub fn fetchHealth(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}/health",
 
-        .{
-            base
-        },
+        .{base_url},
     );
 
     defer allocator.free(url);
@@ -39,20 +37,18 @@ pub fn fetchHealth(
 //
 pub fn sendStop(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}/stop",
 
-        .{
-            base
-        },
+        .{base_url},
     );
 
     defer allocator.free(url);
@@ -64,23 +60,19 @@ pub fn sendStop(
 //
 pub fn fetchActions(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
     parameters: handler.ListParams,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}?skip={d}&limit={d}",
 
-        .{
-            base,
-            parameters.skip,
-            parameters.limit
-        },
+        .{ base_url, parameters.skip, parameters.limit },
     );
 
     defer allocator.free(url);
@@ -92,22 +84,19 @@ pub fn fetchActions(
 //
 pub fn fetchAction(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
     reference: []const u8,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}/{s}",
 
-        .{
-            base,
-            reference
-        },
+        .{ base_url, reference },
     );
 
     defer allocator.free(url);
@@ -119,21 +108,19 @@ pub fn fetchAction(
 //
 pub fn pushAction(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
     parameters: handler.PushParameters,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}/push",
 
-        .{
-            base
-        },
+        .{base_url},
     );
 
     defer allocator.free(url);
@@ -149,22 +136,19 @@ pub fn pushAction(
 //
 pub fn popAction(
     allocator: std.mem.Allocator,
-    setting: setting.Setting,
+    setting_data: setting.Setting,
     reference: []const u8,
 ) !Response {
-    const base = try setting.resolveBaseUrl();
+    const base_url = try setting_data.resolveBaseUrl();
 
-    defer allocator.free(base);
+    defer allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
         allocator,
 
         "{s}/pop/{s}",
 
-        .{
-            base,
-            reference
-        },
+        .{ base_url, reference },
     );
 
     defer allocator.free(url);
@@ -186,9 +170,9 @@ fn buildPushBody(
 
     try writer.print(
         "\"reference\":\"{s}\"," ++
-        "\"name\":\"{s}\"," ++
-        "\"description\":\"{s}\"," ++
-        "\"type\":\"{s}\"",
+            "\"name\":\"{s}\"," ++
+            "\"description\":\"{s}\"," ++
+            "\"type\":\"{s}\"",
 
         .{
             parameters.reference,
@@ -204,7 +188,7 @@ fn buildPushBody(
     if (parameters.selector) |value|
         try writer.print(",\"selector\":\"{s}\"", .{value});
 
-    if (params.value) |value|
+    if (parameters.value) |value|
         try writer.print(",\"value\":\"{s}\"", .{value});
 
     if (parameters.script) |value|
@@ -215,7 +199,7 @@ fn buildPushBody(
 
     try writer.writeAll("}");
 
-    return buf.toOwnedSlice();
+    return buffer.toOwnedSlice();
 }
 
 // sendGet performs an HTTP GET request and returns the response.
@@ -289,12 +273,9 @@ fn httpRequest(
     const status: u16 = @intFromEnum(request.response.status);
     const response_body = try request.reader()
         .readAllAlloc(
-            allocator,
-            1024 * 1024,
-        );
+        allocator,
+        1024 * 1024,
+    );
 
-    return Response{
-        .status = status,
-        .body = response_body
-    };
+    return Response{ .status = status, .body = response_body };
 }
