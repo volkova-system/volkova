@@ -230,14 +230,21 @@ containers/*/data/**/*.*
 
 # START TESTS
 !tests/
-!tests/*/
-!tests/*/*-service/
-!tests/*/*-service/**/*
 
 !tests/*-system/
-!tests/*-system/*-service/
-!tests/*-system/*-service/*/scenarios
-!tests/*-system/*-service/*/units
+!tests/*-system/services/
+!tests/*-system/services/*-service/
+!tests/*-system/services/*-service/*/
+!tests/*-system/services/*-service/*/units/
+!tests/*-system/services/*-service/*/scenarios/
+!tests/*-system/services/*-service/**/*.hurl
+
+!tests/*-system/interfaces/
+!tests/*-system/interfaces/*-cli/
+!tests/*-system/interfaces/*-cli/*/
+!tests/*-system/interfaces/*-cli/*/units/
+!tests/*-system/interfaces/*-cli/*/scenarios/
+!tests/*-system/interfaces/*-cli/**/*.tcl
 # END TESTS
 
 !todos/
