@@ -85,11 +85,9 @@ pub fn resolveGetParameters(arguments: []const []const u8) !GetParameters {
             if (output_directory) |value|
                 if (value.len == 0)
                     return error.InvalidOutputDir;
-
-        } else if (
-            reference == null and
-            !std.mem.startsWith(u8, argument_value, "--")
-        ) {
+        } else if (reference == null and
+            !std.mem.startsWith(u8, argument_value, "--"))
+        {
             reference = argument_value;
         }
     }
@@ -119,7 +117,6 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
             skip = std.fmt.parseInt(u32, raw, 10) catch {
                 return error.InvalidSkip;
             };
-
         } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
             const raw = argument_value["--limit=".len..];
 
@@ -129,7 +126,6 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
 
             if (limit == 0 or limit > 100)
                 return error.InvalidLimit;
-
         } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
 
@@ -166,28 +162,20 @@ pub fn resolvePushParameters(
     for (arguments) |argument_value| {
         if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
             name = argument_value["--name=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--description=")) {
             description = argument_value["--description=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--type=")) {
             action_type = argument_value["--type=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--address=")) {
             address = argument_value["--address=".len..];
-
-        } else if (std.mem.startsWith(u8, arg, "--selector=")) {
-            selector = arg["--selector=".len..];
-
+        } else if (std.mem.startsWith(u8, argument_value, "--selector=")) {
+            selector = argument_value["--selector=".len..];
         } else if (std.mem.startsWith(u8, argument_value, "--value=")) {
             value = argument_value["--value=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--script=")) {
             script = argument_value["--script=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--delay=")) {
             const raw = argument_value["--delay=".len..];
 
@@ -209,11 +197,13 @@ pub fn resolvePushParameters(
     if (action_type == null or action_type.?.len == 0)
         return error.MissingType;
 
-    return PushParams{
+    return PushParameters{
         .reference = reference.?,
         .name = name.?,
         .description = description.?,
+
         .action_type = action_type.?,
+
         .address = address,
         .selector = selector,
         .value = value,
