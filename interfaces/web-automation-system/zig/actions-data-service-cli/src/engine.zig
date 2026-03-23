@@ -120,7 +120,7 @@ pub fn fetchAction(
 pub fn pushAction(
     allocator: std.mem.Allocator,
     setting: setting.Setting,
-    parameters: handler.PushParams,
+    parameters: handler.PushParameters,
 ) !Response {
     const base = try setting.resolveBaseUrl();
 
