@@ -245,7 +245,6 @@ fn httpRequest(
 
     const uri = try std.Uri.parse(url);
 
-    // Convert string method to enum
     const http_method = if (std.mem.eql(u8, method, "GET"))
         std.http.Method.GET
     else if (std.mem.eql(u8, method, "POST"))
@@ -257,21 +256,43 @@ fn httpRequest(
     else if (std.mem.eql(u8, method, "PATCH"))
         std.http.Method.PATCH
     else
-        std.http.Method.GET; // Default to GET
+        return error.UnsupportedHttpMethod;
 
     var redirect_buffer: [1024]u8 = undefined;
+
+    // Prepare headers for JSON requests
+    var headers = std.http.Headers{ .allocator = allocator };
+
+    defer headers.deinit();
+
+    try headers.append("Accept", "application/json");
+    if (body != null) {
+        try headers.append("Content-Type", "application/json");
+    }
 
     const result = try client.fetch(.{
         .location = .{ .uri = uri },
         .method = http_method,
+        .headers = headers,
         .redirect_buffer = &redirect_buffer,
-        .payload = if (body) |b| b else null,
+        .payload = if (body) |body_value| body_value else null,
     });
 
     const status: u16 = @intFromEnum(result.status);
 
-    // For now, return empty body since the response_writer API is complex
-    const response_body = try allocator.dupe(u8, "");
+    // Read the response body
+    const response_body = if (result.body) |body_value|
+        try allocator.dupe(u8, body_value)
+    else
+        try allocator.dupe(u8, "");
+
+    if (status >= 200 and status < 300 and response_body.len > 0) {
+        var parsed = std.json.parseFromSlice(std.json.Value, allocator, response_body, .{}) catch {
+            return error.InvalidJsonResponse;
+        };
+
+        parsed.deinit();
+    }
 
     return Response{ .status = status, .body = response_body };
 }
