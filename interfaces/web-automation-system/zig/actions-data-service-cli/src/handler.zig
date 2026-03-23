@@ -23,6 +23,8 @@ pub const ListParameters = struct {
 // PushParameters holds validated parameters for the push command.
 //
 pub const PushParameters = struct {
+    action_file: ?[]const u8,
+
     reference: []const u8,
     name: []const u8,
     description: []const u8,
@@ -164,6 +166,8 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
 pub fn resolvePushParameters(
     arguments: []const []const u8,
 ) !PushParameters {
+    var action_file: ?[]const u8 = null;
+
     var reference: ?[]const u8 = null;
     var name: ?[]const u8 = null;
     var description: ?[]const u8 = null;
@@ -178,7 +182,10 @@ pub fn resolvePushParameters(
     var delay: ?u32 = null;
 
     for (arguments) |argument_value| {
-        if (std.mem.startsWith(u8, argument_value, "--reference=")) {
+        if (std.mem.startsWith(u8, argument_value, "--action=")) {
+            action_file = argument_value["--action=".len..];
+
+        } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
 
         } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
@@ -211,30 +218,54 @@ pub fn resolvePushParameters(
         }
     }
 
-    if (reference == null or reference.?.len == 0)
-        return error.MissingReference;
+    if (action_file == null) {
+        if (reference == null or reference.?.len == 0)
+            return error.MissingReference;
 
-    if (name == null or name.?.len == 0)
-        return error.MissingName;
+        if (name == null or name.?.len == 0)
+            return error.MissingName;
 
-    if (description == null or description.?.len == 0)
-        return error.MissingDescription;
+        if (description == null or description.?.len == 0)
+            return error.MissingDescription;
 
-    if (action_type == null or action_type.?.len == 0)
-        return error.MissingType;
+        if (action_type == null or action_type.?.len == 0)
+            return error.MissingType;
 
-    return PushParameters{
-        .reference = reference.?,
-        .name = name.?,
-        .description = description.?,
+        return PushParameters{
+            .action_file = null,
 
-        .action_type = action_type.?,
+            .reference = reference.?,
+            .name = name.?,
+            .description = description.?,
 
-        .address = address,
-        .selector = selector,
-        .value = value,
-        .script = script,
+            .action_type = action_type.?,
 
-        .delay = delay,
-    };
+            .address = address,
+            .selector = selector,
+            .value = value,
+            .script = script,
+
+            .delay = delay,
+        };
+    } else {
+        if (action_file.?.len == 0)
+            return error.InvalidActionFile;
+
+        return PushParameters{
+            .action_file = action_file,
+
+            .reference = "",
+            .name = "",
+            .description = "",
+
+            .action_type = "",
+
+            .address = address,
+            .selector = selector,
+            .value = value,
+            .script = script,
+
+            .delay = delay,
+        };
+    }
 }
