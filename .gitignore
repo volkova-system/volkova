@@ -244,11 +244,19 @@ containers/*/data/**/*.*
 !todos/**/*.todo
 !todos/**/*.done
 
+# START TOOLS
+!tools/
+!tools/*-system/
+!tools/*-system/*.py
+# END TOOLS
+
 !waste/
 !waste/**/*.waste
 
+# START WORKFLOWS
 !workflows/
-!workflows/*/
-!workflows/**/*.workflow
+!workflows/*-system/
+!workflows/*-system/*.workflow
+# END WORKFLOWS
 
 package-lock.json
