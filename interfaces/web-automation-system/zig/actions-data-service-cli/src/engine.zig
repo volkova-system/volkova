@@ -22,8 +22,12 @@ pub fn fetchHealth(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}/health",
-        .{base},
+
+        .{
+            base
+        },
     );
 
     defer allocator.free(url);
@@ -43,8 +47,12 @@ pub fn sendStop(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}/stop",
-        .{base},
+
+        .{
+            base
+        },
     );
 
     defer allocator.free(url);
@@ -65,8 +73,14 @@ pub fn fetchActions(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}?skip={d}&limit={d}",
-        .{ base, parameters.skip, parameters.limit },
+
+        .{
+            base,
+            parameters.skip,
+            parameters.limit
+        },
     );
 
     defer allocator.free(url);
@@ -87,8 +101,13 @@ pub fn fetchAction(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}/{s}",
-        .{ base, reference },
+
+        .{
+            base,
+            reference
+        },
     );
 
     defer allocator.free(url);
@@ -109,8 +128,12 @@ pub fn pushAction(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}/push",
-        .{base},
+
+        .{
+            base
+        },
     );
 
     defer allocator.free(url);
@@ -135,9 +158,15 @@ pub fn popAction(
 
     const url = try std.fmt.allocPrint(
         allocator,
+
         "{s}/pop/{s}",
-        .{ base, reference },
+
+        .{
+            base,
+            reference
+        },
     );
+
     defer allocator.free(url);
 
     return sendDelete(allocator, url);
@@ -264,5 +293,8 @@ fn httpRequest(
             1024 * 1024,
         );
 
-    return Response{ .status = status, .body = response_body };
+    return Response{
+        .status = status,
+        .body = response_body
+    };
 }
