@@ -24,8 +24,14 @@ pub const Setting = struct {
     ) ![]u8 {
         return std.fmt.allocPrint(
             self.allocator,
+
             "{s}:{s}{s}",
-            .{ self.host, self.port, route_prefix },
+
+            .{
+                self.host,
+                self.port,
+                route_prefix,
+            },
         );
     }
 };
