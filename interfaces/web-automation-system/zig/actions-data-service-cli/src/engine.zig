@@ -4,17 +4,20 @@ const setting = @import("setting.zig");
 
 // Response wraps the raw HTTP response body.
 // Caller owns the body slice.
+//
 pub const Response = struct {
     status: u16,
     body: []u8,
 };
 
 // fetchHealth calls GET /service/data/actions/health.
+//
 pub fn fetchHealth(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -22,17 +25,20 @@ pub fn fetchHealth(
         "{s}/health",
         .{base},
     );
+
     defer allocator.free(url);
 
     return sendGet(allocator, url);
 }
 
 // sendStop calls POST /service/data/actions/stop.
+//
 pub fn sendStop(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -40,18 +46,21 @@ pub fn sendStop(
         "{s}/stop",
         .{base},
     );
+
     defer allocator.free(url);
 
     return sendPost(allocator, url, "{}");
 }
 
 // fetchActions calls GET /service/data/actions?skip=N&limit=N.
+//
 pub fn fetchActions(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
     params: handler.ListParams,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -59,18 +68,21 @@ pub fn fetchActions(
         "{s}?skip={d}&limit={d}",
         .{ base, params.skip, params.limit },
     );
+
     defer allocator.free(url);
 
     return sendGet(allocator, url);
 }
 
 // fetchAction calls GET /service/data/actions/:reference.
+//
 pub fn fetchAction(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
     reference: []const u8,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -78,18 +90,21 @@ pub fn fetchAction(
         "{s}/{s}",
         .{ base, reference },
     );
+
     defer allocator.free(url);
 
     return sendGet(allocator, url);
 }
 
 // pushAction calls POST /service/data/actions/push with a JSON body.
+//
 pub fn pushAction(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
     params: handler.PushParams,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -97,21 +112,25 @@ pub fn pushAction(
         "{s}/push",
         .{base},
     );
+
     defer allocator.free(url);
 
     const body = try buildPushBody(allocator, params);
+
     defer allocator.free(body);
 
     return sendPost(allocator, url, body);
 }
 
 // popAction calls DELETE /service/data/actions/pop/:reference.
+//
 pub fn popAction(
     allocator: std.mem.Allocator,
-    s: setting.Setting,
+    setting: setting.Setting,
     reference: []const u8,
 ) !Response {
-    const base = try s.resolveBaseUrl();
+    const base = try setting.resolveBaseUrl();
+
     defer allocator.free(base);
 
     const url = try std.fmt.allocPrint(
@@ -126,15 +145,16 @@ pub fn popAction(
 
 // buildPushBody serializes PushParams into a JSON string.
 // Caller owns the returned slice.
+//
 fn buildPushBody(
     allocator: std.mem.Allocator,
     params: handler.PushParams,
 ) ![]u8 {
-    var buf = std.ArrayList(u8).init(allocator);
-    const w = buf.writer();
+    var buffer = std.ArrayList(u8).init(allocator);
+    const writer = buffer.writer();
 
-    try w.writeAll("{");
-    try w.print(
+    try writer.writeAll("{");
+    try writer.print(
         "\"reference\":\"{s}\",\"name\":\"{s}\"," ++
             "\"description\":\"{s}\",\"type\":\"{s}\"",
         .{
@@ -145,18 +165,18 @@ fn buildPushBody(
         },
     );
 
-    if (params.address) |v|
-        try w.print(",\"address\":\"{s}\"", .{v});
-    if (params.selector) |v|
-        try w.print(",\"selector\":\"{s}\"", .{v});
-    if (params.value) |v|
-        try w.print(",\"value\":\"{s}\"", .{v});
-    if (params.script) |v|
-        try w.print(",\"script\":\"{s}\"", .{v});
-    if (params.delay) |v|
-        try w.print(",\"delay\":{d}", .{v});
+    if (params.address) |value|
+        try writer.print(",\"address\":\"{s}\"", .{value});
+    if (params.selector) |value|
+        try writer.print(",\"selector\":\"{s}\"", .{value});
+    if (params.value) |value|
+        try writer.print(",\"value\":\"{s}\"", .{value});
+    if (params.script) |value|
+        try writer.print(",\"script\":\"{s}\"", .{value});
+    if (params.delay) |value|
+        try writer.print(",\"delay\":{d}", .{value});
 
-    try w.writeAll("}");
+    try writer.writeAll("}");
 
     return buf.toOwnedSlice();
 }
@@ -199,34 +219,35 @@ fn httpRequest(
 
     const uri = try std.Uri.parse(url);
 
-    var header_buf: [4096]u8 = undefined;
-    var req = try client.request(
+    var header_buffer: [4096]u8 = undefined;
+    var request = try client.request(
         std.http.Method.parse(method),
         uri,
-        .{ .server_header_buffer = &header_buf },
+        .{ .server_header_buffer = &header_buffer },
     );
-    defer req.deinit();
+    defer request.deinit();
 
-    if (body) |b| {
-        req.transfer_encoding = .{ .content_length = b.len };
-        req.headers.content_type =
+    if (body) |body_value| {
+        request.transfer_encoding = .{ .content_length = body_value.len };
+        request.headers.content_type =
             .{ .override = "application/json" };
     }
 
-    try req.send();
+    try request.send();
 
-    if (body) |b| {
-        try req.writeAll(b);
-        try req.finish();
+    if (body) |body_value| {
+        try request.writeAll(body_value);
+        try request.finish();
     }
 
-    try req.wait();
+    try request.wait();
 
-    const status: u16 = @intFromEnum(req.response.status);
-    const response_body = try req.reader().readAllAlloc(
-        allocator,
-        1024 * 1024,
-    );
+    const status: u16 = @intFromEnum(request.response.status);
+    const response_body = try request.reader()
+        .readAllAlloc(
+            allocator,
+            1024 * 1024,
+        );
 
     return Response{ .status = status, .body = response_body };
 }
