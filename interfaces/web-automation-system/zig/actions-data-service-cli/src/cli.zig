@@ -35,7 +35,7 @@ pub fn run(allocator: std.mem.Allocator) !void {
             result = try engine.sendStop(allocator, allocated_setting);
         },
         .list => {
-            const parameters = try handler.resolveListParams(rest);
+            const parameters = try handler.resolveListParameters(rest);
 
             const response = try engine.fetchActions(
                 allocator,
@@ -75,7 +75,7 @@ pub fn run(allocator: std.mem.Allocator) !void {
             result = response;
         },
         .get => {
-            const parameters = try handler.resolveGetParams(rest);
+            const parameters = try handler.resolveGetParameters(rest);
 
             const response = try engine.fetchAction(
                 allocator,
@@ -114,7 +114,7 @@ pub fn run(allocator: std.mem.Allocator) !void {
             result = response;
         },
         .push => {
-            const parameters = try handler.resolvePushParams(rest);
+            const parameters = try handler.resolvePushParameters(rest);
 
             result = try engine.pushAction(
                 allocator,
