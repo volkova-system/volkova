@@ -23,8 +23,6 @@ pub const ListParameters = struct {
 // PushParameters holds validated parameters for the push command.
 //
 pub const PushParameters = struct {
-    action_file: ?[]const u8,
-
     reference: []const u8,
     name: []const u8,
     description: []const u8,
@@ -96,8 +94,7 @@ pub fn resolveGetParameters(arguments: []const []const u8) !GetParameters {
 
             if (output_directory) |value|
                 if (value.len == 0)
-                    return error.InvalidOutputDir;
-
+                    return error.InvalidOutputDirectory;
         } else if (reference == null and
             !std.mem.startsWith(u8, argument_value, "--"))
         {
@@ -127,28 +124,21 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
         if (std.mem.startsWith(u8, argument_value, "--skip=")) {
             const raw = argument_value["--skip=".len..];
 
-            skip = std.fmt.parseInt(u32, raw, 10)
-                catch {
-                    return error.InvalidSkip;
-                };
-
+            skip = std.fmt.parseInt(u32, raw, 10) catch {
+                return error.InvalidSkip;
+            };
         } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
             const raw = argument_value["--limit=".len..];
 
-            limit = std.fmt.parseInt(u32, raw, 10)
-                catch {
-                    return error.InvalidLimit;
-                };
-
-            if (limit == 0 or limit > 100)
+            limit = std.fmt.parseInt(u32, raw, 10) catch {
                 return error.InvalidLimit;
-
+            };
         } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
 
             if (output_directory) |value|
                 if (value.len == 0)
-                    return error.InvalidOutputDir;
+                    return error.InvalidOutputDirectory;
         }
     }
 
@@ -185,30 +175,27 @@ pub fn resolvePushParameters(
         if (std.mem.startsWith(u8, argument_value, "--action=")) {
             action_file = argument_value["--action=".len..];
 
+            return try resolvePushParametersFromFile(allocator, action_file);
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
 
+            if (reference) |value|
+                if (value.len == 0)
+                    return error.InvalidReference;
         } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
             name = argument_value["--name=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--description=")) {
             description = argument_value["--description=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--type=")) {
             action_type = argument_value["--type=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--address=")) {
             address = argument_value["--address=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--selector=")) {
             selector = argument_value["--selector=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--value=")) {
             value = argument_value["--value=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--script=")) {
             script = argument_value["--script=".len..];
-
         } else if (std.mem.startsWith(u8, argument_value, "--delay=")) {
             const raw = argument_value["--delay=".len..];
 
@@ -218,54 +205,120 @@ pub fn resolvePushParameters(
         }
     }
 
-    if (action_file == null) {
-        if (reference == null or reference.?.len == 0)
-            return error.MissingReference;
+    return PushParameters{
+        .reference = reference.?,
+        .name = name.?,
+        .description = description.?,
 
-        if (name == null or name.?.len == 0)
-            return error.MissingName;
+        .action_type = action_type.?,
 
-        if (description == null or description.?.len == 0)
-            return error.MissingDescription;
+        .address = address,
+        .selector = selector,
+        .value = value,
+        .script = script,
 
-        if (action_type == null or action_type.?.len == 0)
-            return error.MissingType;
+        .delay = delay,
+    };
+}
 
-        return PushParameters{
-            .action_file = null,
+fn resolvePushParametersFromFile(
+    allocator: std.mem.Allocator,
+    path: []const u8,
+) !PushParameters {
+    var file = std.fs.openFileAbsolute(path, .{}) catch std.fs.cwd().openFile(path, .{}) catch {
+        return error.InvalidActionFile;
+    };
 
-            .reference = reference.?,
-            .name = name.?,
-            .description = description.?,
+    defer file.close();
 
-            .action_type = action_type.?,
+    const content = try file.readToEndAlloc(allocator, 1024 * 1024);
 
-            .address = address,
-            .selector = selector,
-            .value = value,
-            .script = script,
+    defer allocator.free(content);
 
-            .delay = delay,
-        };
-    } else {
-        if (action_file.?.len == 0)
-            return error.InvalidActionFile;
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, content, .{});
 
-        return PushParameters{
-            .action_file = action_file,
+    defer parsed_json.deinit();
 
-            .reference = "",
-            .name = "",
-            .description = "",
+    switch (parsed_json.value) {
+        .object => |object_value| {
+            var reference: ?[]const u8 = null;
+            var name: ?[]const u8 = null;
+            var description: ?[]const u8 = null;
+            var action_type: ?[]const u8 = null;
 
-            .action_type = "",
+            var address: ?[]const u8 = null;
+            var selector: ?[]const u8 = null;
+            var value: ?[]const u8 = null;
+            var script: ?[]const u8 = null;
 
-            .address = address,
-            .selector = selector,
-            .value = value,
-            .script = script,
+            var delay: ?u32 = null;
 
-            .delay = delay,
-        };
+            if (object_value.get("reference")) |key_value| {
+                if (key_value.* == .string)
+                    reference = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("name")) |key_value| {
+                if (key_value.* == .string)
+                    name = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("description")) |key_value| {
+                if (key_value.* == .string)
+                    description = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("type")) |key_value| {
+                if (key_value.* == .string)
+                    action_type = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("address")) |key_value| {
+                if (key_value.* == .string)
+                    address = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("selector")) |key_value| {
+                if (key_value.* == .string)
+                    selector = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("value")) |key_value| {
+                if (key_value.* == .string)
+                    value = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("script")) |key_value| {
+                if (key_value.* == .string)
+                    script = try allocator.dupe(u8, key_value.*.string);
+            }
+
+            if (object_value.get("delay")) |key_value| {
+                if (key_value.* == .string) {
+                    delay = std.fmt.parseInt(u32, key_value.*.string, 10) catch return error.InvalidDelay;
+                }
+            }
+
+            if (reference) |value|
+                if (value.len == 0)
+                    return error.InvalidReference;
+
+            return PushParameters{
+                .reference = reference.?,
+                .name = name.?,
+                .description = description.?,
+
+                .action_type = action_type.?,
+
+                .address = address,
+                .selector = selector,
+                .value = value,
+                .script = script,
+
+                .delay = delay,
+            };
+        },
+
+        else => return error.InvalidActionFile,
     }
 }
