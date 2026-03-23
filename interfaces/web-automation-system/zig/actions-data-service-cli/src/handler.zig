@@ -62,6 +62,129 @@ pub fn resolveCommand(raw: []const u8) !Command {
     return error.UnknownCommand;
 }
 
+// checkForHelpFlag checks if help is requested for a command
+//
+pub fn checkForHelpFlag(arguments: []const []const u8) bool {
+    for (arguments) |arg| {
+        if (std.mem.eql(u8, arg, "--help") or std.mem.eql(u8, arg, "-h")) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// printCommandHelp prints help for specific commands
+//
+pub fn printCommandHelp(command: Command) void {
+    switch (command) {
+        .health => {
+            std.debug.print(
+                \\health - Check service health status
+                \\
+                \\Usage:
+                \\  actions-data-service-cli health
+                \\
+                \\Description:
+                \\  Checks if the actions data service is running and responsive.
+                \\
+            , .{});
+        },
+        .stop => {
+            std.debug.print(
+                \\stop - Stop the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli stop
+                \\
+                \\Description:
+                \\  Sends a stop signal to the actions data service.
+                \\
+            , .{});
+        },
+        .list => {
+            std.debug.print(
+                \\list - List actions with optional filtering
+                \\
+                \\Usage:
+                \\  actions-data-service-cli list [options]
+                \\
+                \\Options:
+                \\  --skip=N       Skip N actions (default: 0)
+                \\  --limit=N      Limit to N actions (default: 10)
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli list
+                \\  actions-data-service-cli list --limit=20
+                \\  actions-data-service-cli list --skip=10 --limit=5 --output=./actions
+                \\
+            , .{});
+        },
+        .get => {
+            std.debug.print(
+                \\get - Get a specific action by reference
+                \\
+                \\Usage:
+                \\  actions-data-service-cli get <reference> [options]
+                \\
+                \\Arguments:
+                \\  <reference>    Action reference identifier
+                \\
+                \\Options:
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli get my-action-ref
+                \\  actions-data-service-cli get my-action-ref --output=./actions
+                \\
+            , .{});
+        },
+        .push => {
+            std.debug.print(
+                \\push - Push a new action to the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli push --action=FILE
+                \\  actions-data-service-cli push --reference= --name= --description= --type= [options]
+                \\
+                \\Options (file mode):
+                \\  --action=FILE  Load action from JSON file
+                \\
+                \\Options (inline mode):
+                \\  --reference=   Action reference (required)
+                \\  --name=        Action name (required)
+                \\  --description= Action description (required)
+                \\  --type=        Action type (required)
+                \\  --address=     Target address (optional)
+                \\  --selector=    Element selector (optional)
+                \\  --value=       Input value (optional)
+                \\  --script=      Script to execute (optional)
+                \\  --delay=N      Delay in milliseconds (optional)
+                \\
+                \\Examples:
+                \\  actions-data-service-cli push --action=action.json
+                \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --type=click --selector="#submit"
+                \\
+            , .{});
+        },
+        .pop => {
+            std.debug.print(
+                \\pop - Remove an action by reference
+                \\
+                \\Usage:
+                \\  actions-data-service-cli pop <reference>
+                \\
+                \\Arguments:
+                \\  <reference>    Action reference identifier to remove
+                \\
+                \\Examples:
+                \\  actions-data-service-cli pop my-action-ref
+                \\
+            , .{});
+        },
+    }
+}
+
 // resolveReference validates that a reference argument is non-empty.
 // Returns error.MissingReference when absent.
 //
@@ -176,7 +299,7 @@ pub fn resolvePushParameters(
         if (std.mem.startsWith(u8, argument_value, "--action=")) {
             action_file = argument_value["--action=".len..];
 
-            return try resolvePushParametersFromFile(allocator, action_file);
+            return try resolvePushParametersFromFile(allocator, action_file.?);
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
 
@@ -255,8 +378,8 @@ fn resolvePushParametersFromFile(
             var delay: ?u32 = null;
 
             if (object_value.get("reference")) |key_value| {
-                if (key_value.* == .string)
-                    reference = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    reference = try allocator.dupe(u8, key_value.string);
 
                 if (reference) |reference_value|
                     if (reference_value.len == 0)
@@ -264,43 +387,43 @@ fn resolvePushParametersFromFile(
             }
 
             if (object_value.get("name")) |key_value| {
-                if (key_value.* == .string)
-                    name = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    name = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("description")) |key_value| {
-                if (key_value.* == .string)
-                    description = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    description = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("type")) |key_value| {
-                if (key_value.* == .string)
-                    action_type = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    action_type = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("address")) |key_value| {
-                if (key_value.* == .string)
-                    address = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    address = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("selector")) |key_value| {
-                if (key_value.* == .string)
-                    selector = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    selector = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("value")) |key_value| {
-                if (key_value.* == .string)
-                    value = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    value = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("script")) |key_value| {
-                if (key_value.* == .string)
-                    script = try allocator.dupe(u8, key_value.*.string);
+                if (key_value == .string)
+                    script = try allocator.dupe(u8, key_value.string);
             }
 
             if (object_value.get("delay")) |key_value| {
-                if (key_value.* == .string) {
-                    delay = std.fmt.parseInt(u32, key_value.*.string, 10) catch return error.InvalidDelay;
+                if (key_value == .string) {
+                    delay = std.fmt.parseInt(u32, key_value.string, 10) catch return error.InvalidDelay;
                 }
             }
 
