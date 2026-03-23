@@ -5,6 +5,7 @@ const std = @import("std");
 pub const Command = enum {
     health,
     stop,
+
     list,
     get,
     push,
@@ -25,11 +26,14 @@ pub const PushParameters = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
+
     action_type: []const u8,
+
     address: ?[]const u8,
     selector: ?[]const u8,
     value: ?[]const u8,
     script: ?[]const u8,
+
     delay: ?u32,
 };
 
@@ -163,11 +167,14 @@ pub fn resolvePushParameters(
     var reference: ?[]const u8 = null;
     var name: ?[]const u8 = null;
     var description: ?[]const u8 = null;
+
     var action_type: ?[]const u8 = null;
+
     var address: ?[]const u8 = null;
     var selector: ?[]const u8 = null;
     var value: ?[]const u8 = null;
     var script: ?[]const u8 = null;
+
     var delay: ?u32 = null;
 
     for (arguments) |argument_value| {
@@ -227,6 +234,7 @@ pub fn resolvePushParameters(
         .selector = selector,
         .value = value,
         .script = script,
+
         .delay = delay,
     };
 }
