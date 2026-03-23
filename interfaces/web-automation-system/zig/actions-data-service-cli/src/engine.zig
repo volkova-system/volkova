@@ -57,7 +57,7 @@ pub fn sendStop(
 pub fn fetchActions(
     allocator: std.mem.Allocator,
     setting: setting.Setting,
-    params: handler.ListParams,
+    parameters: handler.ListParams,
 ) !Response {
     const base = try setting.resolveBaseUrl();
 
@@ -66,7 +66,7 @@ pub fn fetchActions(
     const url = try std.fmt.allocPrint(
         allocator,
         "{s}?skip={d}&limit={d}",
-        .{ base, params.skip, params.limit },
+        .{ base, parameters.skip, parameters.limit },
     );
 
     defer allocator.free(url);
@@ -101,7 +101,7 @@ pub fn fetchAction(
 pub fn pushAction(
     allocator: std.mem.Allocator,
     setting: setting.Setting,
-    params: handler.PushParams,
+    parameters: handler.PushParams,
 ) !Response {
     const base = try setting.resolveBaseUrl();
 
@@ -115,7 +115,7 @@ pub fn pushAction(
 
     defer allocator.free(url);
 
-    const body = try buildPushBody(allocator, params);
+    const body = try buildPushBody(allocator, parameters);
 
     defer allocator.free(body);
 
@@ -143,37 +143,45 @@ pub fn popAction(
     return sendDelete(allocator, url);
 }
 
-// buildPushBody serializes PushParams into a JSON string.
+// buildPushBody serializes PushParameters into a JSON string.
 // Caller owns the returned slice.
 //
 fn buildPushBody(
     allocator: std.mem.Allocator,
-    params: handler.PushParams,
+    parameters: handler.PushParameters,
 ) ![]u8 {
     var buffer = std.ArrayList(u8).init(allocator);
     const writer = buffer.writer();
 
     try writer.writeAll("{");
+
     try writer.print(
-        "\"reference\":\"{s}\",\"name\":\"{s}\"," ++
-            "\"description\":\"{s}\",\"type\":\"{s}\"",
+        "\"reference\":\"{s}\"," ++
+        "\"name\":\"{s}\"," ++
+        "\"description\":\"{s}\"," ++
+        "\"type\":\"{s}\"",
+
         .{
-            params.reference,
-            params.name,
-            params.description,
-            params.action_type,
+            parameters.reference,
+            parameters.name,
+            parameters.description,
+            parameters.action_type,
         },
     );
 
-    if (params.address) |value|
+    if (parameters.address) |value|
         try writer.print(",\"address\":\"{s}\"", .{value});
-    if (params.selector) |value|
+
+    if (parameters.selector) |value|
         try writer.print(",\"selector\":\"{s}\"", .{value});
+
     if (params.value) |value|
         try writer.print(",\"value\":\"{s}\"", .{value});
-    if (params.script) |value|
+
+    if (parameters.script) |value|
         try writer.print(",\"script\":\"{s}\"", .{value});
-    if (params.delay) |value|
+
+    if (parameters.delay) |value|
         try writer.print(",\"delay\":{d}", .{value});
 
     try writer.writeAll("}");
@@ -182,6 +190,7 @@ fn buildPushBody(
 }
 
 // sendGet performs an HTTP GET request and returns the response.
+//
 fn sendGet(
     allocator: std.mem.Allocator,
     url: []const u8,
@@ -190,6 +199,7 @@ fn sendGet(
 }
 
 // sendPost performs an HTTP POST request with a JSON body.
+//
 fn sendPost(
     allocator: std.mem.Allocator,
     url: []const u8,
@@ -199,6 +209,7 @@ fn sendPost(
 }
 
 // sendDelete performs an HTTP DELETE request.
+//
 fn sendDelete(
     allocator: std.mem.Allocator,
     url: []const u8,
@@ -208,6 +219,7 @@ fn sendDelete(
 
 // httpRequest is the single HTTP transport procedure.
 // Caller owns Response.body.
+//
 fn httpRequest(
     allocator: std.mem.Allocator,
     method: []const u8,
@@ -215,6 +227,7 @@ fn httpRequest(
     body: ?[]const u8,
 ) !Response {
     var client = std.http.Client{ .allocator = allocator };
+
     defer client.deinit();
 
     const uri = try std.Uri.parse(url);
@@ -225,10 +238,12 @@ fn httpRequest(
         uri,
         .{ .server_header_buffer = &header_buffer },
     );
+
     defer request.deinit();
 
     if (body) |body_value| {
         request.transfer_encoding = .{ .content_length = body_value.len };
+
         request.headers.content_type =
             .{ .override = "application/json" };
     }
