@@ -10,9 +10,11 @@ pub const default_port: []const u8 = "4071";
 pub const route_prefix: []const u8 = "/service/data/actions";
 
 // Setting holds resolved runtime configuration
+//
 pub const Setting = struct {
     host: []const u8,
     port: []const u8,
+
     allocator: std.mem.Allocator,
 
     // resolveBaseUrl builds the base URL from host and port.
@@ -31,6 +33,7 @@ pub const Setting = struct {
 // load reads ACTIONS_DATA_SERVICE_HOST and
 // ACTIONS_DATA_SERVICE_PORT from the environment.
 // Falls back to defaults when variables are absent.
+//
 pub fn load(allocator: std.mem.Allocator) Setting {
     const host = std.process.getEnvVarOwned(
         allocator,
