@@ -114,7 +114,7 @@ pub fn run(allocator: std.mem.Allocator) !void {
             result = response;
         },
         .push => {
-            const parameters = try handler.resolvePushParameters(rest);
+            var parameters = try handler.resolvePushParameters(rest);
 
             result = try engine.pushAction(
                 allocator,
