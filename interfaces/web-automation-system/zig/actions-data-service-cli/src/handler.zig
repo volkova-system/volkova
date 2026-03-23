@@ -37,17 +37,23 @@ pub const PushParameters = struct {
 // Returns error.UnknownCommand when the string is not recognized.
 //
 pub fn resolveCommand(raw: []const u8) !Command {
-    if (std.mem.eql(u8, raw, "health")) return .health;
+    if (std.mem.eql(u8, raw, "health"))
+        return .health;
 
-    if (std.mem.eql(u8, raw, "stop")) return .stop;
+    if (std.mem.eql(u8, raw, "stop"))
+        return .stop;
 
-    if (std.mem.eql(u8, raw, "list")) return .list;
+    if (std.mem.eql(u8, raw, "list"))
+        return .list;
 
-    if (std.mem.eql(u8, raw, "get")) return .get;
+    if (std.mem.eql(u8, raw, "get"))
+        return .get;
 
-    if (std.mem.eql(u8, raw, "push")) return .push;
+    if (std.mem.eql(u8, raw, "push"))
+        return .push;
 
-    if (std.mem.eql(u8, raw, "pop")) return .pop;
+    if (std.mem.eql(u8, raw, "pop"))
+        return .pop;
 
     return error.UnknownCommand;
 }
@@ -85,6 +91,7 @@ pub fn resolveGetParameters(arguments: []const []const u8) !GetParameters {
             if (output_directory) |value|
                 if (value.len == 0)
                     return error.InvalidOutputDir;
+
         } else if (reference == null and
             !std.mem.startsWith(u8, argument_value, "--"))
         {
@@ -114,18 +121,22 @@ pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
         if (std.mem.startsWith(u8, argument_value, "--skip=")) {
             const raw = argument_value["--skip=".len..];
 
-            skip = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidSkip;
-            };
+            skip = std.fmt.parseInt(u32, raw, 10)
+                catch {
+                    return error.InvalidSkip;
+                };
+
         } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
             const raw = argument_value["--limit=".len..];
 
-            limit = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidLimit;
-            };
+            limit = std.fmt.parseInt(u32, raw, 10)
+                catch {
+                    return error.InvalidLimit;
+                };
 
             if (limit == 0 or limit > 100)
                 return error.InvalidLimit;
+
         } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
 
@@ -162,20 +173,28 @@ pub fn resolvePushParameters(
     for (arguments) |argument_value| {
         if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--name=")) {
             name = argument_value["--name=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--description=")) {
             description = argument_value["--description=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--type=")) {
             action_type = argument_value["--type=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--address=")) {
             address = argument_value["--address=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--selector=")) {
             selector = argument_value["--selector=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--value=")) {
             value = argument_value["--value=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--script=")) {
             script = argument_value["--script=".len..];
+
         } else if (std.mem.startsWith(u8, argument_value, "--delay=")) {
             const raw = argument_value["--delay=".len..];
 
