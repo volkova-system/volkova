@@ -9,6 +9,9 @@ const Setting = @import("setting.zig").Setting;
 
 const Response = request.Response;
 
+const Health = model.Health;
+const Action = model.Action;
+
 const PushActionParameters = model.PushActionParameters;
 const GetActionParameters = model.GetActionParameters;
 const GetActionsParameters = model.GetActionsParameters;
@@ -16,7 +19,7 @@ const PopActionParameters = model.PopActionParameters;
 
 // checkHealth calls GET /service/data/actions/health.
 //
-pub fn checkHealth(setting: Setting) !Response {
+pub fn checkHealth(setting: Setting) !Health {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -31,7 +34,11 @@ pub fn checkHealth(setting: Setting) !Response {
 
     defer setting.allocator.free(url);
 
-    return sendGet(setting.allocator, url);
+    const result = try sendGet(setting.allocator, url);
+
+    const health_result = try handler.resolveCheckHealthResult(setting.allocator, result);
+
+    return health_result.health;
 }
 
 // stopService calls POST /service/data/actions/stop.
@@ -86,7 +93,7 @@ pub fn pushAction(
 pub fn getAction(
     setting: Setting,
     parameters: GetActionParameters,
-) !Response {
+) !Action {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -101,7 +108,26 @@ pub fn getAction(
 
     defer setting.allocator.free(url);
 
-    return sendGet(setting.allocator, url);
+    const result = try sendGet(setting.allocator, url);
+
+    const action_result = try handler.resolveGetActionResult(setting.allocator, result);
+    const action = action_result.action;
+
+    const output_directory = parameters.output_directory;
+
+    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
+        return error.InvalidOutputDirectory;
+    };
+
+    defer directory.close();
+
+    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
+
+    defer file.close();
+
+    try file.writeAll(action);
+
+    return action;
 }
 
 // getActions calls GET /service/data/actions?skip=N&limit=N.
