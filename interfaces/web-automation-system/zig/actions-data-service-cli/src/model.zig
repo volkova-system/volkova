@@ -1,4 +1,4 @@
-const Action = struct {
+pub const Action = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
