@@ -1,7 +1,18 @@
 const std = @import("std");
 const handler = @import("handler.zig");
-const engine = @import("engine.zig");
-const setting = @import("setting.zig");
+
+// checkForHelpFlag checks if help is requested for a command
+//
+pub fn checkForHelpFlag(arguments: []const []const u8) bool {
+    for (arguments) |argument_value| {
+        if (std.mem.eql(u8, argument_value, "--help") or
+            std.mem.eql(u8, argument_value, "-h"))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 // printUsage writes a brief usage message to stderr.
 //
