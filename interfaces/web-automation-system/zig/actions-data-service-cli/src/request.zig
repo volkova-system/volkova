@@ -56,14 +56,6 @@ pub fn httpRequest(
         else => return error_value,
     };
 
-    if (status >= 200 and status < 300 and result_body.len > 0) {
-        if (std.json.parseFromSlice(std.json.Value, allocator, result_body, .{})) |parsed_json| {
-            parsed_json.deinit();
-        } else {
-            return error.InvalidJsonResponse;
-        }
-    }
-
     return Response{ .status = status, .body = result_body };
 }
 
