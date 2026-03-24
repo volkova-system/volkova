@@ -15,6 +15,7 @@
         "matthewpi.caddyfile-support",
         "golang.go",
         "zokugun.explicit-folding",
-        "ziglang.vscode-zig"
+        "ziglang.vscode-zig",
+        "K3ndr1ckFu.tcl-language-support-for-vscode"
     ]
 }
