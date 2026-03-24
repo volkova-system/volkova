@@ -86,7 +86,7 @@ func main() {
 		if err := c.JSON(fiber.Map{
             "operation": fiber.Map{
                 "status": "initiated",
-                "type": "shutdown",
+                "procedure": "shutdown",
                 "service": "actions-data-service",
             },
         }); err != nil {
