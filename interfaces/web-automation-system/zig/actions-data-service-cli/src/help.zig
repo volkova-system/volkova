@@ -1,18 +1,7 @@
 const std = @import("std");
-const handler = @import("handler.zig");
+const model = @import("model.zig");
 
-// checkForHelpFlag checks if help is requested for a command
-//
-pub fn checkForHelpFlag(arguments: []const []const u8) bool {
-    for (arguments) |argument_value| {
-        if (std.mem.eql(u8, argument_value, "--help") or
-            std.mem.eql(u8, argument_value, "-h"))
-        {
-            return true;
-        }
-    }
-    return false;
-}
+const Command = model.Command;
 
 // printUsage writes a brief usage message to stderr.
 //
@@ -40,9 +29,9 @@ pub fn printHelp() void {
         \\Commands:
         \\  health        Check service health status
         \\  stop          Stop the service
-        \\  list          List actions with optional filtering
-        \\  get           Get a specific action by reference
         \\  push          Push a new action to the service
+        \\  get           Get a specific action by reference
+        \\  list          List actions with optional filtering
         \\  pop           Remove an action by reference
         \\
         \\Global Options:
@@ -86,14 +75,14 @@ pub fn printHelp() void {
 //
 pub fn printVersion() void {
     std.debug.print(
-        \\actions-data-service-cli version 1.0.0
+        \\actions-data-service-cli version 0.0.0
         \\
     , .{});
 }
 
 // printCommandHelp prints help for specific commands
 //
-pub fn printCommandHelp(command: handler.Command) void {
+pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
