@@ -1,29 +1,24 @@
 const std = @import("std");
 const handler = @import("handler.zig");
 const engine = @import("engine.zig");
-const setting = @import("setting.zig");
 const help = @import("help.zig");
 
-// run is the single entry point for the CLI interface.
-// It reads args, dispatches to the correct engine procedure,
-// and writes the response body to stdout.
-//
-pub fn run(allocator: std.mem.Allocator) !void {
-    const arguments = try std.process.argsAlloc(allocator);
+const Setting = @import("setting.zig").Setting;
 
-    defer std.process.argsFree(allocator, arguments);
+pub fn run(setting: Setting) !void {
+    const arguments = try std.process.argsAlloc(setting.allocator);
 
-    // args[0] is the executable name; args[1] is the command
+    defer std.process.argsFree(setting.allocator, arguments);
+
     if (arguments.len < 2) {
         return help.printUsage();
     }
 
-    // Handle global help and version flags
-    if (std.mem.eql(u8, arguments[1], "--help") or std.mem.eql(u8, arguments[1], "-h")) {
+    if (handler.checkHelpFlag(arguments)) {
         return help.printHelp();
     }
 
-    if (std.mem.eql(u8, arguments[1], "--version") or std.mem.eql(u8, arguments[1], "-v")) {
+    if (handler.checkVersionFlag(arguments)) {
         return help.printVersion();
     }
 
@@ -33,41 +28,22 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
     const rest = arguments[2..];
 
-    // Check for command-specific help
-    if (help.checkForHelpFlag(rest)) {
+    if (handler.checkCommandHelpFlag(rest)) {
         return help.printCommandHelp(command);
     }
-
-    const allocated_setting = setting.load(allocator);
 
     var result: engine.Response = undefined;
     switch (command) {
         .health => {
-            result = try engine.fetchHealth(allocator, allocated_setting);
+            result = try engine.checkHealth(setting);
         },
         .stop => {
-            result = try engine.sendStop(allocator, allocated_setting);
+            result = try engine.stopService(setting);
         },
-        .list => {
-            const parameters = try handler.resolveListParameters(rest);
+        .push => {
+            const parameters = try handler.resolvePushParameters(allocator, rest);
 
-            const response = try engine.fetchActions(allocator, allocated_setting, parameters);
-
-            if (parameters.output_directory) |directory_value| {
-                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
-                    return error.InvalidOutputDirectory;
-                };
-
-                defer directory.close();
-
-                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-                defer file.close();
-
-                try file.writeAll(response.body);
-            }
-
-            result = response;
+            result = try engine.pushAction(allocator, allocated_setting, parameters);
         },
         .get => {
             const parameters = try handler.resolveGetParameters(rest);
@@ -92,11 +68,28 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
             result = response;
         },
-        .push => {
-            const parameters = try handler.resolvePushParameters(allocator, rest);
+        .list => {
+            const parameters = try handler.resolveListParameters(rest);
 
-            result = try engine.pushAction(allocator, allocated_setting, parameters);
+            const response = try engine.fetchActions(allocator, allocated_setting, parameters);
+
+            if (parameters.output_directory) |directory_value| {
+                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
+                    return error.InvalidOutputDirectory;
+                };
+
+                defer directory.close();
+
+                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
+
+                defer file.close();
+
+                try file.writeAll(response.body);
+            }
+
+            result = response;
         },
+
         .pop => {
             const reference = try handler.resolveReference(rest);
 
