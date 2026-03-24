@@ -27,6 +27,7 @@
         "*.todo": "text",
         "*.waste": "text",
         "*.workflow": "text",
+        "*.tool": "text",
         "5LAWS": "text",
         "AUTHOR": "text",
         "CHANGELOG": "text",
