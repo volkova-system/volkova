@@ -254,7 +254,8 @@ containers/*/data/**/*.*
 # START TOOLS
 !tools/
 !tools/*-system/
-!tools/*-system/*.py
+!tools/*-system/*/
+!tools/*-system/**/*.py
 # END TOOLS
 
 !waste/
