@@ -34,42 +34,42 @@ pub fn run(setting: Setting) !void {
 
     switch (command) {
         .health => {
-            const health = try engine.checkHealth(setting);
+            const result = try engine.checkHealth(setting);
 
-            try std.io.getStdOut().writer().print("{s}", .{health});
+            try std.io.getStdOut().writer().print("{s}", .{result.raw_health});
         },
         .stop => {
-            const operation = try engine.stopService(setting);
+            const result = try engine.stopService(setting);
 
-            try std.io.getStdOut().writer().print("{s}", .{operation});
+            try std.io.getStdOut().writer().print("{s}", .{result.raw_operation});
         },
         .push => {
             const parameters = try handler.resolvePushParameters(setting, command_parameters);
 
-            const reference = try engine.pushAction(setting, parameters);
+            const result = try engine.pushAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{reference});
+            try std.io.getStdOut().writer().print("{s}", .{result.reference});
         },
         .get => {
             const parameters = try handler.resolveGetParameters(command_parameters);
 
-            const action = try engine.getAction(setting, parameters);
+            const result = try engine.getAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{action});
+            try std.io.getStdOut().writer().print("{s}", .{result.raw_action});
         },
         .list => {
             const parameters = try handler.resolveGetActionsParameters(command_parameters);
 
-            const actions = try engine.getActions(setting, parameters);
+            const result = try engine.getActions(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{actions});
+            try std.io.getStdOut().writer().print("{s}", .{result.raw_actions});
         },
         .pop => {
             const parameters = try handler.resolvePopActionParameters(command_parameters);
 
-            const action = try engine.popAction(setting, parameters);
+            const result = try engine.popAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{action});
+            try std.io.getStdOut().writer().print("{s}", .{result.raw_action});
         },
     }
 }
