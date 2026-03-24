@@ -54,6 +54,11 @@
                     "PackageIdentifier": "zig.zig",
                     "Version": "0.15.2",
                     "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "Magicsplat.TclTk",
+                    "Version": "1.16.0",
+                    "Source": "winget"
                 }
             ]
         }
