@@ -27,31 +27,29 @@ pub fn httpRequest(
 
     const http_method = parseHttpMethod(method) orelse return error.UnsupportedHttpMethod;
 
-    // Use ArrayList with proper error handling
-    var response_body = std.ArrayList(u8).init(allocator);
-    defer response_body.deinit();
+    var response_writer = std.Io.Writer.Allocating.init(allocator);
+    defer response_writer.deinit();
 
-    // Larger redirect buffer for better compatibility
     var redirect_buffer: [4096]u8 = undefined;
 
     const result = client.fetch(.{
         .location = .{ .uri = uri },
         .method = http_method,
         .redirect_buffer = &redirect_buffer,
-        .response_writer = response_body.writer().any(),
+        .response_writer = &response_writer.writer,
         .payload = body,
     }) catch |error_value| switch (error_value) {
         error.ConnectionRefused => return error.ConnectionFailed,
         error.NetworkUnreachable => return error.NetworkError,
-        error.NameResolutionFailed => return error.DnsResolutionFailed,
+        error.UnknownHostName => return error.DnsResolutionFailed,
         error.TlsInitializationFailed => return error.TlsError,
-        error.CertificateVerificationFailed => return error.CertificateError,
+        error.CertificateBundleLoadFailure => return error.CertificateError,
         error.OutOfMemory => return error.OutOfMemory,
         else => return error_value,
     };
 
     const status: u16 = @intFromEnum(result.status);
-    const result_body = response_body.toOwnedSlice() catch |error_value| switch (error_value) {
+    const result_body = response_writer.toOwnedSlice() catch |error_value| switch (error_value) {
         error.OutOfMemory => return error.OutOfMemory,
         else => return error_value,
     };
