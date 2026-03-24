@@ -84,10 +84,12 @@ pub const PopActionParameters = struct {
 
 pub const CheckHealthResult = struct {
     health: Health,
+    raw_health: []u8,
 };
 
 pub const StopServiceResult = struct {
     operation: Operation,
+    raw_operation: []u8,
 };
 
 pub const PushActionResult = struct {
@@ -96,12 +98,15 @@ pub const PushActionResult = struct {
 
 pub const GetActionResult = struct {
     action: Action,
+    raw_action: []u8,
 };
 
 pub const GetActionsResult = struct {
     actions: []Action,
+    raw_actions: []u8,
 };
 
 pub const PopActionResult = struct {
     action: Action,
+    raw_action: []u8,
 };
