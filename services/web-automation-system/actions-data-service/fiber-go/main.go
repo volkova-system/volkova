@@ -66,19 +66,33 @@ func main() {
 
 		if err != nil {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
-				"status":  "unhealthy",
-				"service": "actions-data-service",
-				"issue":   "database connectivity failed",
-			})
+                    "health": fiber.Map{
+                        "status": "unhealthy",
+                        "service": "actions-data-service",
+                        "issue": "database connectivity failed",
+                    },
+                })
 		}
 
 		return c.JSON(fiber.Map{
-			"status":  "healthy",
-            "service": "actions-data-service",
-		})
+                "health": fiber.Map{
+                    "status": "healthy",
+                    "service": "actions-data-service",
+                },
+            })
 	})
 
     actionsGroup.Post("/stop", func(c fiber.Ctx) error {
+		if err := c.JSON(fiber.Map{
+            "operation": fiber.Map{
+                "status": "initiated",
+                "type": "shutdown",
+                "service": "actions-data-service",
+            },
+        }); err != nil {
+			return err
+		}
+
 		go func() {
 			shutdownCh <- struct{}{}
 		}()
