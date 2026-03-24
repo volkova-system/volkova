@@ -108,44 +108,6 @@ pub fn printCommandHelp(command: Command) void {
                 \\
             , .{});
         },
-        .list => {
-            std.debug.print(
-                \\list - List actions with optional filtering
-                \\
-                \\Usage:
-                \\  actions-data-service-cli list [options]
-                \\
-                \\Options:
-                \\  --skip=N       Skip N actions (default: 0)
-                \\  --limit=N      Limit to N actions (default: 10)
-                \\  --output=DIR   Save output to directory
-                \\
-                \\Examples:
-                \\  actions-data-service-cli list
-                \\  actions-data-service-cli list --limit=20
-                \\  actions-data-service-cli list --skip=10 --limit=5 --output=./actions
-                \\
-            , .{});
-        },
-        .get => {
-            std.debug.print(
-                \\get - Get a specific action by reference
-                \\
-                \\Usage:
-                \\  actions-data-service-cli get <reference> [options]
-                \\
-                \\Arguments:
-                \\  <reference>    Action reference identifier
-                \\
-                \\Options:
-                \\  --output=DIR   Save output to directory
-                \\
-                \\Examples:
-                \\  actions-data-service-cli get my-action-ref
-                \\  actions-data-service-cli get my-action-ref --output=./actions
-                \\
-            , .{});
-        },
         .push => {
             std.debug.print(
                 \\push - Push a new action to the service
@@ -174,6 +136,44 @@ pub fn printCommandHelp(command: Command) void {
                 \\
             , .{});
         },
+        .get => {
+            std.debug.print(
+                \\get - Get a specific action by reference
+                \\
+                \\Usage:
+                \\  actions-data-service-cli get <reference> [options]
+                \\
+                \\Arguments:
+                \\  <reference>    Action reference identifier
+                \\
+                \\Options:
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli get my-action-ref
+                \\  actions-data-service-cli get my-action-ref --output=./actions
+                \\
+            , .{});
+        },
+        .list => {
+            std.debug.print(
+                \\list - List actions with optional filtering
+                \\
+                \\Usage:
+                \\  actions-data-service-cli list [options]
+                \\
+                \\Options:
+                \\  --skip=N       Skip N actions (default: 0)
+                \\  --limit=N      Limit to N actions (default: 10)
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli list
+                \\  actions-data-service-cli list --limit=20
+                \\  actions-data-service-cli list --skip=10 --limit=5 --output=./actions
+                \\
+            , .{});
+        },
         .pop => {
             std.debug.print(
                 \\pop - Remove an action by reference
@@ -183,6 +183,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Arguments:
                 \\  <reference>    Action reference identifier to remove
+                \\
+                \\Options:
+                \\  --output=DIR   Save output to directory
                 \\
                 \\Examples:
                 \\  actions-data-service-cli pop my-action-ref
