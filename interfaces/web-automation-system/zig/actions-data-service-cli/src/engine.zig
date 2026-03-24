@@ -122,19 +122,9 @@ pub fn getAction(
     const get_action_result = try handler.resolveGetActionResult(setting.allocator, result);
     const action = get_action_result.action;
 
-    const output_directory = parameters.output_directory;
-
-    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
-        return error.InvalidOutputDirectory;
-    };
-
-    defer directory.close();
-
-    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-    defer file.close();
-
-    try file.writeAll(action);
+    if (parameters.output_directory != null and parameters.file_name != null) {
+        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
+    }
 
     return action;
 }
@@ -164,19 +154,9 @@ pub fn getActions(
     const get_actions_result = try handler.resolveGetActionsResult(setting.allocator, result);
     const actions = get_actions_result.actions;
 
-    const output_directory = parameters.output_directory;
-
-    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
-        return error.InvalidOutputDirectory;
-    };
-
-    defer directory.close();
-
-    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-    defer file.close();
-
-    try file.writeAll(actions);
+    if (parameters.output_directory != null and parameters.file_name != null) {
+        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
+    }
 
     return actions;
 }
@@ -206,19 +186,9 @@ pub fn popAction(
     const pop_action_result = try handler.resolvePopActionResult(setting.allocator, result);
     const action = pop_action_result.action;
 
-    const output_directory = parameters.output_directory;
-
-    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
-        return error.InvalidOutputDirectory;
-    };
-
-    defer directory.close();
-
-    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-    defer file.close();
-
-    try file.writeAll(action);
+    if (parameters.output_directory != null and parameters.file_name != null) {
+        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
+    }
 
     return action;
 }
@@ -295,4 +265,24 @@ fn sendDelete(
     url: []const u8,
 ) !Response {
     return httpRequest(allocator, "DELETE", url, null);
+}
+
+fn persistToFile(
+    output_directory: []const u8,
+    file_name: []const u8,
+    content: []u8,
+) !void {
+    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
+        return error.InvalidOutputDirectory;
+    };
+
+    defer directory.close();
+
+    var file = try directory.createFile(file_name, .{ .truncate = true });
+
+    defer file.close();
+
+    try file.writeAll(content);
+
+    try file.sync();
 }
