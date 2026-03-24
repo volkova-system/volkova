@@ -1,100 +1,52 @@
 const std = @import("std");
 const handler = @import("handler.zig");
-const setting = @import("setting.zig");
 const request = @import("request.zig");
+const model = @import("model.zig");
 
-// fetchHealth calls GET /service/data/actions/health.
+const Setting = @import("setting.zig").Setting;
+
+const Response = request.Response;
+
+const PushActionParameters = model.PushActionParameters;
+
+// checkHealth calls GET /service/data/actions/health.
 //
-pub fn fetchHealth(
-    allocator: std.mem.Allocator,
-    setting_data: setting.Setting,
-) !request.Response {
-    const base_url = try setting_data.resolveBaseUrl();
+pub fn checkHealth(setting: Setting) !Response {
+    const base_url = try setting.resolveBaseUrl();
 
-    defer allocator.free(base_url);
+    defer setting.allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
-        allocator,
+        setting.allocator,
 
         "{s}/health",
 
         .{base_url},
     );
 
-    defer allocator.free(url);
+    defer setting.allocator.free(url);
 
-    return sendGet(allocator, url);
+    return sendGet(setting.allocator, url);
 }
 
-// sendStop calls POST /service/data/actions/stop.
+// stopService calls POST /service/data/actions/stop.
 //
-pub fn sendStop(
-    allocator: std.mem.Allocator,
-    setting_data: setting.Setting,
-) !request.Response {
-    const base_url = try setting_data.resolveBaseUrl();
+pub fn stopService(setting: Setting) !Response {
+    const base_url = try setting.resolveBaseUrl();
 
-    defer allocator.free(base_url);
+    defer setting.allocator.free(base_url);
 
     const url = try std.fmt.allocPrint(
-        allocator,
+        setting.allocator,
 
         "{s}/stop",
 
         .{base_url},
     );
 
-    defer allocator.free(url);
+    defer setting.allocator.free(url);
 
-    return sendPost(allocator, url, "{}");
-}
-
-// fetchActions calls GET /service/data/actions?skip=N&limit=N.
-//
-pub fn fetchActions(
-    allocator: std.mem.Allocator,
-    setting_data: setting.Setting,
-    parameters: handler.ListParameters,
-) !request.Response {
-    const base_url = try setting_data.resolveBaseUrl();
-
-    defer allocator.free(base_url);
-
-    const url = try std.fmt.allocPrint(
-        allocator,
-
-        "{s}?skip={d}&limit={d}",
-
-        .{ base_url, parameters.skip, parameters.limit },
-    );
-
-    defer allocator.free(url);
-
-    return sendGet(allocator, url);
-}
-
-// fetchAction calls GET /service/data/actions/:reference.
-//
-pub fn fetchAction(
-    allocator: std.mem.Allocator,
-    setting_data: setting.Setting,
-    reference: []const u8,
-) !request.Response {
-    const base_url = try setting_data.resolveBaseUrl();
-
-    defer allocator.free(base_url);
-
-    const url = try std.fmt.allocPrint(
-        allocator,
-
-        "{s}/{s}",
-
-        .{ base_url, reference },
-    );
-
-    defer allocator.free(url);
-
-    return sendGet(allocator, url);
+    return sendPost(setting.allocator, url, "{}");
 }
 
 // pushAction calls POST /service/data/actions/push with a JSON body.
@@ -102,8 +54,8 @@ pub fn fetchAction(
 pub fn pushAction(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
-    parameters: handler.PushParameters,
-) !request.Response {
+    parameters: PushActionParameters,
+) !Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -125,13 +77,61 @@ pub fn pushAction(
     return sendPost(allocator, url, body);
 }
 
+// getAction calls GET /service/data/actions/:reference.
+//
+pub fn getAction(
+    allocator: std.mem.Allocator,
+    setting_data: setting.Setting,
+    reference: []const u8,
+) !Response {
+    const base_url = try setting_data.resolveBaseUrl();
+
+    defer allocator.free(base_url);
+
+    const url = try std.fmt.allocPrint(
+        allocator,
+
+        "{s}/{s}",
+
+        .{ base_url, reference },
+    );
+
+    defer allocator.free(url);
+
+    return sendGet(allocator, url);
+}
+
+// getActions calls GET /service/data/actions?skip=N&limit=N.
+//
+pub fn getActions(
+    allocator: std.mem.Allocator,
+    setting_data: setting.Setting,
+    parameters: handler.ListParameters,
+) !Response {
+    const base_url = try setting_data.resolveBaseUrl();
+
+    defer allocator.free(base_url);
+
+    const url = try std.fmt.allocPrint(
+        allocator,
+
+        "{s}?skip={d}&limit={d}",
+
+        .{ base_url, parameters.skip, parameters.limit },
+    );
+
+    defer allocator.free(url);
+
+    return sendGet(allocator, url);
+}
+
 // popAction calls DELETE /service/data/actions/pop/:reference.
 //
 pub fn popAction(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
     reference: []const u8,
-) !request.Response {
+) !Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -200,7 +200,7 @@ fn buildPushBody(
 fn sendGet(
     allocator: std.mem.Allocator,
     url: []const u8,
-) !request.Response {
+) !Response {
     return request.httpRequest(allocator, "GET", url, null);
 }
 
@@ -210,7 +210,7 @@ fn sendPost(
     allocator: std.mem.Allocator,
     url: []const u8,
     body: []const u8,
-) !request.Response {
+) !Response {
     return request.httpRequest(allocator, "POST", url, body);
 }
 
@@ -219,6 +219,6 @@ fn sendPost(
 fn sendDelete(
     allocator: std.mem.Allocator,
     url: []const u8,
-) !request.Response {
+) !Response {
     return request.httpRequest(allocator, "DELETE", url, null);
 }
