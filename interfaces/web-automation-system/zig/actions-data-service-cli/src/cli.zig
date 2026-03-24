@@ -15,27 +15,27 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
     // args[0] is the executable name; args[1] is the command
     if (arguments.len < 2) {
-        return printUsage();
+        return help.printUsage();
     }
 
     // Handle global help and version flags
     if (std.mem.eql(u8, arguments[1], "--help") or std.mem.eql(u8, arguments[1], "-h")) {
-        return printHelp();
+        return help.printHelp();
     }
 
     if (std.mem.eql(u8, arguments[1], "--version") or std.mem.eql(u8, arguments[1], "-v")) {
-        return printVersion();
+        return help.printVersion();
     }
 
     const command = handler.resolveCommand(arguments[1]) catch {
-        return printUsage();
+        return help.printUsage();
     };
 
     const rest = arguments[2..];
 
     // Check for command-specific help
-    if (handler.checkForHelpFlag(rest)) {
-        return printCommandHelp(command);
+    if (help.checkForHelpFlag(rest)) {
+        return help.printCommandHelp(command);
     }
 
     const allocated_setting = setting.load(allocator);
