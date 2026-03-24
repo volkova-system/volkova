@@ -16,7 +16,7 @@ pub fn checkForHelpFlag(arguments: []const []const u8) bool {
 
 // printUsage writes a brief usage message to stderr.
 //
-fn printUsage() void {
+pub fn printUsage() void {
     std.debug.print(
         \\actions-data-service-cli - Web automation actions data service CLI
         \\
@@ -30,7 +30,7 @@ fn printUsage() void {
 
 // printHelp writes the full help message to stdout.
 //
-fn printHelp() void {
+pub fn printHelp() void {
     std.debug.print(
         \\actions-data-service-cli - Web automation actions data service CLI
         \\
@@ -84,7 +84,7 @@ fn printHelp() void {
 
 // printVersion writes version information to stdout.
 //
-fn printVersion() void {
+pub fn printVersion() void {
     std.debug.print(
         \\actions-data-service-cli version 1.0.0
         \\
@@ -93,7 +93,7 @@ fn printVersion() void {
 
 // printCommandHelp prints help for specific commands
 //
-fn printCommandHelp(command: handler.Command) void {
+pub fn printCommandHelp(command: handler.Command) void {
     switch (command) {
         .health => {
             std.debug.print(
