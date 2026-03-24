@@ -13,6 +13,18 @@ const Action = struct {
     delay: ?u32,
 };
 
+pub const Health = struct {
+    status: []const u8,
+    service: []const u8,
+    issue: ?[]const u8,
+};
+
+pub const Operation = struct {
+    status: []const u8,
+    type: []const u8,
+    service: []const u8,
+};
+
 // Command enumerates all supported CLI commands.
 //
 pub const Command = enum {
@@ -71,9 +83,11 @@ pub const PopActionParameters = struct {
 };
 
 pub const CheckHealthResult = struct {
-    status: []const u8,
-    service: []const u8,
-    issue: ?[]const u8,
+    health: Health,
+};
+
+pub const StopServiceResult = struct {
+    operation: Operation,
 };
 
 pub const GetActionResult = struct {
