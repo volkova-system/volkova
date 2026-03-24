@@ -10,6 +10,7 @@ const Setting = @import("setting.zig").Setting;
 const Response = request.Response;
 
 const Health = model.Health;
+const Operation = model.Operation;
 const Action = model.Action;
 
 const PushActionParameters = model.PushActionParameters;
@@ -43,7 +44,7 @@ pub fn checkHealth(setting: Setting) !Health {
 
 // stopService calls POST /service/data/actions/stop.
 //
-pub fn stopService(setting: Setting) !Response {
+pub fn stopService(setting: Setting) !Operation {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -58,7 +59,11 @@ pub fn stopService(setting: Setting) !Response {
 
     defer setting.allocator.free(url);
 
-    return sendPost(setting.allocator, url, "{}");
+    const result = try sendPost(setting.allocator, url, "{}");
+
+    const operation_result = try handler.resolveStopServiceResult(setting.allocator, result);
+
+    return operation_result.operation;
 }
 
 // pushAction calls POST /service/data/actions/push with a JSON body.
@@ -66,7 +71,7 @@ pub fn stopService(setting: Setting) !Response {
 pub fn pushAction(
     setting: Setting,
     parameters: PushActionParameters,
-) !Response {
+) ![]const u8 {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -85,7 +90,11 @@ pub fn pushAction(
 
     defer setting.allocator.free(body);
 
-    return sendPost(setting.allocator, url, body);
+    const result = try sendPost(setting.allocator, url, body);
+
+    const push_action_result = try handler.resolvePushActionResult(setting.allocator, result);
+
+    return push_action_result.reference;
 }
 
 // getAction calls GET /service/data/actions/:reference.
@@ -110,8 +119,8 @@ pub fn getAction(
 
     const result = try sendGet(setting.allocator, url);
 
-    const action_result = try handler.resolveGetActionResult(setting.allocator, result);
-    const action = action_result.action;
+    const get_action_result = try handler.resolveGetActionResult(setting.allocator, result);
+    const action = get_action_result.action;
 
     const output_directory = parameters.output_directory;
 
@@ -135,7 +144,7 @@ pub fn getAction(
 pub fn getActions(
     setting: Setting,
     parameters: GetActionsParameters,
-) !Response {
+) ![]Action {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -150,7 +159,26 @@ pub fn getActions(
 
     defer setting.allocator.free(url);
 
-    return sendGet(setting.allocator, url);
+    const result = try sendGet(setting.allocator, url);
+
+    const get_actions_result = try handler.resolveGetActionsResult(setting.allocator, result);
+    const actions = get_actions_result.actions;
+
+    const output_directory = parameters.output_directory;
+
+    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
+        return error.InvalidOutputDirectory;
+    };
+
+    defer directory.close();
+
+    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
+
+    defer file.close();
+
+    try file.writeAll(actions);
+
+    return actions;
 }
 
 // popAction calls DELETE /service/data/actions/pop/:reference.
@@ -158,7 +186,7 @@ pub fn getActions(
 pub fn popAction(
     setting: Setting,
     parameters: PopActionParameters,
-) !Response {
+) !Action {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
