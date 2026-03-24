@@ -1,0 +1,46 @@
+{
+    auto_https off
+    admin off
+
+    log {
+        output file logs/access.log {
+            roll_size 50MB
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        output stdout
+        format console
+        level INFO
+    }
+}
+
+http://localhost:9630 {
+    log {
+        output file logs/error.log {
+            roll_size 50MB
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        output stderr
+        format console
+        level ERROR
+    }
+
+    handle /assets/images/* {
+        reverse_proxy localhost:5173
+    }
+
+    route {
+        handle /service/component/products* {
+            reverse_proxy localhost:6039
+        }
+
+        handle /service/data/products* {
+            reverse_proxy localhost:4979
+        }
+
+        handle {
+            reverse_proxy localhost:3690
+        }
+    }
+}
