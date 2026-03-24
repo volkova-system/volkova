@@ -76,8 +76,6 @@ pub fn checkForHelpFlag(arguments: []const []const u8) bool {
     return false;
 }
 
-
-
 // resolveReference validates that a reference argument is non-empty.
 // Returns error.MissingReference when absent.
 //
