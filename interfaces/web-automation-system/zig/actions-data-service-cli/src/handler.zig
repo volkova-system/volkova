@@ -646,8 +646,8 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
     if (parsed_json.value.object.get("actions")) |actions_value| {
         switch (actions_value) {
             .array => |array_value| {
-                var actions = std.ArrayList(Action).init(allocator);
-                defer actions.deinit();
+                var actions: std.ArrayList(Action) = .empty;
+                defer actions.deinit(allocator);
 
                 for (array_value.items) |action_json| {
                     if (action_json != .object) continue;
@@ -732,11 +732,11 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
                         .delay = delay,
                     };
 
-                    try actions.append(action);
+                    try actions.append(allocator, action);
                 }
 
                 return GetActionsResult{
-                    .actions = try actions.toOwnedSlice(),
+                    .actions = try actions.toOwnedSlice(allocator),
                     .raw_actions = result.body,
                 };
             },
