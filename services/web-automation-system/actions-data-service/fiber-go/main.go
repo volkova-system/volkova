@@ -68,7 +68,7 @@ func main() {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
 				"status":  "unhealthy",
 				"service": "actions-data-service",
-				"error":   "database connectivity failed",
+				"issue":   "database connectivity failed",
 			})
 		}
 
