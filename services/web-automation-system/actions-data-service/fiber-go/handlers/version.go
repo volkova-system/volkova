@@ -11,7 +11,7 @@ func VersionHandler() fiber.Handler {
 		return c.JSON(fiber.Map{
 			"version": fiber.Map{
                 "number": version.Version,
-                "service": "actions-data-service",
+                "service": version.Name,
             },
 		})
 	}
