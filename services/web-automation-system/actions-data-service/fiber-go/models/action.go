@@ -7,7 +7,7 @@ type Action struct {
     Name        string      `json:"name"`
     Description string      `json:"description"`
 
-    Type        string      `json:"type"`
+    Flow        string      `json:"flow"`
 
     Address     *string     `json:"address,omitempty"`
     Selector    *string     `json:"selector,omitempty"`
