@@ -116,9 +116,9 @@ pub fn getAction(
 
     const result = try sendGet(setting.allocator, url);
 
-    if (parameters.output_directory != null and parameters.file_name != null) {
-        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
-    }
+    if (parameters.output_directory) |output_directory|
+        if (parameters.file_name) |file_name|
+            try persistToFile(output_directory, file_name, result.body);
 
     return try handler.resolveGetActionResult(setting.allocator, result);
 }
@@ -145,9 +145,9 @@ pub fn getActions(
 
     const result = try sendGet(setting.allocator, url);
 
-    if (parameters.output_directory != null and parameters.file_name != null) {
-        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
-    }
+    if (parameters.output_directory) |output_directory|
+        if (parameters.file_name) |file_name|
+            try persistToFile(output_directory, file_name, result.body);
 
     return try handler.resolveGetActionsResult(setting.allocator, result);
 }
@@ -174,9 +174,9 @@ pub fn popAction(
 
     const result = try sendDelete(setting.allocator, url);
 
-    if (parameters.output_directory != null and parameters.file_name != null) {
-        try persistToFile(parameters.output_directory, parameters.file_name, result.body);
-    }
+    if (parameters.output_directory) |output_directory|
+        if (parameters.file_name) |file_name|
+            try persistToFile(output_directory, file_name, result.body);
 
     return try handler.resolvePopActionResult(setting.allocator, result);
 }
@@ -186,7 +186,7 @@ pub fn popAction(
 //
 fn buildPushBody(
     allocator: std.mem.Allocator,
-    parameters: handler.PushParameters,
+    parameters: PushActionParameters,
 ) ![]u8 {
     var buffer = std.ArrayList(u8){};
     const writer = buffer.writer(allocator);
