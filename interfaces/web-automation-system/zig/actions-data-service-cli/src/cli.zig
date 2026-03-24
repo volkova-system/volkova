@@ -26,9 +26,9 @@ pub fn run(setting: Setting) !void {
         return help.printUsage();
     };
 
-    const rest = arguments[2..];
+    const command_parameters = arguments[2..];
 
-    if (handler.checkCommandHelpFlag(rest)) {
+    if (handler.checkCommandHelpFlag(command_parameters)) {
         return help.printCommandHelp(command);
     }
 
@@ -41,14 +41,14 @@ pub fn run(setting: Setting) !void {
             result = try engine.stopService(setting);
         },
         .push => {
-            const parameters = try handler.resolvePushParameters(allocator, rest);
+            const parameters = try handler.resolvePushParameters(setting, command_parameters);
 
-            result = try engine.pushAction(allocator, allocated_setting, parameters);
+            result = try engine.pushAction(setting, parameters);
         },
         .get => {
-            const parameters = try handler.resolveGetParameters(rest);
+            const parameters = try handler.resolveGetParameters(command_parameters);
 
-            const response = try engine.fetchAction(allocator, allocated_setting, parameters.reference);
+            const response = try engine.getAction(setting, parameters);
 
             const action = response.body;
 
@@ -69,9 +69,9 @@ pub fn run(setting: Setting) !void {
             result = response;
         },
         .list => {
-            const parameters = try handler.resolveListParameters(rest);
+            const parameters = try handler.resolveGetActionsParameters(command_parameters);
 
-            const response = try engine.fetchActions(allocator, allocated_setting, parameters);
+            const response = try engine.getActions(setting, parameters);
 
             if (parameters.output_directory) |directory_value| {
                 var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
@@ -89,15 +89,14 @@ pub fn run(setting: Setting) !void {
 
             result = response;
         },
-
         .pop => {
-            const reference = try handler.resolveReference(rest);
+            const parameters = try handler.resolvePopActionParameters(command_parameters);
 
-            result = try engine.popAction(allocator, allocated_setting, reference);
+            result = try engine.popAction(setting, parameters);
         },
     }
 
-    defer allocator.free(result.body);
+    defer setting.allocator.free(result.body);
 
     std.debug.print("{s}\n", .{result.body});
 }
