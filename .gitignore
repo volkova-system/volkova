@@ -160,43 +160,43 @@ containers/*/data/**/*.*
 
 # START SERVICES
 !services/
-!services/core/
-!services/core/*-service/
+!services/*-system/
+!services/*-system/*-service/
 
-!services/core/*-service/caddy/
-!services/core/*-service/caddy/logs/
-!services/core/*-service/caddy/Caddyfile*
+!services/*-system/*-service/caddy/
+!services/*-system/*-service/caddy/logs/
+!services/*-system/*-service/caddy/Caddyfile*
 
-!services/core/*-service/nginx/
-!services/core/*-service/nginx/logs/
-!services/core/*-service/nginx/*.conf
+!services/*-system/*-service/nginx/
+!services/*-system/*-service/nginx/logs/
+!services/*-system/*-service/nginx/*.conf
 
-!services/core/*-service/fastify-node/
-!services/core/*-service/fastify-node/logs/
-!services/core/*-service/fastify-node/dist/
-!services/core/*-service/fastify-node/src/
-!services/core/*-service/fastify-node/src/data/
-!services/core/*-service/fastify-node/src/engines/
-!services/core/*-service/fastify-node/src/handlers/
-!services/core/*-service/fastify-node/src/models/
-!services/core/*-service/fastify-node/**/*.ts
-!services/core/*-service/fastify-node/**/*.json
+!services/*-system/*-service/fastify-node/
+!services/*-system/*-service/fastify-node/logs/
+!services/*-system/*-service/fastify-node/dist/
+!services/*-system/*-service/fastify-node/src/
+!services/*-system/*-service/fastify-node/src/data/
+!services/*-system/*-service/fastify-node/src/engines/
+!services/*-system/*-service/fastify-node/src/handlers/
+!services/*-system/*-service/fastify-node/src/models/
+!services/*-system/*-service/fastify-node/**/*.ts
+!services/*-system/*-service/fastify-node/**/*.json
 
-!services/core/*-service/fiber-go/
-!services/core/*-service/fiber-go/logs/
-!services/core/*-service/fiber-go/data/
-!services/core/*-service/fiber-go/engines/
-!services/core/*-service/fiber-go/handlers/
-!services/core/*-service/fiber-go/models/
-!services/core/*-service/fiber-go/**/*.go
-!services/core/*-service/fiber-go/**/*.mod
+!services/*-system/*-service/fiber-go/
+!services/*-system/*-service/fiber-go/logs/
+!services/*-system/*-service/fiber-go/data/
+!services/*-system/*-service/fiber-go/engines/
+!services/*-system/*-service/fiber-go/handlers/
+!services/*-system/*-service/fiber-go/models/
+!services/*-system/*-service/fiber-go/**/*.go
+!services/*-system/*-service/fiber-go/**/*.mod
 
-!services/core/*-service/varnish/
+!services/*-system/*-service/varnish/
 
-!services/core/*-service/nats/
+!services/*-system/*-service/nats/
 
-!services/core/*-service/go/
-!services/core/*-service/go/agents
+!services/*-system/*-service/go/
+!services/*-system/*-service/go/agents
 
 !services/*-system/
 !services/*-system/*-service/
