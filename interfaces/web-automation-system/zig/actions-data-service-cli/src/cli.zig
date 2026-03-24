@@ -46,7 +46,9 @@ pub fn run(setting: Setting) !void {
         .push => {
             const parameters = try handler.resolvePushParameters(setting, command_parameters);
 
-            result = try engine.pushAction(setting, parameters);
+            const reference = try engine.pushAction(setting, parameters);
+
+            try std.io.getStdOut().writer().print("{s}", .{reference});
         },
         .get => {
             const parameters = try handler.resolveGetParameters(command_parameters);
@@ -58,28 +60,16 @@ pub fn run(setting: Setting) !void {
         .list => {
             const parameters = try handler.resolveGetActionsParameters(command_parameters);
 
-            const response = try engine.getActions(setting, parameters);
+            const actions = try engine.getActions(setting, parameters);
 
-            if (parameters.output_directory) |directory_value| {
-                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
-                    return error.InvalidOutputDirectory;
-                };
-
-                defer directory.close();
-
-                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-                defer file.close();
-
-                try file.writeAll(response.body);
-            }
-
-            result = response;
+            try std.io.getStdOut().writer().print("{s}", .{actions});
         },
         .pop => {
             const parameters = try handler.resolvePopActionParameters(command_parameters);
 
-            result = try engine.popAction(setting, parameters);
+            const action = try engine.popAction(setting, parameters);
+
+            try std.io.getStdOut().writer().print("{s}", .{action});
         },
     }
 }
