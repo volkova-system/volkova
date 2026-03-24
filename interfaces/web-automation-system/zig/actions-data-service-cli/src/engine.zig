@@ -201,7 +201,26 @@ pub fn popAction(
 
     defer setting.allocator.free(url);
 
-    return sendDelete(setting.allocator, url);
+    const result = try sendDelete(setting.allocator, url);
+
+    const pop_action_result = try handler.resolvePopActionResult(setting.allocator, result);
+    const action = get_action_result.action;
+
+    const output_directory = parameters.output_directory;
+
+    var directory = std.fs.openDirAbsolute(output_directory, .{}) catch std.fs.cwd().openDir(output_directory, .{}) catch {
+        return error.InvalidOutputDirectory;
+    };
+
+    defer directory.close();
+
+    var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
+
+    defer file.close();
+
+    try file.writeAll(action);
+
+    return action;
 }
 
 // buildPushBody serializes PushParameters into a JSON string.
