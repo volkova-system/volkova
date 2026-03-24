@@ -1,0 +1,34 @@
+{
+    auto_https off
+    admin off
+
+    log {
+        output file logs/access.log {
+            roll_size 50MB
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        output stdout
+        format console
+        level INFO
+    }
+}
+
+http://localhost:5173 {
+    log {
+        output file logs/error.log {
+            roll_size 50MB
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        output stderr
+        format console
+        level ERROR
+    }
+
+    handle_path /assets/images/* {
+        root * "{$IMAGE_ASSETS_DIRECTORY_PATH}"
+        try_files {path} /404.svg
+        file_server
+    }
+}
