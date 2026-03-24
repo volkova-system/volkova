@@ -204,7 +204,7 @@ pub fn popAction(
     const result = try sendDelete(setting.allocator, url);
 
     const pop_action_result = try handler.resolvePopActionResult(setting.allocator, result);
-    const action = get_action_result.action;
+    const action = pop_action_result.action;
 
     const output_directory = parameters.output_directory;
 
