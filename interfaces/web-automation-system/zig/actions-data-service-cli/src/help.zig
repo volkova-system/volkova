@@ -45,7 +45,7 @@ fn printHelp() void {
         \\  push          Push a new action to the service
         \\  pop           Remove an action by reference
         \\
-        \\Options:
+        \\Global Options:
         \\  -h, --help       Show this help message
         \\  -v, --version    Show version information
         \\
