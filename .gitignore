@@ -150,11 +150,6 @@ containers/*/data/**/*.*
 
 # START SCRIPTS
 !scripts/
-!scripts/core/
-!scripts/core/*-service/
-!scripts/core/*-service/python/
-!scripts/core/*-service/python/*.py
-
 !scripts/**/*.js
 !scripts/**/*.mjs
 !scripts/**/*.ps1
@@ -164,6 +159,7 @@ containers/*/data/**/*.*
 !scripts/**/*.bash
 !scripts/**/*.zig
 !scripts/**/*.py
+!scripts/**/*.tcl
 # END SCRIPTS
 
 # START SERVICES
@@ -263,7 +259,7 @@ containers/*/data/**/*.*
 !tools/
 !tools/*-system/
 !tools/*-system/*/
-!tools/*-system/**/*.py
+!tools/*-system/**/*.tool
 # END TOOLS
 
 !waste/
