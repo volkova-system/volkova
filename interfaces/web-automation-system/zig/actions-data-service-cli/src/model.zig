@@ -37,6 +37,23 @@ pub const Command = enum {
     pop,
 };
 
+// PushActionParameters holds validated parameters for the push command.
+//
+pub const PushActionParameters = struct {
+    reference: []const u8,
+    name: []const u8,
+    description: []const u8,
+
+    action_type: []const u8,
+
+    address: ?[]const u8,
+    selector: ?[]const u8,
+    value: ?[]const u8,
+    script: ?[]const u8,
+
+    delay: ?u32,
+};
+
 // GetActionParameters holds validated parameters for the get command.
 //
 pub const GetActionParameters = struct {
@@ -56,23 +73,6 @@ pub const GetActionsParameters = struct {
     file_name: ?[]const u8,
 };
 
-// PushActionParameters holds validated parameters for the push command.
-//
-pub const PushActionParameters = struct {
-    reference: []const u8,
-    name: []const u8,
-    description: []const u8,
-
-    action_type: []const u8,
-
-    address: ?[]const u8,
-    selector: ?[]const u8,
-    value: ?[]const u8,
-    script: ?[]const u8,
-
-    delay: ?u32,
-};
-
 // PopActionParameters holds validated parameters for the pop command.
 //
 pub const PopActionParameters = struct {
@@ -90,16 +90,16 @@ pub const StopServiceResult = struct {
     operation: Operation,
 };
 
+pub const PushActionResult = struct {
+    reference: []const u8,
+};
+
 pub const GetActionResult = struct {
     action: Action,
 };
 
 pub const GetActionsResult = struct {
     actions: []Action,
-};
-
-pub const PushActionResult = struct {
-    reference: []const u8,
 };
 
 pub const PopActionResult = struct {
