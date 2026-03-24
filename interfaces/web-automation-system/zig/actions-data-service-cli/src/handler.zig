@@ -795,7 +795,7 @@ pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !P
                 .delay = delay,
             };
 
-            return GetActionResult{
+            return PopActionResult{
                 .action = action,
             };
         },
