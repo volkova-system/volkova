@@ -63,8 +63,6 @@ pub fn resolveCommand(raw: []const u8) !Command {
     return error.UnknownCommand;
 }
 
-
-
 // resolveReference validates that a reference argument is non-empty.
 // Returns error.MissingReference when absent.
 //
