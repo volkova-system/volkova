@@ -13,7 +13,11 @@ const GetActionsParameters = model.GetActionsParameters;
 const PopActionParameters = model.PopActionParameters;
 
 const CheckHealthResult = model.CheckHealthResult;
+const StopServiceResult = model.StopServiceResult;
+const PushActionResult = model.PushActionResult;
 const GetActionResult = model.GetActionResult;
+const GetActionsResult = model.GetActionsResult;
+const PopActionResult = model.PopActionResult;
 
 // checkVersionFlag checks if version is requested for a service
 //
@@ -387,7 +391,7 @@ pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) 
     var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
     defer parsed_json.deinit();
 
-    switch (parsed_json.value) {
+    switch (parsed_json.value.get("health")) {
         .object => |object_value| {
             var status: ?[]const u8 = null;
             var service: ?[]const u8 = null;
@@ -421,6 +425,79 @@ pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) 
     }
 }
 
+pub fn resolveStopServiceResult(allocator: std.mem.Allocator, result: Response) !StopServiceResult {
+    if (result.status < 200 or result.status >= 300) {
+        return error.InvalidResponse;
+    }
+
+    if (result.body.len == 0) {
+        return error.EmptyResponse;
+    }
+
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    defer parsed_json.deinit();
+
+    switch (parsed_json.value.get("operation")) {
+        .object => |object_value| {
+            var status: ?[]const u8 = null;
+            var operation_type: ?[]const u8 = null;
+            var service: ?[]const u8 = null;
+
+            if (object_value.get("status")) |key_value| {
+                if (key_value == .string)
+                    status = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("type")) |key_value| {
+                if (key_value == .string)
+                    operation_type = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("service")) |key_value| {
+                if (key_value == .string)
+                    service = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (status == null) return error.MissingOperationStatus;
+            if (operation_type == null) return error.MissingOperationType;
+            if (service == null) return error.MissingOperationService;
+
+            return StopServiceResult{
+                .status = status.?,
+                .type = operation_type.?,
+                .service = service.?,
+            };
+        },
+        else => return error.InvalidJsonFormat,
+    }
+}
+
+pub fn resolvePushActionResult(allocator: std.mem.Allocator, result: Response) !PushActionResult {
+    if (result.status < 200 or result.status >= 300) {
+        return error.InvalidResponse;
+    }
+
+    if (result.body.len == 0) {
+        return error.EmptyResponse;
+    }
+
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    defer parsed_json.deinit();
+
+    var reference: ?[]const u8 = null;
+
+    if (parsed_json.value.get("reference")) |key_value| {
+        if (key_value == .string)
+            reference = try allocator.dupe(u8, key_value.string);
+    }
+
+    if (reference == null) return error.MissingActionReference;
+
+    return PushActionResult{
+        .reference = reference.?,
+    };
+}
+
 pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !GetActionResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
@@ -433,7 +510,212 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
     var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
     defer parsed_json.deinit();
 
-    switch (parsed_json.value) {
+    switch (parsed_json.value.get("action")) {
+        .object => |object_value| {
+            var reference: ?[]const u8 = null;
+            var name: ?[]const u8 = null;
+            var description: ?[]const u8 = null;
+            var action_type: ?[]const u8 = null;
+
+            var address: ?[]const u8 = null;
+            var selector: ?[]const u8 = null;
+            var value: ?[]const u8 = null;
+            var script: ?[]const u8 = null;
+
+            var delay: ?u32 = null;
+
+            if (object_value.get("reference")) |key_value| {
+                if (key_value == .string)
+                    reference = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("name")) |key_value| {
+                if (key_value == .string)
+                    name = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("description")) |key_value| {
+                if (key_value == .string)
+                    description = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("type")) |key_value| {
+                if (key_value == .string)
+                    action_type = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("address")) |key_value| {
+                if (key_value == .string)
+                    address = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("selector")) |key_value| {
+                if (key_value == .string)
+                    selector = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("value")) |key_value| {
+                if (key_value == .string)
+                    value = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("script")) |key_value| {
+                if (key_value == .string)
+                    script = try allocator.dupe(u8, key_value.string);
+            }
+
+            if (object_value.get("delay")) |key_value| {
+                if (key_value == .number) {
+                    delay = @intFromFloat(key_value.number);
+                } else if (key_value == .string) {
+                    delay = std.fmt.parseInt(u32, key_value.string, 10) catch null;
+                }
+            }
+
+            // Validate required fields
+            if (reference == null) return error.MissingReference;
+            if (name == null) return error.MissingName;
+            if (description == null) return error.MissingDescription;
+            if (action_type == null) return error.MissingActionType;
+
+            const action = model.Action{
+                .reference = reference.?,
+                .name = name.?,
+                .description = description.?,
+                .action_type = action_type.?,
+                .address = address,
+                .selector = selector,
+                .value = value,
+                .script = script,
+                .delay = delay,
+            };
+
+            return GetActionResult{
+                .action = action,
+            };
+        },
+        else => return error.InvalidJsonFormat,
+    }
+}
+
+pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !GetActionsResult {
+    if (result.status < 200 or result.status >= 300) {
+        return error.InvalidResponse;
+    }
+
+    if (result.body.len == 0) {
+        return error.EmptyResponse;
+    }
+
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    defer parsed_json.deinit();
+
+    switch (parsed_json.value.get("actions")) {
+        .array => |array_value| {
+            var actions = std.ArrayList(model.Action).init(allocator);
+            defer actions.deinit();
+
+            for (array_value.items) |action_json| {
+                if (action_json != .object) continue;
+
+                const object_value = action_json.object;
+
+                var reference: ?[]const u8 = null;
+                var name: ?[]const u8 = null;
+                var description: ?[]const u8 = null;
+                var action_type: ?[]const u8 = null;
+
+                var address: ?[]const u8 = null;
+                var selector: ?[]const u8 = null;
+                var value: ?[]const u8 = null;
+                var script: ?[]const u8 = null;
+
+                var delay: ?u32 = null;
+
+                if (object_value.get("reference")) |key_value| {
+                    if (key_value == .string)
+                        reference = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("name")) |key_value| {
+                    if (key_value == .string)
+                        name = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("description")) |key_value| {
+                    if (key_value == .string)
+                        description = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("type")) |key_value| {
+                    if (key_value == .string)
+                        action_type = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("address")) |key_value| {
+                    if (key_value == .string)
+                        address = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("selector")) |key_value| {
+                    if (key_value == .string)
+                        selector = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("value")) |key_value| {
+                    if (key_value == .string)
+                        value = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("script")) |key_value| {
+                    if (key_value == .string)
+                        script = try allocator.dupe(u8, key_value.string);
+                }
+
+                if (object_value.get("delay")) |key_value| {
+                    if (key_value == .number) {
+                        delay = @intFromFloat(key_value.number);
+                    } else if (key_value == .string) {
+                        delay = std.fmt.parseInt(u32, key_value.string, 10) catch null;
+                    }
+                }
+
+                const action = model.Action{
+                    .reference = reference.?,
+                    .name = name.?,
+                    .description = description.?,
+                    .action_type = action_type.?,
+                    .address = address,
+                    .selector = selector,
+                    .value = value,
+                    .script = script,
+                    .delay = delay,
+                };
+
+                try actions.append(action);
+            }
+
+            return GetActionsResult{
+                .actions = try actions.toOwnedSlice(),
+            };
+        },
+        else => return error.InvalidJsonFormat,
+    }
+}
+
+pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !PopActionResult {
+    if (result.status < 200 or result.status >= 300) {
+        return error.InvalidResponse;
+    }
+
+    if (result.body.len == 0) {
+        return error.EmptyResponse;
+    }
+
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    defer parsed_json.deinit();
+
+    switch (parsed_json.value.get("action")) {
         .object => |object_value| {
             var reference: ?[]const u8 = null;
             var name: ?[]const u8 = null;
