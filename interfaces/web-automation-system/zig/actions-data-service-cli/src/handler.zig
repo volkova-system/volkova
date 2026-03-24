@@ -1,11 +1,14 @@
 const std = @import("std");
-const model = @import("model");
+const model = @import("model.zig");
+
+const Setting = @import("setting.zig").Setting;
 
 const Command = model.Command;
-const GetParameters = model.GetParameters;
-const ListParameters = model.ListParameters;
-const PushParameters = model.PushParameters;
-const PopParameters = model.PopParameters;
+
+const PushActionParameters = model.PushActionParameters;
+const GetActionParameters = model.GetActionParameters;
+const GetActionsParameters = model.GetActionsParameters;
+const PopActionParameters = model.PopActionParameters;
 
 // checkVersionFlag checks if version is requested for a service
 //
@@ -74,106 +77,14 @@ pub fn resolveCommand(raw: []const u8) !Command {
     return error.UnknownCommand;
 }
 
-// resolveReference validates that a reference argument is non-empty.
-// Returns error.MissingReference when absent.
-//
-pub fn resolveReference(arguments: []const []const u8) ![]const u8 {
-    if (arguments.len < 1 or arguments[0].len == 0) {
-        return error.MissingReference;
-    }
-
-    return arguments[0];
-}
-
-// resolveGetParameters parses required reference and optional output flags.
-// Required: reference
-// Optional: --output=DIR
-//
-pub fn resolveGetParameters(arguments: []const []const u8) !GetParameters {
-    var reference: ?[]const u8 = null;
-    var output_directory: ?[]const u8 = null;
-
-    for (arguments) |argument_value| {
-        if (std.mem.startsWith(u8, argument_value, "--output=")) {
-            output_directory = argument_value["--output=".len..];
-
-            if (output_directory) |value|
-                if (value.len == 0)
-                    return error.InvalidOutputDirectory;
-        } else if (reference == null and
-            !std.mem.startsWith(u8, argument_value, "--"))
-        {
-            reference = argument_value;
-        }
-    }
-
-    if (reference == null or reference.?.len == 0)
-        return error.MissingReference;
-
-    var file_name_buffer: [256]u8 = undefined;
-    const file_name = std.fmt.bufPrint(&file_name_buffer, "action-{s}.json", .{reference.?}) catch "action.json";
-
-    return GetParameters{
-        .reference = reference.?,
-        .output_directory = output_directory,
-        .file_name = file_name,
-    };
-}
-
-// resolveListParameters parses optional skip, limit, and output flags.
-// Accepted forms: --skip=N  --limit=N  --output=DIR
-// Falls back to defaults: skip=0, limit=10, output_dir=null.
-//
-pub fn resolveListParameters(arguments: []const []const u8) !ListParameters {
-    var skip: u32 = 0;
-    var limit: u32 = 10;
-    var output_directory: ?[]const u8 = null;
-
-    for (arguments) |argument_value| {
-        if (std.mem.startsWith(u8, argument_value, "--skip=")) {
-            const raw = argument_value["--skip=".len..];
-
-            skip = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidSkip;
-            };
-        } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
-            const raw = argument_value["--limit=".len..];
-
-            limit = std.fmt.parseInt(u32, raw, 10) catch {
-                return error.InvalidLimit;
-            };
-        } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
-            output_directory = argument_value["--output=".len..];
-
-            if (output_directory) |directory_value|
-                if (directory_value.len == 0)
-                    return error.InvalidOutputDirectory;
-        }
-    }
-
-    var file_name_buffer: [256]u8 = undefined;
-    const file_name = std.fmt.bufPrint(
-        &file_name_buffer,
-        "actions-{d}-{d}.json",
-        .{ skip, limit },
-    ) catch "actions.json";
-
-    return ListParameters{
-        .skip = skip,
-        .limit = limit,
-        .output_directory = output_directory,
-        .file_name = file_name,
-    };
-}
-
-// resolvePushParams parses required and optional push flags.
+// resolvePushActionParameters parses required and optional push flags.
 // Required: --reference=  --name=  --description=  --type=
 // Optional: --address=  --selector=  --value=  --script=  --delay=
 //
-pub fn resolvePushParameters(
-    allocator: std.mem.Allocator,
+pub fn resolvePushActionParameters(
+    setting: Setting,
     arguments: []const []const u8,
-) !PushParameters {
+) !PushActionParameters {
     var action_file: ?[]const u8 = null;
 
     var reference: ?[]const u8 = null;
@@ -193,7 +104,7 @@ pub fn resolvePushParameters(
         if (std.mem.startsWith(u8, argument_value, "--action=")) {
             action_file = argument_value["--action=".len..];
 
-            return try resolvePushParametersFromFile(allocator, action_file.?);
+            return try resolvePushActionParametersFromFile(setting.allocator, action_file.?);
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
 
@@ -223,7 +134,7 @@ pub fn resolvePushParameters(
         }
     }
 
-    return PushParameters{
+    return PushActionParameters{
         .reference = reference.?,
         .name = name.?,
         .description = description.?,
@@ -239,10 +150,10 @@ pub fn resolvePushParameters(
     };
 }
 
-fn resolvePushParametersFromFile(
+fn resolvePushActionParametersFromFile(
     allocator: std.mem.Allocator,
     path: []const u8,
-) !PushParameters {
+) !PushActionParameters {
     var file = std.fs.openFileAbsolute(path, .{}) catch std.fs.cwd().openFile(path, .{}) catch {
         return error.InvalidActionFile;
     };
@@ -321,7 +232,7 @@ fn resolvePushParametersFromFile(
                 }
             }
 
-            return PushParameters{
+            return PushActionParameters{
                 .reference = reference.?,
                 .name = name.?,
                 .description = description.?,
@@ -339,4 +250,122 @@ fn resolvePushParametersFromFile(
 
         else => return error.InvalidActionFile,
     }
+}
+
+// resolveGetActionParameters parses required reference and optional output flags.
+// Required: reference
+// Optional: --output=DIR
+//
+pub fn resolveGetActionParameters(arguments: []const []const u8) !GetActionParameters {
+    var reference: ?[]const u8 = null;
+    var output_directory: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--output=")) {
+            output_directory = argument_value["--output=".len..];
+
+            if (output_directory) |value|
+                if (value.len == 0)
+                    return error.InvalidOutputDirectory;
+        } else if (reference == null and
+            !std.mem.startsWith(u8, argument_value, "--"))
+        {
+            reference = argument_value;
+        }
+    }
+
+    if (reference == null or reference.?.len == 0)
+        return error.MissingReference;
+
+    var file_name_buffer: [256]u8 = undefined;
+    const file_name = std.fmt.bufPrint(&file_name_buffer, "action-{s}.json", .{reference.?}) catch "action.json";
+
+    return GetActionParameters{
+        .reference = reference.?,
+
+        .output_directory = output_directory,
+        .file_name = file_name,
+    };
+}
+
+// resolveGetActionsParameters parses optional skip, limit, and output flags.
+// Accepted forms: --skip=N  --limit=N  --output=DIR
+// Falls back to defaults: skip=0, limit=10, output_dir=null.
+//
+pub fn resolveGetActionsParameters(arguments: []const []const u8) !GetActionsParameters {
+    var skip: u32 = 0;
+    var limit: u32 = 10;
+    var output_directory: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--skip=")) {
+            const raw = argument_value["--skip=".len..];
+
+            skip = std.fmt.parseInt(u32, raw, 10) catch {
+                return error.InvalidSkip;
+            };
+        } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
+            const raw = argument_value["--limit=".len..];
+
+            limit = std.fmt.parseInt(u32, raw, 10) catch {
+                return error.InvalidLimit;
+            };
+        } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
+            output_directory = argument_value["--output=".len..];
+
+            if (output_directory) |directory_value|
+                if (directory_value.len == 0)
+                    return error.InvalidOutputDirectory;
+        }
+    }
+
+    var file_name_buffer: [256]u8 = undefined;
+    const file_name = std.fmt.bufPrint(
+        &file_name_buffer,
+        "actions-{d}-{d}.json",
+        .{ skip, limit },
+    ) catch "actions.json";
+
+    return GetActionsParameters{
+        .skip = skip,
+        .limit = limit,
+
+        .output_directory = output_directory,
+        .file_name = file_name,
+    };
+}
+
+// resolvePopActionParameters validates that a reference argument is non-empty.
+// Returns error.MissingReference when absent.
+//
+pub fn resolvePopActionParameters(arguments: []const []const u8) !PopActionParameters {
+    var reference: ?[]const u8 = null;
+    var output_directory: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--output=")) {
+            output_directory = argument_value["--output=".len..];
+
+            if (output_directory) |value|
+                if (value.len == 0)
+                    return error.InvalidOutputDirectory;
+        } else if (reference == null and
+            !std.mem.startsWith(u8, argument_value, "--"))
+        {
+            reference = argument_value;
+        }
+    }
+
+    if (reference == null or reference.?.len == 0)
+        return error.MissingReference;
+
+    var file_name_buffer: [256]u8 = undefined;
+    const file_name = std.fmt.bufPrint(&file_name_buffer, "action-{s}.json", .{reference.?}) catch "action.json";
+
+    return PopActionParameters{
+        .reference = reference.?,
+
+        .output_directory = output_directory,
+        .file_name = file_name,
+    };
 }
