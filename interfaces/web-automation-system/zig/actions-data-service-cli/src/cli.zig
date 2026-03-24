@@ -34,7 +34,7 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
     // Check for command-specific help
     if (handler.checkForHelpFlag(rest)) {
-        return handler.printCommandHelp(command);
+        return printCommandHelp(command);
     }
 
     const allocated_setting = setting.load(allocator);
@@ -183,4 +183,116 @@ fn printVersion() void {
         \\actions-data-service-cli version 1.0.0
         \\
     , .{});
+}
+
+// printCommandHelp prints help for specific commands
+//
+fn printCommandHelp(command: handler.Command) void {
+    switch (command) {
+        .health => {
+            std.debug.print(
+                \\health - Check service health status
+                \\
+                \\Usage:
+                \\  actions-data-service-cli health
+                \\
+                \\Description:
+                \\  Checks if the actions data service is running and responsive.
+                \\
+            , .{});
+        },
+        .stop => {
+            std.debug.print(
+                \\stop - Stop the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli stop
+                \\
+                \\Description:
+                \\  Sends a stop signal to the actions data service.
+                \\
+            , .{});
+        },
+        .list => {
+            std.debug.print(
+                \\list - List actions with optional filtering
+                \\
+                \\Usage:
+                \\  actions-data-service-cli list [options]
+                \\
+                \\Options:
+                \\  --skip=N       Skip N actions (default: 0)
+                \\  --limit=N      Limit to N actions (default: 10)
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli list
+                \\  actions-data-service-cli list --limit=20
+                \\  actions-data-service-cli list --skip=10 --limit=5 --output=./actions
+                \\
+            , .{});
+        },
+        .get => {
+            std.debug.print(
+                \\get - Get a specific action by reference
+                \\
+                \\Usage:
+                \\  actions-data-service-cli get <reference> [options]
+                \\
+                \\Arguments:
+                \\  <reference>    Action reference identifier
+                \\
+                \\Options:
+                \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  actions-data-service-cli get my-action-ref
+                \\  actions-data-service-cli get my-action-ref --output=./actions
+                \\
+            , .{});
+        },
+        .push => {
+            std.debug.print(
+                \\push - Push a new action to the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli push --action=FILE
+                \\  actions-data-service-cli push --reference= --name= --description= --type= [options]
+                \\
+                \\Options (file mode):
+                \\  --action=FILE  Load action from JSON file
+                \\
+                \\Options (inline mode):
+                \\  --reference=   Action reference (required)
+                \\  --name=        Action name (required)
+                \\  --description= Action description (required)
+                \\  --type=        Action type (required)
+                \\  --address=     Target address (optional)
+                \\  --selector=    Element selector (optional)
+                \\  --value=       Input value (optional)
+                \\  --script=      Script to execute (optional)
+                \\  --delay=N      Delay in milliseconds (optional)
+                \\
+                \\Examples:
+                \\  actions-data-service-cli push --action=action.json
+                \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --type=click --selector="#submit"
+                \\
+            , .{});
+        },
+        .pop => {
+            std.debug.print(
+                \\pop - Remove an action by reference
+                \\
+                \\Usage:
+                \\  actions-data-service-cli pop <reference>
+                \\
+                \\Arguments:
+                \\  <reference>    Action reference identifier to remove
+                \\
+                \\Examples:
+                \\  actions-data-service-cli pop my-action-ref
+                \\
+            , .{});
+        },
+    }
 }
