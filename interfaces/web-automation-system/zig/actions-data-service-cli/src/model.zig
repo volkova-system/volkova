@@ -60,7 +60,7 @@ pub const GetActionParameters = struct {
     reference: []const u8,
 
     output_directory: ?[]const u8,
-    file_name: []const u8,
+    file_name: ?[]const u8,
 };
 
 // GetActionsParameters holds validated parameters for the list command.
@@ -79,7 +79,7 @@ pub const PopActionParameters = struct {
     reference: []const u8,
 
     output_directory: ?[]const u8,
-    file_name: []const u8,
+    file_name: ?[]const u8,
 };
 
 pub const CheckHealthResult = struct {
