@@ -1,21 +1,14 @@
 const std = @import("std");
 const handler = @import("handler.zig");
 const setting = @import("setting.zig");
-
-// Response wraps the raw HTTP response body.
-// Caller owns the body slice.
-//
-pub const Response = struct {
-    status: u16,
-    body: []u8,
-};
+const request = @import("request.zig");
 
 // fetchHealth calls GET /service/data/actions/health.
 //
 pub fn fetchHealth(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -38,7 +31,7 @@ pub fn fetchHealth(
 pub fn sendStop(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -62,7 +55,7 @@ pub fn fetchActions(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
     parameters: handler.ListParameters,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -86,7 +79,7 @@ pub fn fetchAction(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
     reference: []const u8,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -110,7 +103,7 @@ pub fn pushAction(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
     parameters: handler.PushParameters,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -138,7 +131,7 @@ pub fn popAction(
     allocator: std.mem.Allocator,
     setting_data: setting.Setting,
     reference: []const u8,
-) !Response {
+) !request.Response {
     const base_url = try setting_data.resolveBaseUrl();
 
     defer allocator.free(base_url);
@@ -207,8 +200,8 @@ fn buildPushBody(
 fn sendGet(
     allocator: std.mem.Allocator,
     url: []const u8,
-) !Response {
-    return httpRequest(allocator, "GET", url, null);
+) !request.Response {
+    return request.httpRequest(allocator, "GET", url, null);
 }
 
 // sendPost performs an HTTP POST request with a JSON body.
@@ -217,8 +210,8 @@ fn sendPost(
     allocator: std.mem.Allocator,
     url: []const u8,
     body: []const u8,
-) !Response {
-    return httpRequest(allocator, "POST", url, body);
+) !request.Response {
+    return request.httpRequest(allocator, "POST", url, body);
 }
 
 // sendDelete performs an HTTP DELETE request.
@@ -226,73 +219,6 @@ fn sendPost(
 fn sendDelete(
     allocator: std.mem.Allocator,
     url: []const u8,
-) !Response {
-    return httpRequest(allocator, "DELETE", url, null);
-}
-
-// httpRequest is the single HTTP transport procedure.
-// Caller owns Response.body.
-//
-fn httpRequest(
-    allocator: std.mem.Allocator,
-    method: []const u8,
-    url: []const u8,
-    body: ?[]const u8,
-) !Response {
-    var client = std.http.Client{ .allocator = allocator };
-
-    defer client.deinit();
-
-    const uri = try std.Uri.parse(url);
-
-    const http_method = if (std.mem.eql(u8, method, "GET"))
-        std.http.Method.GET
-    else if (std.mem.eql(u8, method, "POST"))
-        std.http.Method.POST
-    else if (std.mem.eql(u8, method, "PUT"))
-        std.http.Method.PUT
-    else if (std.mem.eql(u8, method, "DELETE"))
-        std.http.Method.DELETE
-    else if (std.mem.eql(u8, method, "PATCH"))
-        std.http.Method.PATCH
-    else
-        return error.UnsupportedHttpMethod;
-
-    var redirect_buffer: [1024]u8 = undefined;
-
-    // Prepare headers for JSON requests
-    var headers = std.http.Headers{ .allocator = allocator };
-
-    defer headers.deinit();
-
-    try headers.append("Accept", "application/json");
-    if (body != null) {
-        try headers.append("Content-Type", "application/json");
-    }
-
-    const result = try client.fetch(.{
-        .location = .{ .uri = uri },
-        .method = http_method,
-        .headers = headers,
-        .redirect_buffer = &redirect_buffer,
-        .payload = if (body) |body_value| body_value else null,
-    });
-
-    const status: u16 = @intFromEnum(result.status);
-
-    // Read the response body
-    const response_body = if (result.body) |body_value|
-        try allocator.dupe(u8, body_value)
-    else
-        try allocator.dupe(u8, "");
-
-    if (status >= 200 and status < 300 and response_body.len > 0) {
-        var parsed = std.json.parseFromSlice(std.json.Value, allocator, response_body, .{}) catch {
-            return error.InvalidJsonResponse;
-        };
-
-        parsed.deinit();
-    }
-
-    return Response{ .status = status, .body = response_body };
+) !request.Response {
+    return request.httpRequest(allocator, "DELETE", url, null);
 }
