@@ -15,6 +15,7 @@ import (
 	"github.com/tidwall/buntdb"
 
 	"actions-data-service/data"
+	"actions-data-service/version"
 )
 
 func main() {
@@ -25,7 +26,7 @@ func main() {
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName:      "actions-data-service",
+		AppName:      version.Name,
 
         ReadTimeout:  time.Second * 5,
 		WriteTimeout: time.Second * 5,
@@ -68,7 +69,7 @@ func main() {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
                     "health": fiber.Map{
                         "status": "unhealthy",
-                        "service": "actions-data-service",
+                        "service": version.Name,
                         "issue": "database connectivity failed",
                     },
                 })
@@ -77,7 +78,7 @@ func main() {
 		return c.JSON(fiber.Map{
                 "health": fiber.Map{
                     "status": "healthy",
-                    "service": "actions-data-service",
+                    "service": version.Name,
                 },
             })
 	})
@@ -87,7 +88,7 @@ func main() {
             "operation": fiber.Map{
                 "status": "initiated",
                 "procedure": "shutdown",
-                "service": "actions-data-service",
+                "service": version.Name,
             },
         }); err != nil {
 			return err
