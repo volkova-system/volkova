@@ -36,40 +36,40 @@ pub fn run(setting: Setting) !void {
         .health => {
             const result = try engine.checkHealth(setting);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.raw_health});
+            try std.fs.File.stdout().writeAll(result.raw_health);
         },
         .stop => {
             const result = try engine.stopService(setting);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.raw_operation});
+            try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
-            const parameters = try handler.resolvePushParameters(setting, command_parameters);
+            const parameters = try handler.resolvePushActionParameters(setting, command_parameters);
 
             const result = try engine.pushAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.reference});
+            try std.fs.File.stdout().writeAll(result.reference);
         },
         .get => {
-            const parameters = try handler.resolveGetParameters(command_parameters);
+            const parameters = try handler.resolveGetActionParameters(command_parameters);
 
             const result = try engine.getAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.raw_action});
+            try std.fs.File.stdout().writeAll(result.raw_action);
         },
         .list => {
             const parameters = try handler.resolveGetActionsParameters(command_parameters);
 
             const result = try engine.getActions(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.raw_actions});
+            try std.fs.File.stdout().writeAll(result.raw_actions);
         },
         .pop => {
             const parameters = try handler.resolvePopActionParameters(command_parameters);
 
             const result = try engine.popAction(setting, parameters);
 
-            try std.io.getStdOut().writer().print("{s}", .{result.raw_action});
+            try std.fs.File.stdout().writeAll(result.raw_action);
         },
     }
 }
