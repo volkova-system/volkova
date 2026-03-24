@@ -1,42 +1,53 @@
 const std = @import("std");
+const model = @import("model");
 
-// Command enumerates all supported CLI commands.
+const Command = model.Command;
+const GetParameters = model.GetParameters;
+const ListParameters = model.ListParameters;
+const PushParameters = model.PushParameters;
+const PopParameters = model.PopParameters;
+
+// checkVersionFlag checks if version is requested for a service
 //
-pub const Command = enum {
-    health,
-    stop,
+pub fn checkVersionFlag(arguments: []const []const u8) bool {
+    for (arguments) |argument_value| {
+        if (std.mem.eql(u8, argument_value, "--version") or
+            std.mem.eql(u8, argument_value, "-v"))
+        {
+            return true;
+        }
+    }
 
-    list,
-    get,
-    push,
-    pop,
-};
+    return false;
+}
 
-// ListParameters holds validated parameters for the list command.
+// checkHelpFlag checks if help is requested for a service
 //
-pub const ListParameters = struct {
-    skip: u32,
-    limit: u32,
-    output_directory: ?[]const u8,
-    file_name: ?[]const u8,
-};
+pub fn checkHelpFlag(arguments: []const []const u8) bool {
+    for (arguments) |argument_value| {
+        if (std.mem.eql(u8, argument_value, "--help") or
+            std.mem.eql(u8, argument_value, "-h"))
+        {
+            return true;
+        }
+    }
 
-// PushParameters holds validated parameters for the push command.
+    return false;
+}
+
+// checkCommandHelpFlag checks if help is requested for a command
 //
-pub const PushParameters = struct {
-    reference: []const u8,
-    name: []const u8,
-    description: []const u8,
+pub fn checkCommandHelpFlag(arguments: []const []const u8) bool {
+    for (arguments) |argument_value| {
+        if (std.mem.eql(u8, argument_value, "--help") or
+            std.mem.eql(u8, argument_value, "-h"))
+        {
+            return true;
+        }
+    }
 
-    action_type: []const u8,
-
-    address: ?[]const u8,
-    selector: ?[]const u8,
-    value: ?[]const u8,
-    script: ?[]const u8,
-
-    delay: ?u32,
-};
+    return false;
+}
 
 // resolveCommand maps a raw string argument to a Command.
 // Returns error.UnknownCommand when the string is not recognized.
@@ -73,14 +84,6 @@ pub fn resolveReference(arguments: []const []const u8) ![]const u8 {
 
     return arguments[0];
 }
-
-// GetParams holds validated parameters for the get command.
-//
-pub const GetParameters = struct {
-    reference: []const u8,
-    output_directory: ?[]const u8,
-    file_name: []const u8,
-};
 
 // resolveGetParameters parses required reference and optional output flags.
 // Required: reference
