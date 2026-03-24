@@ -8,6 +8,15 @@ import (
 )
 
 func RegisterActionRoutes(actionsGroup fiber.Router, cache *data.Cache) {
+    actionsGroup.Get("/version",
+        handlers.VersionHandler())
+
+	actionsGroup.Get("/health",
+        handlers.HealthHandler())
+
+	actionsGroup.Get("/stop",
+        handlers.StopHandler())
+
 	actionsGroup.Get("/",
         handlers.GetActionsHandler(cache))
 
