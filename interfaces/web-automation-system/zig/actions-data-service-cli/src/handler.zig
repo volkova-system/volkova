@@ -63,18 +63,7 @@ pub fn resolveCommand(raw: []const u8) !Command {
     return error.UnknownCommand;
 }
 
-// checkForHelpFlag checks if help is requested for a command
-//
-pub fn checkForHelpFlag(arguments: []const []const u8) bool {
-    for (arguments) |argument_value| {
-        if (std.mem.eql(u8, argument_value, "--help") or
-            std.mem.eql(u8, argument_value, "-h"))
-        {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 // resolveReference validates that a reference argument is non-empty.
 // Returns error.MissingReference when absent.
