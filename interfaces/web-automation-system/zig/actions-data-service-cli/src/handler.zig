@@ -588,10 +588,16 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
                 }
 
                 if (object_value.get("delay")) |key_value| {
-                    if (key_value == .number) {
-                        delay = @intFromFloat(key_value.number);
-                    } else if (key_value == .string) {
-                        delay = std.fmt.parseInt(u32, key_value.string, 10) catch null;
+                    switch (key_value) {
+                        .string => |string_value| {
+                            delay = try std.fmt.parseInt(u32, string_value, 10);
+                        },
+                        .integer => |integer_value| {
+                            delay = @intCast(integer_value);
+                        },
+                        else => {
+                            return error.InvalidActionDelay;
+                        },
                     }
                 }
 
@@ -701,10 +707,16 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
                     }
 
                     if (object_value.get("delay")) |key_value| {
-                        if (key_value == .number) {
-                            delay = @intFromFloat(key_value.number);
-                        } else if (key_value == .string) {
-                            delay = std.fmt.parseInt(u32, key_value.string, 10) catch null;
+                        switch (key_value) {
+                            .string => |string_value| {
+                                delay = try std.fmt.parseInt(u32, string_value, 10);
+                            },
+                            .integer => |integer_value| {
+                                delay = @intCast(integer_value);
+                            },
+                            else => {
+                                return error.InvalidActionDelay;
+                            },
                         }
                     }
 
@@ -803,10 +815,16 @@ pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !P
                 }
 
                 if (object_value.get("delay")) |key_value| {
-                    if (key_value == .number) {
-                        delay = @intFromFloat(key_value.number);
-                    } else if (key_value == .string) {
-                        delay = std.fmt.parseInt(u32, key_value.string, 10) catch null;
+                    switch (key_value) {
+                        .string => |string_value| {
+                            delay = try std.fmt.parseInt(u32, string_value, 10);
+                        },
+                        .integer => |integer_value| {
+                            delay = @intCast(integer_value);
+                        },
+                        else => {
+                            return error.InvalidActionDelay;
+                        },
                     }
                 }
 
