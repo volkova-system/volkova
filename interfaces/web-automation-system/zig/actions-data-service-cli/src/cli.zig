@@ -2,6 +2,7 @@ const std = @import("std");
 const handler = @import("handler.zig");
 const engine = @import("engine.zig");
 const setting = @import("setting.zig");
+const help = @import("help.zig");
 
 // run is the single entry point for the CLI interface.
 // It reads args, dispatches to the correct engine procedure,
