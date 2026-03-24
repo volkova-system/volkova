@@ -9,25 +9,25 @@ feather-icons --save
 htmx.org --save
 hyperscript.org --save
 
-storybook --save-dev --prefix ./prototype/concise-design-system/storybook
-@storybook/html-vite --save-dev --prefix ./prototype/concise-design-system/storybook
-typescript --save-dev --prefix ./prototype/concise-design-system/storybook
-vite --save-dev --prefix ./prototype/concise-design-system/storybook
-@storybook/addon-vitest --save-dev --prefix ./prototype/concise-design-system/storybook
-@storybook/addon-a11y --save-dev --prefix ./prototype/concise-design-system/storybook
-@chromatic-com/storybook --save-dev --prefix ./prototype/concise-design-system/storybook
+storybook --save-dev --prefix ./interfaces/prototype-system/storybook
+@storybook/html-vite --save-dev --prefix ./interfaces/prototype-system/storybook
+typescript --save-dev --prefix ./interfaces/prototype-system/storybook
+vite --save-dev --prefix ./interfaces/prototype-system/storybook
+@storybook/addon-vitest --save-dev --prefix ./interfaces/prototype-system/storybook
+@storybook/addon-a11y --save-dev --prefix ./interfaces/prototype-system/storybook
+@chromatic-com/storybook --save-dev --prefix ./interfaces/prototype-system/storybook
 
-storybook --save-dev --prefix ./prototype/web-automation-system/storybook
-@storybook/html-vite --save-dev --prefix ./prototype/web-automation-system/storybook
-typescript --save-dev --prefix ./prototype/web-automation-system/storybook
-vite --save-dev --prefix ./prototype/web-automation-system/storybook
-@storybook/addon-vitest --save-dev --prefix ./prototype/web-automation-system/storybook
-@storybook/addon-a11y --save-dev --prefix ./prototype/web-automation-system/storybook
-@chromatic-com/storybook --save-dev --prefix ./prototype/web-automation-system/storybook
+storybook --save-dev --prefix ./interfaces/web-automation-system/storybook
+@storybook/html-vite --save-dev --prefix ./interfaces/web-automation-system/storybook
+typescript --save-dev --prefix ./interfaces/web-automation-system/storybook
+vite --save-dev --prefix ./interfaces/web-automation-system/storybook
+@storybook/addon-vitest --save-dev --prefix ./interfaces/web-automation-system/storybook
+@storybook/addon-a11y --save-dev --prefix ./interfaces/web-automation-system/storybook
+@chromatic-com/storybook --save-dev --prefix ./interfaces/web-automation-system/storybook
 
-fastify --save --prefix ./services/core/web-automation-service/fastify-node
-playwright --save --prefix ./services/core/web-automation-service/fastify-node
-zod --save --prefix ./services/core/web-automation-service/fastify-node
-typescript --save-dev --prefix ./services/core/web-automation-service/fastify-node
-@types/node --save-dev --prefix ./services/core/web-automation-service/fastify-node
-tsx --save-dev --prefix ./services/core/web-automation-service/fastify-node
+fastify --save --prefix ./services/prototype-system/web-automation-service/fastify-node
+playwright --save --prefix ./services/prototype-system/web-automation-service/fastify-node
+zod --save --prefix ./services/prototype-system/web-automation-service/fastify-node
+typescript --save-dev --prefix ./services/prototype-system/web-automation-service/fastify-node
+@types/node --save-dev --prefix ./services/prototype-system/web-automation-service/fastify-node
+tsx --save-dev --prefix ./services/prototype-system/web-automation-service/fastify-node
