@@ -32,13 +32,16 @@ pub fn run(setting: Setting) !void {
         return help.printCommandHelp(command);
     }
 
-    var result: engine.Response = undefined;
     switch (command) {
         .health => {
-            result = try engine.checkHealth(setting);
+            const health = try engine.checkHealth(setting);
+
+            try std.io.getStdOut().writer().print("{s}", .{health});
         },
         .stop => {
-            result = try engine.stopService(setting);
+            const operation = try engine.stopService(setting);
+
+            try std.io.getStdOut().writer().print("{s}", .{operation});
         },
         .push => {
             const parameters = try handler.resolvePushParameters(setting, command_parameters);
@@ -48,25 +51,9 @@ pub fn run(setting: Setting) !void {
         .get => {
             const parameters = try handler.resolveGetParameters(command_parameters);
 
-            const response = try engine.getAction(setting, parameters);
+            const action = try engine.getAction(setting, parameters);
 
-            const action = response.body;
-
-            if (parameters.output_directory) |directory_value| {
-                var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
-                    return error.InvalidOutputDirectory;
-                };
-
-                defer directory.close();
-
-                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
-
-                defer file.close();
-
-                try file.writeAll(action);
-            }
-
-            result = response;
+            try std.io.getStdOut().writer().print("{s}", .{action});
         },
         .list => {
             const parameters = try handler.resolveGetActionsParameters(command_parameters);
@@ -95,8 +82,4 @@ pub fn run(setting: Setting) !void {
             result = try engine.popAction(setting, parameters);
         },
     }
-
-    defer setting.allocator.free(result.body);
-
-    std.debug.print("{s}\n", .{result.body});
 }
