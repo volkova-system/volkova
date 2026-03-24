@@ -54,19 +54,12 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
             if (parameters.output_directory) |directory_value| {
                 var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
-                    return error.InvalidOutputDir;
+                    return error.InvalidOutputDirectory;
                 };
 
                 defer directory.close();
 
-                var file_name_buffer: [256]u8 = undefined;
-                const file_name = std.fmt.bufPrint(
-                    &file_name_buffer,
-                    "actions-{d}-{d}.json",
-                    .{ parameters.skip, parameters.limit },
-                ) catch "actions.json";
-
-                var file = try directory.createFile(file_name, .{ .truncate = true });
+                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
 
                 defer file.close();
 
@@ -84,15 +77,12 @@ pub fn run(allocator: std.mem.Allocator) !void {
 
             if (parameters.output_directory) |directory_value| {
                 var directory = std.fs.openDirAbsolute(directory_value, .{}) catch std.fs.cwd().openDir(directory_value, .{}) catch {
-                    return error.InvalidOutputDir;
+                    return error.InvalidOutputDirectory;
                 };
 
                 defer directory.close();
 
-                var file_name_buffer: [256]u8 = undefined;
-                const file_name = std.fmt.bufPrint(&file_name_buffer, "action-{s}.json", .{parameters.reference}) catch "action.json";
-
-                var file = try directory.createFile(file_name, .{ .truncate = true });
+                var file = try directory.createFile(parameters.file_name, .{ .truncate = true });
 
                 defer file.close();
 
