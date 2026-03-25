@@ -8,7 +8,7 @@ import (
 	"github.com/tidwall/buntdb"
 )
 
-func HealthHandler(cache *data.Cache) fiber.Handler {
+func HealthDataHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		err := cache.DB().View(func(tx *buntdb.Tx) error {
 			return nil
@@ -26,6 +26,19 @@ func HealthHandler(cache *data.Cache) fiber.Handler {
 			})
 		}
 
+		return c.JSON(fiber.Map{
+			"health": fiber.Map{
+				"status":  "healthy",
+			},
+
+            "service": settings.Name,
+            "version": settings.Version,
+		})
+	}
+}
+
+func HealthControlHandler() fiber.Handler {
+    return func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"health": fiber.Map{
 				"status":  "healthy",
