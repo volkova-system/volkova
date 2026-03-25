@@ -12,7 +12,6 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
-	"github.com/tidwall/buntdb"
 
 	"actions-data-service/data"
 	"actions-data-service/version"
@@ -60,30 +59,7 @@ func main() {
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
 
-    actionsGroup.Get("/health", func(c fiber.Ctx) error {
-		err := cache.DB().View(func(tx *buntdb.Tx) error {
-			return nil
-		})
-
-		if err != nil {
-			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
-                    "health": fiber.Map{
-                        "status": "unhealthy",
-                        "service": version.Name,
-                        "issue": "database connectivity failed",
-                    },
-                })
-		}
-
-		return c.JSON(fiber.Map{
-                "health": fiber.Map{
-                    "status": "healthy",
-                    "service": version.Name,
-                },
-            })
-	})
-
-    actionsGroup.Post("/stop", func(c fiber.Ctx) error {
+	actionsGroup.Post("/stop", func(c fiber.Ctx) error {
 		if err := c.JSON(fiber.Map{
             "operation": fiber.Map{
                 "status": "initiated",
