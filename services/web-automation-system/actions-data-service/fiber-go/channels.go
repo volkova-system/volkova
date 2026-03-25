@@ -13,6 +13,10 @@ var (
 	abortOnce sync.Once
 	aborted int32
 
+	kill_channel = make(chan struct{})
+	killOnce sync.Once
+	killed int32
+
 	start_channel = make(chan struct{})
 	startOnce sync.Once
 )
@@ -40,6 +44,21 @@ func SignalAbort() {
 
 func IsAbort() bool {
 	return atomic.LoadInt32(&aborted) == 1
+}
+
+func GetKillChannel() chan struct{} {
+	return kill_channel
+}
+
+func SignalKill() {
+	killOnce.Do(func() {
+		atomic.StoreInt32(&killed, 1)
+		close(kill_channel)
+	})
+}
+
+func IsKilled() bool {
+	return atomic.LoadInt32(&killed) == 1
 }
 
 func GetStartChannel() chan struct{} {
