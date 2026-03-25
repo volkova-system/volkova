@@ -110,7 +110,10 @@ func control() {
 		}
 	}()
 
-	<-GetStartChannel()
+	select {
+	case <-GetStartChannel():
+	case <-GetKillChannel():
+	}
 	if err := server.Shutdown(); err != nil {
 		log.Printf("actions data control service shutdown error: %v", err)
 	}
