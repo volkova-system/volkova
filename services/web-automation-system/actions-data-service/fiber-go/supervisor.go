@@ -9,7 +9,10 @@ import (
 	"time"
 )
 
-const abortExitCode = 200
+const (
+	abortExitCode = 200
+	killExitCode = 201
+)
 
 func runParent() {
 	port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
@@ -82,6 +85,14 @@ func runParent() {
 
 					_ = f2.Close()
 					_ = ctrl.Wait()
+					code2 := 0
+					if ctrl.ProcessState != nil {
+						code2 = ctrl.ProcessState.ExitCode()
+					}
+					if code2 == killExitCode {
+						log.Printf("control child requested termination; exiting parent")
+						return
+					}
 
 					log.Printf("control child exited; restarting data child")
 
@@ -133,6 +144,14 @@ func runParent() {
 					}
 
 					_ = ctrl.Wait()
+					code2 := 0
+					if ctrl.ProcessState != nil {
+						code2 = ctrl.ProcessState.ExitCode()
+					}
+					if code2 == killExitCode {
+						log.Printf("control child requested termination; exiting parent")
+						return
+					}
 
 					log.Printf("control child exited; restarting data child")
 
@@ -161,6 +180,10 @@ func runChild() {
 	}
 
 	serve()
+
+	if IsKilled() {
+		os.Exit(killExitCode)
+	}
 
 	if IsAbort() {
 		os.Exit(abortExitCode)
