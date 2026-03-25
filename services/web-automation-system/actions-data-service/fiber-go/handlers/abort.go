@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func AbortHandler(onAbortAndShutdown func()) fiber.Handler {
+func AbortHandler(onAbort func()) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		if err := c.JSON(fiber.Map{
 			"operation": fiber.Map{
@@ -19,7 +19,7 @@ func AbortHandler(onAbortAndShutdown func()) fiber.Handler {
 			return err
 		}
 
-		go onAbortAndShutdown()
+		go onAbort()
 
 		return nil
 	}
