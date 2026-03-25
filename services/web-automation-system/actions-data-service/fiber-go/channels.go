@@ -7,7 +7,10 @@ import (
 
 var (
 	shutdown_channel = make(chan struct{})
-	once sync.Once
+	shutdownOnce sync.Once
+
+	abort_channel = make(chan struct{})
+	abortOnce sync.Once
 	aborted int32
 )
 
@@ -16,20 +19,22 @@ func GetShutdownChannel() chan struct{} {
 }
 
 func SignalShutdown() {
-	once.Do(func() {
+	shutdownOnce.Do(func() {
 		close(shutdown_channel)
 	})
 }
 
+func GetAbortChannel() chan struct{} {
+	return abort_channel
+}
+
 func SignalAbort() {
-	atomic.StoreInt32(&aborted, 1)
+	abortOnce.Do(func() {
+		atomic.StoreInt32(&aborted, 1)
+		close(abort_channel)
+	})
 }
 
 func IsAbort() bool {
 	return atomic.LoadInt32(&aborted) == 1
-}
-
-func AbortAndShutdown() {
-	SignalAbort()
-	SignalShutdown()
 }
