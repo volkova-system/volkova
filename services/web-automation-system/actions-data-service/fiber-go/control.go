@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	"actions-data-service/handlers"
 	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
@@ -57,7 +56,7 @@ func control() {
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
 
-	actionsGroup.Post("/start", handlers.StartHandler(SignalStart))
+    RegisterActionsControlRoutes(actionsGroup)
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
