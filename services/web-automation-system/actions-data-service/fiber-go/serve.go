@@ -2,7 +2,7 @@ package main
 
 import (
 	"actions-data-service/data"
-	"actions-data-service/version"
+	"actions-data-service/settings"
 	"context"
 	"log"
 	"net"
@@ -26,7 +26,7 @@ func serve(){
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName: version.Name,
+		AppName: settings.Name,
 
         ReadTimeout: time.Second * 5,
 		WriteTimeout: time.Second * 5,
@@ -47,8 +47,8 @@ func serve(){
                 "method": c.Method(),
                 "path":  c.Path(),
 
-                "service": version.Name,
-                "version": version.Version,
+                "service": settings.Name,
+                "version": settings.Version,
 			})
 		},
 	})
@@ -72,8 +72,8 @@ func serve(){
             "method": c.Method(),
             "path":  c.Path(),
 
-            "service": version.Name,
-            "version": version.Version,
+            "service": settings.Name,
+            "version": settings.Version,
 		})
 	})
 
