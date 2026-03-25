@@ -26,12 +26,12 @@ func serve(){
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName:      version.Name,
+		AppName: version.Name,
 
-        ReadTimeout:  time.Second * 5,
+        ReadTimeout: time.Second * 5,
 		WriteTimeout: time.Second * 5,
-		IdleTimeout:  time.Second * 5,
-		BodyLimit:    1 * 1024 * 1024,
+		IdleTimeout: time.Second * 5,
+		BodyLimit: 1 * 1024 * 1024,
 
         ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
@@ -39,10 +39,16 @@ func serve(){
 				code = e.Code
 			}
 
-			log.Printf("Fiber error [%d]: %v", code, err)
+			log.Printf("actions data service error [%d]: %v", code, err)
 
 			return c.Status(code).JSON(fiber.Map{
-				"error": err.Error(),
+				"issue": err.Error(),
+
+                "method": c.Method(),
+                "path":  c.Path(),
+
+                "service": version.Name,
+                "version": version.Version,
 			})
 		},
 	})
@@ -61,8 +67,13 @@ func serve(){
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": "Not Found",
-			"path":  c.Path(),
+			"issue": "request not found",
+
+            "method": c.Method(),
+            "path":  c.Path(),
+
+            "service": version.Name,
+            "version": version.Version,
 		})
 	})
 
@@ -83,14 +94,15 @@ func serve(){
             if file != nil {
                 if ln, err := net.FileListener(file); err == nil {
                     if err := server.Listener(ln); err != nil {
-                        log.Printf("server fd listener error: %v", err)
+                        log.Printf("actions data service descriptor listener error: %v", err)
                     }
 
                     return
 
                 } else {
                     _ = file.Close()
-                    log.Printf("fd listener error: %v", err)
+
+                    log.Printf("actions data service descriptor listener error: %v", err)
                 }
             }
         }
@@ -99,8 +111,9 @@ func serve(){
         if  port == "" {
             port = "4071"
         }
+
         if err := server.Listen(":" + port); err != nil {
-            log.Printf("server listen error: %v", err)
+            log.Printf("actions data service listen error: %v", err)
         }
 	}()
 
@@ -110,14 +123,14 @@ func serve(){
 
 	select {
 	case <-ctx.Done():
-		log.Println("received signal, shutting down data service...")
+		log.Println("received terminate signal, shutting down actions data service...")
 	case <-GetShutdownChannel():
-		log.Println("received shutdown request, shutting down data service...")
+		log.Println("received shutdown request, shutting down actions data service...")
 	case <-GetAbortChannel():
-		log.Println("received abort request, shutting down data service...")
+		log.Println("received abort request, shutting down actions data service...")
 	}
 
 	if err := server.Shutdown(); err != nil {
-		log.Printf("server shutdown error: %v", err)
+		log.Printf("actions data service shutdown error: %v", err)
 	}
 }
