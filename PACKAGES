@@ -17,14 +17,6 @@ vite --save-dev --prefix ./interfaces/prototype-system/storybook
 @storybook/addon-a11y --save-dev --prefix ./interfaces/prototype-system/storybook
 @chromatic-com/storybook --save-dev --prefix ./interfaces/prototype-system/storybook
 
-storybook --save-dev --prefix ./interfaces/web-automation-system/storybook
-@storybook/html-vite --save-dev --prefix ./interfaces/web-automation-system/storybook
-typescript --save-dev --prefix ./interfaces/web-automation-system/storybook
-vite --save-dev --prefix ./interfaces/web-automation-system/storybook
-@storybook/addon-vitest --save-dev --prefix ./interfaces/web-automation-system/storybook
-@storybook/addon-a11y --save-dev --prefix ./interfaces/web-automation-system/storybook
-@chromatic-com/storybook --save-dev --prefix ./interfaces/web-automation-system/storybook
-
 fastify --save --prefix ./services/prototype-system/web-automation-service/fastify-node
 playwright --save --prefix ./services/prototype-system/web-automation-service/fastify-node
 zod --save --prefix ./services/prototype-system/web-automation-service/fastify-node
