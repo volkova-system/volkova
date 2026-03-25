@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"actions-data-service/handlers"
-	"actions-data-service/version"
+	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
@@ -18,7 +18,7 @@ import (
 
 func control() {
 	server := fiber.New(fiber.Config{
-        AppName: version.Name,
+        AppName: settings.Name,
 
 		ReadTimeout: time.Second * 5,
 		WriteTimeout: time.Second * 5,
@@ -39,8 +39,8 @@ func control() {
                 "method": c.Method(),
                 "path":  c.Path(),
 
-                "service": version.Name,
-                "version": version.Version,
+                "service": settings.Name,
+                "version": settings.Version,
 			})
 		},
 	})
@@ -64,8 +64,8 @@ func control() {
             "method": c.Method(),
             "path":  c.Path(),
 
-            "service": version.Name,
-            "version": version.Version,
+            "service": settings.Name,
+            "version": settings.Version,
 		})
 	})
 
