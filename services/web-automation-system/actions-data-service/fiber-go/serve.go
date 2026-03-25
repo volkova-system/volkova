@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -65,21 +66,30 @@ func serve(){
 		})
 	})
 
-	ctx, stop := signal.NotifyContext(context.Background(),
-        os.Interrupt, syscall.SIGTERM)
-	defer stop()
-
 	go func() {
-        useFD := os.Getenv("ACTIONS_DATA_SERVICE_USE_FD") == "1"
+        useFD := os.Getenv("ACTIONS_DATA_SERVICE_USE_FD") == "1" ||
+            os.Getenv("USE_INHERITED_FD") == "1" ||
+            os.Getenv("SOCKET_FD") != ""
+
+        fd := uintptr(3)
+        if v := os.Getenv("SOCKET_FD"); v != "" {
+            if n, err := strconv.Atoi(v); err == nil && n >= 0 {
+                fd = uintptr(n)
+            }
+        }
+
         if useFD {
-            file := os.NewFile(uintptr(3), "listener")
+            file := os.NewFile(fd, "listener")
             if file != nil {
                 if ln, err := net.FileListener(file); err == nil {
                     if err := server.Listener(ln); err != nil {
                         log.Printf("server fd listener error: %v", err)
                     }
+
                     return
+
                 } else {
+                    _ = file.Close()
                     log.Printf("fd listener error: %v", err)
                 }
             }
@@ -94,12 +104,18 @@ func serve(){
         }
 	}()
 
+    ctx, stop := signal.NotifyContext(context.Background(),
+        os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
 	// Wait for either signal or manual shutdown
 	select {
 	case <-ctx.Done():
 		log.Println("received signal, shutting down data service...")
 	case <-GetShutdownChannel():
 		log.Println("received shutdown request, shutting down data service...")
+	case <-GetAbortChannel():
+		log.Println("received abort request, shutting down data service...")
 	}
 
 	if err := server.Shutdown(); err != nil {
