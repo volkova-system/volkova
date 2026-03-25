@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"actions-data-service/version"
+	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -11,9 +11,11 @@ func StopHandler(onStop func()) fiber.Handler {
 		if err := c.JSON(fiber.Map{
 			"operation": fiber.Map{
 				"status": "initiated",
+
 				"procedure": "shutdown",
-				"service": version.Name,
-                "version": version.Version,
+
+				"service": settings.Name,
+                "version": settings.Version,
 			},
 		}); err != nil {
 			return err
