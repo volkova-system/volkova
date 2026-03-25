@@ -42,4 +42,7 @@ func RegisterActionsControlRoutes(actionsGroup fiber.Router) {
 
 	actionsGroup.Post("/start",
         handlers.StartDataHandler(SignalStart))
+
+    actionsGroup.Post("/kill",
+        handlers.KillHandler(SignalKill))
 }
