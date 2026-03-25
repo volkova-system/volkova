@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const abortExitCode = 200
+
 func runParent() {
 	port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
 	if port == "" {
@@ -30,9 +32,7 @@ func runParent() {
 			f, err := tcpLn.File()
 			if err != nil {
 				log.Printf("listener file error: %v", err)
-
 				time.Sleep(3 * time.Second)
-
 				continue
 			}
 
@@ -43,13 +43,22 @@ func runParent() {
 			cmd.ExtraFiles = []*os.File{f}
 			if err := cmd.Start(); err != nil {
 				log.Printf("child start error: %v", err)
-
+				_ = f.Close()
 				time.Sleep(3 * time.Second)
-
 				continue
 			}
+			_ = f.Close()
 
 			err = cmd.Wait()
+			code := 0
+			if cmd.ProcessState != nil {
+				code = cmd.ProcessState.ExitCode()
+			}
+			if code == abortExitCode {
+				log.Printf("child aborted, not restarting")
+				_ = ln.Close()
+				select {}
+			}
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
 			} else {
@@ -66,13 +75,19 @@ func runParent() {
 			cmd.Env = os.Environ()
 			if err := cmd.Start(); err != nil {
 				log.Printf("child start error: %v", err)
-
 				time.Sleep(3 * time.Second)
-
 				continue
 			}
 
 			err := cmd.Wait()
+			code := 0
+			if cmd.ProcessState != nil {
+				code = cmd.ProcessState.ExitCode()
+			}
+			if code == abortExitCode {
+				log.Printf("child aborted, not restarting")
+				select {}
+			}
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
 			} else {
@@ -86,4 +101,7 @@ func runParent() {
 
 func runChild() {
 	serve()
+	if IsAbort() {
+		os.Exit(abortExitCode)
+	}
 }
