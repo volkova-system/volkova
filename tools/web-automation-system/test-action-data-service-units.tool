@@ -1,0 +1,1 @@
+hurl --test --report-tap ".\tests\web-automation-system\services\actions-data-service\hurl\reports\actions-data-service-units.tap" --glob ".\tests\web-automation-system\services\actions-data-service\hurl\units\*.hurl"
