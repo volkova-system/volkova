@@ -11,12 +11,11 @@ func StartHandler(onStart func()) fiber.Handler {
 		if err := c.JSON(fiber.Map{
 			"operation": fiber.Map{
 				"status":   "initiated",
-
 				"procedure": "start",
-
-				"service":  settings.Name,
-                "version":  settings.Version,
 			},
+
+            "service":  settings.Name,
+            "version":  settings.Version,
 		}); err != nil {
 			return err
 		}
