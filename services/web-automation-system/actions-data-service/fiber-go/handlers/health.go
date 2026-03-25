@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"actions-data-service/data"
-	"actions-data-service/version"
+	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/tidwall/buntdb"
@@ -18,9 +18,11 @@ func HealthHandler(cache *data.Cache) fiber.Handler {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
 				"health": fiber.Map{
 					"status":  "unhealthy",
+
 					"issue":   "database connectivity failed",
-					"service": version.Name,
-                    "version": version.Version,
+
+					"service": settings.Name,
+                    "version": settings.Version,
 				},
 			})
 		}
@@ -28,8 +30,9 @@ func HealthHandler(cache *data.Cache) fiber.Handler {
 		return c.JSON(fiber.Map{
 			"health": fiber.Map{
 				"status":  "healthy",
-				"service": version.Name,
-                "version": version.Version,
+
+				"service": settings.Name,
+                "version": settings.Version,
 			},
 		})
 	}
