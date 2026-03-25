@@ -10,12 +10,12 @@ func AbortHandler(onAbort func()) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		if err := c.JSON(fiber.Map{
 			"operation": fiber.Map{
-				"status":   "initiated",
+				"status":    "initiated",
 				"procedure": "abort",
 			},
 
-            "service":  settings.Name,
-			"version":  settings.Version,
+			"service": settings.DataServiceName,
+			"version": settings.Version,
 		}); err != nil {
 			return err
 		}
