@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"actions-data-service/version"
+	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -14,8 +14,8 @@ func StartHandler(onStart func()) fiber.Handler {
 
 				"procedure": "start",
 
-				"service":  version.Name,
-                "version":  version.Version,
+				"service":  settings.Name,
+                "version":  settings.Version,
 			},
 		}); err != nil {
 			return err
