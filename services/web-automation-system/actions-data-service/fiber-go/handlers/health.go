@@ -17,35 +17,35 @@ func HealthDataHandler(cache *data.Cache) fiber.Handler {
 		if err != nil {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
 				"health": fiber.Map{
-					"status":  "unhealthy",
-					"issue":   "database connectivity failed",
+					"status": "unhealthy",
+					"issue":  "database connectivity failed",
 				},
 
-                "service": settings.Name,
-                "version": settings.Version,
+				"service": settings.DataServiceName,
+				"version": settings.Version,
 			})
 		}
 
 		return c.JSON(fiber.Map{
 			"health": fiber.Map{
-				"status":  "healthy",
+				"status": "healthy",
 			},
 
-            "service": settings.Name,
-            "version": settings.Version,
+			"service": settings.DataServiceName,
+			"version": settings.Version,
 		})
 	}
 }
 
 func HealthControlHandler() fiber.Handler {
-    return func(c fiber.Ctx) error {
+	return func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"health": fiber.Map{
-				"status":  "healthy",
+				"status": "healthy",
 			},
 
-            "service": settings.Name,
-            "version": settings.Version,
+			"service": settings.DataControlServiceName,
+			"version": settings.Version,
 		})
 	}
 }
