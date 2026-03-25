@@ -1,0 +1,18 @@
+TAP version 13
+1..16
+not ok 1 - tests\web-automation-system\services\actions-data-service\hurl\units\test-404.hurl
+not ok 2 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-action.hurl
+not ok 3 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-actions.hurl
+not ok 4 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-health.hurl
+not ok 5 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-version.hurl
+not ok 6 - tests\web-automation-system\services\actions-data-service\hurl\units\test-pop-action.hurl
+not ok 7 - tests\web-automation-system\services\actions-data-service\hurl\units\test-push-action.hurl
+not ok 8 - tests\web-automation-system\services\actions-data-service\hurl\units\test-stop.hurl
+ok 9 - tests\web-automation-system\services\actions-data-service\hurl\units\test-404.hurl
+not ok 10 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-action.hurl
+not ok 11 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-actions.hurl
+not ok 12 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-health.hurl
+not ok 13 - tests\web-automation-system\services\actions-data-service\hurl\units\test-get-version.hurl
+not ok 14 - tests\web-automation-system\services\actions-data-service\hurl\units\test-pop-action.hurl
+ok 15 - tests\web-automation-system\services\actions-data-service\hurl\units\test-push-action.hurl
+not ok 16 - tests\web-automation-system\services\actions-data-service\hurl\units\test-stop.hurl
