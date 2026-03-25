@@ -18,22 +18,22 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
-func serve(){
-    cache, err := data.Open()
+func serve() {
+	cache, err := data.Open()
 	if err != nil {
 		log.Fatal("cannot open cache:", err)
 	}
 	defer cache.Close()
 
 	server := fiber.New(fiber.Config{
-		AppName: settings.Name,
+		AppName: settings.DataServiceName,
 
-        ReadTimeout: time.Second * 5,
+		ReadTimeout:  time.Second * 5,
 		WriteTimeout: time.Second * 5,
-		IdleTimeout: time.Second * 5,
-		BodyLimit: 1 * 1024 * 1024,
+		IdleTimeout:  time.Second * 5,
+		BodyLimit:    1 * 1024 * 1024,
 
-        ErrorHandler: func(c fiber.Ctx, err error) error {
+		ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
 			if e, ok := err.(*fiber.Error); ok {
 				code = e.Code
@@ -43,14 +43,14 @@ func serve(){
 
 			return c.Status(code).JSON(fiber.Map{
 				"issue": fiber.Map{
-                    "description": err.Error(),
+					"description": err.Error(),
 
-                    "method": c.Method(),
-                    "path":  c.Path(),
-                },
+					"method": c.Method(),
+					"path":   c.Path(),
+				},
 
-                "service": settings.Name,
-                "version": settings.Version,
+				"service": settings.DataServiceName,
+				"version": settings.Version,
 			})
 		},
 	})
@@ -69,60 +69,60 @@ func serve(){
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-                "issue": fiber.Map{
-                    "description": "request not found",
+			"issue": fiber.Map{
+				"description": "request not found",
 
-                    "method": c.Method(),
-                    "path":  c.Path(),
-                },
+				"method": c.Method(),
+				"path":   c.Path(),
+			},
 
-                "service": settings.Name,
-                "version": settings.Version,
-            })
+			"service": settings.DataServiceName,
+			"version": settings.Version,
+		})
 	})
 
 	go func() {
-        useFD := os.Getenv("ACTIONS_DATA_SERVICE_USE_FD") == "1" ||
-            os.Getenv("USE_INHERITED_FD") == "1" ||
-            os.Getenv("SOCKET_FD") != ""
+		useFD := os.Getenv("ACTIONS_DATA_SERVICE_USE_FD") == "1" ||
+			os.Getenv("USE_INHERITED_FD") == "1" ||
+			os.Getenv("SOCKET_FD") != ""
 
-        fd := uintptr(3)
-        if v := os.Getenv("SOCKET_FD"); v != "" {
-            if n, err := strconv.Atoi(v); err == nil && n >= 0 {
-                fd = uintptr(n)
-            }
-        }
+		fd := uintptr(3)
+		if v := os.Getenv("SOCKET_FD"); v != "" {
+			if n, err := strconv.Atoi(v); err == nil && n >= 0 {
+				fd = uintptr(n)
+			}
+		}
 
-        if useFD {
-            file := os.NewFile(fd, "listener")
-            if file != nil {
-                if ln, err := net.FileListener(file); err == nil {
-                    if err := server.Listener(ln); err != nil {
-                        log.Printf("actions data service descriptor listener error: %v", err)
-                    }
+		if useFD {
+			file := os.NewFile(fd, "listener")
+			if file != nil {
+				if ln, err := net.FileListener(file); err == nil {
+					if err := server.Listener(ln); err != nil {
+						log.Printf("actions data service descriptor listener error: %v", err)
+					}
 
-                    return
+					return
 
-                } else {
-                    _ = file.Close()
+				} else {
+					_ = file.Close()
 
-                    log.Printf("actions data service descriptor listener error: %v", err)
-                }
-            }
-        }
+					log.Printf("actions data service descriptor listener error: %v", err)
+				}
+			}
+		}
 
-        port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
-        if  port == "" {
-            port = "4071"
-        }
+		port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
+		if port == "" {
+			port = settings.DefaultPort
+		}
 
-        if err := server.Listen(":" + port); err != nil {
-            log.Printf("actions data service listen error: %v", err)
-        }
+		if err := server.Listen(":" + port); err != nil {
+			log.Printf("actions data service listen error: %v", err)
+		}
 	}()
 
-    ctx, stop := signal.NotifyContext(context.Background(),
-        os.Interrupt, syscall.SIGTERM)
+	ctx, stop := signal.NotifyContext(context.Background(),
+		os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
 	select {
