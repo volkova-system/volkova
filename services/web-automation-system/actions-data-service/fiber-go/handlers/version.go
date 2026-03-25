@@ -1,17 +1,17 @@
 package handlers
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"actions-data-service/settings"
 
-	"actions-data-service/version"
+	"github.com/gofiber/fiber/v3"
 )
 
 func VersionHandler() fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"version": fiber.Map{
-                "number": version.Version,
-                "service": version.Name,
+                "number": settings.Version,
+                "service": settings.Name,
             },
 		})
 	}
