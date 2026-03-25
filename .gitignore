@@ -242,14 +242,18 @@ containers/*/data/**/*.*
 !tests/*-system/services/*-service/*/
 !tests/*-system/services/*-service/*/units/
 !tests/*-system/services/*-service/*/scenarios/
+!tests/*-system/services/*-service/*/reports/
 !tests/*-system/services/*-service/**/*.hurl
+!tests/*-system/services/*-service/**/*.tap
 
 !tests/*-system/interfaces/
 !tests/*-system/interfaces/*-cli/
 !tests/*-system/interfaces/*-cli/*/
 !tests/*-system/interfaces/*-cli/*/units/
 !tests/*-system/interfaces/*-cli/*/scenarios/
+!tests/*-system/interfaces/*-cli/*/reports/
 !tests/*-system/interfaces/*-cli/**/*.tcl
+!tests/*-system/interfaces/*-cli/**/*.tap
 # END TESTS
 
 !todos/
