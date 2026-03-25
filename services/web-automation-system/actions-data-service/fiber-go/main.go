@@ -52,30 +52,9 @@ func main() {
 	server.Use(logger.New())
 	server.Use(cors.New())
 
-	// Channel for manual shutdown trigger
-	shutdownCh := make(chan struct{})
-
 	serviceGroup := server.Group("/service")
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
-
-	actionsGroup.Post("/stop", func(c fiber.Ctx) error {
-		if err := c.JSON(fiber.Map{
-            "operation": fiber.Map{
-                "status": "initiated",
-                "procedure": "shutdown",
-                "service": version.Name,
-            },
-        }); err != nil {
-			return err
-		}
-
-		go func() {
-			shutdownCh <- struct{}{}
-		}()
-
-		return nil
-	})
 
 	RegisterActionRoutes(actionsGroup, cache)
 
@@ -106,7 +85,7 @@ func main() {
 	select {
 	case <-ctx.Done():
 		log.Println("received signal, shutting down data service...")
-	case <-shutdownCh:
+	case <-GetShutdownChannel():
 		log.Println("received shutdown request, shutting down data service...")
 	}
 
