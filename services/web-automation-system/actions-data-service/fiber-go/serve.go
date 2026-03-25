@@ -108,7 +108,6 @@ func serve(){
         os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	// Wait for either signal or manual shutdown
 	select {
 	case <-ctx.Done():
 		log.Println("received signal, shutting down data service...")
