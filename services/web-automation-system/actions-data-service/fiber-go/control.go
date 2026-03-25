@@ -17,12 +17,11 @@ import (
 
 func control() {
 	server := fiber.New(fiber.Config{
-        AppName: settings.Name,
+		AppName: settings.DataControlServiceName,
 
-		ReadTimeout: time.Second * 5,
+		ReadTimeout:  time.Second * 5,
 		WriteTimeout: time.Second * 5,
-		IdleTimeout: time.Second * 5,
-		BodyLimit: 256 * 1024,
+		IdleTimeout:  time.Second * 5,
 
 		ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
@@ -34,14 +33,14 @@ func control() {
 
 			return c.Status(code).JSON(fiber.Map{
 				"issue": fiber.Map{
-                    "description": err.Error(),
+					"description": err.Error(),
 
-                    "method": c.Method(),
-                    "path":  c.Path(),
-                },
+					"method": c.Method(),
+					"path":   c.Path(),
+				},
 
-                "service": settings.Name,
-                "version": settings.Version,
+				"service": settings.DataControlServiceName,
+				"version": settings.Version,
 			})
 		},
 	})
@@ -56,20 +55,20 @@ func control() {
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
 
-    RegisterActionsControlRoutes(actionsGroup)
+	RegisterActionsControlRoutes(actionsGroup)
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"issue": fiber.Map{
-                "description": "request not found",
+				"description": "request not found",
 
-                "method": c.Method(),
-                "path":  c.Path(),
-            },
+				"method": c.Method(),
+				"path":   c.Path(),
+			},
 
-            "service": settings.Name,
-            "version": settings.Version,
-        })
+			"service": settings.DataControlServiceName,
+			"version": settings.Version,
+		})
 	})
 
 	go func() {
@@ -102,7 +101,7 @@ func control() {
 
 		port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
 		if port == "" {
-			port = "4071"
+			port = settings.DefaultPort
 		}
 
 		if err := server.Listen(":" + port); err != nil {
