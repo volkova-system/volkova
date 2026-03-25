@@ -34,10 +34,12 @@ func control() {
 			log.Printf("actions data control service error [%d]: %v", code, err)
 
 			return c.Status(code).JSON(fiber.Map{
-				"issue": err.Error(),
+				"issue": fiber.Map{
+                    "description": err.Error(),
 
-                "method": c.Method(),
-                "path":  c.Path(),
+                    "method": c.Method(),
+                    "path":  c.Path(),
+                },
 
                 "service": settings.Name,
                 "version": settings.Version,
@@ -59,14 +61,16 @@ func control() {
 
 	server.Use(func(c fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"issue": "request not found",
+			"issue": fiber.Map{
+                "description": "request not found",
 
-            "method": c.Method(),
-            "path":  c.Path(),
+                "method": c.Method(),
+                "path":  c.Path(),
+            },
 
             "service": settings.Name,
             "version": settings.Version,
-		})
+        })
 	})
 
 	go func() {
