@@ -39,12 +39,13 @@ func runParent() {
 			cmd := exec.Command(os.Args[0], "child")
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
-			cmd.Env = append(os.Environ(), "ACTIONS_DATA_SERVICE_USE_FD=1")
+			cmd.Env = append(os.Environ(), "ACTIONS_DATA_SERVICE_USE_FD=1", "USE_INHERITED_FD=1", "SOCKET_FD=3")
 			cmd.ExtraFiles = []*os.File{f}
 			if err := cmd.Start(); err != nil {
 				log.Printf("child start error: %v", err)
 				_ = f.Close()
 				time.Sleep(3 * time.Second)
+
 				continue
 			}
 			_ = f.Close()
@@ -76,6 +77,7 @@ func runParent() {
 			if err := cmd.Start(); err != nil {
 				log.Printf("child start error: %v", err)
 				time.Sleep(3 * time.Second)
+
 				continue
 			}
 
