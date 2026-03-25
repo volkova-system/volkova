@@ -11,12 +11,11 @@ func StopHandler(onStop func()) fiber.Handler {
 		if err := c.JSON(fiber.Map{
 			"operation": fiber.Map{
 				"status": "initiated",
-
 				"procedure": "shutdown",
-
-				"service": settings.Name,
-                "version": settings.Version,
 			},
+
+            "service": settings.Name,
+            "version": settings.Version,
 		}); err != nil {
 			return err
 		}
