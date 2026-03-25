@@ -7,12 +7,12 @@ import (
 	"actions-data-service/handlers"
 )
 
-func RegisterActionRoutes(actionsGroup fiber.Router, cache *data.Cache) {
+func RegisterActionsDataRoutes(actionsGroup fiber.Router, cache *data.Cache) {
     actionsGroup.Get("/version",
         handlers.VersionHandler())
 
 	actionsGroup.Get("/health",
-        handlers.HealthHandler(cache))
+        handlers.HealthDataHandler(cache))
 
 	actionsGroup.Post("/stop",
         handlers.StopHandler(SignalShutdown))
@@ -31,4 +31,8 @@ func RegisterActionRoutes(actionsGroup fiber.Router, cache *data.Cache) {
 
 	actionsGroup.Get("/:reference",
         handlers.GetActionHandler(cache))
+}
+
+func RegisterActionsControlRoutes(actionsGroup fiber.Router) {
+    
 }
