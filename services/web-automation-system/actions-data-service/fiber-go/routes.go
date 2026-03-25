@@ -17,8 +17,8 @@ func RegisterActionRoutes(actionsGroup fiber.Router, cache *data.Cache) {
 	actionsGroup.Post("/stop",
         handlers.StopHandler(SignalShutdown))
 
-    actionsGroup.Post("/abort",
-        handlers.AbortHandler(AbortAndShutdown))
+	actionsGroup.Post("/abort",
+        handlers.AbortHandler(SignalAbort))
 
 	actionsGroup.Get("/",
         handlers.GetActionsHandler(cache))
