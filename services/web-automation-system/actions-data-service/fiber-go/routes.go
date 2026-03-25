@@ -34,5 +34,12 @@ func RegisterActionsDataRoutes(actionsGroup fiber.Router, cache *data.Cache) {
 }
 
 func RegisterActionsControlRoutes(actionsGroup fiber.Router) {
-    
+    actionsGroup.Get("/version",
+        handlers.VersionHandler())
+
+	actionsGroup.Get("/health",
+        handlers.HealthControlHandler())
+
+	actionsGroup.Post("/start",
+        handlers.StartDataHandler(SignalStart))
 }
