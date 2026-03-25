@@ -18,22 +18,21 @@ func HealthHandler(cache *data.Cache) fiber.Handler {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
 				"health": fiber.Map{
 					"status":  "unhealthy",
-
 					"issue":   "database connectivity failed",
-
-					"service": settings.Name,
-                    "version": settings.Version,
 				},
+
+                "service": settings.Name,
+                "version": settings.Version,
 			})
 		}
 
 		return c.JSON(fiber.Map{
 			"health": fiber.Map{
 				"status":  "healthy",
-
-				"service": settings.Name,
-                "version": settings.Version,
 			},
+
+            "service": settings.Name,
+            "version": settings.Version,
 		})
 	}
 }
