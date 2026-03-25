@@ -33,6 +33,7 @@ func runParent() {
 			if err != nil {
 				log.Printf("listener file error: %v", err)
 				time.Sleep(3 * time.Second)
+
 				continue
 			}
 
@@ -58,7 +59,10 @@ func runParent() {
 			if code == abortExitCode {
 				log.Printf("child aborted, not restarting")
 				_ = ln.Close()
-				select {}
+
+				for {
+					time.Sleep(24 * time.Hour)
+				}
 			}
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
@@ -88,7 +92,10 @@ func runParent() {
 			}
 			if code == abortExitCode {
 				log.Printf("child aborted, not restarting")
-				select {}
+
+                for {
+					time.Sleep(24 * time.Hour)
+				}
 			}
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
@@ -103,6 +110,7 @@ func runParent() {
 
 func runChild() {
 	serve()
+
 	if IsAbort() {
 		os.Exit(abortExitCode)
 	}
