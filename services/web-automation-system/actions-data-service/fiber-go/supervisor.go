@@ -176,6 +176,9 @@ func runParent() {
 func runChild() {
 	if os.Getenv("ACTIONS_DATA_SERVICE_MODE") == "control" {
 		control()
+		if IsKilled() {
+			os.Exit(killExitCode)
+		}
 		return
 	}
 
