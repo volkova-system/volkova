@@ -1,6 +1,7 @@
 package main
 
 import (
+	"actions-data-service/settings"
 	"log"
 	"net"
 	"os"
@@ -11,13 +12,13 @@ import (
 
 const (
 	abortExitCode = 200
-	killExitCode = 201
+	killExitCode  = 201
 )
 
 func runParent() {
 	port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
 	if port == "" {
-		port = "4071"
+		port = settings.DefaultPort
 	}
 
 	if runtime.GOOS != "windows" {
@@ -144,11 +145,11 @@ func runParent() {
 					}
 
 					_ = ctrl.Wait()
-					code2 := 0
+					killCode := 0
 					if ctrl.ProcessState != nil {
-						code2 = ctrl.ProcessState.ExitCode()
+						killCode = ctrl.ProcessState.ExitCode()
 					}
-					if code2 == killExitCode {
+					if killCode == killExitCode {
 						log.Printf("control child requested termination; exiting parent")
 						return
 					}
@@ -171,7 +172,6 @@ func runParent() {
 		}
 	}
 }
-
 
 func runChild() {
 	if os.Getenv("ACTIONS_DATA_SERVICE_MODE") == "control" {
