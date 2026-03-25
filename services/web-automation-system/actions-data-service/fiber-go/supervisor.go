@@ -57,13 +57,40 @@ func runParent() {
 				code = cmd.ProcessState.ExitCode()
 			}
 			if code == abortExitCode {
-				log.Printf("child aborted, not restarting")
-				_ = ln.Close()
-
+				log.Printf("child aborted, starting control child")
 				for {
-					time.Sleep(24 * time.Hour)
+					f2, err := tcpLn.File()
+					if err != nil {
+						log.Printf("listener file error: %v", err)
+						time.Sleep(3 * time.Second)
+
+						continue
+					}
+
+					ctrl := exec.Command(os.Args[0], "child")
+					ctrl.Stdout = os.Stdout
+					ctrl.Stderr = os.Stderr
+					ctrl.Env = append(os.Environ(), "ACTIONS_DATA_SERVICE_USE_FD=1", "USE_INHERITED_FD=1", "SOCKET_FD=3", "ACTIONS_DATA_SERVICE_MODE=control")
+					ctrl.ExtraFiles = []*os.File{f2}
+					if err := ctrl.Start(); err != nil {
+						log.Printf("control child start error: %v", err)
+						_ = f2.Close()
+						time.Sleep(3 * time.Second)
+
+						continue
+					}
+
+					_ = f2.Close()
+					_ = ctrl.Wait()
+
+					log.Printf("control child exited; restarting data child")
+
+					break
 				}
+
+				continue
 			}
+
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
 			} else {
@@ -90,13 +117,31 @@ func runParent() {
 			if cmd.ProcessState != nil {
 				code = cmd.ProcessState.ExitCode()
 			}
-			if code == abortExitCode {
-				log.Printf("child aborted, not restarting")
 
-                for {
-					time.Sleep(24 * time.Hour)
+			if code == abortExitCode {
+				log.Printf("child aborted, starting control child")
+				for {
+					ctrl := exec.Command(os.Args[0], "child")
+					ctrl.Stdout = os.Stdout
+					ctrl.Stderr = os.Stderr
+					ctrl.Env = append(os.Environ(), "ACTIONS_DATA_SERVICE_MODE=control")
+					if err := ctrl.Start(); err != nil {
+						log.Printf("control child start error: %v", err)
+						time.Sleep(3 * time.Second)
+
+						continue
+					}
+
+					_ = ctrl.Wait()
+
+					log.Printf("control child exited; restarting data child")
+
+					break
 				}
+
+				continue
 			}
+
 			if err != nil {
 				log.Printf("child exited with error: %v", err)
 			} else {
@@ -108,7 +153,13 @@ func runParent() {
 	}
 }
 
+
 func runChild() {
+	if os.Getenv("ACTIONS_DATA_SERVICE_MODE") == "control" {
+		control()
+		return
+	}
+
 	serve()
 
 	if IsAbort() {
