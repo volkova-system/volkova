@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
 
+	"actions-data-service/handlers"
 	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
@@ -15,7 +16,7 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
-func control() {
+func RunControl() {
 	server := fiber.New(fiber.Config{
 		AppName: settings.DataServiceName,
 
@@ -31,17 +32,7 @@ func control() {
 
 			log.Printf("actions data control service error [%d]: %v", code, err)
 
-			return c.Status(code).JSON(fiber.Map{
-				"issue": fiber.Map{
-					"description": err.Error(),
-
-					"method": c.Method(),
-					"path":   c.Path(),
-				},
-
-				"service": settings.DataServiceName,
-				"version": settings.Version,
-			})
+			return handlers.IssueResponse(c, code, err.Error())
 		},
 	})
 
@@ -58,17 +49,7 @@ func control() {
 	RegisterActionsControlRoutes(actionsGroup)
 
 	server.Use(func(c fiber.Ctx) error {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"issue": fiber.Map{
-				"description": "request not found",
-
-				"method": c.Method(),
-				"path":   c.Path(),
-			},
-
-			"service": settings.DataServiceName,
-			"version": settings.Version,
-		})
+		return handlers.IssueResponse(c, fiber.StatusNotFound, "request not found")
 	})
 
 	go func() {
