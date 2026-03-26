@@ -15,7 +15,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on any validation or storage error.
-//
 func PushActionHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return pushActionToCache(c, cache)
@@ -23,31 +22,29 @@ func PushActionHandler(cache *data.Cache) fiber.Handler {
 }
 
 // pushActionToCache processes the action push request.
-//
 func pushActionToCache(c fiber.Ctx, cache *data.Cache) error {
 	action, err := parseActionFromRequest(c)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "invalid action data" })
+			fiber.Map{"error": "invalid action data"})
 	}
 
 	err = validateActionData(action)
 	if err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "action validation failed" })
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{"error": "action validation failed"})
 	}
 
 	err = storeActionInCache(cache, action)
 	if err != nil {
-        return c.Status(fiber.StatusInternalServerError).JSON(
-            fiber.Map{ "error": "action cache error" })
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			fiber.Map{"error": "action cache error"})
 	}
 
-	return c.JSON(fiber.Map{ "reference": action.Reference })
+	return c.JSON(fiber.Map{"reference": action.Reference})
 }
 
 // parseActionFromRequest extracts action data from request body.
-//
 func parseActionFromRequest(c fiber.Ctx) (*models.Action, error) {
 	var action models.Action
 
@@ -60,7 +57,6 @@ func parseActionFromRequest(c fiber.Ctx) (*models.Action, error) {
 }
 
 // validateActionData ensures required fields are present and within limits.
-//
 func validateActionData(action *models.Action) error {
 	if action.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "reference required")
@@ -70,11 +66,14 @@ func validateActionData(action *models.Action) error {
 		return fiber.NewError(fiber.StatusBadRequest, "name required")
 	}
 
+	if action.Flow == "" {
+		return fiber.NewError(fiber.StatusBadRequest, "flow required")
+	}
+
 	return nil
 }
 
 // storeActionInCache saves action to cache storage.
-//
 func storeActionInCache(cache *data.Cache, action *models.Action) error {
 	return engines.PushAction(cache, *action)
 }
