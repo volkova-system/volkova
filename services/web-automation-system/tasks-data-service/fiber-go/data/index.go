@@ -1,12 +1,9 @@
 package data
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/tidwall/buntdb"
-
-	"tasks-data-service/models"
 )
 
 func SetupIndexes(conn *buntdb.DB) error {
@@ -21,18 +18,7 @@ func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
 		"reference",
 		"task:*",
-		func(a, b string) bool {
-			var taskA, taskB models.Task
-
-			if err := json.Unmarshal([]byte(a), &taskA); err != nil {
-				return false
-			}
-			if err := json.Unmarshal([]byte(b), &taskB); err != nil {
-				return false
-			}
-
-			return taskA.Reference < taskB.Reference
-		},
+		buntdb.IndexJSON("reference"),
 	); err != nil {
 		return fmt.Errorf("failed to create reference index: %w", err)
 	}
