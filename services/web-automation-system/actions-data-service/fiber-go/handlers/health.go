@@ -44,7 +44,7 @@ func HealthControlHandler() fiber.Handler {
 				"status": "healthy",
 			},
 
-			"service": settings.DataControlServiceName,
+			"service": settings.DataServiceName,
 			"version": settings.Version,
 		})
 	}
