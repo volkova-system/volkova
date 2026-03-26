@@ -109,7 +109,7 @@ func runParent() {
 				log.Printf("child exited")
 			}
 
-			time.Sleep(300 * time.Millisecond)
+			time.Sleep(backoffNextECycle(300))
 		}
 	} else {
 		for {
@@ -168,7 +168,7 @@ func runParent() {
 				log.Printf("child exited")
 			}
 
-			time.Sleep(300 * time.Millisecond)
+			time.Sleep(backoffNextECycle(300))
 		}
 	}
 }
