@@ -114,7 +114,6 @@ func serve() {
 
 						SignalShutdown()
 					}
-
 				}
 			}
 
