@@ -25,20 +25,17 @@ func PushActionHandler(cache *data.Cache) fiber.Handler {
 func pushActionToCache(c fiber.Ctx, cache *data.Cache) error {
 	action, err := parseActionFromRequest(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{"error": "invalid action data"})
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid action data")
 	}
 
 	err = validateActionData(action)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{"error": "action validation failed"})
+		return IssueResponse(c, fiber.StatusBadRequest, "action validation failed")
 	}
 
 	err = storeActionInCache(cache, action)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{"error": "action cache error"})
+		return IssueResponse(c, fiber.StatusInternalServerError, "action cache error")
 	}
 
 	return c.JSON(fiber.Map{"reference": action.Reference})
