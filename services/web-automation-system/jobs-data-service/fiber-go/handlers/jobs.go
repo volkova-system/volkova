@@ -14,6 +14,7 @@ import (
 // Returns paginated list of jobs from cache storage.
 //
 // Query Parameters:
+//
 //   - skip:    Number of jobs to skip (default: 0)
 //
 //   - limit:   Maximum jobs to return (default: 10)
@@ -21,7 +22,6 @@ import (
 // Response: JSON array of jobs or error details
 //
 // Fails fast on any cache retrieval error.
-//
 func GetJobsHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getJobsFromCache(c, cache)
@@ -29,24 +29,20 @@ func GetJobsHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getJobsFromCache processes the jobs list request.
-//
 func getJobsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "invalid jobs request parameters" })
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid jobs request parameters")
 	}
 
 	jobs, err := retrieveJobsFromCache(cache, skip, limit)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "job cache error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "job cache error")
 	}
 
 	total, err := engines.GetJobsCount(cache)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "job cache count error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "job cache count error")
 	}
 
 	return sendJobsResponse(c, jobs, skip, limit, total)
@@ -54,7 +50,6 @@ func getJobsFromCache(c fiber.Ctx, cache *data.Cache) error {
 
 // parsePaginationParams extracts skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10. Enforces maximum limit of 100.
-//
 func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 	skip := 0
 	limit := 10
@@ -98,7 +93,6 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 }
 
 // retrieveJobsFromCache gets jobs from cache with pagination.
-//
 func retrieveJobsFromCache(cache *data.Cache, skip, limit int) (
 	interface{}, error) {
 	return engines.GetJobs(cache, skip, limit)
@@ -106,13 +100,12 @@ func retrieveJobsFromCache(cache *data.Cache, skip, limit int) (
 
 // sendJobsResponse returns jobs list as JSON response
 // with pagination metadata.
-//
 func sendJobsResponse(c fiber.Ctx, jobs interface{},
 	skip, limit, total int) error {
-	pages, page := computePageData(skip, limit, total)
+	pages, page := ComputePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
-		"jobs":  jobs,
+		"jobs": jobs,
 
 		"skip":  skip,
 		"limit": limit,
