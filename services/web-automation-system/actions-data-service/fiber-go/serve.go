@@ -2,6 +2,7 @@ package main
 
 import (
 	"actions-data-service/data"
+	"actions-data-service/handlers"
 	"actions-data-service/settings"
 	"context"
 	"log"
@@ -18,7 +19,7 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
-func serve() {
+func ServeData() {
 	cache, err := data.Open()
 	if err != nil {
 		log.Fatal("cannot open cache:", err)
@@ -41,17 +42,7 @@ func serve() {
 
 			log.Printf("actions data service error [%d]: %v", code, err)
 
-			return c.Status(code).JSON(fiber.Map{
-				"issue": fiber.Map{
-					"description": err.Error(),
-
-					"method": c.Method(),
-					"path":   c.Path(),
-				},
-
-				"service": settings.DataServiceName,
-				"version": settings.Version,
-			})
+			return handlers.IssueResponse(c, code, err.Error())
 		},
 	})
 
@@ -68,17 +59,7 @@ func serve() {
 	RegisterActionsDataRoutes(actionsGroup, cache)
 
 	server.Use(func(c fiber.Ctx) error {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"issue": fiber.Map{
-				"description": "request not found",
-
-				"method": c.Method(),
-				"path":   c.Path(),
-			},
-
-			"service": settings.DataServiceName,
-			"version": settings.Version,
-		})
+		return handlers.IssueResponse(c, fiber.StatusNotFound, "request not found")
 	})
 
 	go func() {
