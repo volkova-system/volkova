@@ -28,7 +28,7 @@ func GetTasks(cache *data.Cache, skip, limit int) ([]models.Task, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend(cache.Name(), func(key, value string) bool {
+		tx.Ascend("reference", func(key, value string) bool {
 			if count < skip {
 				count++
 
