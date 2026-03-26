@@ -17,7 +17,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on any validation or storage error.
-//
 func PushJobHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return pushJobToCache(c, cache)
@@ -25,31 +24,26 @@ func PushJobHandler(cache *data.Cache) fiber.Handler {
 }
 
 // pushJobToCache processes the job push request.
-//
 func pushJobToCache(c fiber.Ctx, cache *data.Cache) error {
 	job, err := parseJobFromRequest(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "invalid job data" })
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid job data")
 	}
 
 	err = validateJobData(job)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "job validation failed" })
+		return IssueResponse(c, fiber.StatusBadRequest, "job validation failed")
 	}
 
 	err = storeJobInCache(cache, job)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "job cache error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "job cache error")
 	}
 
-	return c.JSON(fiber.Map{ "reference": job.Reference })
+	return c.JSON(fiber.Map{"reference": job.Reference})
 }
 
 // parseJobFromRequest extracts job data from request body.
-//
 func parseJobFromRequest(c fiber.Ctx) (*models.Job, error) {
 	var job models.Job
 
@@ -62,7 +56,6 @@ func parseJobFromRequest(c fiber.Ctx) (*models.Job, error) {
 }
 
 // validateJobData ensures required fields are present and within limits.
-//
 func validateJobData(job *models.Job) error {
 	if job.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "reference required")
@@ -102,7 +95,6 @@ func validateJobData(job *models.Job) error {
 }
 
 // storeJobInCache saves job to cache storage.
-//
 func storeJobInCache(cache *data.Cache, job *models.Job) error {
 	return engines.PushJob(cache, *job)
 }
