@@ -17,7 +17,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on any validation or storage error.
-//
 func PushTaskHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return pushTaskToCache(c, cache)
@@ -25,31 +24,26 @@ func PushTaskHandler(cache *data.Cache) fiber.Handler {
 }
 
 // pushTaskToCache processes the task push request.
-//
 func pushTaskToCache(c fiber.Ctx, cache *data.Cache) error {
 	task, err := parseTaskFromRequest(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "invalid task data" })
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid task data")
 	}
 
 	err = validateTaskData(task)
 	if err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "task validation failed" })
+		return IssueResponse(c, fiber.StatusBadRequest, "task validation failed")
 	}
 
 	err = storeTaskInCache(cache, task)
 	if err != nil {
-        return c.Status(fiber.StatusInternalServerError).JSON(
-            fiber.Map{ "error": "task cache error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "task cache error")
 	}
 
-	return c.JSON(fiber.Map{ "reference": task.Reference })
+	return c.JSON(fiber.Map{"reference": task.Reference})
 }
 
 // parseTaskFromRequest extracts task data from request body.
-//
 func parseTaskFromRequest(c fiber.Ctx) (*models.Task, error) {
 	var task models.Task
 
@@ -62,7 +56,6 @@ func parseTaskFromRequest(c fiber.Ctx) (*models.Task, error) {
 }
 
 // validateTaskData ensures required fields are present and within limits.
-//
 func validateTaskData(task *models.Task) error {
 	if task.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "reference required")
@@ -72,7 +65,7 @@ func validateTaskData(task *models.Task) error {
 		return fiber.NewError(fiber.StatusBadRequest, "name required")
 	}
 
-    // Validate each Action has required reference and name
+	// Validate each Action has required reference and name
 	for a, action := range task.Actions {
 		if action.Reference == "" {
 			return fiber.NewError(fiber.StatusBadRequest,
@@ -83,13 +76,17 @@ func validateTaskData(task *models.Task) error {
 			return fiber.NewError(fiber.StatusBadRequest,
 				fmt.Sprintf("action[%d]: name required", a))
 		}
+
+		if action.Flow == "" {
+			return fiber.NewError(fiber.StatusBadRequest,
+				fmt.Sprintf("action[%d]: flow required", a))
+		}
 	}
 
 	return nil
 }
 
 // storeTaskInCache saves task to cache storage.
-//
 func storeTaskInCache(cache *data.Cache, task *models.Task) error {
 	return engines.PushTask(cache, *task)
 }
