@@ -1,9 +1,12 @@
 package main
 
 import (
+	"actions-data-service/settings"
 	"math"
 	"math/rand"
 	"time"
+
+	"github.com/gofiber/fiber/v3"
 )
 
 // backoffNextECycle computes a restart delay using only the starting milliseconds.
@@ -65,4 +68,20 @@ func backoffNextECycle(startingMilliseconds int) time.Duration {
 	// Round to the nearest millisecond and convert to time.Duration for sleeping.
 	roundedMilliseconds := math.Round(clampedDelayMilliseconds)
 	return time.Duration(roundedMilliseconds) * time.Millisecond
+}
+
+// issueResponse creates a consistent issue response format for the API.
+// It returns a standardized JSON issue structure with the given status code,
+// description, and includes the request method and path for debugging.
+func issueResponse(c fiber.Ctx, statusCode int, description string) error {
+	return c.Status(statusCode).JSON(fiber.Map{
+		"issue": fiber.Map{
+			"description": description,
+			"method":      c.Method(),
+			"path":        c.Path(),
+		},
+
+		"service": settings.DataServiceName,
+		"version": settings.Version,
+	})
 }
