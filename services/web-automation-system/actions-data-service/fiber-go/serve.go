@@ -96,19 +96,27 @@ func serve() {
 		if useFD {
 			file := os.NewFile(fd, "listener")
 			if file != nil {
-				if ln, err := net.FileListener(file); err == nil {
-					if err := server.Listener(ln); err != nil {
-						log.Printf("actions data service descriptor listener error: %v", err)
-					}
+				ln, err := net.FileListener(file)
 
-					return
-
-				} else {
+				if err != nil {
 					_ = file.Close()
 
 					log.Printf("actions data service descriptor listener error: %v", err)
+
+					SignalShutdown()
+				} else {
+					if err := server.Listener(ln); err != nil {
+						_ = ln.Close()
+
+						log.Printf("actions data service descriptor listener error: %v", err)
+
+						SignalShutdown()
+					}
+
 				}
 			}
+
+			return
 		}
 
 		port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
@@ -118,6 +126,8 @@ func serve() {
 
 		if err := server.Listen(":" + port); err != nil {
 			log.Printf("actions data service listen error: %v", err)
+
+			SignalShutdown()
 		}
 	}()
 
