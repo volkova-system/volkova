@@ -14,7 +14,7 @@ func StartDataHandler(onStart func()) fiber.Handler {
 				"procedure": "start",
 			},
 
-			"service": settings.DataControlServiceName,
+			"service": settings.DataServiceName,
 			"version": settings.Version,
 		}); err != nil {
 			return err
