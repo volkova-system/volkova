@@ -14,7 +14,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on missing reference or cache removal error.
-//
 func PopActionHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return popActionFromCache(c, cache)
@@ -22,19 +21,23 @@ func PopActionHandler(cache *data.Cache) fiber.Handler {
 }
 
 // popActionFromCache processes the action removal request.
-//
 func popActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-        return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "action reference cannot be empty" })
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{"error": "action reference cannot be empty"})
 	}
 
 	action, err := engines.PopAction(cache, "action:"+reference)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(
-            fiber.Map{ "error": "action cache error" })
+			fiber.Map{"error": "action cache error"})
 	}
 
-	return c.JSON(fiber.Map{ "action": action })
+	if action == nil {
+		return c.Status(fiber.StatusNotFound).JSON(
+			fiber.Map{"error": "action not found"})
+	}
+
+	return c.JSON(fiber.Map{"action": action})
 }
