@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"errors"
+
 	"github.com/gofiber/fiber/v3"
+	"github.com/tidwall/buntdb"
 
 	"tasks-data-service/data"
 	"tasks-data-service/engines"
@@ -14,7 +17,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on missing reference or cache removal error.
-//
 func PopTaskHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return popTaskFromCache(c, cache)
@@ -22,19 +24,20 @@ func PopTaskHandler(cache *data.Cache) fiber.Handler {
 }
 
 // popTaskFromCache processes the task removal request.
-//
 func popTaskFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-        return c.Status(fiber.StatusBadRequest).JSON(
-            fiber.Map{ "error": "task reference cannot be empty" })
+		return IssueResponse(c, fiber.StatusBadRequest, "task reference cannot be empty")
 	}
 
 	task, err := engines.PopTask(cache, "task:"+reference)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-            fiber.Map{ "error": "task cache error" })
+		if errors.Is(err, buntdb.ErrNotFound) {
+			return IssueResponse(c, fiber.StatusNotFound, "task not found")
+		}
+
+		return IssueResponse(c, fiber.StatusInternalServerError, "task cache error")
 	}
 
-	return c.JSON(fiber.Map{ "task": task })
+	return c.JSON(fiber.Map{"task": task})
 }
