@@ -14,7 +14,6 @@ import (
 // Response: JSON job data or error details
 //
 // Fails fast on missing reference or cache retrieval error.
-//
 func GetJobHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getJobFromCache(c, cache)
@@ -22,19 +21,16 @@ func GetJobHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getJobFromCache processes the single job retrieval request.
-//
 func getJobFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "job reference cannot be empty" })
+		return IssueResponse(c, fiber.StatusBadRequest, "job reference cannot be empty")
 	}
 
 	job, err := engines.GetJob(cache, "job:"+reference)
 	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(
-			fiber.Map{ "error": "job not found" })
+		return IssueResponse(c, fiber.StatusNotFound, "job not found")
 	}
 
-	return c.JSON(fiber.Map{ "job": job })
+	return c.JSON(fiber.Map{"job": job})
 }
