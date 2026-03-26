@@ -104,7 +104,6 @@ func control() {
 
 						SignalKill()
 					}
-
 				}
 			}
 
