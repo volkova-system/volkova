@@ -7,7 +7,7 @@
     "build": "storybook build --output-dir storybook-static"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "5.0.2",
+    "@chromatic-com/storybook": "5.1.0",
     "@storybook/addon-a11y": "10.3.3",
     "@storybook/addon-vitest": "10.3.3",
     "@storybook/html-vite": "10.3.3",
