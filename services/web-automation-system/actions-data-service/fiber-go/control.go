@@ -17,7 +17,7 @@ import (
 
 func control() {
 	server := fiber.New(fiber.Config{
-		AppName: settings.DataControlServiceName,
+		AppName: settings.DataServiceName,
 
 		ReadTimeout:  time.Second * 5,
 		WriteTimeout: time.Second * 5,
@@ -39,7 +39,7 @@ func control() {
 					"path":   c.Path(),
 				},
 
-				"service": settings.DataControlServiceName,
+				"service": settings.DataServiceName,
 				"version": settings.Version,
 			})
 		},
@@ -66,7 +66,7 @@ func control() {
 				"path":   c.Path(),
 			},
 
-			"service": settings.DataControlServiceName,
+			"service": settings.DataServiceName,
 			"version": settings.Version,
 		})
 	})
