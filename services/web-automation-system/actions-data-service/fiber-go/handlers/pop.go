@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"errors"
+
 	"github.com/gofiber/fiber/v3"
+	"github.com/tidwall/buntdb"
 
 	"actions-data-service/data"
 	"actions-data-service/engines"
@@ -30,13 +33,13 @@ func popActionFromCache(c fiber.Ctx, cache *data.Cache) error {
 
 	action, err := engines.PopAction(cache, "action:"+reference)
 	if err != nil {
+		if errors.Is(err, buntdb.ErrNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(
+				fiber.Map{"error": "action not found"})
+		}
+
 		return c.Status(fiber.StatusInternalServerError).JSON(
 			fiber.Map{"error": "action cache error"})
-	}
-
-	if action == nil {
-		return c.Status(fiber.StatusNotFound).JSON(
-			fiber.Map{"error": "action not found"})
 	}
 
 	return c.JSON(fiber.Map{"action": action})
