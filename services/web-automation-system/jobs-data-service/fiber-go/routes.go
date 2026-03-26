@@ -7,16 +7,42 @@ import (
 	"jobs-data-service/handlers"
 )
 
-func RegisterJobRoutes(jobsGroup fiber.Router, cache *data.Cache) {
-	jobsGroup.Get("/",
-        handlers.GetJobsHandler(cache))
+func RegisterJobsDataRoutes(jobsGroup fiber.Router, cache *data.Cache) {
+	jobsGroup.Get("/version",
+		handlers.VersionHandler())
 
-    jobsGroup.Post("/push",
-        handlers.PushJobHandler(cache))
+	jobsGroup.Get("/health",
+		handlers.HealthDataHandler(cache))
+
+	jobsGroup.Post("/stop",
+		handlers.StopHandler(SignalShutdown))
+
+	jobsGroup.Post("/abort",
+		handlers.AbortHandler(SignalAbort))
+
+	jobsGroup.Get("/",
+		handlers.GetJobsHandler(cache))
+
+	jobsGroup.Post("/push",
+		handlers.PushJobHandler(cache))
 
 	jobsGroup.Delete("/pop/:reference",
-        handlers.PopJobHandler(cache))
+		handlers.PopJobHandler(cache))
 
 	jobsGroup.Get("/:reference",
-        handlers.GetJobHandler(cache))
+		handlers.GetJobHandler(cache))
+}
+
+func RegisterJobsControlRoutes(jobsGroup fiber.Router) {
+	jobsGroup.Get("/version",
+		handlers.VersionHandler())
+
+	jobsGroup.Get("/health",
+		handlers.HealthControlHandler())
+
+	jobsGroup.Post("/start",
+		handlers.StartDataHandler(SignalStart))
+
+	jobsGroup.Post("/kill",
+		handlers.KillHandler(SignalKill))
 }
