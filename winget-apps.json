@@ -32,7 +32,7 @@
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.3.0",
+                    "Version": "12.3.2",
                     "Source": "winget"
                 },
                 {
