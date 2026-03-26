@@ -86,17 +86,27 @@ func control() {
 		if useFD {
 			file := os.NewFile(fd, "listener")
 			if file != nil {
-				if ln, err := net.FileListener(file); err == nil {
-					if err := server.Listener(ln); err != nil {
-						log.Printf("actions data control service descriptor listener error: %v", err)
-					}
-					return
-				} else {
+				ln, err := net.FileListener(file)
+
+				if err != nil {
 					_ = file.Close()
 
-					log.Printf("actions data service descriptor listener error: %v", err)
+					log.Printf("actions data control service descriptor listener error: %v", err)
+
+					SignalKill()
+				} else {
+					if err := server.Listener(ln); err != nil {
+						_ = ln.Close()
+
+						log.Printf("actions data control service descriptor listener error: %v", err)
+
+						SignalKill()
+					}
+
 				}
 			}
+
+			return
 		}
 
 		port := os.Getenv("ACTIONS_DATA_SERVICE_PORT")
@@ -106,6 +116,8 @@ func control() {
 
 		if err := server.Listen(":" + port); err != nil {
 			log.Printf("actions data control service listen error: %v", err)
+
+			SignalKill()
 		}
 	}()
 
@@ -113,6 +125,7 @@ func control() {
 	case <-GetStartChannel():
 	case <-GetKillChannel():
 	}
+
 	if err := server.Shutdown(); err != nil {
 		log.Printf("actions data control service shutdown error: %v", err)
 	}
