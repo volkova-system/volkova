@@ -95,6 +95,8 @@ func control() {
 
 					SignalKill()
 				} else {
+					_ = file.Close()
+
 					if err := server.Listener(ln); err != nil {
 						_ = ln.Close()
 
