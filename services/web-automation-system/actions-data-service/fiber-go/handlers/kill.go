@@ -14,7 +14,7 @@ func KillHandler(onKill func()) fiber.Handler {
 				"procedure": "kill",
 			},
 
-			"service": settings.DataControlServiceName,
+			"service": settings.DataServiceName,
 			"version": settings.Version,
 		}); err != nil {
 			return err
