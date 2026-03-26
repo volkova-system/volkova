@@ -28,7 +28,7 @@ func GetActions(cache *data.Cache, skip, limit int) ([]models.Action, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend(cache.Name(), func(key, value string) bool {
+		tx.Ascend("reference", func(key, value string) bool {
 			if count < skip {
 				count++
 
