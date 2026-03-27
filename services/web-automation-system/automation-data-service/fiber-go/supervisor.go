@@ -1,6 +1,7 @@
 package main
 
 import (
+	"automation-data-service/channels"
 	"automation-data-service/settings"
 	"log"
 	"math"
@@ -179,7 +180,7 @@ func RunChild() {
 	if os.Getenv("AUTOMATION_DATA_SERVICE_MODE") == "control" {
 		RunControl()
 
-		if IsKilled() {
+		if channels.IsKilled() {
 			os.Exit(killExitCode)
 		}
 
@@ -188,7 +189,7 @@ func RunChild() {
 
 	ServeData()
 
-	if IsAbort() {
+	if channels.IsAbort() {
 		os.Exit(abortExitCode)
 	}
 }
