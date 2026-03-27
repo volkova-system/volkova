@@ -19,6 +19,13 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
+
+	actionsData "actions-data-service/data"
+	actionsRoutes "actions-data-service/routes"
+	jobsData "jobs-data-service/data"
+	jobsRoutes "jobs-data-service/routes"
+	tasksData "tasks-data-service/data"
+	tasksRoutes "tasks-data-service/routes"
 )
 
 func ServeData() {
@@ -59,6 +66,27 @@ func ServeData() {
 	automationGroup := dataGroup.Group("/automation")
 
 	routes.RegisterAutomationDataRoutes(automationGroup, cache)
+
+	actionsGroup := dataGroup.Group("/actions")
+	actionsCache, err := actionsData.SetupCache(cache.Name(), cache.DB(), cache.Path())
+	if err != nil {
+		log.Fatal(err)
+	}
+	actionsRoutes.RegisterActionsDataRoutes(actionsGroup, actionsCache)
+
+	tasksGroup := dataGroup.Group("/tasks")
+	tasksCache, err := tasksData.SetupCache(cache.Name(), cache.DB(), cache.Path())
+	if err != nil {
+		log.Fatal(err)
+	}
+	tasksRoutes.RegisterTasksDataRoutes(tasksGroup, tasksCache)
+
+	jobsGroup := dataGroup.Group("/jobs")
+	jobsCache, err := jobsData.SetupCache(cache.Name(), cache.DB(), cache.Path())
+	if err != nil {
+		log.Fatal(err)
+	}
+	jobsRoutes.RegisterJobsDataRoutes(jobsGroup, jobsCache)
 
 	server.Use(func(c fiber.Ctx) error {
 		return handlers.IssueResponse(c, fiber.StatusNotFound, "request not found")
