@@ -194,12 +194,14 @@ containers/*/data/**/*.*
 !services/*-system/*-service/go/agents
 
 !services/*-system/*-service/fiber-go/
+!services/*-system/*-service/fiber-go/channels/
 !services/*-system/*-service/fiber-go/data/
 !services/*-system/*-service/fiber-go/dist/
 !services/*-system/*-service/fiber-go/engines/
 !services/*-system/*-service/fiber-go/handlers/
 !services/*-system/*-service/fiber-go/logs/
 !services/*-system/*-service/fiber-go/models/
+!services/*-system/*-service/fiber-go/routes/
 !services/*-system/*-service/fiber-go/services/
 !services/*-system/*-service/fiber-go/settings/
 !services/*-system/*-service/fiber-go/**/*.go
@@ -208,12 +210,14 @@ containers/*/data/**/*.*
 !services/*-system/**/services/
 !services/*-system/**/services/*-service/
 !services/*-system/**/services/*-service/fiber-go/
+!services/*-system/**/services/*-service/fiber-go/channels/
 !services/*-system/**/services/*-service/fiber-go/data/
 !services/*-system/**/services/*-service/fiber-go/dist/
 !services/*-system/**/services/*-service/fiber-go/engines/
 !services/*-system/**/services/*-service/fiber-go/handlers/
 !services/*-system/**/services/*-service/fiber-go/logs/
 !services/*-system/**/services/*-service/fiber-go/models/
+!services/*-system/**/services/*-service/fiber-go/routes/
 !services/*-system/**/services/*-service/fiber-go/services/
 !services/*-system/**/services/*-service/fiber-go/settings/
 !services/*-system/**/services/*-service/fiber-go/**/*.go
