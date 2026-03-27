@@ -12,9 +12,8 @@ import (
 )
 
 // PushTask stores a task in the cache using its reference as the key.
-//
 func PushTask(cache *data.Cache, task models.Task) error {
-	// Set timestamps for new actions
+	// Set timestamps for new tasks
 	now := time.Now()
 	if task.CreatedAt.IsZero() {
 		task.CreatedAt = now
