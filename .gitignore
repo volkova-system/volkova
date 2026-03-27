@@ -125,6 +125,17 @@ containers/*/data/**/*.*
 !interfaces/*-system/storybook/package.json
 !interfaces/*-system/storybook/tsconfig.json
 
+!interfaces/*-system/*-cai/
+!interfaces/*-system/*-cai/storybook/
+!interfaces/*-system/*-cai/storybook/.storybook/
+!interfaces/*-system/*-cai/storybook/public/
+!interfaces/*-system/*-cai/storybook/stories/
+!interfaces/*-system/*-cai/storybook/.storybook/**/*
+!interfaces/*-system/*-cai/storybook/public/**/*
+!interfaces/*-system/*-cai/storybook/stories/**/*
+!interfaces/*-system/*-cai/storybook/package.json
+!interfaces/*-system/*-cai/storybook/tsconfig.json
+
 !interfaces/*-system/zig/
 !interfaces/*-system/zig/*-cli/
 !interfaces/*-system/zig/*-cli/src/
