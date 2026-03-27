@@ -2,13 +2,14 @@ package data
 
 import (
 	"fmt"
+	"tasks-data-service/settings"
 
 	"github.com/tidwall/buntdb"
 )
 
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"task:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -16,7 +17,7 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"task:*",
 		buntdb.IndexJSON("reference"),
 	); err != nil {
