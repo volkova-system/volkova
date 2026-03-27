@@ -8,6 +8,7 @@ import (
 
 	"jobs-data-service/data"
 	"jobs-data-service/models"
+	"jobs-data-service/settings"
 )
 
 // GetJobs retrieves a paginated list of jobs from the cache.
@@ -28,7 +29,7 @@ func GetJobs(cache *data.Cache, skip, limit int) ([]models.Job, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend("reference", func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
