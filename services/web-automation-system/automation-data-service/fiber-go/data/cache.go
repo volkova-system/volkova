@@ -4,6 +4,7 @@
 package data
 
 import (
+	"automation-data-service/settings"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,13 +13,13 @@ import (
 )
 
 // defaultCacheName is the default index name used for automation storage.
-const defaultCacheName = "automation"
+const defaultCacheName = "automations"
 
 // Cache represents an in-memory cache for automation data using BuntDB.
 type Cache struct {
-	name        string
+	name       string
 	automation *buntdb.DB
-	path        string
+	path       string
 }
 
 func (db *Cache) DB() *buntdb.DB {
@@ -80,8 +81,11 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 		}
 	}
 
-	return &Cache{name: defaultCacheName, automation: conn,
-		path: persistPath}, nil
+	return &Cache{
+		name:       settings.DefaultCacheName,
+		automation: conn,
+		path:       persistPath,
+	}, nil
 }
 
 // Close gracefully shuts down the cache and releases all resources.
