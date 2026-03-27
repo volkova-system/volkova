@@ -7,7 +7,9 @@ import (
 	"strconv"
 	"time"
 
+	"actions-data-service/channels"
 	"actions-data-service/handlers"
+	"actions-data-service/routes"
 	"actions-data-service/settings"
 
 	"github.com/gofiber/fiber/v3"
@@ -46,7 +48,7 @@ func RunControl() {
 	dataGroup := serviceGroup.Group("/data")
 	actionsGroup := dataGroup.Group("/actions")
 
-	RegisterActionsControlRoutes(actionsGroup)
+	routes.RegisterActionsControlRoutes(actionsGroup)
 
 	server.Use(func(c fiber.Ctx) error {
 		return handlers.IssueResponse(c, fiber.StatusNotFound, "request not found")
@@ -74,7 +76,7 @@ func RunControl() {
 
 					log.Printf("actions data control service descriptor listener error: %v", err)
 
-					SignalKill()
+					channels.SignalKill()
 				} else {
 					_ = file.Close()
 
@@ -83,7 +85,7 @@ func RunControl() {
 
 						log.Printf("actions data control service descriptor listener error: %v", err)
 
-						SignalKill()
+						channels.SignalKill()
 					}
 				}
 			}
@@ -99,13 +101,13 @@ func RunControl() {
 		if err := server.Listen(":" + port); err != nil {
 			log.Printf("actions data control service listen error: %v", err)
 
-			SignalKill()
+			channels.SignalKill()
 		}
 	}()
 
 	select {
-	case <-GetStartChannel():
-	case <-GetKillChannel():
+	case <-channels.GetStartChannel():
+	case <-channels.GetKillChannel():
 	}
 
 	if err := server.Shutdown(); err != nil {
