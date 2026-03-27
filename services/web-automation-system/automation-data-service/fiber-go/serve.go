@@ -1,8 +1,10 @@
 package main
 
 import (
+	"automation-data-service/channels"
 	"automation-data-service/data"
 	"automation-data-service/handlers"
+	"automation-data-service/routes"
 	"automation-data-service/settings"
 	"context"
 	"log"
@@ -56,7 +58,7 @@ func ServeData() {
 	dataGroup := serviceGroup.Group("/data")
 	automationGroup := dataGroup.Group("/automation")
 
-	RegisterAutomationDataRoutes(automationGroup, cache)
+	routes.RegisterAutomationDataRoutes(automationGroup, cache)
 
 	server.Use(func(c fiber.Ctx) error {
 		return handlers.IssueResponse(c, fiber.StatusNotFound, "request not found")
@@ -84,7 +86,7 @@ func ServeData() {
 
 					log.Printf("automation data service descriptor listener error: %v", err)
 
-					SignalShutdown()
+					channels.SignalShutdown()
 				} else {
 					_ = file.Close()
 
@@ -93,7 +95,7 @@ func ServeData() {
 
 						log.Printf("automation data service descriptor listener error: %v", err)
 
-						SignalShutdown()
+						channels.SignalShutdown()
 					}
 				}
 			}
@@ -109,7 +111,7 @@ func ServeData() {
 		if err := server.Listen(":" + port); err != nil {
 			log.Printf("automation data service listen error: %v", err)
 
-			SignalShutdown()
+			channels.SignalShutdown()
 		}
 	}()
 
@@ -120,9 +122,9 @@ func ServeData() {
 	select {
 	case <-ctx.Done():
 		log.Println("received terminate signal, shutting down automation data service...")
-	case <-GetShutdownChannel():
+	case <-channels.GetShutdownChannel():
 		log.Println("received shutdown request, shutting down automation data service...")
-	case <-GetAbortChannel():
+	case <-channels.GetAbortChannel():
 		log.Println("received abort request, shutting down automation data service...")
 	}
 
