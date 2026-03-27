@@ -12,7 +12,6 @@ import (
 )
 
 // PushJob stores a job in the cache using its reference as the key.
-//
 func PushJob(cache *data.Cache, job models.Job) error {
 	// Set timestamps for new jobs
 	now := time.Now()
