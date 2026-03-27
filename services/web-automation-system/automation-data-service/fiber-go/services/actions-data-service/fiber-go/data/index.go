@@ -1,6 +1,7 @@
 package data
 
 import (
+	"actions-data-service/settings"
 	"fmt"
 
 	"github.com/tidwall/buntdb"
@@ -8,7 +9,7 @@ import (
 
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"action:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -16,7 +17,7 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"action:*",
 		buntdb.IndexJSON("reference"),
 	); err != nil {
