@@ -8,6 +8,7 @@ import (
 
 	"actions-data-service/data"
 	"actions-data-service/models"
+	"actions-data-service/settings"
 )
 
 // GetActions retrieves a paginated list of actions from the cache.
@@ -28,7 +29,7 @@ func GetActions(cache *data.Cache, skip, limit int) ([]models.Action, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend("reference", func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
