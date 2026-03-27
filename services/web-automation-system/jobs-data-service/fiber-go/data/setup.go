@@ -1,5 +1,11 @@
 package data
 
-func SetupCache(cache *Cache) error {
-	return SetupIndexes(cache.DB())
+import "github.com/tidwall/buntdb"
+
+func SetupCache(name string, db *buntdb.DB, path string) (*Cache, error) {
+	if err := SetupIndexes(db); err != nil {
+		return nil, err
+	}
+
+	return &Cache{name: name, jobs: db, path: path}, nil
 }
