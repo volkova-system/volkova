@@ -8,6 +8,7 @@ import (
 
 	"tasks-data-service/data"
 	"tasks-data-service/models"
+	"tasks-data-service/settings"
 )
 
 // GetTasks retrieves a paginated list of tasks from the cache.
@@ -28,7 +29,7 @@ func GetTasks(cache *data.Cache, skip, limit int) ([]models.Task, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend("reference", func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
