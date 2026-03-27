@@ -3,8 +3,11 @@ module automation-data-service
 go 1.26
 
 require (
+	actions-data-service v0.0.0
 	github.com/gofiber/fiber/v3 v3.1.0
 	github.com/tidwall/buntdb v1.3.2
+	jobs-data-service v0.0.0
+	tasks-data-service v0.0.0
 )
 
 require (
@@ -26,8 +29,14 @@ require (
 	github.com/tinylib/msgp v1.6.3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.69.0 // indirect
-	golang.org/x/crypto v0.48.0 // indirect
-	golang.org/x/net v0.50.0 // indirect
-	golang.org/x/sys v0.41.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/crypto v0.49.0 // indirect
+	golang.org/x/net v0.52.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 )
+
+replace actions-data-service => ./services/actions-data-service/fiber-go
+
+replace tasks-data-service => ./services/tasks-data-service/fiber-go
+
+replace jobs-data-service => ./services/jobs-data-service/fiber-go
