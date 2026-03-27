@@ -12,7 +12,6 @@ import (
 
 // PopTask removes a task from the cache by its key and returns
 // the retrieved data.
-//
 func PopTask(cache *data.Cache, key string) (*models.Task, error) {
 	if key == "" {
 		return nil, fmt.Errorf("key cannot be empty")
@@ -20,7 +19,6 @@ func PopTask(cache *data.Cache, key string) (*models.Task, error) {
 
 	var task models.Task
 	err := cache.DB().Update(func(tx *buntdb.Tx) error {
-		// First retrieve the data
 		val, err := tx.Get(key)
 		if err != nil {
 			return fmt.Errorf("task not found for key %s: %w", key, err)
@@ -30,7 +28,6 @@ func PopTask(cache *data.Cache, key string) (*models.Task, error) {
 			return fmt.Errorf("failed to unmarshal task data: %w", err)
 		}
 
-		// Then delete the key
 		_, err = tx.Delete(key)
 		if err != nil {
 			return fmt.Errorf("failed to remove task with key %s: %w", key, err)
