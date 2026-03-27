@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"tasks-data-service/channels"
 	"tasks-data-service/settings"
 	"time"
 )
@@ -179,7 +180,7 @@ func RunChild() {
 	if os.Getenv("TASKS_DATA_SERVICE_MODE") == "control" {
 		RunControl()
 
-		if IsKilled() {
+		if channels.IsKilled() {
 			os.Exit(killExitCode)
 		}
 
@@ -188,7 +189,7 @@ func RunChild() {
 
 	ServeData()
 
-	if IsAbort() {
+	if channels.IsAbort() {
 		os.Exit(abortExitCode)
 	}
 }
