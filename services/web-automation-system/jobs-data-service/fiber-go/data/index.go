@@ -2,13 +2,14 @@ package data
 
 import (
 	"fmt"
+	"jobs-data-service/settings"
 
 	"github.com/tidwall/buntdb"
 )
 
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"job:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -16,7 +17,7 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"job:*",
 		buntdb.IndexJSON("reference"),
 	); err != nil {
