@@ -10,6 +10,8 @@ import (
 	"os/exec"
 	"runtime"
 	"time"
+
+	"actions-data-service/channels"
 )
 
 const (
@@ -179,7 +181,7 @@ func RunChild() {
 	if os.Getenv("ACTIONS_DATA_SERVICE_MODE") == "control" {
 		RunControl()
 
-		if IsKilled() {
+		if channels.IsKilled() {
 			os.Exit(killExitCode)
 		}
 
@@ -188,7 +190,7 @@ func RunChild() {
 
 	ServeData()
 
-	if IsAbort() {
+	if channels.IsAbort() {
 		os.Exit(abortExitCode)
 	}
 }
