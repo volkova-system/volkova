@@ -1,3 +1,4 @@
+// Package routes wires HTTP routes to their handler functions.
 package routes
 
 import (
@@ -8,6 +9,19 @@ import (
 	"actions-data-service/handlers"
 )
 
+// RegisterActionsDataRoutes mounts all data-service endpoints under
+// the provided router group.
+//
+// Registered routes:
+//
+//	GET    /version          — service version
+//	GET    /health           — database health check
+//	POST   /stop             — graceful shutdown
+//	POST   /abort            — abort (triggers control child)
+//	GET    /                 — paginated action list
+//	POST   /push             — store an action
+//	DELETE /pop/:reference   — remove and return an action
+//	GET    /:reference       — retrieve a single action
 func RegisterActionsDataRoutes(actionsGroup fiber.Router, cache *data.Cache) {
 	actionsGroup.Get("/version",
 		handlers.VersionHandler())
@@ -34,6 +48,15 @@ func RegisterActionsDataRoutes(actionsGroup fiber.Router, cache *data.Cache) {
 		handlers.GetActionHandler(cache))
 }
 
+// RegisterActionsControlRoutes mounts all control-server endpoints under
+// the provided router group.
+//
+// Registered routes:
+//
+//	GET    /version   — service version
+//	GET    /health    — control health check (no database)
+//	POST   /start     — signal data child to restart
+//	POST   /kill      — signal supervisor to terminate entirely
 func RegisterActionsControlRoutes(actionsGroup fiber.Router) {
 	actionsGroup.Get("/version",
 		handlers.VersionHandler())
