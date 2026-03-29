@@ -8,12 +8,13 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
+
 	"tasks-data-service/channels"
 	"tasks-data-service/data"
 	"tasks-data-service/handlers"
 	"tasks-data-service/routes"
 	"tasks-data-service/settings"
-	"time"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
@@ -21,6 +22,17 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
+// ServeData opens the task cache and starts the data HTTP server.
+//
+// The data server exposes CRUD endpoints for task records and runs
+// until it receives an OS interrupt, SIGTERM, a shutdown signal, or
+// an abort signal. On exit the cache is persisted to disk via
+// cache.Close().
+//
+// Listener selection (in priority order):
+//  1. Inherited file descriptor via SOCKET_FD / USE_INHERITED_FD env vars.
+//  2. Port from TASKS_DATA_SERVICE_PORT env var.
+//  3. DefaultPort constant.
 func ServeData() {
 	cache, err := data.Open()
 	if err != nil {
