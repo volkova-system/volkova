@@ -22,14 +22,17 @@ type Cache struct {
 	path  string
 }
 
+// DB returns the underlying BuntDB connection.
 func (db *Cache) DB() *buntdb.DB {
 	return db.tasks
 }
 
+// Name returns the cache index name.
 func (db *Cache) Name() string {
 	return db.name
 }
 
+// Path returns the persistence file path, or empty string for memory-only.
 func (db *Cache) Path() string {
 	return db.path
 }
@@ -50,6 +53,8 @@ func Open() (*Cache, error) {
 	return OpenWithPath(dbPath)
 }
 
+// OpenWithPath creates and initializes a cache backed by the given file path.
+// Pass ":memory:" for a non-persistent in-memory database.
 func OpenWithPath(dbPath string) (*Cache, error) {
 	persistPath := ""
 	if dbPath != "" && dbPath != ":memory:" {
