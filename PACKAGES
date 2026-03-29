@@ -9,13 +9,13 @@ feather-icons --save
 htmx.org --save
 hyperscript.org --save
 
-storybook --save-dev --prefix ./interfaces/prototype-system/storybook
-@storybook/html-vite --save-dev --prefix ./interfaces/prototype-system/storybook
-typescript --save-dev --prefix ./interfaces/prototype-system/storybook
-vite --save-dev --prefix ./interfaces/prototype-system/storybook
-@storybook/addon-vitest --save-dev --prefix ./interfaces/prototype-system/storybook
-@storybook/addon-a11y --save-dev --prefix ./interfaces/prototype-system/storybook
-@chromatic-com/storybook --save-dev --prefix ./interfaces/prototype-system/storybook
+storybook --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+@storybook/html-vite --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+typescript --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+vite --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+@storybook/addon-vitest --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+@storybook/addon-a11y --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
+@chromatic-com/storybook --save-dev --prefix ./interfaces/prototype-system/concise-cai/storybook
 
 fastify --save --prefix ./services/prototype-system/web-automation-service/fastify-node
 playwright --save --prefix ./services/prototype-system/web-automation-service/fastify-node
