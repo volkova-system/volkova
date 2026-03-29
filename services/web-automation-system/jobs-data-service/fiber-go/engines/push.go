@@ -12,6 +12,11 @@ import (
 )
 
 // PushJob stores a job in the cache using its reference as the key.
+// If the job has no CreatedAt timestamp it is set to now; UpdatedAt is
+// always refreshed to the current time.
+//
+// The cache key format is "job:<reference>".
+// Returns an error if marshalling or the BuntDB write fails.
 func PushJob(cache *data.Cache, job models.Job) error {
 	// Set timestamps for new jobs
 	now := time.Now()
