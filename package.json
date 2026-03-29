@@ -1,49 +1,49 @@
 {
-  "name": "volkova-system",
-  "version": "0.0.0",
-  "description": "volkova system",
-  "keywords": [
-    "volkova-system",
-    "volkova",
-    "system"
-  ],
-  "homepage": "https://github.com/volkovasystem/volkova#readme",
-  "bugs": {
-    "url": "https://github.com/volkovasystem/volkova/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/volkovasystem/volkova.git"
-  },
-  "license": "MIT",
-  "author": "Richeve Bebedor <richeve.bebedor963+vs@proton.me> (https://github.com/volkovasystem)",
-  "type": "module",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky || true"
-  },
-  "engines": {
-    "node": "24.14.1",
-    "npm": "11.12.1"
-  },
-  "volta": {
-    "node": "24.14.1",
-    "npm": "11.12.1"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "20.5.0",
-    "@commitlint/config-conventional": "20.5.0",
-    "http-server": "14.1.1",
-    "husky": "9.1.7",
-    "lint-staged": "16.4.0"
-  },
-  "dependencies": {
-    "@picocss/pico": "2.1.1",
-    "feather-icons": "4.29.2",
-    "firacode": "6.2.0",
-    "htmx.org": "2.0.8",
-    "hyperscript.org": "0.9.14",
-    "simple-icons": "16.10.0"
-  }
+    "name": "volkova-system",
+    "version": "0.0.0",
+    "description": "volkova system",
+    "keywords": [
+        "volkova-system",
+        "volkova",
+        "system"
+    ],
+    "homepage": "https://github.com/volkovasystem/volkova#readme",
+    "bugs": {
+        "url": "https://github.com/volkovasystem/volkova/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/volkovasystem/volkova.git"
+    },
+    "license": "MIT",
+    "author": "Richeve Bebedor <richeve.bebedor963+vs@proton.me> (https://github.com/volkovasystem)",
+    "type": "module",
+    "main": "index.html",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky || true"
+    },
+    "engines": {
+        "node": "24.14.1",
+        "npm": "11.12.1"
+    },
+    "volta": {
+        "node": "24.14.1",
+        "npm": "11.12.1"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "20.5.0",
+        "@commitlint/config-conventional": "20.5.0",
+        "http-server": "14.1.1",
+        "husky": "9.1.7",
+        "lint-staged": "16.4.0"
+    },
+    "dependencies": {
+        "@picocss/pico": "2.1.1",
+        "feather-icons": "4.29.2",
+        "firacode": "6.2.0",
+        "htmx.org": "2.0.8",
+        "hyperscript.org": "0.9.14",
+        "simple-icons": "16.10.0"
+    }
 }
