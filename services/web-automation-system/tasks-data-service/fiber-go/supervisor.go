@@ -8,9 +8,10 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"time"
+
 	"tasks-data-service/channels"
 	"tasks-data-service/settings"
-	"time"
 )
 
 const (
