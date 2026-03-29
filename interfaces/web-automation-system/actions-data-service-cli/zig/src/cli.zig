@@ -43,6 +43,21 @@ pub fn run(setting: Setting) !void {
 
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
+        .abort => {
+            const result = try engine.abortService(setting);
+
+            try std.fs.File.stdout().writeAll(result.raw_operation);
+        },
+        .start => {
+            const result = try engine.startService(setting);
+
+            try std.fs.File.stdout().writeAll(result.raw_operation);
+        },
+        .kill => {
+            const result = try engine.killService(setting);
+
+            try std.fs.File.stdout().writeAll(result.raw_operation);
+        },
         .push => {
             const parameters = try handler.resolvePushActionParameters(setting, command_parameters);
 
