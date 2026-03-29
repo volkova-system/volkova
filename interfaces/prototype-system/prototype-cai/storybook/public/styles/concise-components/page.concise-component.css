@@ -1,0 +1,10 @@
+.concise-component .page {
+    display: flex;
+    flex-direction: row;
+
+    height: 100dvh;
+    width: 100dvw;
+
+    overflow-y: hidden;
+    overflow-x: auto;
+}

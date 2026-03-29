@@ -1,0 +1,181 @@
+
+.concise-component a.focus-action.control,
+.concise-component button.focus-action.control,
+.concise-component .focus-action
+{
+    background-color: var(--concise-action-focus-background-color);
+    color: var(--concise-action-focus-color);
+}
+
+.concise-component a.focus-action.control > h4,
+.concise-component a.focus-action.control > h5,
+.concise-component a.focus-action.control > h6,
+.concise-component a.focus-action.control > span,
+.concise-component button.focus-action.control > h4,
+.concise-component button.focus-action.control > h5,
+.concise-component button.focus-action.control > h6,
+.concise-component button.focus-action.control > span
+{
+    color: var(--concise-action-focus-color);
+}
+
+.concise-component a.focus-action.control:hover,
+.concise-component button.focus-action.control:hover,
+.concise-component .focus-action:hover
+{
+    background-color: var(--concise-action-focus-hover-background-color);
+    color: var(--concise-action-focus-hover-color);
+}
+
+.concise-component a.focus-action.control:hover > h4,
+.concise-component a.focus-action.control:hover > h5,
+.concise-component a.focus-action.control:hover > h6,
+.concise-component a.focus-action.control:hover > span,
+.concise-component button.focus-action.control:hover > h4,
+.concise-component button.focus-action.control:hover > h5,
+.concise-component button.focus-action.control:hover > h6,
+.concise-component button.focus-action.control:hover > span
+{
+    color: var(--concise-action-focus-hover-color);
+}
+
+.concise-component a.focus-action.control:active,
+.concise-component button.focus-action.control:active,
+.concise-component .focus-action:active
+{
+    background-color: var(--concise-action-focus-active-background-color);
+    color: var(--concise-action-focus-active-color);
+}
+
+.concise-component a.focus-action.control:active > h4,
+.concise-component a.focus-action.control:active > h5,
+.concise-component a.focus-action.control:active > h6,
+.concise-component a.focus-action.control:active > span
+.concise-component button.focus-action.control:active > h4,
+.concise-component button.focus-action.control:active > h5,
+.concise-component button.focus-action.control:active > h6,
+.concise-component button.focus-action.control:active > span
+{
+    color: var(--concise-action-focus-active-color);
+}
+
+.concise-component a.support-action.control,
+.concise-component button.support-action.control,
+.concise-component .support-action
+{
+    background-color: var(--concise-action-support-background-color);
+    color: var(--concise-action-support-color);
+}
+
+.concise-component a.support-action.control > h4,
+.concise-component a.support-action.control > h5,
+.concise-component a.support-action.control > h6,
+.concise-component a.support-action.control > span
+.concise-component button.support-action.control > h4,
+.concise-component button.support-action.control > h5,
+.concise-component button.support-action.control > h6,
+.concise-component button.support-action.control > span
+{
+    color: var(--concise-action-support-color);
+}
+
+.concise-component a.support-action.control:hover,
+.concise-component button.support-action.control:hover,
+.concise-component .support-action:hover
+{
+    background-color: var(--concise-action-support-hover-background-color);
+    color: var(--concise-action-support-hover-color);
+}
+
+.concise-component a.support-action.control:hover > h4,
+.concise-component a.support-action.control:hover > h5,
+.concise-component a.support-action.control:hover > h6,
+.concise-component a.support-action.control:hover > span
+.concise-component button.support-action.control:hover > h4,
+.concise-component button.support-action.control:hover > h5,
+.concise-component button.support-action.control:hover > h6,
+.concise-component button.support-action.control:hover > span
+{
+    color: var(--concise-action-support-hover-color);
+}
+
+.concise-component a.support-action.control:active,
+.concise-component button.support-action.control:active,
+.concise-component .support-action:active
+{
+    background-color: var(--concise-action-support-active-background-color);
+    color: var(--concise-action-support-active-color);
+}
+
+.concise-component a.support-action.control:active > h4,
+.concise-component a.support-action.control:active > h5,
+.concise-component a.support-action.control:active > h6,
+.concise-component a.support-action.control:active > span
+.concise-component button.support-action.control:active > h4,
+.concise-component button.support-action.control:active > h5,
+.concise-component button.support-action.control:active > h6,
+.concise-component button.support-action.control:active > span
+{
+    color: var(--concise-action-support-active-color);
+}
+
+.concise-component a.other-action.control,
+.concise-component button.other-action.control,
+.concise-component .other-action
+{
+    background-color: var(--concise-action-other-background-color);
+    color: var(--concise-action-other-color);
+}
+
+.concise-component a.other-action.control > h4,
+.concise-component a.other-action.control > h5,
+.concise-component a.other-action.control > h6,
+.concise-component a.other-action.control > span
+.concise-component button.other-action.control > h4,
+.concise-component button.other-action.control > h5,
+.concise-component button.other-action.control > h6,
+.concise-component button.other-action.control > span
+{
+    color: var(--concise-action-other-color);
+}
+
+.concise-component a.other-action.control:hover,
+.concise-component button.other-action.control:hover,
+.concise-component .other-action:hover
+{
+    background-color: var(--concise-action-other-hover-background-color);
+}
+
+.concise-component a.other-action.control:hover > h4,
+.concise-component a.other-action.control:hover > h5,
+.concise-component a.other-action.control:hover > h6,
+.concise-component a.other-action.control:hover > span
+.concise-component button.other-action.control:hover > h4,
+.concise-component button.other-action.control:hover > h5,
+.concise-component button.other-action.control:hover > h6,
+.concise-component button.other-action.control:hover > span
+{
+    color: var(--concise-action-other-hover-color);
+}
+
+.concise-component a.other-action.control:active,
+.concise-component button.other-action.control:active,
+.concise-component .other-action:active
+{
+    background-color: var(--concise-action-other-active-background-color);
+    color: var(--concise-action-other-active-color);
+}
+
+.concise-component a.other-action.control:active > h4,
+.concise-component a.other-action.control:active > h5,
+.concise-component a.other-action.control:active > h6,
+.concise-component a.other-action.control:active > span
+.concise-component button.other-action.control:active > h4,
+.concise-component button.other-action.control:active > h5,
+.concise-component button.other-action.control:active > h6,
+.concise-component button.other-action.control:active > span
+{
+    color: var(--concise-action-other-active-color);
+}
+
+

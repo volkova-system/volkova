@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root,
+:host
+{
+    --concise-text-font-family: 'Fira Code', monospace;
+
+    --concise-text-size-emphasis-5: 37px;
+    --concise-text-size-emphasis-4: 31px;
+    --concise-text-size-emphasis-3: 29px;
+    --concise-text-size-emphasis-2: 23px;
+    --concise-text-size-emphasis-1: 19px;
+    --concise-text-size-base:       17px;
+    --concise-text-size-depth-1:    13px;
+    --concise-text-size-depth-2:    11px;
+    --concise-text-size-depth-3:    7px;
+
+    --concise-line-height-factor:           calc((var(--concise-text-size-base) * var(--concise-ratio)) / 3);
+    --concise-text-line-height-emphasis-5:  calc(var(--concise-text-size-emphasis-5) + var(--concise-line-height-factor));
+    --concise-text-line-height-emphasis-4:  calc(var(--concise-text-size-emphasis-4) + var(--concise-line-height-factor));
+    --concise-text-line-height-emphasis-3:  calc(var(--concise-text-size-emphasis-3) + var(--concise-line-height-factor));
+    --concise-text-line-height-emphasis-2:  calc(var(--concise-text-size-emphasis-2) + var(--concise-line-height-factor));
+    --concise-text-line-height-emphasis-1:  calc(var(--concise-text-size-emphasis-1) + var(--concise-line-height-factor));
+    --concise-text-line-height-base:        calc(var(--concise-text-size-base) + var(--concise-line-height-factor));
+    --concise-text-line-height-depth-1:     calc(var(--concise-text-size-depth-1) + var(--concise-line-height-factor));
+    --concise-text-line-height-depth-2:     calc(var(--concise-text-size-depth-2) + var(--concise-line-height-factor));
+    --concise-text-line-height-depth-3:     calc(var(--concise-text-size-depth-3) + var(--concise-line-height-factor));
+
+    --concise-text-heading-1-size: var(--concise-text-size-emphasis-5);
+    --concise-text-heading-1-line-height: var(--concise-text-line-height-emphasis-5);
+
+    --concise-text-heading-2-size: var(--concise-text-size-emphasis-4);
+    --concise-text-heading-2-line-height: var(--concise-text-line-height-emphasis-4);
+
+    --concise-text-heading-3-size: var(--concise-text-size-emphasis-3);
+    --concise-text-heading-3-line-height: var(--concise-text-line-height-emphasis-3);
+
+    --concise-text-heading-4-size: var(--concise-text-size-emphasis-2);
+    --concise-text-heading-4-line-height: var(--concise-text-line-height-emphasis-2);
+
+    --concise-text-heading-5-size: var(--concise-text-size-emphasis-1);
+    --concise-text-heading-5-line-height: var(--concise-text-line-height-emphasis-1);
+
+    --concise-text-heading-6-size: var(--concise-text-size-base);
+    --concise-text-heading-6-line-height: var(--concise-text-line-height-base);
+
+    --concise-text-title-value-size: var(--concise-text-size-emphasis-1);
+    --concise-text-title-value-line-height: var(--concise-text-line-height-emphasis-1);
+
+    --concise-text-subtitle-value-size: var(--concise-text-size-base);
+    --concise-text-subtitle-value-line-height: var(--concise-text-line-height-base);
+
+    --concise-text-description-value-size: var(--concise-text-size-depth-1);
+    --concise-text-description-value-line-height: var(--concise-text-line-height-depth-1);
+
+    --concise-text-value-size: var(--concise-text-size-depth-1);
+    --concise-text-value-line-height: var(--concise-text-line-height-depth-1);
+
+    --concise-text-title-label-size: var(--concise-text-size-base);
+    --concise-text-title-label-line-height: var(--concise-text-line-height-base);
+
+    --concise-text-subtitle-label-size: var(--concise-text-size-depth-1);
+    --concise-text-subtitle-label-line-height: var(--concise-text-line-height-depth-1);
+
+    --concise-text-label-size: var(--concise-text-size-depth-2);
+    --concise-text-label-line-height: var(--concise-text-line-height-depth-2);
+
+    --concise-text-main-section-title: var(--concise-text-heading-1-size);
+    --concise-text-main-section-title-line-height: var(--concise-text-heading-1-line-height);
+
+    --concise-text-main-section-description: var(--concise-text-heading-6-size);
+    --concise-text-main-section-description-line-height: var(--concise-text-heading-6-line-height);
+
+    --concise-text-support-section-title: var(--concise-text-heading-2-size);
+    --concise-text-support-section-title-line-height: var(--concise-text-heading-2-line-height);
+
+    --concise-text-support-section-description: var(--concise-text-heading-6-size);
+    --concise-text-support-section-description-line-height: var(--concise-text-heading-6-line-height);
+
+    --concise-text-specific-section-title: var(--concise-text-heading-3-size);
+    --concise-text-specific-section-title-line-height: var(--concise-text-heading-3-line-height);
+
+    --concise-text-specific-section-description: var(--concise-text-heading-6-size);
+    --concise-text-specific-section-description-line-height: var(--concise-text-heading-6-line-height);
+}

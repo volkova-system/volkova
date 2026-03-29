@@ -1,0 +1,13 @@
+.concise-component .label {
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.concise-component .title.label {
+    font-size: var(--concise-text-size-base);
+    letter-spacing: 1.1px;
+}
+
+.concise-component .label:not(.title):not(.subtitle)::after {
+    content: ':';
+}

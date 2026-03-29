@@ -1,0 +1,296 @@
+<div class="leftbar sidebar spacer"></div>
+<section class="page">
+    <div class="sidebar spacer"></div>
+
+    <main id="product-list-tree"
+        class="content-tree tree list">
+        <div class="item spacer"></div>
+        <header class="item">
+            <span class="logo icon">
+                <svg class="logo"
+                    viewBox="0 0 900 900"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    aria-label="volkova system logo">
+                    <use href="/assets/images/vs.logo.svg#vs-logo" />
+                </svg>
+            </span>
+            <h1 class="main-content content">
+                sarikanto
+            </h1>
+            <div class="spacer"></div>
+        </header>
+        <div class="emphasize-spacing item spacer"></div>
+        <ol id="product-list"
+            class="product-list content-tree-list list">
+        </ol>
+        <product-list
+            target="product-list"
+            data-state="list"
+            data-component-service-address="http://localhost:6039"
+            data-component="/service/component/products"
+            data-service="/service/data/products">
+        </product-list>
+        <div class="item spacer"></div>
+    </main>
+    <div class="sidebar spacer"></div>
+    <article id="product-preview-tree"
+        class="focus-tree tree list hidden">
+        <div class="item spacer"></div>
+        <ol id="product-card"
+            class="card focus-tree-list list">
+        </ol>
+        <product-card
+            target="product-card"
+            data-state="idle"
+            data-component-service-address="http://localhost:6039"
+            data-component="/service/component/products/product_reference/preview"
+            data-service="/service/data/products/product_reference">
+        </product-card>
+        <div class="item spacer"></div>
+    </article>
+</section>
+<aside id="product-search-tree"
+    class="product-search-tree input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <ol id="product-search-list"
+        class="input-tree-list list">
+        <li class="input-tree-item item">
+            <button class="icon-control control"
+                aria-label="collapse product search panel"
+                _="
+                    on click
+                        add .hidden to #product-search-tree
+                        remove .hidden from #product-search-tree-idle
+
+                        add .hidden to #product-sort-tree
+                        add .hidden to #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'idle'
+
+                        add .hidden to #product-filter-tree
+                        add .hidden to #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'idle'
+
+                        set #search-products-query.value to ''
+                        trigger input on #search-products-query
+
+                        set @data-state of <product-list/> to 'list'
+                        set @data-service of <product-list/> to '/service/data/products'
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#chevron-right" />
+                </svg>
+            </button>
+            <div class="content">
+                <input id="search-products-query"
+                    type="text"
+                    class="input title value"
+                    placeholder="search products"/>
+            </div>
+            <button id="search-products-control"
+                class="icon-control control"
+                aria-label="search products"
+                _="
+                    on input from #search-products-query
+                        if #search-products-query.value.trim() is empty
+                            add .disabled to me
+                            set @disabled to 'disabled'
+                        else
+                            remove .disabled from me
+                            remove [@disabled] from me
+                        end
+                    on click
+                        if @disabled
+                            halt
+                        end
+
+                        add .hidden to me
+                        remove .hidden from #clear-search-products-control
+
+                        set query to #search-products-query.value
+                        set @data-state of <product-list/> to 'search'
+                        set @data-service of <product-list/> to '/service/data/products/search?query=' + query
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#search" />
+                </svg>
+            </button>
+            <button id="clear-search-products-control"
+                class="icon-control control hidden"
+                aria-label="clear search"
+                _="
+                    on input from #search-products-query
+                        if #search-products-query.value.trim() is empty
+                            add .hidden to me
+                            remove .hidden from #search-products-control
+
+                            set #search-products-query.value to ''
+                            set @data-state of <product-list/> to 'list'
+                            set @data-service of <product-list/> to '/service/data/products'
+                        end
+                    on click
+                        add .hidden to me
+                        remove .hidden from #search-products-control
+
+                        set #search-products-query.value to ''
+                        trigger input on #search-products-query
+
+                        set @data-state of <product-list/> to 'list'
+                        set @data-service of <product-list/> to '/service/data/products'
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#x" />
+                </svg>
+            </button>
+        </li>
+        <li class="normal-spacing item spacer"></li>
+        <li class="input-tree-item item">
+            <div class="spacer"></div>
+            <div class="label-content content">
+                <label class="title label">
+                    sort products
+                </label>
+            </div>
+            <dl class="label-content content hidden">
+                <dt class="label"></dt>
+                <dd class="title value"></dd>
+            </dl>
+            <button class="icon-control control"
+                aria-label="sort products"
+                _="
+                    on click
+                        remove .hidden from #product-sort-tree
+                        remove .hidden from #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'list'
+
+                        add .hidden to #product-filter-tree
+                        add .hidden to #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'idle'
+
+                        set #search-products-query.value to ''
+                        trigger input on #search-products-query
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#more-vertical" />
+                </svg>
+            </button>
+        </li>
+        <li class="normal-spacing item spacer"></li>
+        <li class="input-tree-item item">
+            <div class="spacer"></div>
+            <div class="label-content content">
+                <label class="title label">
+                    filter products
+                </label>
+            </div>
+            <button class="icon-control control"
+                aria-label="sort products"
+                _="
+                    on click
+                        remove .hidden from #product-filter-tree
+                        remove .hidden from #product-filter-tree-divider
+                        set @data-state of <product-filter/> to 'list'
+
+                        add .hidden to #product-sort-tree
+                        add .hidden to #product-sort-tree-divider
+                        set @data-state of <product-sort/> to 'idle'
+                ">
+                <svg class="icon">
+                    <use href="/assets/images/feather-sprite.svg#more-vertical" />
+                </svg>
+            </button>
+        </li>
+    </ol>
+    <div class="item spacer"></div>
+</aside>
+<div id="product-sort-tree-divider" class="sidebar spacer hidden"></div>
+<aside id="product-sort-tree"
+    class="product-sort-tree input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <header class="item">
+        <div class="label-content content">
+            <label class="title label">
+                sort by
+            </label>
+        </div>
+        <div class="spacer"></div>
+        <button class="icon-control control"
+            aria-label="sort products"
+            _="
+                on click
+                    add .hidden to #product-sort-tree
+                    add .hidden to #product-sort-tree-divider
+                    set @data-state of <product-sort/> to 'idle'
+            ">
+            <svg class="icon">
+                <use href="/assets/images/feather-sprite.svg#chevron-left" />
+            </svg>
+        </button>
+    </header>
+    <ol id="product-sort-criteria"
+        class="product-sort-criteria input-tree-list list">
+    </ol>
+    <product-sort
+        target="product-sort-criteria"
+        data-state="idle"
+        data-component-service-address="http://localhost:6039"
+        data-component="/service/component/products/sort/criteria"
+        data-service="/service/data/products/sort/criteria">
+    </product-sort>
+    <div class="item spacer"></div>
+</aside>
+<div id="product-filter-tree-divider" class="sidebar spacer hidden"></div>
+<aside id="product-filter-tree"
+    class="product-filter-tree input-tree tree list hidden">
+    <div class="item spacer"></div>
+    <header class="item">
+        <div class="label-content content">
+            <label class="title label">
+                filter by
+            </label>
+        </div>
+        <div class="spacer"></div>
+        <button class="icon-control control"
+            aria-label="sort products"
+            _="
+                on click
+                    add .hidden to #product-filter-tree
+                    add .hidden to #product-filter-tree-divider
+                    set @data-state of <product-filter/> to 'idle'
+            ">
+            <svg class="icon">
+                <use href="/assets/images/feather-sprite.svg#chevron-left" />
+            </svg>
+        </button>
+    </header>
+    <ol id="product-filter-fields"
+        class="product-filter-fields input-tree-list list">
+    </ol>
+    <product-filter
+        target="product-filter-fields"
+        data-state="idle"
+        data-component-service-address="http://localhost:6039"
+        data-component="/service/component/products/filter/fields"
+        data-service="/service/data/products/filter/fields">
+    </product-filter>
+    <div class="item spacer"></div>
+</aside>
+<div id="product-search-tree-idle"
+    class="sidebar">
+    <div class="spacer"></div>
+    <button class="icon-control control"
+        aria-label="expand product search panel"
+        _="
+            on click
+                remove .hidden from #product-search-tree
+                add .hidden to #product-search-tree-idle
+
+                add .hidden to #product-preview-tree
+        ">
+        <svg class="icon">
+            <use href="/assets/images/feather-sprite.svg#search" />
+        </svg>
+    </button>
+</div>
+<div class="sidebar spacer"></div>
+<div class="rightbar sidebar spacer"></div>

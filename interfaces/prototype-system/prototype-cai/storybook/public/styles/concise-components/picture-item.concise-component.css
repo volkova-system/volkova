@@ -1,0 +1,12 @@
+.concise-component li.picture-item.item {
+    background-color: var(--concise-color-black-light);
+}
+
+.concise-component li.picture-item.item *,
+.concise-component li.picture-item.item {
+    cursor: pointer;
+}
+
+.concise-component li.picture-item.item:hover {
+    background-color: var(--concise-color-black-dark);
+}

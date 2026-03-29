@@ -1,0 +1,11 @@
+:host,
+:root {
+    --concise-spacing-base: var(--concise-slicing-base);
+    --concise-gap-base: var(--concise-division-base);
+
+    --concise-spacing-normal: var(--concise-spacing-base);
+    --concise-spacing-emphasis: calc(var(--concise-spacing-base) * 3);
+    --concise-spacing-next: calc(var(--concise-spacing-base) * 5);
+
+    --concise-gap-normal: var(--concise-gap-base);
+}
