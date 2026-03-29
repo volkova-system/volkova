@@ -3,7 +3,7 @@ pub const Action = struct {
     name: []const u8,
     description: []const u8,
 
-    action_type: []const u8,
+    flow: []const u8,
 
     address: ?[]const u8,
     selector: ?[]const u8,
@@ -11,17 +11,18 @@ pub const Action = struct {
     script: ?[]const u8,
 
     delay: ?u32,
+
+    created_at: []const u8,
+    updated_at: []const u8,
 };
 
 pub const Health = struct {
     status: []const u8,
-    service: []const u8,
-    issue: ?[]const u8,
 };
 
 pub const Operation = struct {
     status: []const u8,
-    type: []const u8,
+    procedure: []const u8,
     service: []const u8,
 };
 
@@ -30,6 +31,9 @@ pub const Operation = struct {
 pub const Command = enum {
     health,
     stop,
+    abort,
+    start,
+    kill,
 
     list,
     get,
@@ -44,7 +48,7 @@ pub const PushActionParameters = struct {
     name: []const u8,
     description: []const u8,
 
-    action_type: []const u8,
+    flow: []const u8,
 
     address: ?[]const u8,
     selector: ?[]const u8,
@@ -88,6 +92,21 @@ pub const CheckHealthResult = struct {
 };
 
 pub const StopServiceResult = struct {
+    operation: Operation,
+    raw_operation: []u8,
+};
+
+pub const AbortServiceResult = struct {
+    operation: Operation,
+    raw_operation: []u8,
+};
+
+pub const StartServiceResult = struct {
+    operation: Operation,
+    raw_operation: []u8,
+};
+
+pub const KillServiceResult = struct {
     operation: Operation,
     raw_operation: []u8,
 };
