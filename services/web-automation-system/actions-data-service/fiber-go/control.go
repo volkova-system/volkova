@@ -18,6 +18,17 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
+// RunControl starts the control HTTP server.
+//
+// The control server exposes lifecycle management endpoints (version,
+// health, start, kill) and runs while the data child is in the aborted
+// state. It blocks until either the start or kill channel is closed,
+// then shuts down gracefully.
+//
+// Listener selection (in priority order):
+//  1. Inherited file descriptor via SOCKET_FD / USE_INHERITED_FD env vars.
+//  2. Port from ACTIONS_DATA_SERVICE_PORT env var.
+//  3. DefaultPort constant.
 func RunControl() {
 	server := fiber.New(fiber.Config{
 		AppName: settings.DataServiceName,
