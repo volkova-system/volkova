@@ -22,7 +22,7 @@ linux_dependency = false
 [npx]
 interpreter = false
 interpreter_version = false
-command_version = "11.12.0"
+command_version = "11.12.1"
 os_platform = false
 windows_dependency = "scripts/install-node-version.ps1"
 macos_dependency = false
@@ -40,7 +40,7 @@ linux_dependency = false
 [npm]
 interpreter = false
 interpreter_version = false
-command_version = "11.12.0"
+command_version = "11.12.1"
 os_platform = false
 windows_dependency = "scripts/install-node-version.ps1"
 macos_dependency = false
