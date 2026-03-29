@@ -16,6 +16,10 @@ const PopActionParameters = model.PopActionParameters;
 
 const CheckHealthResult = model.CheckHealthResult;
 const StopServiceResult = model.StopServiceResult;
+const AbortServiceResult = model.AbortServiceResult;
+const StartServiceResult = model.StartServiceResult;
+const KillServiceResult = model.KillServiceResult;
+
 const PushActionResult = model.PushActionResult;
 const GetActionResult = model.GetActionResult;
 const GetActionsResult = model.GetActionsResult;
@@ -63,6 +67,72 @@ pub fn stopService(setting: Setting) !StopServiceResult {
     const result = try sendPost(setting.allocator, url, "{}");
 
     return try handler.resolveStopServiceResult(setting.allocator, result);
+}
+
+// abortService calls POST /service/data/actions/abort.
+//
+pub fn abortService(setting: Setting) !AbortServiceResult {
+    const base_url = try setting.resolveBaseUrl();
+
+    defer setting.allocator.free(base_url);
+
+    const url = try std.fmt.allocPrint(
+        setting.allocator,
+
+        "{s}/abort",
+
+        .{base_url},
+    );
+
+    defer setting.allocator.free(url);
+
+    const result = try sendPost(setting.allocator, url, "{}");
+
+    return try handler.resolveAbortServiceResult(setting.allocator, result);
+}
+
+// startService calls POST /service/data/actions/start.
+//
+pub fn startService(setting: Setting) !StartServiceResult {
+    const base_url = try setting.resolveBaseUrl();
+
+    defer setting.allocator.free(base_url);
+
+    const url = try std.fmt.allocPrint(
+        setting.allocator,
+
+        "{s}/start",
+
+        .{base_url},
+    );
+
+    defer setting.allocator.free(url);
+
+    const result = try sendPost(setting.allocator, url, "{}");
+
+    return try handler.resolveStartServiceResult(setting.allocator, result);
+}
+
+// killService calls POST /service/data/actions/kill.
+//
+pub fn killService(setting: Setting) !KillServiceResult {
+    const base_url = try setting.resolveBaseUrl();
+
+    defer setting.allocator.free(base_url);
+
+    const url = try std.fmt.allocPrint(
+        setting.allocator,
+
+        "{s}/kill",
+
+        .{base_url},
+    );
+
+    defer setting.allocator.free(url);
+
+    const result = try sendPost(setting.allocator, url, "{}");
+
+    return try handler.resolveKillServiceResult(setting.allocator, result);
 }
 
 // pushAction calls POST /service/data/actions/push with a JSON body.
@@ -197,13 +267,13 @@ fn buildPushBody(
         "\"reference\":\"{s}\"," ++
             "\"name\":\"{s}\"," ++
             "\"description\":\"{s}\"," ++
-            "\"type\":\"{s}\"",
+            "\"flow\":\"{s}\"",
 
         .{
             parameters.reference,
             parameters.name,
             parameters.description,
-            parameters.action_type,
+            parameters.flow,
         },
     );
 
