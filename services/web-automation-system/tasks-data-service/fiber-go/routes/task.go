@@ -1,3 +1,4 @@
+// Package routes wires HTTP routes to their handler functions.
 package routes
 
 import (
@@ -8,6 +9,19 @@ import (
 	"tasks-data-service/handlers"
 )
 
+// RegisterTasksDataRoutes mounts all data-service endpoints under
+// the provided router group.
+//
+// Registered routes:
+//
+//	GET    /version          — service version
+//	GET    /health           — database health check
+//	POST   /stop             — graceful shutdown
+//	POST   /abort            — abort (triggers control child)
+//	GET    /                 — paginated task list
+//	POST   /push             — store a task
+//	DELETE /pop/:reference   — remove and return a task
+//	GET    /:reference       — retrieve a single task
 func RegisterTasksDataRoutes(tasksGroup fiber.Router, cache *data.Cache) {
 	tasksGroup.Get("/version",
 		handlers.VersionHandler())
@@ -34,6 +48,15 @@ func RegisterTasksDataRoutes(tasksGroup fiber.Router, cache *data.Cache) {
 		handlers.GetTaskHandler(cache))
 }
 
+// RegisterTasksControlRoutes mounts all control-server endpoints under
+// the provided router group.
+//
+// Registered routes:
+//
+//	GET    /version   — service version
+//	GET    /health    — control health check (no database)
+//	POST   /start     — signal data child to restart
+//	POST   /kill      — signal supervisor to terminate entirely
 func RegisterTasksControlRoutes(tasksGroup fiber.Router) {
 	tasksGroup.Get("/version",
 		handlers.VersionHandler())
