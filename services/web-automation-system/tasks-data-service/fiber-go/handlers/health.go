@@ -8,6 +8,11 @@ import (
 	"github.com/tidwall/buntdb"
 )
 
+// HealthDataHandler handles GET /service/data/tasks/health endpoint.
+// Verifies database connectivity by opening a read-only transaction.
+//
+// Response: JSON health status with service name and version,
+// or 503 if the database is unreachable.
 func HealthDataHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		err := cache.DB().View(func(tx *buntdb.Tx) error {
@@ -29,6 +34,11 @@ func HealthDataHandler(cache *data.Cache) fiber.Handler {
 	}
 }
 
+// HealthControlHandler handles GET /service/data/tasks/health endpoint
+// on the control server.
+// The control server has no database; it always returns healthy.
+//
+// Response: JSON health status with service name and version.
 func HealthControlHandler() fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
