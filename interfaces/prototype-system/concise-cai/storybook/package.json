@@ -1,18 +1,18 @@
 {
-  "name": "volkova-prototype-web-core",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "storybook": "storybook dev -p 3690",
-    "build": "storybook build --output-dir storybook-static"
-  },
-  "devDependencies": {
-    "@chromatic-com/storybook": "5.1.1",
-    "@storybook/addon-a11y": "10.3.3",
-    "@storybook/addon-vitest": "10.3.3",
-    "@storybook/html-vite": "10.3.3",
-    "storybook": "10.3.3",
-    "typescript": "6.0.2",
-    "vite": "8.0.3"
-  }
+    "name": "concise-cai",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "storybook": "storybook dev -p 3690",
+        "build": "storybook build --output-dir storybook-static"
+    },
+    "devDependencies": {
+        "@chromatic-com/storybook": "5.1.1",
+        "@storybook/addon-a11y": "10.3.3",
+        "@storybook/addon-vitest": "10.3.3",
+        "@storybook/html-vite": "10.3.3",
+        "storybook": "10.3.3",
+        "typescript": "6.0.2",
+        "vite": "8.0.3"
+    }
 }
