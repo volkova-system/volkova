@@ -21,6 +21,17 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 )
 
+// ServeData opens the action cache and starts the data HTTP server.
+//
+// The data server exposes CRUD endpoints for action records and runs
+// until it receives an OS interrupt, SIGTERM, a shutdown signal, or
+// an abort signal. On exit the cache is persisted to disk via
+// cache.Close().
+//
+// Listener selection (in priority order):
+//  1. Inherited file descriptor via SOCKET_FD / USE_INHERITED_FD env vars.
+//  2. Port from ACTIONS_DATA_SERVICE_PORT env var.
+//  3. DefaultPort constant.
 func ServeData() {
 	cache, err := data.Open()
 	if err != nil {
