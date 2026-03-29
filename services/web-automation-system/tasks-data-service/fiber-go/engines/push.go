@@ -12,6 +12,11 @@ import (
 )
 
 // PushTask stores a task in the cache using its reference as the key.
+// If the task has no CreatedAt timestamp it is set to now; UpdatedAt is
+// always refreshed to the current time.
+//
+// The cache key format is "task:<reference>".
+// Returns an error if marshalling or the BuntDB write fails.
 func PushTask(cache *data.Cache, task models.Task) error {
 	// Set timestamps for new tasks
 	now := time.Now()
