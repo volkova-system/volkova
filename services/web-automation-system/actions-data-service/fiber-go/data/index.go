@@ -7,6 +7,14 @@ import (
 	"github.com/tidwall/buntdb"
 )
 
+// SetupIndexes creates the BuntDB indexes required for action queries.
+//
+// Indexes created:
+//   - DefaultCacheName: string index on all "action:*" keys.
+//   - ReferenceIndexName: JSON index on the "reference" field,
+//     used for ordered pagination in GetActions.
+//
+// Returns an error if either index cannot be created.
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
 		settings.DefaultCacheName,
