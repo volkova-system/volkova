@@ -12,7 +12,11 @@ import (
 )
 
 // PushAction stores an action in the cache using its reference as the key.
+// If the action has no CreatedAt timestamp it is set to now; UpdatedAt is
+// always refreshed to the current time.
 //
+// The cache key format is "action:<reference>".
+// Returns an error if marshalling or the BuntDB write fails.
 func PushAction(cache *data.Cache, action models.Action) error {
 	// Set timestamps for new actions
 	now := time.Now()
