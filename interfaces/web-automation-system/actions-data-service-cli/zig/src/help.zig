@@ -29,9 +29,13 @@ pub fn printHelp() void {
         \\Commands:
         \\  health        Check service health status
         \\  stop          Stop the service
-        \\  push          Push a new action to the service
-        \\  get           Get a specific action by reference
+        \\  abort         Abort the service
+        \\  start         Start the service
+        \\  kill          Kill the service
+        \\
         \\  list          List actions with optional filtering
+        \\  get           Get a specific action by reference
+        \\  push          Push a new action to the service
         \\  pop           Remove an action by reference
         \\
         \\Global Options:
@@ -53,7 +57,7 @@ pub fn printHelp() void {
         \\    --reference=   Action reference (required)
         \\    --name=        Action name (required)
         \\    --description= Action description (required)
-        \\    --type=        Action type (required)
+        \\    --flow=        Action flow (required)
         \\    --address=     Target address (optional)
         \\    --selector=    Element selector (optional)
         \\    --value=       Input value (optional)
@@ -65,7 +69,7 @@ pub fn printHelp() void {
         \\  actions-data-service-cli list --limit=20 --skip=10
         \\  actions-data-service-cli get my-action-ref
         \\  actions-data-service-cli push --action=action.json
-        \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --type=click --selector="#submit"
+        \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --flow=click --selector="#submit"
         \\  actions-data-service-cli pop my-action-ref
         \\
     , .{});
@@ -108,13 +112,49 @@ pub fn printCommandHelp(command: Command) void {
                 \\
             , .{});
         },
+        .abort => {
+            std.debug.print(
+                \\abort - Abort the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli abort
+                \\
+                \\Description:
+                \\  Sends an abort signal to the actions data service.
+                \\
+            , .{});
+        },
+        .start => {
+            std.debug.print(
+                \\start - Start the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli start
+                \\
+                \\Description:
+                \\  Sends a start signal to the actions data service.
+                \\
+            , .{});
+        },
+        .kill => {
+            std.debug.print(
+                \\kill - Kill the service
+                \\
+                \\Usage:
+                \\  actions-data-service-cli kill
+                \\
+                \\Description:
+                \\  Sends a kill signal to the actions data service.
+                \\
+            , .{});
+        },
         .push => {
             std.debug.print(
                 \\push - Push a new action to the service
                 \\
                 \\Usage:
                 \\  actions-data-service-cli push --action=FILE
-                \\  actions-data-service-cli push --reference= --name= --description= --type= [options]
+                \\  actions-data-service-cli push --reference= --name= --description= --flow= [options]
                 \\
                 \\Options (file mode):
                 \\  --action=FILE  Load action from JSON file
@@ -123,7 +163,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\  --reference=   Action reference (required)
                 \\  --name=        Action name (required)
                 \\  --description= Action description (required)
-                \\  --type=        Action type (required)
+                \\  --flow=        Action flow (required)
                 \\  --address=     Target address (optional)
                 \\  --selector=    Element selector (optional)
                 \\  --value=       Input value (optional)
@@ -132,7 +172,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  actions-data-service-cli push --action=action.json
-                \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --type=click --selector="#submit"
+                \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --flow=click --selector="#submit"
                 \\
             , .{});
         },
