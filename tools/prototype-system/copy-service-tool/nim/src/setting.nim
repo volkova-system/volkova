@@ -4,8 +4,7 @@ const
   # Command name for CLI interface
   commandName* = "copy-service"
 
-  # Directory marker to identify project root
-  projectMarker* = "services"
+  # Directory name within project root containing services
+  servicesDirectory* = "services"
 
-  # Maximum directory levels to ascend when searching for root
-  maxAscend* = 12
+  version* = "0.0.0"
