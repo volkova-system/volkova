@@ -17,6 +17,12 @@ proc checkHelpFlag*(flag: string): bool =
   ## Returns: Boolean true if it's a help flag
   return flag in ["-h", "--help", "help"]
 
+proc checkVersionFlag*(flag: string): bool =
+  ## Check if argument is a version flag
+  ## Args: flag - The flag to check
+  ## Returns: Boolean true if it's a version flag
+  return flag in ["-v", "--version", "version"]
+
 proc checkCommandHelpFlag*(args: seq[string]): bool =
   ## Check if arguments contain command help flag
   ## Args: args - List of arguments to check
