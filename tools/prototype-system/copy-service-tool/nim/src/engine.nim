@@ -1,41 +1,25 @@
 # Core engine for copy-service tool operations
 
-import os, strutils
+import os, strutils, osproc
 import setting
 
 proc findRoot*(): string =
-  ## Find project root by searching for services directory
-  ## Returns: Absolute path to project root
-  var dir = getCurrentDir()
+  ## Find project root using git repository detection
+  ## Returns: Absolute path to project root (git repository root)
+  let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
+  if exitCode == 0:
+    let gitRoot = output.strip()
+    if gitRoot != "" and dirExists(gitRoot):
+      return absolutePath(gitRoot)
 
-  for i in 0..<maxAscend:
-    let servicesPath = dir / projectMarker
-
-    if dirExists(servicesPath):
-      return absolutePath(dir)
-
-    let parent = parentDir(dir)
-    if parent == dir:  # Reached filesystem root
-      break
-    dir = parent
-
-  raise newException(IOError, "Project root not found after " & $maxAscend & " levels")
+  raise newException(IOError, "Git repository root not found")
 
 proc servicesRoot*(): string =
   ## Get absolute path to services directory
   ## Returns: Absolute path to services directory
   let root = findRoot()
-  let servicesPath = root / projectMarker
+  let servicesPath = root / servicesDirectory
   return absolutePath(servicesPath)
-
-proc within(base: string, path: string): bool =
-  ## Check if path is within base directory
-  ## Args: base - Base directory path
-  ##       path - Path to check
-  ## Returns: Boolean true if path is within base
-  let normalBase = absolutePath(base)
-  let normalPath = absolutePath(path)
-  return normalPath.startsWith(normalBase)
 
 proc copyDir*(srcRel: string, dstRel: string): string =
   ## Copy directory from source to destination within services
@@ -45,28 +29,6 @@ proc copyDir*(srcRel: string, dstRel: string): string =
   let services = servicesRoot()
   let srcAbs = absolutePath(services / srcRel)
   let dstAbs = absolutePath(services / dstRel)
-
-  # Validate source exists and is directory
-  if not dirExists(srcAbs):
-    raise newException(IOError, "Source directory not found: " & srcRel)
-
-  # Validate paths are within services directory
-  if not within(services, srcAbs):
-    raise newException(IOError, "Source path outside services directory: " & srcRel)
-
-  if not within(services, dstAbs):
-    raise newException(IOError, "Target path outside services directory: " & dstRel)
-
-  # Validate source and target relationship
-  if srcAbs == dstAbs:
-    raise newException(IOError, "Source and target are identical: " & srcRel)
-
-  if dstAbs.startsWith(srcAbs):
-    raise newException(IOError, "Target cannot be inside source directory")
-
-  # Check if target already exists
-  if dirExists(dstAbs):
-    raise newException(IOError, "Target directory already exists: " & dstRel)
 
   # Create parent directory if needed
   let parent = parentDir(dstAbs)
