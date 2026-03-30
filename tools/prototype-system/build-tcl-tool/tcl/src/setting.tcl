@@ -14,7 +14,7 @@ namespace eval build_tcl {
         # TCL Kit download URLs for different platforms
         variable tclkitUrls
         array set tclkitUrls {
-            windows "https://sourceforge.net/projects/twapi/files/Tcl%20binaries/Tclkits/tclkit-gui-8_6_7-x64.exe/download"
+            windows "https://sourceforge.net/projects/twapi/files/Tcl%20binaries/Tclkits%20with%20TWAPI/tclkit-cli-8_6_7-twapi-4_2_12-x64-max.exe/download"
             linux   "https://gorilla.dp100.com/downloads/tclkit/tclkit-8.6.9-linux-x86_64"
             darwin  "https://gorilla.dp100.com/downloads/tclkit/tclkit-8.6.6-MacOSX-amd64-mk-tk"
         }
