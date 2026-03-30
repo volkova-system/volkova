@@ -9,18 +9,15 @@ import (
 	"path/filepath"
 
 	"github.com/tidwall/buntdb"
+
+	"runtimes-data-service/settings"
 )
 
-// defaultCacheName is the default index name used for runtime storage.
-//
-const defaultCacheName = "runtimes"
-
 // Cache represents an in-memory cache for runtime data using BuntDB.
-//
 type Cache struct {
-	name        string
-	runtimes    *buntdb.DB
-	path        string
+	name     string
+	runtimes *buntdb.DB
+	path     string
 }
 
 func (db *Cache) DB() *buntdb.DB {
@@ -37,17 +34,16 @@ func (db *Cache) Path() string {
 
 // Open creates and initializes a new in-memory cache instance.
 func Open() (*Cache, error) {
-    dbPath := os.Getenv("RUNTIMES_CACHE_PATH")
+	dbPath := os.Getenv("RUNTIMES_CACHE_PATH")
 
-    if dbPath == "" {
-        absPath, err := filepath.Abs("./data")
-        if err != nil {
-            return nil, fmt.Errorf("failed to get absolute path: %w",
-                err)
-        }
+	if dbPath == "" {
+		absPath, err := filepath.Abs("./data")
+		if err != nil {
+			return nil, fmt.Errorf("failed to get absolute path: %w", err)
+		}
 
-        dbPath = filepath.Join(absPath, "runtimes-cache.db")
-    }
+		dbPath = filepath.Join(absPath, "runtimes-cache.db")
+	}
 
 	return OpenWithPath(dbPath)
 }
@@ -57,9 +53,9 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 	if dbPath != "" && dbPath != ":memory:" {
 		persistPath = dbPath
 		if err := os.MkdirAll(filepath.Dir(persistPath),
-            0755); err != nil {
+			0755); err != nil {
 			return nil, fmt.Errorf(
-                "failed to create directory for db: %w", err)
+				"failed to create directory for db: %w", err)
 		}
 	}
 
@@ -73,12 +69,12 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 			f, err := os.Open(persistPath)
 			if err != nil {
 				return nil, fmt.Errorf(
-                    "failed to open db file for load: %w", err)
+					"failed to open db file for load: %w", err)
 			}
 			defer f.Close()
 			if err := conn.Load(f); err != nil {
 				return nil, fmt.Errorf(
-                    "failed to load db snapshot: %w", err)
+					"failed to load db snapshot: %w", err)
 			}
 		}
 	}
@@ -87,29 +83,32 @@ func OpenWithPath(dbPath string) (*Cache, error) {
 		return nil, err
 	}
 
-	return &Cache{name: defaultCacheName, runtimes: conn,
-        path: persistPath}, nil
+	return &Cache{
+		name:     settings.DefaultCacheName,
+		runtimes: conn,
+		path:     persistPath,
+	}, nil
 }
 
 // Close gracefully shuts down the cache and releases all resources.
 func (db *Cache) Close() error {
 	if db.path != "" {
 		if err := os.MkdirAll(filepath.Dir(db.path),
-            0755); err != nil {
+			0755); err != nil {
 			return fmt.Errorf(
-                "failed to create directory for db: %w", err)
+				"failed to create directory for db: %w", err)
 		}
 
 		f, err := os.Create(db.path)
 		if err != nil {
 			return fmt.Errorf(
-                "failed to create db file: %w", err)
+				"failed to create db file: %w", err)
 		}
 		defer f.Close()
 
 		if err := db.runtimes.Save(f); err != nil {
 			return fmt.Errorf(
-                "failed to save db snapshot: %w", err)
+				"failed to save db snapshot: %w", err)
 		}
 	}
 
