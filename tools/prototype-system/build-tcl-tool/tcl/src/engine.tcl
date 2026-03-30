@@ -212,20 +212,27 @@ namespace eval build_tcl {
 
             puts "Building TCL tool for $platform platform..."
 
-            # Download required binaries to src directory
+            # Download required binaries to build directory
             puts "Downloading build tools..."
-            set tclkitPath [downloadTclkit $srcPath]
-            set sdxPath [downloadSdx $srcPath]
 
-            # Create temporary build directory
-            set buildDir [file join $distPath "build-temp"]
-            if {[file exists $buildDir]} {
-                file delete -force $buildDir
+            # Create build directory for artifacts
+            set buildDir [file join $distPath "build"]
+            if {![file exists $buildDir]} {
+                file mkdir $buildDir
             }
-            file mkdir $buildDir
+
+            set tclkitPath [downloadTclkit $buildDir]
+            set sdxPath [downloadSdx $buildDir]
+
+            # Create temporary build directory for starkit creation
+            set tempBuildDir [file join $buildDir "temp-[clock seconds]"]
+            if {[file exists $tempBuildDir]} {
+                file delete -force $tempBuildDir
+            }
+            file mkdir $tempBuildDir
 
             # Create starkit structure
-            set starkitDir [file join $buildDir "$toolDir.vfs"]
+            set starkitDir [file join $tempBuildDir "$toolDir.vfs"]
             file mkdir $starkitDir
             file mkdir [file join $starkitDir "lib"]
             file mkdir [file join $starkitDir "lib" $toolDir]
@@ -261,16 +268,22 @@ namespace eval build_tcl {
 
             # Build the starkit using SDX
             puts "Building starkit..."
-            set starkitFile [file join $buildDir "$toolDir.kit"]
+            set starkitFile [file join $tempBuildDir "$toolDir.kit"]
 
             # Use tclkit to run SDX
             set sdxCmd [list $tclkitPath $sdxPath wrap $starkitFile -vfs $starkitDir]
-            if {[catch {exec {*}$sdxCmd} result]} {
-                puts "SDX output: $result"
+            puts "Running: $sdxCmd"
+
+            if {[catch {exec {*}$sdxCmd 2>@1} result]} {
+                puts "SDX execution result: $result"
                 # SDX might succeed but still output to stderr, so check if file was created
                 if {![file exists $starkitFile]} {
                     error "Failed to create starkit: $result"
+                } else {
+                    puts "Starkit created successfully despite warnings"
                 }
+            } else {
+                puts "SDX completed successfully: $result"
             }
 
             # Create final executable
@@ -302,14 +315,108 @@ namespace eval build_tcl {
                 file attributes $execPath -permissions 0755
             }
 
-            # Clean up temporary build directory
-            file delete -force $buildDir
+            # Clean up temporary build directory (ignore errors)
+            robustCleanup $tempBuildDir
 
             puts "Build completed successfully!"
+            puts "Build artifacts stored in: [file join $distPath build]"
+            puts "  - tclkit: [file tail $tclkitPath]"
+            puts "  - sdx: [file tail $sdxPath]"
             puts "Executable created: $execPath"
             puts "Standalone executable - no external dependencies required"
 
             return $execPath
+        }
+
+# Clean functions to append to engine.tcl
+
+        # Clean up build artifacts for a tool
+        # Args: toolDir - Tool directory name
+        proc cleanupBuildArtifacts {toolDir} {
+            # Validate tool structure
+            set paths [validateToolStructure $toolDir]
+            set distPath [dict get $paths distPath]
+
+            # Clean up build directory
+            set buildDir [file join $distPath "build"]
+            if {[file exists $buildDir]} {
+                puts "Cleaning up build artifacts..."
+                robustCleanup $buildDir
+            }
+
+            # Clean up platform directories
+            foreach platform {windows linux darwin} {
+                set platformDir [file join $distPath $platform]
+                if {[file exists $platformDir]} {
+                    puts "Cleaning up $platform artifacts..."
+                    robustCleanup $platformDir
+                }
+            }
+
+            puts "Cleanup completed for $toolDir"
+        }
+
+        # Robust directory cleanup function for Windows
+        # Args: dirPath - Directory path to clean up
+        proc robustCleanup {dirPath} {
+            if {![file exists $dirPath]} {
+                return
+            }
+
+            puts "Cleaning up: $dirPath"
+
+            # Method 1: Try standard Tcl deletion first
+            if {![catch {file delete -force $dirPath}]} {
+                puts "Standard cleanup successful"
+                return
+            }
+
+            # Method 2: Use PowerShell with multiple techniques
+            global tcl_platform
+            if {$tcl_platform(platform) eq "windows"} {
+                puts "Trying PowerShell cleanup methods..."
+
+                # Technique 1: Remove read-only attributes first
+                set attribCmd [list powershell -Command "Get-ChildItem '$dirPath' -Recurse | ForEach-Object { \$_.Attributes = 'Normal' }; Remove-Item '$dirPath' -Recurse -Force -ErrorAction SilentlyContinue"]
+                if {![catch {exec {*}$attribCmd}]} {
+                    if {![file exists $dirPath]} {
+                        puts "PowerShell cleanup successful"
+                        return
+                    }
+                }
+
+                # Technique 2: Take ownership and then delete
+                set takeownCmd [list powershell -Command "takeown /f '$dirPath' /r /d y 2>nul; icacls '$dirPath' /grant administrators:F /t 2>nul; Remove-Item '$dirPath' -Recurse -Force -ErrorAction SilentlyContinue"]
+                if {![catch {exec {*}$takeownCmd}]} {
+                    if {![file exists $dirPath]} {
+                        puts "Ownership-based cleanup successful"
+                        return
+                    }
+                }
+
+                # Technique 3: Use robocopy to mirror empty directory (Windows-specific trick)
+                set emptyDir [file join [file dirname $dirPath] "empty-temp-[clock seconds]"]
+                file mkdir $emptyDir
+                set robocopyCmd [list robocopy $emptyDir $dirPath /mir /r:0 /w:0]
+                catch {exec {*}$robocopyCmd}
+                catch {file delete -force $emptyDir}
+                catch {file delete -force $dirPath}
+
+                if {![file exists $dirPath]} {
+                    puts "Robocopy cleanup successful"
+                    return
+                }
+            }
+
+            # Method 3: Last resort - rename and mark for deletion on reboot
+            if {[file exists $dirPath]} {
+                set tempName [file join [file dirname $dirPath] "delete-me-[clock seconds]"]
+                if {![catch {file rename $dirPath $tempName}]} {
+                    puts "Directory renamed to $tempName for later cleanup"
+                } else {
+                    puts "Warning: Could not fully clean up $dirPath - some files may remain locked"
+                }
+            }
         }
 
         # Helper function to read binary file
@@ -321,6 +428,5 @@ namespace eval build_tcl {
             close $fp
             return $content
         }
-
     }
 }
