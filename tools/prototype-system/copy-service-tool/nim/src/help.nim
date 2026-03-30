@@ -18,7 +18,12 @@ proc printUsage*() =
   echo "               complex-system/complex-data-service/services"
   echo ""
   echo "Options:"
-  echo "  -h, --help, help  Show this help message"
+  echo "  -h, --help, help     Show this help message"
+  echo "  -v, --version        Show version information"
+
+proc printVersion*() =
+  ## Print version information to stdout
+  echo commandName, " version ", version
 
 proc printCommandHelp*(command: string) =
   ## Print command-specific help information
