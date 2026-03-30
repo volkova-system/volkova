@@ -8,6 +8,7 @@ import (
 
 	"runtimes-data-service/data"
 	"runtimes-data-service/models"
+	"runtimes-data-service/settings"
 )
 
 // GetRuntimes retrieves a paginated list of runtimes from the cache.
@@ -28,7 +29,7 @@ func GetRuntimes(cache *data.Cache, skip, limit int) ([]models.Runtime, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend(cache.Name(), func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
@@ -40,11 +41,9 @@ func GetRuntimes(cache *data.Cache, skip, limit int) ([]models.Runtime, error) {
 			}
 
 			var runtime models.Runtime
-			if err := json.Unmarshal([]byte(value), &runtime);
-                err != nil {
+			if err := json.Unmarshal([]byte(value), &runtime); err != nil {
 				unmarshalErr = fmt.Errorf(
-					"failed to unmarshal runtime at key %s: %w",
-                        key, err)
+					"failed to unmarshal runtime at key %s: %w", key, err)
 
 				return false
 			}
