@@ -12,7 +12,11 @@ import (
 )
 
 // PushRuntime stores a runtime in the cache using its reference as the key.
+// If the runtime has no CreatedAt timestamp it is set to now; UpdatedAt is
+// always refreshed to the current time.
 //
+// The cache key format is "runtime:<reference>".
+// Returns an error if marshalling or the BuntDB write fails.
 func PushRuntime(cache *data.Cache, runtime models.Runtime) error {
 	// Set timestamps for new runtimes
 	now := time.Now()
@@ -27,11 +31,9 @@ func PushRuntime(cache *data.Cache, runtime models.Runtime) error {
 	}
 
 	return cache.DB().Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set("runtime:"+runtime.Reference,
-            string(runtimeData), nil)
+		_, _, err := tx.Set("runtime:"+runtime.Reference, string(runtimeData), nil)
 		if err != nil {
-			return fmt.Errorf("failed to store runtime in cache: %w",
-                err)
+			return fmt.Errorf("failed to store runtime in cache: %w", err)
 		}
 
 		return nil
