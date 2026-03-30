@@ -61,8 +61,8 @@
                     "Source": "winget"
                 },
                 {
-                    "PackageIdentifier": "nim.nim",
-                    "Version": "2.0.8",
+                    "PackageIdentifier": "NimLang.ChooseNim",
+                    "Version": "0.8.16",
                     "Source": "winget"
                 }
             ]
