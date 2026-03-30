@@ -28,7 +28,9 @@ proc copyDir*(srcRel: string, dstRel: string): string =
   ## Returns: Absolute path to created destination
   let services = servicesRoot()
   let srcAbs = absolutePath(services / srcRel)
-  let dstAbs = absolutePath(services / dstRel)
+  let dstDirAbs = absolutePath(services / dstRel)
+  let srcName = lastPathPart(srcAbs)
+  let dstAbs = absolutePath(dstDirAbs / srcName)
 
   # Create parent directory if needed
   let parent = parentDir(dstAbs)
