@@ -14,6 +14,7 @@ import (
 // Returns paginated list of sessions from cache storage.
 //
 // Query Parameters:
+//
 //   - skip:    Number of sessions to skip (default: 0)
 //
 //   - limit:   Maximum sessions to return (default: 10)
@@ -21,7 +22,6 @@ import (
 // Response: JSON array of sessions or error details
 //
 // Fails fast on any cache retrieval error.
-//
 func GetSessionsHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getSessionsFromCache(c, cache)
@@ -29,24 +29,20 @@ func GetSessionsHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getSessionsFromCache processes the sessions list request.
-//
 func getSessionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 	skip, limit, err := parsePaginationParams(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "invalid sessions request parameters" })
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid sessions request parameters")
 	}
 
 	sessions, err := retrieveSessionsFromCache(cache, skip, limit)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "session cache error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "session cache error")
 	}
 
 	total, err := engines.GetSessionsCount(cache)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "session cache count error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "session cache count error")
 	}
 
 	return sendSessionsResponse(c, sessions, skip, limit, total)
@@ -54,7 +50,6 @@ func getSessionsFromCache(c fiber.Ctx, cache *data.Cache) error {
 
 // parsePaginationParams extracts skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10. Enforces maximum limit of 100.
-//
 func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 	skip := 0
 	limit := 10
@@ -98,7 +93,6 @@ func parsePaginationParams(c fiber.Ctx) (int, int, error) {
 }
 
 // retrieveSessionsFromCache gets sessions from cache with pagination.
-//
 func retrieveSessionsFromCache(cache *data.Cache, skip, limit int) (
 	interface{}, error) {
 	return engines.GetSessions(cache, skip, limit)
@@ -106,10 +100,9 @@ func retrieveSessionsFromCache(cache *data.Cache, skip, limit int) (
 
 // sendSessionsResponse returns sessions list as JSON response
 // with pagination metadata.
-//
 func sendSessionsResponse(c fiber.Ctx, sessions interface{},
 	skip, limit, total int) error {
-	pages, page := computePageData(skip, limit, total)
+	pages, page := ComputePageData(skip, limit, total)
 
 	return c.JSON(fiber.Map{
 		"sessions": sessions,
