@@ -1,91 +1,98 @@
-proc usage {} {
-    puts "Usage: copy-service <source_dir_relative_to_services> <target_dir_relative_to_services>"
-    puts "Example: copy-service prototype-system web-automation-system"
-}
+# CLI interface for copy-service tool
 
-proc find_services_root {} {
-    set dir [file dirname [info script]]
-    while {1} {
-        set servicesDir [file join $dir "services"]
-        if {[file isdirectory $servicesDir]} {
-            return [file normalize $servicesDir]
+# Source all required modules
+source [file join [file dirname [info script]] setting.tcl]
+source [file join [file dirname [info script]] help.tcl]
+source [file join [file dirname [info script]] engine.tcl]
+source [file join [file dirname [info script]] handler.tcl]
+
+namespace eval copy_service {
+    namespace eval cli {
+
+        # Main CLI execution function
+        # Processes command line arguments and delegates to appropriate handlers
+        proc run {} {
+            global argc argv
+
+            # Check if no arguments provided
+            if {$argc == 0} {
+                copy_service::help::printUsage
+                exit 1
+            }
+
+            # Get command and arguments
+            set cmd [lindex $argv 0]
+            set args [lrange $argv 1 end]
+
+            # Handle help requests
+            if {[checkHelpFlag $cmd]} {
+                copy_service::help::printUsage
+                exit 0
+            }
+
+            # Validate and execute command
+            set command [resolveCommand $cmd]
+            if {$command eq ""} {
+                puts stderr "Error: Invalid command '$cmd'"
+                copy_service::help::printUsage
+                exit 1
+            }
+
+            # Check for command-specific help
+            if {[checkCommandHelpFlag $args]} {
+                copy_service::help::printCommandHelp $command
+                exit 0
+            }
+
+            # Execute the command
+            executeCommand $command $args
         }
-        set parent [file dirname $dir]
-        if {$parent eq $dir} {
-            error "Unable to locate 'services' directory relative to the CLI script"
+
+        # Check if argument is a help flag
+        # Args: flag - The flag to check
+        # Returns: Boolean true if it's a help flag
+        proc checkHelpFlag {flag} {
+            return [expr {$flag in {"-h" "--help" "help"}}]
         }
-        set dir $parent
-    }
-}
 
-proc list_services {} {
-    set servicesRoot [find_services_root]
-    set dirs [glob -nocomplain -types d -directory $servicesRoot *]
-    set names {}
-    foreach d $dirs {
-        set base [file tail $d]
-        if {$base eq "." || $base eq ".."} {
-            continue
+        # Check if arguments contain command help flag
+        # Args: args - List of arguments to check
+        # Returns: Boolean true if help flag found
+        proc checkCommandHelpFlag {args} {
+            foreach arg $args {
+                if {[checkHelpFlag $arg]} {
+                    return 1
+                }
+            }
+            return 0
         }
-        lappend names $base
-    }
-    return $names
-}
 
-proc fail {msg code} {
-    puts stderr $msg
-    exit $code
-}
+        # Resolve command name to internal command
+        # Args: cmdName - Command name from user input
+        # Returns: Resolved command name or empty string if invalid
+        proc resolveCommand {cmdName} {
+            set validCommands [list $copy_service::setting::commandName]
 
-proc copy_service {srcRel destRel} {
-    set servicesRoot [find_services_root]
-    set src [file normalize [file join $servicesRoot $srcRel]]
-    set dest [file normalize [file join $servicesRoot $destRel]]
-    if {![file exists $src]} {
-        set options [list_services]
-        set hint ""
-        if {[llength $options] > 0} {
-            set hint "Available: [join $options {, }]"
+            if {$cmdName in $validCommands} {
+                return $cmdName
+            }
+
+            return ""
         }
-        fail "Source directory not found under services: $srcRel $hint" 2
-    }
-    if {![file isdirectory $src]} {
-        fail "Source path is not a directory: $srcRel" 2
-    }
-    if {$src eq $dest} {
-        fail "Source and target resolve to the same directory: $srcRel" 2
-    }
-    if {[file exists $dest]} {
-        fail "Target directory already exists under services: $destRel" 3
-    }
-    set destParent [file dirname $dest]
-    if {![file exists $destParent]} {
-        file mkdir $destParent
-    }
-    file copy $src $dest
-    puts "Copied service from '$srcRel' to '$destRel'"
-    puts "Source: $src"
-    puts "Target: $dest"
-}
 
-set args $argv
-if {$argc == 0} {
-    usage
-    exit 1
+        # Execute the resolved command with arguments
+        # Args: command - The resolved command name
+        #       args - List of command arguments
+        proc executeCommand {command args} {
+            switch $command {
+                "copy-service" {
+                    copy_service::handler::execute $command {*}$args
+                }
+                default {
+                    puts stderr "Error: Unknown command '$command'"
+                    exit 1
+                }
+            }
+        }
+    }
 }
-set first [lindex $args 0]
-if {[lsearch -exact {"-h" "--help" "help"} $first] >= 0} {
-    usage
-    exit 0
-}
-if {$first ne "copy-service"} {
-    usage
-    exit 1
-}
-if {$argc != 3} {
-    usage
-    exit 1
-}
-set srcRel [lindex $args 1]
-set destRel [lindex $args 2]
-copy_service $srcRel $destRel
