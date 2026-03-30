@@ -12,9 +12,12 @@ import (
 )
 
 // PushSession stores a session in the cache using its reference as the key.
+// If the session has no CreatedAt timestamp it is set to now; UpdatedAt is
+// always refreshed to the current time.
 //
+// The cache key format is "session:<reference>".
+// Returns an error if marshalling or the BuntDB write fails.
 func PushSession(cache *data.Cache, session models.Session) error {
-	// Set timestamps for new sessions
 	now := time.Now()
 	if session.CreatedAt.IsZero() {
 		session.CreatedAt = now
