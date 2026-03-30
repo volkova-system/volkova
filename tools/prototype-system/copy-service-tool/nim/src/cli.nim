@@ -62,6 +62,11 @@ proc run*() =
     printUsage()
     quit(0)
 
+  # Handle version requests
+  if handler.checkVersionFlag(cmd):
+    printVersion()
+    quit(0)
+
   # Validate and execute command
   let command = handler.resolveCommand(cmd)
   if command == "":
