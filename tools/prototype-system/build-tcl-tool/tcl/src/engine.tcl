@@ -328,8 +328,6 @@ namespace eval build_tcl {
             return $execPath
         }
 
-# Clean functions to append to engine.tcl
-
         # Clean up build artifacts for a tool
         # Args: toolDir - Tool directory name
         proc cleanupBuildArtifacts {toolDir} {
@@ -356,66 +354,156 @@ namespace eval build_tcl {
             puts "Cleanup completed for $toolDir"
         }
 
-        # Robust directory cleanup function for Windows
+        # Windows-specific cleanup procedure that kills processes holding files first
+        # Args: dirPath - Directory path to clean up
+        proc windowsCleanup {dirPath} {
+            if {![file exists $dirPath]} {
+                return
+            }
+
+            puts "Windows cleanup: $dirPath"
+
+            # Step 1: Find and kill processes holding files in the directory
+            puts "Finding processes holding files in directory..."
+            set handleCmd [list powershell -Command "
+                try {
+                    \$processes = @()
+                    Get-ChildItem '$dirPath' -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object {
+                        \$file = \$_.FullName
+                        try {
+                            \$handles = handle.exe -nobanner \$file 2>nul
+                            if (\$handles -match '\\s+(\\w+)\\s+pid:\\s+(\\d+)\\s+type:\\s+File\\s+') {
+                                \$processes += \$matches[2]
+                            }
+                        } catch {
+                            # handle.exe not available, try alternative method
+                            \$fileStream = [System.IO.File]::Open(\$file, 'Open', 'Read', 'None')
+                            \$fileStream.Close()
+                        }
+                    }
+                    \$processes | Sort-Object -Unique | ForEach-Object {
+                        Write-Host \"Killing process: \$_\"
+                        Stop-Process -Id \$_ -Force -ErrorAction SilentlyContinue
+                    }
+                } catch {
+                    Write-Host \"Process detection failed, continuing with cleanup\"
+                }
+            "]
+
+            catch {exec {*}$handleCmd}
+
+            # Step 2: Wait a moment for processes to terminate
+            after 1000
+
+            # Step 3: Remove read-only attributes and delete
+            puts "Removing attributes and deleting files..."
+            set cleanupCmd [list powershell -Command "
+                try {
+                    Get-ChildItem '$dirPath' -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+                        \$_.Attributes = 'Normal'
+                    }
+                    Remove-Item '$dirPath' -Recurse -Force -ErrorAction Stop
+                    Write-Host 'Cleanup successful'
+                } catch {
+                    Write-Host \"Cleanup failed: \$(\$_.Exception.Message)\"
+                    exit 1
+                }
+            "]
+
+            if {![catch {exec {*}$cleanupCmd} result]} {
+                if {![file exists $dirPath]} {
+                    puts "Windows cleanup successful"
+                    return
+                }
+            }
+
+            # Step 4: If still failed, try taking ownership first
+            puts "Taking ownership and retrying..."
+            set ownershipCmd [list powershell -Command "
+                try {
+                    takeown /f '$dirPath' /r /d y 2>nul
+                    icacls '$dirPath' /grant administrators:F /t 2>nul
+                    Get-ChildItem '$dirPath' -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+                        \$_.Attributes = 'Normal'
+                    }
+                    Remove-Item '$dirPath' -Recurse -Force -ErrorAction Stop
+                } catch {
+                    Write-Host \"Final cleanup attempt failed: \$(\$_.Exception.Message)\"
+                    exit 1
+                }
+            "]
+
+            if {![catch {exec {*}$ownershipCmd}]} {
+                if {![file exists $dirPath]} {
+                    puts "Windows cleanup with ownership successful"
+                    return
+                }
+            }
+
+            error "Windows cleanup failed: Directory still exists after all attempts"
+        }
+
+        # Unix/Linux cleanup procedure
+        # Args: dirPath - Directory path to clean up
+        proc unixCleanup {dirPath} {
+            if {![file exists $dirPath]} {
+                return
+            }
+
+            puts "Unix cleanup: $dirPath"
+
+            # Try standard deletion first
+            if {![catch {file delete -force $dirPath}]} {
+                puts "Unix cleanup successful"
+                return
+            }
+
+            # If that fails, try with system rm command
+            if {![catch {exec rm -rf $dirPath}]} {
+                puts "Unix cleanup with rm successful"
+                return
+            }
+
+            error "Unix cleanup failed: Could not delete directory"
+        }
+
+        # Cross-platform robust cleanup procedure
+        # Determines OS platform and calls appropriate cleanup method
         # Args: dirPath - Directory path to clean up
         proc robustCleanup {dirPath} {
             if {![file exists $dirPath]} {
                 return
             }
 
-            puts "Cleaning up: $dirPath"
+            puts "Starting robust cleanup: $dirPath"
 
-            # Method 1: Try standard Tcl deletion first
+            # Try standard Tcl deletion first (works on all platforms)
             if {![catch {file delete -force $dirPath}]} {
                 puts "Standard cleanup successful"
                 return
             }
 
-            # Method 2: Use PowerShell with multiple techniques
+            # Determine platform and use appropriate cleanup method
             global tcl_platform
-            if {$tcl_platform(platform) eq "windows"} {
-                puts "Trying PowerShell cleanup methods..."
-
-                # Technique 1: Remove read-only attributes first
-                set attribCmd [list powershell -Command "Get-ChildItem '$dirPath' -Recurse | ForEach-Object { \$_.Attributes = 'Normal' }; Remove-Item '$dirPath' -Recurse -Force -ErrorAction SilentlyContinue"]
-                if {![catch {exec {*}$attribCmd}]} {
-                    if {![file exists $dirPath]} {
-                        puts "PowerShell cleanup successful"
-                        return
-                    }
+            switch $tcl_platform(platform) {
+                "windows" {
+                    windowsCleanup $dirPath
                 }
-
-                # Technique 2: Take ownership and then delete
-                set takeownCmd [list powershell -Command "takeown /f '$dirPath' /r /d y 2>nul; icacls '$dirPath' /grant administrators:F /t 2>nul; Remove-Item '$dirPath' -Recurse -Force -ErrorAction SilentlyContinue"]
-                if {![catch {exec {*}$takeownCmd}]} {
-                    if {![file exists $dirPath]} {
-                        puts "Ownership-based cleanup successful"
-                        return
-                    }
+                "unix" {
+                    unixCleanup $dirPath
                 }
-
-                # Technique 3: Use robocopy to mirror empty directory (Windows-specific trick)
-                set emptyDir [file join [file dirname $dirPath] "empty-temp-[clock seconds]"]
-                file mkdir $emptyDir
-                set robocopyCmd [list robocopy $emptyDir $dirPath /mir /r:0 /w:0]
-                catch {exec {*}$robocopyCmd}
-                catch {file delete -force $emptyDir}
-                catch {file delete -force $dirPath}
-
-                if {![file exists $dirPath]} {
-                    puts "Robocopy cleanup successful"
-                    return
+                default {
+                    # Fallback for unknown platforms
+                    puts "Unknown platform: $tcl_platform(platform), trying generic cleanup"
+                    unixCleanup $dirPath
                 }
             }
 
-            # Method 3: Last resort - rename and mark for deletion on reboot
+            # Final verification
             if {[file exists $dirPath]} {
-                set tempName [file join [file dirname $dirPath] "delete-me-[clock seconds]"]
-                if {![catch {file rename $dirPath $tempName}]} {
-                    puts "Directory renamed to $tempName for later cleanup"
-                } else {
-                    puts "Warning: Could not fully clean up $dirPath - some files may remain locked"
-                }
+                error "Robust cleanup failed: Directory still exists after platform-specific cleanup"
+            } else {
+                puts "Robust cleanup completed successfully"
             }
         }
 
