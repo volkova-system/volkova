@@ -290,15 +290,21 @@ containers/*/data/**/*.*
 !tools/*-system/
 !tools/*-system/*-tool/
 !tools/*-system/*-tool/python/
-!tools/*-system/*-tool/tcl/
+
 !tools/*-system/*-tool/zig/
 !tools/*-system/*-tool/zig/src/
 !tools/*-system/*-tool/zig/build/
 !tools/*-system/*-tool/zig/dist/
 !tools/*-system/*-tool/**/*.tool
-!tools/*-system/*-tool/**/*.tcl
+
 !tools/*-system/*-tool/**/*.py
 !tools/*-system/*-tool/**/*.zig
+
+!tools/*-system/*-tool/tcl/
+!tools/*-system/*-tool/tcl/src/
+!tools/*-system/*-tool/tcl/build/
+!tools/*-system/*-tool/tcl/dist/
+!tools/*-system/*-tool/tcl/**/*.tcl
 # END TOOLS
 
 !waste/
