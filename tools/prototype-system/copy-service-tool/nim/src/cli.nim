@@ -28,9 +28,10 @@ proc executeCommand(command: string, args: seq[string]) =
 
       # Execute using engine with validated parameters
       let dstAbs = engine.copyDir(cmdValidation.srcRel, cmdValidation.dstRel)
+      let toRel = cmdValidation.dstRel & "/" & lastPathPart(cmdValidation.srcRel)
       echo "Successfully copied service:"
       echo "  From: ", cmdValidation.srcRel
-      echo "  To:   ", cmdValidation.dstRel
+      echo "  To:   ", toRel
       echo "  Path: ", dstAbs
       quit(0)
     except IOError as e:
