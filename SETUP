@@ -10,3 +10,5 @@ scripts/setup-feather-icons.ps1 -DestinationDirectory interfaces\prototype-syste
 scripts/setup-pico-css.ps1 -DestinationDirectory interfaces\prototype-system\concise-cai\storybook\public\styles\core
 scripts/setup-htmx.ps1 -DestinationDirectory interfaces\prototype-system\concise-cai\storybook\public\scripts\core
 scripts/setup-hyperscript.ps1 -DestinationDirectory interfaces\prototype-system\concise-cai\storybook\public\scripts\core
+
+choosenim stable --firstInstall
