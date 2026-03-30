@@ -61,8 +61,8 @@
                     "Source": "winget"
                 },
                 {
-                    "PackageIdentifier": "Magicsplat.TclTk",
-                    "Version": "1.16.0",
+                    "PackageIdentifier": "nim.nim",
+                    "Version": "2.0.8",
                     "Source": "winget"
                 }
             ]
