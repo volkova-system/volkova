@@ -16,6 +16,6 @@
         "golang.go",
         "zokugun.explicit-folding",
         "ziglang.vscode-zig",
-        "K3ndr1ckFu.tcl-language-support-for-vscode"
+        "nimsaem.nimvscode"
     ]
 }
