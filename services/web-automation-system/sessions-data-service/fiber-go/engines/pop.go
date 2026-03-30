@@ -12,7 +12,6 @@ import (
 
 // PopSession removes a session from the cache by its key and returns
 // the retrieved data.
-//
 func PopSession(cache *data.Cache, key string) (*models.Session, error) {
 	if key == "" {
 		return nil, fmt.Errorf("key cannot be empty")
@@ -20,7 +19,6 @@ func PopSession(cache *data.Cache, key string) (*models.Session, error) {
 
 	var session models.Session
 	err := cache.DB().Update(func(tx *buntdb.Tx) error {
-		// First retrieve the data
 		val, err := tx.Get(key)
 		if err != nil {
 			return fmt.Errorf("session not found for key %s: %w", key, err)
@@ -30,7 +28,6 @@ func PopSession(cache *data.Cache, key string) (*models.Session, error) {
 			return fmt.Errorf("failed to unmarshal session data: %w", err)
 		}
 
-		// Then delete the key
 		_, err = tx.Delete(key)
 		if err != nil {
 			return fmt.Errorf("failed to remove session with key %s: %w", key, err)
