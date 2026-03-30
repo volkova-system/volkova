@@ -1,17 +1,24 @@
 package data
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/tidwall/buntdb"
 
-	"runtimes-data-service/models"
+	"runtimes-data-service/settings"
 )
 
+// SetupIndexes creates the BuntDB indexes required for runtime queries.
+//
+// Indexes created:
+//   - DefaultCacheName: string index on all "runtime:*" keys.
+//   - ReferenceIndexName: JSON index on the "reference" field,
+//     used for ordered pagination in GetRuntimes.
+//
+// Returns an error if either index cannot be created.
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"runtime:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -19,20 +26,9 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"runtime:*",
-		func(a, b string) bool {
-			var runtimeA, runtimeB models.Runtime
-
-			if err := json.Unmarshal([]byte(a), &runtimeA); err != nil {
-				return false
-			}
-			if err := json.Unmarshal([]byte(b), &runtimeB); err != nil {
-				return false
-			}
-
-			return runtimeA.Reference < runtimeB.Reference
-		},
+		buntdb.IndexJSON("reference"),
 	); err != nil {
 		return fmt.Errorf("failed to create reference index: %w", err)
 	}
