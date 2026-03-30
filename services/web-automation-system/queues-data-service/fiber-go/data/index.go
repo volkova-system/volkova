@@ -1,17 +1,23 @@
 package data
 
 import (
-	"encoding/json"
 	"fmt"
+	"queues-data-service/settings"
 
 	"github.com/tidwall/buntdb"
-
-	"queues-data-service/models"
 )
 
+// SetupIndexes creates the BuntDB indexes required for queue queries.
+//
+// Indexes created:
+//   - DefaultCacheName: string index on all "queue:*" keys.
+//   - ReferenceIndexName: JSON index on the "reference" field,
+//     used for ordered pagination in GetQueues.
+//
+// Returns an error if either index cannot be created.
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"queue:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -19,20 +25,9 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"queue:*",
-		func(a, b string) bool {
-			var queueA, queueB models.Queue
-
-			if err := json.Unmarshal([]byte(a), &queueA); err != nil {
-				return false
-			}
-			if err := json.Unmarshal([]byte(b), &queueB); err != nil {
-				return false
-			}
-
-			return queueA.Reference < queueB.Reference
-		},
+		buntdb.IndexJSON("reference"),
 	); err != nil {
 		return fmt.Errorf("failed to create reference index: %w", err)
 	}
