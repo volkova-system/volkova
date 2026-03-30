@@ -14,7 +14,6 @@ import (
 // Response: JSON runtime data or error details
 //
 // Fails fast on missing reference or cache retrieval error.
-//
 func GetRuntimeHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getRuntimeFromCache(c, cache)
@@ -22,19 +21,16 @@ func GetRuntimeHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getRuntimeFromCache processes the single runtime retrieval request.
-//
 func getRuntimeFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "runtime reference cannot be empty" })
+		return IssueResponse(c, fiber.StatusBadRequest, "runtime reference cannot be empty")
 	}
 
 	runtime, err := engines.GetRuntime(cache, "runtime:"+reference)
 	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(
-			fiber.Map{ "error": "runtime not found" })
+		return IssueResponse(c, fiber.StatusNotFound, "runtime not found")
 	}
 
-	return c.JSON(fiber.Map{ "runtime": runtime })
+	return c.JSON(fiber.Map{"runtime": runtime})
 }
