@@ -1,0 +1,29 @@
+# Help and usage information for copy-service tool
+
+import setting
+
+proc printUsage*() =
+  ## Print usage information to stdout
+  echo "Usage: copy-service <source_rel> <target_rel>"
+  echo ""
+  echo "Description:"
+  echo "  Copies a service directory within the services folder"
+  echo ""
+  echo "Arguments:"
+  echo "  source_rel  Source directory relative to services/"
+  echo "  target_rel  Target directory relative to services/"
+  echo ""
+  echo "Example:"
+  echo "  copy-service simple-system/simple-data-service \\"
+  echo "               complex-system/complex-data-service/services"
+  echo ""
+  echo "Options:"
+  echo "  -h, --help, help  Show this help message"
+
+proc printCommandHelp*(command: string) =
+  ## Print command-specific help information
+  case command
+  of commandName:
+    printUsage()
+  else:
+    echo "No help available for command: ", command
