@@ -14,7 +14,6 @@ import (
 // Response: JSON session data or error details
 //
 // Fails fast on missing reference or cache retrieval error.
-//
 func GetSessionHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return getSessionFromCache(c, cache)
@@ -22,19 +21,16 @@ func GetSessionHandler(cache *data.Cache) fiber.Handler {
 }
 
 // getSessionFromCache processes the single session retrieval request.
-//
 func getSessionFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "session reference cannot be empty" })
+		return IssueResponse(c, fiber.StatusBadRequest, "session reference cannot be empty")
 	}
 
 	session, err := engines.GetSession(cache, "session:"+reference)
 	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(
-			fiber.Map{ "error": "session not found" })
+		return IssueResponse(c, fiber.StatusNotFound, "session not found")
 	}
 
-	return c.JSON(fiber.Map{ "session": session })
+	return c.JSON(fiber.Map{"session": session})
 }
