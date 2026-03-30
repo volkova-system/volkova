@@ -1,17 +1,23 @@
 package data
 
 import (
-	"encoding/json"
 	"fmt"
+	"sessions-data-service/settings"
 
 	"github.com/tidwall/buntdb"
-
-	"sessions-data-service/models"
 )
 
+// SetupIndexes creates the BuntDB indexes required for session queries.
+//
+// Indexes created:
+//   - DefaultCacheName: string index on all "session:*" keys.
+//   - ReferenceIndexName: JSON index on the "reference" field,
+//     used for ordered pagination in GetSessions.
+//
+// Returns an error if either index cannot be created.
 func SetupIndexes(conn *buntdb.DB) error {
 	if err := conn.CreateIndex(
-		defaultCacheName,
+		settings.DefaultCacheName,
 		"session:*",
 		buntdb.IndexString,
 	); err != nil {
@@ -19,20 +25,9 @@ func SetupIndexes(conn *buntdb.DB) error {
 	}
 
 	if err := conn.CreateIndex(
-		"reference",
+		settings.ReferenceIndexName,
 		"session:*",
-		func(a, b string) bool {
-			var sessionA, sessionB models.Session
-
-			if err := json.Unmarshal([]byte(a), &sessionA); err != nil {
-				return false
-			}
-			if err := json.Unmarshal([]byte(b), &sessionB); err != nil {
-				return false
-			}
-
-			return sessionA.Reference < sessionB.Reference
-		},
+		buntdb.IndexJSON("reference"),
 	); err != nil {
 		return fmt.Errorf("failed to create reference index: %w", err)
 	}
