@@ -1,33 +1,7 @@
 # CLI interface for copy-service tool
 
 import os, strutils
-import setting, help, handler
-
-proc checkHelpFlag(flag: string): bool =
-  ## Check if argument is a help flag
-  ## Args: flag - The flag to check
-  ## Returns: Boolean true if it's a help flag
-  return flag in ["-h", "--help", "help"]
-
-proc checkCommandHelpFlag(args: seq[string]): bool =
-  ## Check if arguments contain command help flag
-  ## Args: args - List of arguments to check
-  ## Returns: Boolean true if help flag found
-  for arg in args:
-    if checkHelpFlag(arg):
-      return true
-  return false
-
-proc resolveCommand(cmdName: string): string =
-  ## Resolve command name to internal command
-  ## Args: cmdName - Command name from user input
-  ## Returns: Resolved command name or empty string if invalid
-  let validCommands = @[commandName]
-
-  if cmdName in validCommands:
-    return cmdName
-
-  return ""
+import setting, help, handler, engine
 
 proc executeCommand(command: string, args: seq[string]) =
   ## Execute the resolved command with arguments
@@ -35,7 +9,36 @@ proc executeCommand(command: string, args: seq[string]) =
   ##       args - List of command arguments
   case command
   of "copy-service":
-    handler.execute(command, args)
+    # Validate command and basic parameters
+    let cmdValidation = handler.validateCommand(command, args)
+
+    if not cmdValidation.valid:
+      stderr.writeLine("Error: ", cmdValidation.errorMsg)
+      printUsage()
+      quit(1)
+
+    # Get services root and validate paths
+    try:
+      let servicesRoot = engine.servicesRoot()
+      let pathValidation = handler.validatePaths(cmdValidation.srcRel, cmdValidation.dstRel, servicesRoot)
+
+      if not pathValidation.valid:
+        stderr.writeLine("Error: ", pathValidation.errorMsg)
+        quit(2)
+
+      # Execute using engine with validated parameters
+      let dstAbs = engine.copyDir(cmdValidation.srcRel, cmdValidation.dstRel)
+      echo "Successfully copied service:"
+      echo "  From: ", cmdValidation.srcRel
+      echo "  To:   ", cmdValidation.dstRel
+      echo "  Path: ", dstAbs
+      quit(0)
+    except IOError as e:
+      stderr.writeLine("Error: ", e.msg)
+      quit(2)
+    except OSError as e:
+      stderr.writeLine("Error: ", e.msg)
+      quit(2)
   else:
     stderr.writeLine("Error: Unknown command '" & command & "'")
     quit(1)
@@ -55,19 +58,19 @@ proc run*() =
   let args = params[1..^1]
 
   # Handle help requests
-  if checkHelpFlag(cmd):
+  if handler.checkHelpFlag(cmd):
     printUsage()
     quit(0)
 
   # Validate and execute command
-  let command = resolveCommand(cmd)
+  let command = handler.resolveCommand(cmd)
   if command == "":
     stderr.writeLine("Error: Invalid command '" & cmd & "'")
     printUsage()
     quit(1)
 
   # Check for command-specific help
-  if checkCommandHelpFlag(args):
+  if handler.checkCommandHelpFlag(args):
     printCommandHelp(command)
     quit(0)
 
