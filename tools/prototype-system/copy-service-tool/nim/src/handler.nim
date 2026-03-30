@@ -59,7 +59,9 @@ proc validatePaths*(srcRel: string, dstRel: string, servicesRoot: string): Valid
   ##       servicesRoot - Absolute path to services directory
   ## Returns: ValidationResult with validation status
   let srcAbs = absolutePath(servicesRoot / srcRel)
-  let dstAbs = absolutePath(servicesRoot / dstRel)
+  let dstDirAbs = absolutePath(servicesRoot / dstRel)
+  let srcName = lastPathPart(srcAbs)
+  let dstFinalAbs = absolutePath(dstDirAbs / srcName)
 
   # Validate source exists and is directory
   if not dirExists(srcAbs):
@@ -75,30 +77,30 @@ proc validatePaths*(srcRel: string, dstRel: string, servicesRoot: string): Valid
       errorMsg: "Source path outside services directory: " & srcRel
     )
 
-  if not within(servicesRoot, dstAbs):
+  if not within(servicesRoot, dstDirAbs):
     return ValidationResult(
       valid: false,
       errorMsg: "Target path outside services directory: " & dstRel
     )
 
   # Validate source and target relationship
-  if srcAbs == dstAbs:
+  if dstFinalAbs == srcAbs:
     return ValidationResult(
       valid: false,
       errorMsg: "Source and target are identical: " & srcRel
     )
 
-  if dstAbs.startsWith(srcAbs):
+  if dstFinalAbs.startsWith(srcAbs):
     return ValidationResult(
       valid: false,
       errorMsg: "Target cannot be inside source directory"
     )
 
-  # Check if target already exists
-  if dirExists(dstAbs):
+  # Check if final target already exists
+  if dirExists(dstFinalAbs):
     return ValidationResult(
       valid: false,
-      errorMsg: "Target directory already exists: " & dstRel
+      errorMsg: "Target directory already exists: " & (dstRel & "/" & srcName)
     )
 
   # Return successful validation
