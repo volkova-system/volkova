@@ -1,10 +1,13 @@
 package handlers
 
 import (
-	"github.com/gofiber/fiber/v3"
+"errors"
 
-	"queues-data-service/data"
-	"queues-data-service/engines"
+"github.com/gofiber/fiber/v3"
+"github.com/tidwall/buntdb"
+
+"queues-data-service/data"
+"queues-data-service/engines"
 )
 
 // PopQueueHandler handles DELETE /service/data/queues/pop/:reference endpoint.
@@ -14,27 +17,27 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on missing reference or cache removal error.
-//
 func PopQueueHandler(cache *data.Cache) fiber.Handler {
-	return func(c fiber.Ctx) error {
-		return popQueueFromCache(c, cache)
-	}
+return func(c fiber.Ctx) error {
+return popQueueFromCache(c, cache)
+}
 }
 
 // popQueueFromCache processes the queue removal request.
-//
 func popQueueFromCache(c fiber.Ctx, cache *data.Cache) error {
-	reference := c.Params("reference")
-	if reference == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "queue reference cannot be empty" })
-	}
+reference := c.Params("reference")
+if reference == "" {
+return IssueResponse(c, fiber.StatusBadRequest, "queue reference cannot be empty")
+}
 
-	queue, err := engines.PopQueue(cache, "queue:"+reference)
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "queue cache error" })
-	}
+queue, err := engines.PopQueue(cache, "queue:"+reference)
+if err != nil {
+if errors.Is(err, buntdb.ErrNotFound) {
+return IssueResponse(c, fiber.StatusNotFound, "queue not found")
+}
 
-	return c.JSON(fiber.Map{ "queue": queue })
+return IssueResponse(c, fiber.StatusInternalServerError, "queue cache error")
+}
+
+return c.JSON(fiber.Map{"queue": queue})
 }
