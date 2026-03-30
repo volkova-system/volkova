@@ -32,7 +32,7 @@
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.3.6",
+                    "Version": "12.4.1",
                     "Source": "winget"
                 },
                 {
@@ -42,7 +42,12 @@
                 },
                 {
                     "PackageIdentifier": "GNU.Wget2",
-                    "Version": "2.1.0",
+                    "Version": "2.2.1",
+                    "Source": "winget"
+                },
+                {
+                    "PackageIdentifier": "cURL.cURL",
+                    "Version": "8.19.0.5",
                     "Source": "winget"
                 },
                 {
