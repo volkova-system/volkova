@@ -293,7 +293,6 @@ containers/*/data/**/*.*
 
 !tools/*-system/*-tool/zig/
 !tools/*-system/*-tool/zig/src/
-!tools/*-system/*-tool/zig/build/
 !tools/*-system/*-tool/zig/dist/
 !tools/*-system/*-tool/**/*.tool
 
@@ -302,9 +301,13 @@ containers/*/data/**/*.*
 
 !tools/*-system/*-tool/tcl/
 !tools/*-system/*-tool/tcl/src/
-!tools/*-system/*-tool/tcl/build/
 !tools/*-system/*-tool/tcl/dist/
 !tools/*-system/*-tool/tcl/**/*.tcl
+
+!tools/*-system/*-tool/nim/
+!tools/*-system/*-tool/nim/src/
+!tools/*-system/*-tool/nim/dist/
+!tools/*-system/*-tool/nim/**/*.nim
 # END TOOLS
 
 !waste/
