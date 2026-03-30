@@ -12,11 +12,15 @@ namespace eval build_tcl {
         variable maxAscend 12
 
         # TCL Kit download URLs for different platforms
+        # Using verified reliable sources
+        # Windows: SourceForge TWAPI (latest available: 8.6.12 with TWAPI 4.7.2)
+        # Unix: rkeene.org (established provider, though versions are older)
+        # Note: Tclkit binary releases lag significantly behind Tcl source releases
         variable tclkitUrls
         array set tclkitUrls {
-            windows "https://sourceforge.net/projects/twapi/files/Tcl%20binaries/Tclkits%20with%20TWAPI/tclkit-cli-8_6_7-twapi-4_2_12-x64-max.exe/download"
-            linux   "https://gorilla.dp100.com/downloads/tclkit/tclkit-8.6.9-linux-x86_64"
-            darwin  "https://gorilla.dp100.com/downloads/tclkit/tclkit-8.6.6-MacOSX-amd64-mk-tk"
+            windows "https://sourceforge.net/projects/twapi/files/Tcl%20binaries/Tclkits%20with%20TWAPI/tclkit-cli-8_6_12-twapi-4_7_2-x64-max.exe/download"
+            linux   "https://tclkits.rkeene.org/fossil/raw/tclkit-8.6.3-rhel5-x86_64?name=tclkit-8.6.3-rhel5-x86_64"
+            darwin  "https://tclkits.rkeene.org/fossil/raw/tclkit-8.6.3-macosx-ix86?name=tclkit-8.6.3-macosx-ix86"
         }
 
         # SDX (Starkit Developer eXtension) download URLs - needed for building starkits
