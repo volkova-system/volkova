@@ -8,6 +8,7 @@ import (
 
 	"queues-data-service/data"
 	"queues-data-service/models"
+	"queues-data-service/settings"
 )
 
 // GetQueues retrieves a paginated list of queues from the cache.
@@ -28,7 +29,7 @@ func GetQueues(cache *data.Cache, skip, limit int) ([]models.Queue, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend(cache.Name(), func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
