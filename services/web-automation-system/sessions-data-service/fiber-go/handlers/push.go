@@ -18,7 +18,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on any validation or storage error.
-//
 func PushSessionHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return pushSessionToCache(c, cache)
@@ -26,31 +25,26 @@ func PushSessionHandler(cache *data.Cache) fiber.Handler {
 }
 
 // pushSessionToCache processes the session push request.
-//
 func pushSessionToCache(c fiber.Ctx, cache *data.Cache) error {
 	session, err := parseSessionFromRequest(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "invalid session data" })
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid session data")
 	}
 
 	err = validateSessionData(session)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "session validation failed" })
+		return IssueResponse(c, fiber.StatusBadRequest, "session validation failed")
 	}
 
 	err = storeSessionInCache(cache, session)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "session cache error" })
+		return IssueResponse(c, fiber.StatusInternalServerError, "session cache error")
 	}
 
-	return c.JSON(fiber.Map{ "reference": session.Reference })
+	return c.JSON(fiber.Map{"reference": session.Reference})
 }
 
 // parseSessionFromRequest extracts session data from request body.
-//
 func parseSessionFromRequest(c fiber.Ctx) (*models.Session, error) {
 	var session models.Session
 
@@ -63,24 +57,20 @@ func parseSessionFromRequest(c fiber.Ctx) (*models.Session, error) {
 }
 
 // validateStorageState ensures StorageState is not empty or null JSON.
-//
 func validateStorageState(storageState json.RawMessage) error {
 	if len(storageState) == 0 {
 		return fiber.NewError(fiber.StatusBadRequest, "storage_state is required")
 	}
 
-	// Validate that it's valid JSON first
 	var temp any
 	if err := json.Unmarshal(storageState, &temp); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "storage_state must be valid JSON")
 	}
 
-	// Check if it's null JSON
 	if temp == nil {
 		return fiber.NewError(fiber.StatusBadRequest, "storage_state cannot be null")
 	}
 
-	// Check if it's an empty JSON object or array
 	trimmed := strings.TrimSpace(string(storageState))
 	if trimmed == "{}" || trimmed == "[]" {
 		return fiber.NewError(fiber.StatusBadRequest, "storage_state cannot be empty")
@@ -90,13 +80,11 @@ func validateStorageState(storageState json.RawMessage) error {
 }
 
 // validateSessionData ensures required fields are present and within limits.
-//
 func validateSessionData(session *models.Session) error {
 	if session.Reference == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "reference required")
 	}
 
-	// Validate that session.StorageState must not be an empty json
 	if err := validateStorageState(session.StorageState); err != nil {
 		return err
 	}
@@ -105,7 +93,6 @@ func validateSessionData(session *models.Session) error {
 }
 
 // storeSessionInCache saves session to cache storage.
-//
 func storeSessionInCache(cache *data.Cache, session *models.Session) error {
 	return engines.PushSession(cache, *session)
 }
