@@ -8,9 +8,8 @@ import (
 
 	"sessions-data-service/data"
 	"sessions-data-service/models"
+	"sessions-data-service/settings"
 )
-
-const defaultIndexName = "sessions"
 
 // GetSessions retrieves a paginated list of sessions from the cache.
 func GetSessions(cache *data.Cache, skip, limit int) ([]models.Session, error) {
@@ -30,7 +29,7 @@ func GetSessions(cache *data.Cache, skip, limit int) ([]models.Session, error) {
 
 		var unmarshalErr error
 
-		tx.Ascend(cache.Name(), func(key, value string) bool {
+		tx.Ascend(settings.ReferenceIndexName, func(key, value string) bool {
 			if count < skip {
 				count++
 
