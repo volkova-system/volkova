@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"errors"
+
 	"github.com/gofiber/fiber/v3"
+	"github.com/tidwall/buntdb"
 
 	"runtimes-data-service/data"
 	"runtimes-data-service/engines"
@@ -14,7 +17,6 @@ import (
 // Response: Success confirmation or error details
 //
 // Fails fast on missing reference or cache removal error.
-//
 func PopRuntimeHandler(cache *data.Cache) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		return popRuntimeFromCache(c, cache)
@@ -22,19 +24,20 @@ func PopRuntimeHandler(cache *data.Cache) fiber.Handler {
 }
 
 // popRuntimeFromCache processes the runtime removal request.
-//
 func popRuntimeFromCache(c fiber.Ctx, cache *data.Cache) error {
 	reference := c.Params("reference")
 	if reference == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(
-			fiber.Map{ "error": "runtime reference cannot be empty" })
+		return IssueResponse(c, fiber.StatusBadRequest, "runtime reference cannot be empty")
 	}
 
 	runtime, err := engines.PopRuntime(cache, "runtime:"+reference)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			fiber.Map{ "error": "runtime cache error" })
+		if errors.Is(err, buntdb.ErrNotFound) {
+			return IssueResponse(c, fiber.StatusNotFound, "runtime not found")
+		}
+
+		return IssueResponse(c, fiber.StatusInternalServerError, "runtime cache error")
 	}
 
-	return c.JSON(fiber.Map{ "runtime": runtime })
+	return c.JSON(fiber.Map{"runtime": runtime})
 }
