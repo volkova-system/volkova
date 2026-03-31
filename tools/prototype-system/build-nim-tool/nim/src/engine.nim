@@ -29,9 +29,9 @@ proc getCurrentPlatform*(): string =
   elif defined(linux):
     return "linux"
   elif defined(macosx):
-    return "macos"
+    return "darwin"
   else:
-    return "unknown"
+    raise newException(OSError, "unsupported platform")
 
 proc getExecutableExtension*(): string =
   ## Get executable file extension for current platform
