@@ -134,26 +134,47 @@ proc validateCommand*(cmd: string, args: seq[string]): ValidationResult =
           errorMsg: "Expected 1 argument, got " & $args.len
         )
 
-    # Extract tool name
-    let toolName = args[0]
+    # Extract tool path
+    let toolPathArg = args[0]
 
-    # Validate tool name is not empty
-    if toolName == "":
+    # Validate tool path is not empty
+    if toolPathArg == "":
         return ValidationResult(
           valid: false,
-          errorMsg: "Tool name cannot be empty"
+          errorMsg: "Tool path cannot be empty"
         )
 
-    # Validate tool name ends with '-tool'
-    if not toolName.endsWith("-tool"):
+    # Validate tool path format 'name-system/name-tool'
+    let normalized = toolPathArg.replace("\\", "/")
+    let segments = normalized.split("/")
+    if segments.len != 2:
         return ValidationResult(
           valid: false,
-          errorMsg: "Tool name must end with '-tool': " & toolName
+          errorMsg: "Tool path must be in the form 'name-system/name-tool': " & toolPathArg
         )
+
+    let systemName = segments[0]
+    let toolNameOnly = segments[1]
+
+    # Validate suffixes
+    if not systemName.endsWith("-system"):
+        return ValidationResult(
+          valid: false,
+          errorMsg: "Parent path must end with '-system': " & systemName
+        )
+
+    if not toolNameOnly.endsWith("-tool"):
+        return ValidationResult(
+          valid: false,
+          errorMsg: "Tool name must end with '-tool': " & toolNameOnly
+        )
+
+    # Normalize tool path using OS separator
+    let toolPath = systemName / toolNameOnly
 
     # Return successful validation
     return ValidationResult(
       valid: true,
-      toolName: toolName,
+      toolName: toolPath,
       errorMsg: ""
     )
