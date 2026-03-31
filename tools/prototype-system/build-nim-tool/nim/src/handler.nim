@@ -1,7 +1,8 @@
 # Command handler for build-nim tool
 
 import os
-import setting, help
+import strutils
+import setting
 
 type
   ValidationResult* = object
