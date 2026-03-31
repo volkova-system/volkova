@@ -1,13 +1,10 @@
 # Configuration settings for install-nim tool
 
 const
-  # Command name for CLI interface
-  commandName* = "install-nim"
+    # Command name for CLI interface
+    commandName* = "install-nim"
 
-  # Subdirectory within tool containing nim build artifacts
-  nimDirectory* = "nim"
+    # Directory name within project root containing tools
+    toolsDirectory* = "tools"
 
-  # Subdirectory within nim directory containing built executables
-  distDirectory* = "dist"
-
-  version* = "0.0.0"
+    version* = "0.0.0"
