@@ -32,7 +32,7 @@ proc executeCommand(command: string, args: seq[string]) =
                 cmdValidation.toolName
             )
 
-            engine.assertExecutableExists(execPath)
+            handler.assertExecutableExists(execPath)
 
             # Install executable to system-wide directory
             let installDir = engine.getInstallDirectory()
@@ -45,7 +45,7 @@ proc executeCommand(command: string, args: seq[string]) =
             echo "  Source: ", execPath
             echo "  Installed: ", installedPath
 
-            engine.assertInstallDirectoryOnPath(installDir)
+            handler.assertInstallDirectoryOnPath(installDir)
 
             quit(0)
         except IOError as e:
