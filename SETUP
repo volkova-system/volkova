@@ -11,4 +11,4 @@ scripts/setup-pico-css.ps1 -DestinationDirectory interfaces\prototype-system\con
 scripts/setup-htmx.ps1 -DestinationDirectory interfaces\prototype-system\concise-cai\storybook\public\scripts\core
 scripts/setup-hyperscript.ps1 -DestinationDirectory interfaces\prototype-system\concise-cai\storybook\public\scripts\core
 
-choosenim stable --firstInstall
+scripts/setup-nim.ps1
