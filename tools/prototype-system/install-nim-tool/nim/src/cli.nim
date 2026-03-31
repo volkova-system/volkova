@@ -45,6 +45,10 @@ proc executeCommand(command: string, args: seq[string]) =
             echo "  Source: ", execPath
             echo "  Installed: ", installedPath
 
+            if not engine.ensureInstallDirOnPath(installDir):
+                raise newException(OSError,
+                        "Failed to ensure install directory on path: " & installDir)
+
             handler.assertInstallDirectoryOnPath(installDir)
 
             quit(0)
