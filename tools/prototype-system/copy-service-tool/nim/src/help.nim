@@ -17,7 +17,7 @@ proc printUsage*() =
     echo "  copy-service simple-system/simple-data-service \\"
     echo "               complex-system/complex-data-service/services"
     echo "  Output:"
-    echo "    complex-system/complex-data-service/services/simple-data-service"
+    echo "    services/complex-system/complex-data-service/services/simple-data-service"
     echo ""
     echo "Options:"
     echo "  -h, --help, help     Show this help message"
