@@ -1,7 +1,7 @@
 # CLI interface for copy-service tool
 
 import os
-import help, handler, engine
+import help, handler, engine, utils
 
 proc executeCommand(command: string, args: seq[string]) =
     ## Execute the resolved command with arguments
@@ -19,7 +19,7 @@ proc executeCommand(command: string, args: seq[string]) =
 
         # Get services root and validate paths
         try:
-            let servicesRoot = engine.servicesRoot()
+            let servicesRoot = utils.servicesRoot()
             let pathValidation = handler.validatePaths(cmdValidation.srcRel,
                     cmdValidation.dstRel, servicesRoot)
 
