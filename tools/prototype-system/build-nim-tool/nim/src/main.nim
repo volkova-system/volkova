@@ -6,8 +6,8 @@ import cli
 
 # Main execution - delegate to CLI
 proc main() =
-  cli.run()
+    cli.run()
 
 # Execute main
 when isMainModule:
-  main()
+    main()
