@@ -218,23 +218,6 @@ containers/*/data/**/*.*
 !services/*-system/*-service/fiber-go/**/*.go
 !services/*-system/*-service/fiber-go/**/*.mod
 !services/*-system/*-service/fiber-go/**/*.tool
-
-!services/*-system/**/services/
-!services/*-system/**/services/*-service/
-!services/*-system/**/services/*-service/fiber-go/
-!services/*-system/**/services/*-service/fiber-go/channels/
-!services/*-system/**/services/*-service/fiber-go/data/
-!services/*-system/**/services/*-service/fiber-go/dist/
-!services/*-system/**/services/*-service/fiber-go/engines/
-!services/*-system/**/services/*-service/fiber-go/handlers/
-!services/*-system/**/services/*-service/fiber-go/logs/
-!services/*-system/**/services/*-service/fiber-go/models/
-!services/*-system/**/services/*-service/fiber-go/routes/
-!services/*-system/**/services/*-service/fiber-go/services/
-!services/*-system/**/services/*-service/fiber-go/settings/
-!services/*-system/**/services/*-service/fiber-go/**/*.go
-!services/*-system/**/services/*-service/fiber-go/**/*.mod
-!services/*-system/**/services/*-service/fiber-go/**/*.tool
 # END SERVICES
 
 # START SETTINGS
