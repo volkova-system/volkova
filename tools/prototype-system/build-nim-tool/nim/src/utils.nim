@@ -20,19 +20,16 @@ proc toolsRoot*(): string =
     let toolsPath = root / toolsDirectory
     return absolutePath(toolsPath)
 
-proc resolveToolDir*(toolName: string): string =
-    ## Resolve tool directory by name, searching recursively if needed
-    ## Args: toolName - Name of the tool directory
+proc resolveToolDir*(toolPath: string): string =
+    ## Resolve tool directory by relative path 'name-system/name-tool'
+    ## Args: toolPath - Relative tool path under tools directory
     ## Returns: Absolute path to tool directory
     let tools = toolsRoot()
-    let direct = absolutePath(tools / toolName)
+    let normalized = toolPath.replace("\\", "/")
+    let segments = normalized.split("/")
+    if segments.len != 2:
+        raise newException(OSError, "Invalid tool path, expected 'name-system/name-tool': " & toolPath)
+    let direct = absolutePath(tools / segments[0] / segments[1])
     if dirExists(direct):
         return direct
-    var found = ""
-    for path in walkDirRec(tools):
-        if dirExists(path) and lastPathPart(path) == toolName:
-            found = absolutePath(path)
-            break
-    if found == "":
-        raise newException(OSError, "Tool directory not found: " & toolName)
-    return found
+    raise newException(OSError, "Tool directory not found: " & segments[0] & "/" & segments[1])
