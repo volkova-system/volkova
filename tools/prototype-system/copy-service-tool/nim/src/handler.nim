@@ -2,6 +2,7 @@
 
 import os, strutils
 import setting
+import utils
 
 type
     ValidationResult* = object
@@ -51,6 +52,44 @@ proc within(base: string, path: string): bool =
     let normalBase = absolutePath(base)
     let normalPath = absolutePath(path)
     return normalPath.startsWith(normalBase)
+
+proc validateServiceStructure*(servicePath: string,
+        servicesRoot: string): ValidationResult =
+    ## Validate service directory structure
+    ## Args: servicePath - Path of the service directory
+    ##       servicesRoot - Absolute path to services directory
+    ## Returns: ValidationResult with validation status
+    var serviceDir = absolutePath(servicesRoot / servicePath)
+    if not dirExists(serviceDir):
+        try:
+            serviceDir = utils.resolveServiceDir(servicePath)
+        except OSError:
+            return ValidationResult(
+              valid: false,
+              errorMsg: "Service directory not found: " & servicePath
+            )
+
+    # Validate service directory exists
+    if not dirExists(serviceDir):
+        return ValidationResult(
+          valid: false,
+          errorMsg: "Service directory not found: " & servicePath
+        )
+
+    # Validate service is within services directory
+    if not within(servicesRoot, serviceDir):
+        return ValidationResult(
+          valid: false,
+          errorMsg: "Service path outside services directory: " & servicePath
+        )
+
+    # Return successful validation
+    return ValidationResult(
+      valid: true,
+      srcRel: servicePath,
+      dstRel: "",
+      errorMsg: ""
+    )
 
 proc validatePaths*(srcRel: string, dstRel: string,
         servicesRoot: string): ValidationResult =
