@@ -1,7 +1,7 @@
 # Core engine for copy-service tool operations
 
 import os, strutils, osproc
-import setting
+import utils
 
 proc findRoot*(): string =
     ## Find project root using git repository detection
@@ -26,7 +26,7 @@ proc copyDir*(srcRel: string, dstRel: string): string =
     ## Args: srcRel - Source path relative to services
     ##       dstRel - Destination path relative to services
     ## Returns: Absolute path to created destination
-    let services = servicesRoot()
+    let services = utils.servicesRoot()
     let srcAbs = absolutePath(services / srcRel)
     let dstDirAbs = absolutePath(services / dstRel)
     let srcName = lastPathPart(srcAbs)
