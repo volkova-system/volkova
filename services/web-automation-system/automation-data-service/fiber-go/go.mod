@@ -3,14 +3,6 @@ module automation-data-service
 go 1.26
 
 require (
-	actions-data-service v0.0.0
-	github.com/gofiber/fiber/v3 v3.1.0
-	github.com/tidwall/buntdb v1.3.2
-	jobs-data-service v0.0.0
-	tasks-data-service v0.0.0
-)
-
-require (
 	github.com/andybalholm/brotli v1.2.0 // indirect
 	github.com/gofiber/schema v1.7.0 // indirect
 	github.com/gofiber/utils/v2 v2.0.2 // indirect
@@ -35,8 +27,20 @@ require (
 	golang.org/x/text v0.35.0 // indirect
 )
 
+require (
+	actions-data-service v0.0.0
+	github.com/gofiber/fiber/v3 v3.1.0
+	github.com/tidwall/buntdb v1.3.2
+	jobs-data-service v0.0.0
+	tasks-data-service v0.0.0
+	queues-data-service v0.0.0
+	sessions-data-service v0.0.0
+    runtimes-data-service v0.0.0
+)
+
 replace actions-data-service => ./services/actions-data-service/fiber-go
-
 replace tasks-data-service => ./services/tasks-data-service/fiber-go
-
 replace jobs-data-service => ./services/jobs-data-service/fiber-go
+replace queues-data-service => ./services/queues-data-service/fiber-go
+replace sessions-data-service => ./services/sessions-data-service/fiber-go
+replace runtimes-data-service => ./services/runtimes-data-service/fiber-go

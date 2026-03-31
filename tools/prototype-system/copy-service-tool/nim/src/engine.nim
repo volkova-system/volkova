@@ -1,7 +1,7 @@
 # Core engine for copy-service tool operations
 
 import os, strutils, osproc
-import utils
+import utils, setting
 
 proc findRoot*(): string =
     ## Find project root using git repository detection
@@ -36,6 +36,9 @@ proc copyDir*(srcRel: string, dstRel: string): string =
     let parent = parentDir(dstAbs)
     if not dirExists(parent):
         createDir(parent)
+
+    if dirExists(dstAbs):
+        removeDir(dstAbs)
 
     # Perform the copy operation
     copyDirWithPermissions(srcAbs, dstAbs)

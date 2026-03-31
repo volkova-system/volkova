@@ -136,13 +136,6 @@ proc validatePaths*(srcRel: string, dstRel: string,
           errorMsg: "Target cannot be inside source directory"
         )
 
-    # Check if final target already exists
-    if dirExists(dstFinalAbs):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Target directory already exists: " & (dstRel & "/" & srcName)
-        )
-
     # Return successful validation
     return ValidationResult(
       valid: true,
