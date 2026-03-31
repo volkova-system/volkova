@@ -1,7 +1,7 @@
 # CLI interface for build-nim tool
 
-import os, strutils
-import setting, help, handler, engine
+import os
+import help, handler, engine
 
 proc executeCommand(command: string, args: seq[string]) =
   ## Execute the resolved command with arguments
