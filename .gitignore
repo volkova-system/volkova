@@ -299,14 +299,10 @@ containers/*/data/**/*.*
 !tools/*-system/*-tool/**/*.py
 !tools/*-system/*-tool/**/*.zig
 
-!tools/*-system/*-tool/tcl/
-!tools/*-system/*-tool/tcl/src/
-!tools/*-system/*-tool/tcl/dist/
-!tools/*-system/*-tool/tcl/**/*.tcl
-
 !tools/*-system/*-tool/nim/
 !tools/*-system/*-tool/nim/src/
 !tools/*-system/*-tool/nim/dist/
+!tools/*-system/*-tool/nim/dist/windows/
 !tools/*-system/*-tool/nim/**/*.nim
 # END TOOLS
 
