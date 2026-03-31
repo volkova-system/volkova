@@ -32,4 +32,5 @@ proc resolveToolDir*(toolPath: string): string =
     let direct = absolutePath(tools / segments[0] / segments[1])
     if dirExists(direct):
         return direct
-    raise newException(OSError, "Tool directory not found: " & segments[0] & "/" & segments[1])
+    raise newException(OSError, "Tool directory not found: " & segments[0] &
+            "/" & segments[1])
