@@ -13,7 +13,8 @@ proc findRoot*(): string =
 
     raise newException(IOError, "repository root not found")
 
-proc resolveToolFilePath*(toolFilePath: string, currentToolFile: string = ""): string =
+proc resolveToolFilePath*(toolFilePath: string,
+        currentToolFile: string = ""): string =
     ## Resolve a tool file path to an absolute path
     ## Paths starting with "./" are relative to the parent directory of currentToolFile
     ## If currentToolFile is empty, paths are relative to the project root
