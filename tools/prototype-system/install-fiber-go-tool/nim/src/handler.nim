@@ -164,10 +164,10 @@ proc validateCommand*(cmd: string, args: seq[string]): ValidationResult =
           errorMsg: "Parent path must end with '-system': " & systemName
         )
 
-    if not (serviceNameOnly.endsWith("-service") or serviceNameOnly.endsWith("-go")):
+    if not serviceNameOnly.endsWith("-service"):
         return ValidationResult(
           valid: false,
-          errorMsg: "Service name must end with '-service' or '-go': " & serviceNameOnly
+          errorMsg: "Service name must end with '-service': " & serviceNameOnly
         )
 
     # Normalize service path using OS separator
