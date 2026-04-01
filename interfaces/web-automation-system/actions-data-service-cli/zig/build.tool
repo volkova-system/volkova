@@ -1,2 +1,2 @@
 
-build-zig-tool build-zig prototype-system/build-zig-tool
+build-zig-tool build-zig web-automation-system/actions-data-service-cli
