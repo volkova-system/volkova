@@ -1,10 +1,16 @@
 const std = @import("std");
 
+// Response wraps the raw HTTP response body.
+// Caller owns the body slice.
+//
 pub const Response = struct {
     status: u16,
     body: []u8,
 };
 
+// httpRequest is the single HTTP transport procedure.
+// Caller owns Response.body.
+//
 pub fn httpRequest(
     allocator: std.mem.Allocator,
     method: []const u8,
@@ -51,6 +57,7 @@ pub fn httpRequest(
     return Response{ .status = status, .body = result_body };
 }
 
+// Helper function to parse HTTP method strings
 fn parseHttpMethod(method: []const u8) ?std.http.Method {
     const method_map = std.StaticStringMap(std.http.Method).initComptime(.{
         .{ "GET", .GET },
