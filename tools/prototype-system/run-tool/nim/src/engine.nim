@@ -61,7 +61,7 @@ proc executeToolFile*(toolFilePath: string) =
         of lineComment:
             continue
         of lineToolFile:
-            let nestedPath = utils.resolveToolFilePath(line.strip())
+            let nestedPath = utils.resolveToolFilePath(line.strip(), toolFilePath)
             if not fileExists(nestedPath):
                 stderr.writeLine(
                     "Error: Tool file not found: " & nestedPath
