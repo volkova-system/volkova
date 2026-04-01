@@ -138,21 +138,20 @@ containers/*/data/**/*.*
 
 !interfaces/*-system/*-cli/**/*.tool
 
-!interfaces/*-system/zig/
-!interfaces/*-system/zig/*-cli/
-!interfaces/*-system/zig/*-cli/src/
-!interfaces/*-system/zig/*-cli/build/
-!interfaces/*-system/zig/*-cli/dist/
-!interfaces/*-system/zig/*-cli/build.zig
-!interfaces/*-system/zig/*-cli/src/*.zig
-
 !interfaces/*-system/*-cli/
 !interfaces/*-system/*-cli/zig/
 !interfaces/*-system/*-cli/zig/src/
-!interfaces/*-system/*-cli/zig/build/
 !interfaces/*-system/*-cli/zig/dist/
-!interfaces/*-system/*-cli/zig/build.zig
 !interfaces/*-system/*-cli/zig/src/*.zig
+!interfaces/*-system/*-cli/zig/src/*.tool
+
+!interfaces/*-system/*-cli/
+!interfaces/*-system/*-cli/go/
+!interfaces/*-system/*-cli/go/src/
+!interfaces/*-system/*-cli/go/dist/
+!interfaces/*-system/*-cli/go/src/*.go
+!interfaces/*-system/*-cli/go/src/*.mod
+!interfaces/*-system/*-cli/go/src/*.tool
 # END INTERFACES
 
 !prompts/
