@@ -53,10 +53,12 @@ pub fn printHelp() void {
         \\
         \\  push:
         \\    --task=FILE    Load task from JSON file
+        \\
         \\    OR specify inline:
         \\    --reference=   Task reference (required)
         \\    --name=        Task name (required)
         \\    --description= Task description (required)
+        \\
         \\    Optionally include a single action:
         \\    --action-reference=   Action reference (required when action provided)
         \\    --action-name=        Action name (required when action provided)
