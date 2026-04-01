@@ -4,7 +4,7 @@ import setting
 
 proc printUsage*() =
     ## Print usage information to stdout
-    echo "Usage: build-go <service_path>"
+    echo "Usage: build-fiber-go <service_path>"
     echo ""
     echo ""
     echo "Description:"
