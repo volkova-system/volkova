@@ -1,5 +1,4 @@
 const std = @import("std");
-const handler = @import("handler.zig");
 const request = @import("request.zig");
 const model = @import("model.zig");
 
@@ -27,7 +26,7 @@ const PopActionResult = model.PopActionResult;
 
 // checkHealth calls GET /service/data/actions/health.
 //
-pub fn checkHealth(setting: Setting) !CheckHealthResult {
+pub fn checkHealth(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -42,14 +41,12 @@ pub fn checkHealth(setting: Setting) !CheckHealthResult {
 
     defer setting.allocator.free(url);
 
-    const result = try sendGet(setting.allocator, url);
-
-    return try handler.resolveCheckHealthResult(setting.allocator, result);
+    return try sendGet(setting.allocator, url);
 }
 
 // stopService calls POST /service/data/actions/stop.
 //
-pub fn stopService(setting: Setting) !StopServiceResult {
+pub fn stopService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -64,14 +61,12 @@ pub fn stopService(setting: Setting) !StopServiceResult {
 
     defer setting.allocator.free(url);
 
-    const result = try sendPost(setting.allocator, url, "{}");
-
-    return try handler.resolveStopServiceResult(setting.allocator, result);
+    return try sendPost(setting.allocator, url, "{}");
 }
 
 // abortService calls POST /service/data/actions/abort.
 //
-pub fn abortService(setting: Setting) !AbortServiceResult {
+pub fn abortService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -86,14 +81,12 @@ pub fn abortService(setting: Setting) !AbortServiceResult {
 
     defer setting.allocator.free(url);
 
-    const result = try sendPost(setting.allocator, url, "{}");
-
-    return try handler.resolveAbortServiceResult(setting.allocator, result);
+    return try sendPost(setting.allocator, url, "{}");
 }
 
 // startService calls POST /service/data/actions/start.
 //
-pub fn startService(setting: Setting) !StartServiceResult {
+pub fn startService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -108,14 +101,12 @@ pub fn startService(setting: Setting) !StartServiceResult {
 
     defer setting.allocator.free(url);
 
-    const result = try sendPost(setting.allocator, url, "{}");
-
-    return try handler.resolveStartServiceResult(setting.allocator, result);
+    return try sendPost(setting.allocator, url, "{}");
 }
 
 // killService calls POST /service/data/actions/kill.
 //
-pub fn killService(setting: Setting) !KillServiceResult {
+pub fn killService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -130,9 +121,7 @@ pub fn killService(setting: Setting) !KillServiceResult {
 
     defer setting.allocator.free(url);
 
-    const result = try sendPost(setting.allocator, url, "{}");
-
-    return try handler.resolveKillServiceResult(setting.allocator, result);
+    return try sendPost(setting.allocator, url, "{}");
 }
 
 // pushAction calls POST /service/data/actions/push with a JSON body.
@@ -140,7 +129,7 @@ pub fn killService(setting: Setting) !KillServiceResult {
 pub fn pushAction(
     setting: Setting,
     parameters: PushActionParameters,
-) !PushActionResult {
+) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -159,9 +148,7 @@ pub fn pushAction(
 
     defer setting.allocator.free(body);
 
-    const result = try sendPost(setting.allocator, url, body);
-
-    return try handler.resolvePushActionResult(setting.allocator, result);
+    return try sendPost(setting.allocator, url, body);
 }
 
 // getAction calls GET /service/data/actions/:reference.
@@ -169,7 +156,7 @@ pub fn pushAction(
 pub fn getAction(
     setting: Setting,
     parameters: GetActionParameters,
-) !GetActionResult {
+) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -190,7 +177,7 @@ pub fn getAction(
         if (parameters.file_name) |file_name|
             try persistToFile(output_directory, file_name, result.body);
 
-    return try handler.resolveGetActionResult(setting.allocator, result);
+    return result;
 }
 
 // getActions calls GET /service/data/actions?skip=N&limit=N.
@@ -198,7 +185,7 @@ pub fn getAction(
 pub fn getActions(
     setting: Setting,
     parameters: GetActionsParameters,
-) !GetActionsResult {
+) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -219,7 +206,7 @@ pub fn getActions(
         if (parameters.file_name) |file_name|
             try persistToFile(output_directory, file_name, result.body);
 
-    return try handler.resolveGetActionsResult(setting.allocator, result);
+    return result;
 }
 
 // popAction calls DELETE /service/data/actions/pop/:reference.
@@ -227,7 +214,7 @@ pub fn getActions(
 pub fn popAction(
     setting: Setting,
     parameters: PopActionParameters,
-) !PopActionResult {
+) !Response {
     const base_url = try setting.resolveBaseUrl();
 
     defer setting.allocator.free(base_url);
@@ -248,7 +235,7 @@ pub fn popAction(
         if (parameters.file_name) |file_name|
             try persistToFile(output_directory, file_name, result.body);
 
-    return try handler.resolvePopActionResult(setting.allocator, result);
+    return result;
 }
 
 // buildPushBody serializes PushParameters into a JSON string.
