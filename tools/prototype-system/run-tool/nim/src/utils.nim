@@ -10,7 +10,7 @@ proc findRoot*(): string =
         let gitRoot = output.strip()
         if gitRoot != "" and dirExists(gitRoot):
             return absolutePath(gitRoot)
-    raise newException(IOError, "Git repository root not found")
+    raise newException(IOError, "repository root not found")
 
 proc resolveToolFilePath*(toolFilePath: string): string =
     ## Resolve a tool file path to an absolute path
