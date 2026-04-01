@@ -236,7 +236,7 @@ containers/*/data/**/*.*
 !systems/*-system/services/
 !systems/*-system/systems/
 !systems/*-system/tools/
-!systems/*-system/**/compose.tool
+!systems/*-system/**/*.tool
 # END SYSTEMS
 
 !templates/
