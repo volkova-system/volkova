@@ -136,6 +136,8 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cai/storybook/package.json
 !interfaces/*-system/*-cai/storybook/tsconfig.json
 
+!interfaces/*-system/*-cli/**/*.tool
+
 !interfaces/*-system/zig/
 !interfaces/*-system/zig/*-cli/
 !interfaces/*-system/zig/*-cli/src/
@@ -204,6 +206,8 @@ containers/*/data/**/*.*
 !services/*-system/*-service/go/
 !services/*-system/*-service/go/agents
 
+!services/*-system/*-service/**/*.tool
+
 !services/*-system/*-service/fiber-go/
 !services/*-system/*-service/fiber-go/channels/
 !services/*-system/*-service/fiber-go/data/
@@ -217,7 +221,6 @@ containers/*/data/**/*.*
 !services/*-system/*-service/fiber-go/settings/
 !services/*-system/*-service/fiber-go/**/*.go
 !services/*-system/*-service/fiber-go/**/*.mod
-!services/*-system/*-service/fiber-go/**/*.tool
 # END SERVICES
 
 # START SETTINGS
