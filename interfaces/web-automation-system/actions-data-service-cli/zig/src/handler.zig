@@ -396,7 +396,7 @@ pub fn resolvePopActionParameters(arguments: []const []const u8) !PopActionParam
     };
 }
 
-pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) !CheckHealthResult {
+pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealthResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
     }
@@ -405,7 +405,7 @@ pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) 
         return error.EmptyResponse;
     }
 
-    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
     if (parsed_json.value.object.get("health")) |health_value| {
@@ -415,7 +415,7 @@ pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) 
 
                 if (object_value.get("status")) |key_value| {
                     if (key_value == .string)
-                        status = try allocator.dupe(u8, key_value.string);
+                        status = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (status == null) return error.MissingStatus;
@@ -436,8 +436,8 @@ pub fn resolveCheckHealthResult(allocator: std.mem.Allocator, result: Response) 
     }
 }
 
-pub fn resolveStopServiceResult(allocator: std.mem.Allocator, result: Response) !StopServiceResult {
-    const operation = try resolveOperationResult(allocator, result);
+pub fn resolveStopServiceResult(setting: Setting, result: Response) !StopServiceResult {
+    const operation = try resolveOperationResult(setting.allocator, result);
 
     return StopServiceResult{
         .operation = operation,
@@ -445,8 +445,8 @@ pub fn resolveStopServiceResult(allocator: std.mem.Allocator, result: Response) 
     };
 }
 
-pub fn resolveAbortServiceResult(allocator: std.mem.Allocator, result: Response) !AbortServiceResult {
-    const operation = try resolveOperationResult(allocator, result);
+pub fn resolveAbortServiceResult(setting: Setting, result: Response) !AbortServiceResult {
+    const operation = try resolveOperationResult(setting.allocator, result);
 
     return AbortServiceResult{
         .operation = operation,
@@ -454,8 +454,8 @@ pub fn resolveAbortServiceResult(allocator: std.mem.Allocator, result: Response)
     };
 }
 
-pub fn resolveStartServiceResult(allocator: std.mem.Allocator, result: Response) !StartServiceResult {
-    const operation = try resolveOperationResult(allocator, result);
+pub fn resolveStartServiceResult(setting: Setting, result: Response) !StartServiceResult {
+    const operation = try resolveOperationResult(setting.allocator, result);
 
     return StartServiceResult{
         .operation = operation,
@@ -463,8 +463,8 @@ pub fn resolveStartServiceResult(allocator: std.mem.Allocator, result: Response)
     };
 }
 
-pub fn resolveKillServiceResult(allocator: std.mem.Allocator, result: Response) !KillServiceResult {
-    const operation = try resolveOperationResult(allocator, result);
+pub fn resolveKillServiceResult(setting: Setting, result: Response) !KillServiceResult {
+    const operation = try resolveOperationResult(setting.allocator, result);
 
     return KillServiceResult{
         .operation = operation,
@@ -523,7 +523,7 @@ fn resolveOperationResult(allocator: std.mem.Allocator, result: Response) !Opera
     }
 }
 
-pub fn resolvePushActionResult(allocator: std.mem.Allocator, result: Response) !PushActionResult {
+pub fn resolvePushActionResult(setting: Setting, result: Response) !PushActionResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
     }
@@ -532,14 +532,14 @@ pub fn resolvePushActionResult(allocator: std.mem.Allocator, result: Response) !
         return error.EmptyResponse;
     }
 
-    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
     var reference: ?[]const u8 = null;
 
     if (parsed_json.value.object.get("reference")) |key_value| {
         if (key_value == .string)
-            reference = try allocator.dupe(u8, key_value.string);
+            reference = try setting.allocator.dupe(u8, key_value.string);
     }
 
     if (reference == null) return error.MissingActionReference;
@@ -549,7 +549,7 @@ pub fn resolvePushActionResult(allocator: std.mem.Allocator, result: Response) !
     };
 }
 
-pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !GetActionResult {
+pub fn resolveGetActionResult(setting: Setting, result: Response) !GetActionResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
     }
@@ -558,7 +558,7 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
         return error.EmptyResponse;
     }
 
-    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
     if (parsed_json.value.object.get("action")) |action_value| {
@@ -581,42 +581,42 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
 
                 if (object_value.get("reference")) |key_value| {
                     if (key_value == .string)
-                        reference = try allocator.dupe(u8, key_value.string);
+                        reference = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("name")) |key_value| {
                     if (key_value == .string)
-                        name = try allocator.dupe(u8, key_value.string);
+                        name = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("description")) |key_value| {
                     if (key_value == .string)
-                        description = try allocator.dupe(u8, key_value.string);
+                        description = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("flow")) |key_value| {
                     if (key_value == .string)
-                        flow = try allocator.dupe(u8, key_value.string);
+                        flow = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("address")) |key_value| {
                     if (key_value == .string)
-                        address = try allocator.dupe(u8, key_value.string);
+                        address = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("selector")) |key_value| {
                     if (key_value == .string)
-                        selector = try allocator.dupe(u8, key_value.string);
+                        selector = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("value")) |key_value| {
                     if (key_value == .string)
-                        value = try allocator.dupe(u8, key_value.string);
+                        value = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("script")) |key_value| {
                     if (key_value == .string)
-                        script = try allocator.dupe(u8, key_value.string);
+                        script = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("delay")) |key_value| {
@@ -635,12 +635,12 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
 
                 if (object_value.get("created_at")) |key_value| {
                     if (key_value == .string)
-                        created_at = try allocator.dupe(u8, key_value.string);
+                        created_at = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("updated_at")) |key_value| {
                     if (key_value == .string)
-                        updated_at = try allocator.dupe(u8, key_value.string);
+                        updated_at = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 // Validate required fields
@@ -675,7 +675,7 @@ pub fn resolveGetActionResult(allocator: std.mem.Allocator, result: Response) !G
     }
 }
 
-pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !GetActionsResult {
+pub fn resolveGetActionsResult(setting: Setting, result: Response) !GetActionsResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
     }
@@ -684,14 +684,14 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
         return error.EmptyResponse;
     }
 
-    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
     if (parsed_json.value.object.get("actions")) |actions_value| {
         switch (actions_value) {
             .array => |array_value| {
                 var actions: std.ArrayList(Action) = .empty;
-                defer actions.deinit(allocator);
+                defer actions.deinit(setting.allocator);
 
                 for (array_value.items) |action_json| {
                     if (action_json != .object) continue;
@@ -715,42 +715,42 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
 
                     if (object_value.get("reference")) |key_value| {
                         if (key_value == .string)
-                            reference = try allocator.dupe(u8, key_value.string);
+                            reference = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("name")) |key_value| {
                         if (key_value == .string)
-                            name = try allocator.dupe(u8, key_value.string);
+                            name = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("description")) |key_value| {
                         if (key_value == .string)
-                            description = try allocator.dupe(u8, key_value.string);
+                            description = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("flow")) |key_value| {
                         if (key_value == .string)
-                            flow = try allocator.dupe(u8, key_value.string);
+                            flow = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("address")) |key_value| {
                         if (key_value == .string)
-                            address = try allocator.dupe(u8, key_value.string);
+                            address = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("selector")) |key_value| {
                         if (key_value == .string)
-                            selector = try allocator.dupe(u8, key_value.string);
+                            selector = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("value")) |key_value| {
                         if (key_value == .string)
-                            value = try allocator.dupe(u8, key_value.string);
+                            value = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("script")) |key_value| {
                         if (key_value == .string)
-                            script = try allocator.dupe(u8, key_value.string);
+                            script = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("delay")) |key_value| {
@@ -769,12 +769,12 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
 
                     if (object_value.get("created_at")) |key_value| {
                         if (key_value == .string)
-                            created_at = try allocator.dupe(u8, key_value.string);
+                            created_at = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     if (object_value.get("updated_at")) |key_value| {
                         if (key_value == .string)
-                            updated_at = try allocator.dupe(u8, key_value.string);
+                            updated_at = try setting.allocator.dupe(u8, key_value.string);
                     }
 
                     const action = Action{
@@ -791,11 +791,11 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
                         .updated_at = updated_at.?,
                     };
 
-                    try actions.append(allocator, action);
+                    try actions.append(setting.allocator, action);
                 }
 
                 return GetActionsResult{
-                    .actions = try actions.toOwnedSlice(allocator),
+                    .actions = try actions.toOwnedSlice(setting.allocator),
                     .raw_actions = result.body,
                 };
             },
@@ -806,7 +806,7 @@ pub fn resolveGetActionsResult(allocator: std.mem.Allocator, result: Response) !
     }
 }
 
-pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !PopActionResult {
+pub fn resolvePopActionResult(setting: Setting, result: Response) !PopActionResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
     }
@@ -815,7 +815,7 @@ pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !P
         return error.EmptyResponse;
     }
 
-    var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
+    var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
     if (parsed_json.value.object.get("action")) |action_value| {
@@ -838,42 +838,42 @@ pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !P
 
                 if (object_value.get("reference")) |key_value| {
                     if (key_value == .string)
-                        reference = try allocator.dupe(u8, key_value.string);
+                        reference = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("name")) |key_value| {
                     if (key_value == .string)
-                        name = try allocator.dupe(u8, key_value.string);
+                        name = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("description")) |key_value| {
                     if (key_value == .string)
-                        description = try allocator.dupe(u8, key_value.string);
+                        description = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("flow")) |key_value| {
                     if (key_value == .string)
-                        flow = try allocator.dupe(u8, key_value.string);
+                        flow = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("address")) |key_value| {
                     if (key_value == .string)
-                        address = try allocator.dupe(u8, key_value.string);
+                        address = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("selector")) |key_value| {
                     if (key_value == .string)
-                        selector = try allocator.dupe(u8, key_value.string);
+                        selector = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("value")) |key_value| {
                     if (key_value == .string)
-                        value = try allocator.dupe(u8, key_value.string);
+                        value = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("script")) |key_value| {
                     if (key_value == .string)
-                        script = try allocator.dupe(u8, key_value.string);
+                        script = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("delay")) |key_value| {
@@ -892,12 +892,12 @@ pub fn resolvePopActionResult(allocator: std.mem.Allocator, result: Response) !P
 
                 if (object_value.get("created_at")) |key_value| {
                     if (key_value == .string)
-                        created_at = try allocator.dupe(u8, key_value.string);
+                        created_at = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 if (object_value.get("updated_at")) |key_value| {
                     if (key_value == .string)
-                        updated_at = try allocator.dupe(u8, key_value.string);
+                        updated_at = try setting.allocator.dupe(u8, key_value.string);
                 }
 
                 // Validate required fields
