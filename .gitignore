@@ -231,11 +231,11 @@ containers/*/data/**/*.*
 # START SYSTEMS
 !systems/
 !systems/*-system/
-!systems/*-system/data/
 !systems/*-system/helps/
 !systems/*-system/interfaces/
 !systems/*-system/services/
 !systems/*-system/tools/
+!systems/*-system/systems/
 # END SYSTEMS
 
 !templates/
