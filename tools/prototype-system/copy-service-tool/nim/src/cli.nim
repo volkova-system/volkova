@@ -32,14 +32,18 @@ proc executeCommand(command: string, args: seq[string]) =
                     cmdValidation.dstRel)
             let toRel = cmdValidation.dstRel & "/" & lastPathPart(
                     cmdValidation.srcRel)
+
             echo "Successfully copied service:"
             echo "  From: ", cmdValidation.srcRel
             echo "  To:   ", toRel
             echo "  Path: ", dstAbs
+
             quit(0)
+
         except IOError as e:
             stderr.writeLine("Error: ", e.msg)
             quit(2)
+
         except OSError as e:
             stderr.writeLine("Error: ", e.msg)
             quit(2)
