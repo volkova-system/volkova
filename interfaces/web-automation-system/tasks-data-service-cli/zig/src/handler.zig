@@ -33,6 +33,7 @@ pub fn checkVersionFlag(arguments: []const []const u8) bool {
             return true;
         }
     }
+
     return false;
 }
 
@@ -42,6 +43,7 @@ pub fn checkHelpFlag(arguments: []const []const u8) bool {
             return true;
         }
     }
+
     return false;
 }
 
@@ -51,6 +53,7 @@ pub fn checkCommandHelpFlag(arguments: []const []const u8) bool {
             return true;
         }
     }
+
     return false;
 }
 
@@ -64,6 +67,7 @@ pub fn resolveCommand(raw: []const u8) !Command {
     if (std.mem.eql(u8, raw, "get")) return .get;
     if (std.mem.eql(u8, raw, "push")) return .push;
     if (std.mem.eql(u8, raw, "pop")) return .pop;
+
     return error.UnknownCommand;
 }
 
@@ -164,24 +168,30 @@ fn resolvePushTaskParametersFromFile(allocator: std.mem.Allocator, path: []const
             var reference: ?[]const u8 = null;
             var name: ?[]const u8 = null;
             var description: ?[]const u8 = null;
+
             var actions: std.ArrayList(Action) = .empty;
             defer actions.deinit(allocator);
 
             if (object_value.get("reference")) |key_value| {
                 if (key_value == .string) reference = try allocator.dupe(u8, key_value.string);
-                if (reference) |reference_value| if (reference_value.len == 0) return error.InvalidReference;
+                if (reference) |reference_value|
+                    if (reference_value.len == 0) return error.InvalidReference;
             }
+
             if (object_value.get("name")) |key_value| {
                 if (key_value == .string) name = try allocator.dupe(u8, key_value.string);
             }
+
             if (object_value.get("description")) |key_value| {
                 if (key_value == .string) description = try allocator.dupe(u8, key_value.string);
             }
+
             if (object_value.get("actions")) |actions_value| {
                 if (actions_value == .array) {
                     for (actions_value.array.items) |action_json| {
                         if (action_json != .object) continue;
                         const obj = action_json.object;
+
                         var a_reference: ?[]const u8 = null;
                         var a_name: ?[]const u8 = null;
                         var a_description: ?[]const u8 = null;
@@ -191,30 +201,39 @@ fn resolvePushTaskParametersFromFile(allocator: std.mem.Allocator, path: []const
                         var a_value: ?[]const u8 = null;
                         var a_script: ?[]const u8 = null;
                         var a_delay: ?u32 = null;
+
                         if (obj.get("reference")) |kv| {
                             if (kv == .string) a_reference = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("name")) |kv| {
                             if (kv == .string) a_name = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("description")) |kv| {
                             if (kv == .string) a_description = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("flow")) |kv| {
                             if (kv == .string) a_flow = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("address")) |kv| {
                             if (kv == .string) a_address = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("selector")) |kv| {
                             if (kv == .string) a_selector = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("value")) |kv| {
                             if (kv == .string) a_value = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("script")) |kv| {
                             if (kv == .string) a_script = try allocator.dupe(u8, kv.string);
                         }
+
                         if (obj.get("delay")) |kv| {
                             switch (kv) {
                                 .string => |sv| a_delay = std.fmt.parseInt(u32, sv, 10) catch return error.InvalidDelay,
@@ -222,9 +241,11 @@ fn resolvePushTaskParametersFromFile(allocator: std.mem.Allocator, path: []const
                                 else => return error.InvalidDelay,
                             }
                         }
+
                         if (a_reference == null) return error.MissingReference;
                         if (a_name == null) return error.MissingName;
                         if (a_flow == null) return error.MissingFlow;
+
                         const action = Action{
                             .reference = a_reference.?,
                             .name = a_name.?,
@@ -236,10 +257,12 @@ fn resolvePushTaskParametersFromFile(allocator: std.mem.Allocator, path: []const
                             .script = a_script,
                             .delay = a_delay,
                         };
+
                         try actions.append(allocator, action);
                     }
                 }
             }
+
             return PushTaskParameters{
                 .reference = reference.?,
                 .name = name.?,
@@ -250,19 +273,24 @@ fn resolvePushTaskParametersFromFile(allocator: std.mem.Allocator, path: []const
         else => return error.InvalidTaskFile,
     }
 }
+
 pub fn resolveGetTaskParameters(arguments: []const []const u8) !GetTaskParameters {
     var reference: ?[]const u8 = null;
     var output_directory: ?[]const u8 = null;
+
     for (arguments) |argument_value| {
         if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
+
             if (output_directory) |value| if (value.len == 0) return error.InvalidOutputDirectory;
         } else if (reference == null and !std.mem.startsWith(u8, argument_value, "--")) {
             reference = argument_value;
         }
     }
+
     if (reference == null or reference.?.len == 0) return error.MissingReference;
     var file_name_buffer: [256]u8 = undefined;
+
     const file_name = std.fmt.bufPrint(&file_name_buffer, "task-{s}.json", .{reference.?}) catch "task.json";
     return GetTaskParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
 }
@@ -271,18 +299,24 @@ pub fn resolveGetTasksParameters(arguments: []const []const u8) !GetTasksParamet
     var skip: u32 = 0;
     var limit: u32 = 10;
     var output_directory: ?[]const u8 = null;
+
     for (arguments) |argument_value| {
         if (std.mem.startsWith(u8, argument_value, "--skip=")) {
             const raw = argument_value["--skip=".len..];
+
             skip = std.fmt.parseInt(u32, raw, 10) catch return error.InvalidSkip;
         } else if (std.mem.startsWith(u8, argument_value, "--limit=")) {
             const raw = argument_value["--limit=".len..];
+
             limit = std.fmt.parseInt(u32, raw, 10) catch return error.InvalidLimit;
         } else if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
-            if (output_directory) |directory_value| if (directory_value.len == 0) return error.InvalidOutputDirectory;
+
+            if (output_directory) |directory_value|
+                if (directory_value.len == 0) return error.InvalidOutputDirectory;
         }
     }
+
     var file_name_buffer: [256]u8 = undefined;
     const file_name = std.fmt.bufPrint(&file_name_buffer, "tasks-{d}-{d}.json", .{ skip, limit }) catch "tasks.json";
     return GetTasksParameters{ .skip = skip, .limit = limit, .output_directory = output_directory, .file_name = file_name };
@@ -291,15 +325,19 @@ pub fn resolveGetTasksParameters(arguments: []const []const u8) !GetTasksParamet
 pub fn resolvePopTaskParameters(arguments: []const []const u8) !PopTaskParameters {
     var reference: ?[]const u8 = null;
     var output_directory: ?[]const u8 = null;
+
     for (arguments) |argument_value| {
         if (std.mem.startsWith(u8, argument_value, "--output=")) {
             output_directory = argument_value["--output=".len..];
+
             if (output_directory) |value| if (value.len == 0) return error.InvalidOutputDirectory;
         } else if (reference == null and !std.mem.startsWith(u8, argument_value, "--")) {
             reference = argument_value;
         }
     }
+
     if (reference == null or reference.?.len == 0) return error.MissingReference;
+
     var file_name_buffer: [256]u8 = undefined;
     const file_name = std.fmt.bufPrint(&file_name_buffer, "task-{s}.json", .{reference.?}) catch "task.json";
     return PopTaskParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
@@ -308,8 +346,10 @@ pub fn resolvePopTaskParameters(arguments: []const []const u8) !PopTaskParameter
 pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealthResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
+
     var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
+
     if (parsed_json.value.object.get("health")) |health_value| {
         switch (health_value) {
             .object => |object_value| {
@@ -317,7 +357,9 @@ pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealth
                 if (object_value.get("status")) |key_value| {
                     if (key_value == .string) status = try setting.allocator.dupe(u8, key_value.string);
                 }
+
                 if (status == null) return error.MissingStatus;
+
                 const health = Health{ .status = status.? };
                 return CheckHealthResult{ .health = health, .raw_health = result.body };
             },
@@ -328,47 +370,58 @@ pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealth
 
 pub fn resolveStopServiceResult(setting: Setting, result: Response) !StopServiceResult {
     const operation = try resolveOperationResult(setting.allocator, result);
+
     return StopServiceResult{ .operation = operation, .raw_operation = result.body };
 }
 
 pub fn resolveAbortServiceResult(setting: Setting, result: Response) !AbortServiceResult {
     const operation = try resolveOperationResult(setting.allocator, result);
+
     return AbortServiceResult{ .operation = operation, .raw_operation = result.body };
 }
 
 pub fn resolveStartServiceResult(setting: Setting, result: Response) !StartServiceResult {
     const operation = try resolveOperationResult(setting.allocator, result);
+
     return StartServiceResult{ .operation = operation, .raw_operation = result.body };
 }
 
 pub fn resolveKillServiceResult(setting: Setting, result: Response) !KillServiceResult {
     const operation = try resolveOperationResult(setting.allocator, result);
+
     return KillServiceResult{ .operation = operation, .raw_operation = result.body };
 }
 
 fn resolveOperationResult(allocator: std.mem.Allocator, result: Response) !Operation {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
+
     var parsed_json = try std.json.parseFromSlice(std.json.Value, allocator, result.body, .{});
     defer parsed_json.deinit();
+
     if (parsed_json.value.object.get("operation")) |operation_value| {
         switch (operation_value) {
             .object => |object_value| {
                 var status: ?[]const u8 = null;
                 var procedure: ?[]const u8 = null;
                 var service: ?[]const u8 = null;
+
                 if (object_value.get("status")) |key_value| {
                     if (key_value == .string) status = try allocator.dupe(u8, key_value.string);
                 }
+
                 if (object_value.get("procedure")) |key_value| {
                     if (key_value == .string) procedure = try allocator.dupe(u8, key_value.string);
                 }
+
                 if (parsed_json.value.object.get("service")) |key_value| {
                     if (key_value == .string) service = try allocator.dupe(u8, key_value.string);
                 }
+
                 if (status == null) return error.MissingOperationStatus;
                 if (procedure == null) return error.MissingOperationProcedure;
                 if (service == null) return error.MissingOperationService;
+
                 return Operation{ .status = status.?, .procedure = procedure.?, .service = service.? };
             },
             else => return error.InvalidJsonFormat,
@@ -379,18 +432,22 @@ fn resolveOperationResult(allocator: std.mem.Allocator, result: Response) !Opera
 pub fn resolvePushTaskResult(setting: Setting, result: Response) !PushTaskResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
+
     var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
+
     var reference: ?[]const u8 = null;
     if (parsed_json.value.object.get("reference")) |key_value| {
         if (key_value == .string) reference = try setting.allocator.dupe(u8, key_value.string);
     }
+
     if (reference == null) return error.MissingTaskReference;
     return PushTaskResult{ .reference = reference.? };
 }
 
 pub fn resolveGetTaskResult(setting: Setting, result: Response) !GetTaskResult {
     _ = setting;
+
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
@@ -408,6 +465,7 @@ pub fn resolveGetTaskResult(setting: Setting, result: Response) !GetTaskResult {
 
 pub fn resolveGetTasksResult(setting: Setting, result: Response) !GetTasksResult {
     _ = setting;
+
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
@@ -418,6 +476,7 @@ pub fn resolveGetTasksResult(setting: Setting, result: Response) !GetTasksResult
 
 pub fn resolvePopTaskResult(setting: Setting, result: Response) !PopTaskResult {
     _ = setting;
+
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
