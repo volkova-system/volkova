@@ -2,11 +2,14 @@ pub const Action = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
+
     flow: []const u8,
+
     address: ?[]const u8,
     selector: ?[]const u8,
     value: ?[]const u8,
     script: ?[]const u8,
+
     delay: ?u32,
 };
 
@@ -14,7 +17,9 @@ pub const Task = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
+
     actions: []Action,
+
     created_at: []const u8,
     updated_at: []const u8,
 };
@@ -29,61 +34,57 @@ pub const Operation = struct {
     service: []const u8,
 };
 
+// Command enumerates all supported CLI commands.
+//
 pub const Command = enum {
     health,
     stop,
     abort,
     start,
     kill,
+
     list,
     get,
     push,
     pop,
 };
 
+// PushTaskParameters holds validated parameters for the push command.
+//
 pub const PushTaskParameters = struct {
     reference: []const u8,
     name: []const u8,
     description: []const u8,
+
     actions: []Action,
 };
 
+// GetTaskParameters holds validated parameters for the get command.
+//
 pub const GetTaskParameters = struct {
     reference: []const u8,
+
     output_directory: ?[]const u8,
     file_name: ?[]const u8,
 };
 
+// GetTasksParameters holds validated parameters for the list command.
+//
 pub const GetTasksParameters = struct {
     skip: u32,
     limit: u32,
+
     output_directory: ?[]const u8,
     file_name: ?[]const u8,
 };
 
+// PopTaskParameters holds validated parameters for the pop command.
+//
 pub const PopTaskParameters = struct {
     reference: []const u8,
+
     output_directory: ?[]const u8,
     file_name: ?[]const u8,
-};
-
-pub const PushTaskResult = struct {
-    reference: []const u8,
-};
-
-pub const GetTaskResult = struct {
-    task: Task,
-    raw_task: []u8,
-};
-
-pub const GetTasksResult = struct {
-    tasks: []Task,
-    raw_tasks: []u8,
-};
-
-pub const PopTaskResult = struct {
-    task: Task,
-    raw_task: []u8,
 };
 
 pub const CheckHealthResult = struct {
@@ -109,4 +110,23 @@ pub const StartServiceResult = struct {
 pub const KillServiceResult = struct {
     operation: Operation,
     raw_operation: []u8,
+};
+
+pub const PushTaskResult = struct {
+    reference: []const u8,
+};
+
+pub const GetTaskResult = struct {
+    task: Task,
+    raw_task: []u8,
+};
+
+pub const GetTasksResult = struct {
+    tasks: []Task,
+    raw_tasks: []u8,
+};
+
+pub const PopTaskResult = struct {
+    task: Task,
+    raw_task: []u8,
 };
