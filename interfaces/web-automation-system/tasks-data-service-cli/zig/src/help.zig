@@ -1,16 +1,24 @@
 const std = @import("std");
-const Command = @import("model.zig").Command;
+const model = @import("model.zig");
 
+const Command = model.Command;
+
+// printUsage writes a brief usage message to stderr.
+//
 pub fn printUsage() void {
     std.debug.print(
-        \\tasks-data-service-cli
+        \\tasks-data-service-cli - Web automation tasks data service CLI
         \\
         \\Usage:
         \\  tasks-data-service-cli [global options] <command> [command options] [arguments]
         \\
+        \\Use 'tasks-data-service-cli --help' for more information.
+        \\
     , .{});
 }
 
+// printHelp writes the full help message to stdout.
+//
 pub fn printHelp() void {
     std.debug.print(
         \\tasks-data-service-cli - Web automation tasks data service CLI
@@ -65,12 +73,14 @@ pub fn printHelp() void {
         \\  tasks-data-service-cli list --limit=20 --skip=10
         \\  tasks-data-service-cli get my-task-ref
         \\  tasks-data-service-cli push --task=task.json
-        \\  tasks-data-service-cli push --reference=task-1 --name=Task --description=\"Demo\" --action-reference=act-1 --action-name=Click --action-flow=click --action-selector=\"#submit\"
+        \\  tasks-data-service-cli push --reference=task-1 --name="Task" --description="Demo" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
         \\  tasks-data-service-cli pop my-task-ref
         \\
     , .{});
 }
 
+// printVersion writes version information to stdout.
+//
 pub fn printVersion() void {
     std.debug.print(
         \\tasks-data-service-cli version 0.0.0
@@ -78,6 +88,8 @@ pub fn printVersion() void {
     , .{});
 }
 
+// printCommandHelp prints help for specific commands
+//
 pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
@@ -86,6 +98,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Usage:
                 \\  tasks-data-service-cli health
+                \\
+                \\Description:
+                \\  Checks if the tasks data service is running and responsive.
                 \\
             , .{});
         },
@@ -96,6 +111,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\Usage:
                 \\  tasks-data-service-cli stop
                 \\
+                \\Description:
+                \\  Sends a stop signal to the tasks data service.
+                \\
             , .{});
         },
         .abort => {
@@ -104,6 +122,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Usage:
                 \\  tasks-data-service-cli abort
+                \\
+                \\Description:
+                \\  Sends an abort signal to the tasks data service.
                 \\
             , .{});
         },
@@ -114,6 +135,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\Usage:
                 \\  tasks-data-service-cli start
                 \\
+                \\Description:
+                \\  Sends a start signal to the tasks data service.
+                \\
             , .{});
         },
         .kill => {
@@ -122,6 +146,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Usage:
                 \\  tasks-data-service-cli kill
+                \\
+                \\Description:
+                \\  Sends a kill signal to the tasks data service.
                 \\
             , .{});
         },
@@ -152,6 +179,10 @@ pub fn printCommandHelp(command: Command) void {
                 \\  --action-script=      Script to execute (optional)
                 \\  --action-delay=N      Delay in milliseconds (optional)
                 \\
+                \\Examples:
+                \\  tasks-data-service-cli push --task=task.json
+                \\  tasks-data-service-cli push --reference=task-1 --name="Task" --description="Demo" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
+                \\
             , .{});
         },
         .get => {
@@ -167,6 +198,10 @@ pub fn printCommandHelp(command: Command) void {
                 \\Options:
                 \\  --output=DIR   Save output to directory
                 \\
+                \\Examples:
+                \\  tasks-data-service-cli get my-task-ref
+                \\  tasks-data-service-cli get my-task-ref --output=./tasks
+                \\
             , .{});
         },
         .list => {
@@ -180,6 +215,11 @@ pub fn printCommandHelp(command: Command) void {
                 \\  --skip=N       Skip N tasks (default: 0)
                 \\  --limit=N      Limit to N tasks (default: 10)
                 \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  tasks-data-service-cli list
+                \\  tasks-data-service-cli list --limit=20
+                \\  tasks-data-service-cli list --skip=10 --limit=5 --output=./tasks
                 \\
             , .{});
         },
@@ -195,6 +235,9 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Options:
                 \\  --output=DIR   Save output to directory
+                \\
+                \\Examples:
+                \\  tasks-data-service-cli pop my-task-ref
                 \\
             , .{});
         },
