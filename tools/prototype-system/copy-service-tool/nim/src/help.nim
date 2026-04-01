@@ -4,20 +4,26 @@ import setting
 
 proc printUsage*() =
     ## Print usage information to stdout
-    echo "Usage: copy-service <source_rel> <target_rel>"
+    ##
+    echo "Usage: copy-service <source_service> <target_service>"
+    echo ""
     echo ""
     echo "Description:"
-    echo "  Copies the source service directory inside the target directory"
+    echo "  Copies the source service directory inside the target service directory"
+    echo ""
     echo ""
     echo "Arguments:"
-    echo "  source_rel  Source directory relative to services/"
-    echo "  target_rel  Target directory relative to services/"
+    echo "  source_service  Source directory relative to services/"
+    echo "  target_service  Target directory relative to services/"
+    echo ""
     echo ""
     echo "Example:"
-    echo "  copy-service simple-system/simple-data-service \\"
-    echo "               complex-system/complex-data-service/services"
-    echo "  Output:"
-    echo "    services/complex-system/complex-data-service/services/simple-data-service"
+    echo " > copy-service source-system/source-service "
+    echo "                target-system/target-service/services"
+    echo ""
+    echo "Output:"
+    echo "  services/target-system/target-service/services/source-service"
+    echo ""
     echo ""
     echo "Options:"
     echo "  -h, --help, help     Show this help message"
@@ -25,10 +31,12 @@ proc printUsage*() =
 
 proc printVersion*() =
     ## Print version information to stdout
+    ##
     echo commandName, " version ", version
 
 proc printCommandHelp*(command: string) =
     ## Print command-specific help information
+    ##
     case command
     of commandName:
         printUsage()
