@@ -34,55 +34,73 @@ pub fn run(setting: Setting) !void {
 
     switch (command) {
         .health => {
-            const result = try engine.checkHealth(setting);
+            const response = try engine.checkHealth(setting);
+
+            const result = try handler.resolveCheckHealthResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_health);
         },
         .stop => {
-            const result = try engine.stopService(setting);
+            const response = try engine.stopService(setting);
+
+            const result = try handler.resolveStopServiceResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .abort => {
-            const result = try engine.abortService(setting);
+            const response = try engine.abortService(setting);
+
+            const result = try handler.resolveAbortServiceResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .start => {
-            const result = try engine.startService(setting);
+            const response = try engine.startService(setting);
+
+            const result = try handler.resolveStartServiceResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .kill => {
-            const result = try engine.killService(setting);
+            const response = try engine.killService(setting);
+
+            const result = try handler.resolveKillServiceResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
             const parameters = try handler.resolvePushActionParameters(setting, command_parameters);
 
-            const result = try engine.pushAction(setting, parameters);
+            const response = try engine.pushAction(setting, parameters);
+
+            const result = try handler.resolvePushActionResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.reference);
         },
         .get => {
             const parameters = try handler.resolveGetActionParameters(command_parameters);
 
-            const result = try engine.getAction(setting, parameters);
+            const response = try engine.getAction(setting, parameters);
+
+            const result = try handler.resolveGetActionResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_action);
         },
         .list => {
             const parameters = try handler.resolveGetActionsParameters(command_parameters);
 
-            const result = try engine.getActions(setting, parameters);
+            const response = try engine.getActions(setting, parameters);
+
+            const result = try handler.resolveGetActionsResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_actions);
         },
         .pop => {
             const parameters = try handler.resolvePopActionParameters(command_parameters);
 
-            const result = try engine.popAction(setting, parameters);
+            const response = try engine.popAction(setting, parameters);
+
+            const result = try handler.resolvePopActionResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_action);
         },
