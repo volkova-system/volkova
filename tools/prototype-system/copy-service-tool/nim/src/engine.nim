@@ -6,6 +6,7 @@ import utils, setting
 proc findRoot*(): string =
     ## Find project root using git repository detection
     ## Returns: Absolute path to project root (git repository root)
+    ##
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
     if exitCode == 0:
         let gitRoot = output.strip()
@@ -17,8 +18,10 @@ proc findRoot*(): string =
 proc servicesRoot*(): string =
     ## Get absolute path to services directory
     ## Returns: Absolute path to services directory
+    ##
     let root = findRoot()
     let servicesPath = root / servicesDirectory
+
     return absolutePath(servicesPath)
 
 proc copyDir*(srcRel: string, dstRel: string): string =
@@ -26,6 +29,7 @@ proc copyDir*(srcRel: string, dstRel: string): string =
     ## Args: srcRel - Source path relative to services
     ##       dstRel - Destination path relative to services
     ## Returns: Absolute path to created destination
+    ##
     let services = utils.servicesRoot()
     let srcAbs = absolutePath(services / srcRel)
     let dstDirAbs = absolutePath(services / dstRel)
