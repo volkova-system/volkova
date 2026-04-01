@@ -1,1 +1,1 @@
-build-nim-tool build-nim prototype-system/install-nim-tool
+build-nim-tool build-nim prototype-system/run-tool
