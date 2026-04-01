@@ -1,1 +1,1 @@
-build-nim-tool build-fiber-go prototype-system/install-fiber-go-tool
+build-nim-tool build-nim prototype-system/install-fiber-go-tool
