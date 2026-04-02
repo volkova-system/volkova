@@ -3,89 +3,84 @@
 import os
 import help, handler, engine, utils
 
-proc executeCommand(command: string, args: seq[string]) =
+proc executeCommand(command: string, parameters: seq[string]) =
     ## Execute the resolved command with arguments
     ## Args: command - The resolved command name
-    ##       args - List of command arguments
+    ##       parameters - List of command parameters
+
     case command
     of "copy-service":
-        # Validate command and basic parameters
-        let cmdValidation = handler.validateCommand(command, args)
+        let cmdValidation = handler.validateCommand(command, parameters)
 
-        if not cmdValidation.valid:
-            stderr.writeLine("Error: ", cmdValidation.errorMsg)
+        if not cmdValidation.status:
+            stderr.writeLine("Error: ", cmdValidation.issue)
             printUsage()
             quit(1)
 
         # Get services root and validate paths
         try:
-            let servicesRoot = utils.servicesRoot()
-            let pathValidation = handler.validatePaths(cmdValidation.srcRel,
-                    cmdValidation.dstRel, servicesRoot)
+            let servicesRootPath = utils.getServicesRootPath()
+            let systemsRootPath = utils.getSystemsRootPath()
 
-            if not pathValidation.valid:
-                stderr.writeLine("Error: ", pathValidation.errorMsg)
+            let pathValidation = handler.validatePaths(
+                    cmdValidation.source,
+                    cmdValidation.target,
+                    servicesRootPath
+                )
+
+            if not pathValidation.status:
+                stderr.writeLine("Error: ", pathValidation.issue)
                 quit(2)
 
             # Execute using engine with validated parameters
-            let dstAbs = engine.copyDir(cmdValidation.srcRel,
-                    cmdValidation.dstRel)
-            let toRel = cmdValidation.dstRel & "/" & lastPathPart(
-                    cmdValidation.srcRel)
+            let dstAbs = engine.copyDir(cmdValidation.source, cmdValidation.target)
+            let toRel = cmdValidation.source & "/" & lastPathPart(cmdValidation.source)
 
             echo "Successfully copied service:"
-            echo "  From: ", cmdValidation.srcRel
+            echo "  From: ", cmdValidation.source
             echo "  To:   ", toRel
             echo "  Path: ", dstAbs
 
             quit(0)
 
-        except IOError as e:
-            stderr.writeLine("Error: ", e.msg)
+        except IOError as issue:
+            stderr.writeLine("issue, ", issue.msg)
             quit(2)
 
-        except OSError as e:
-            stderr.writeLine("Error: ", e.msg)
+        except OSError as issue:
+            stderr.writeLine("issue, ", issue.msg)
             quit(2)
     else:
-        stderr.writeLine("Error: Unknown command '" & command & "'")
+        stderr.writeLine("unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
-    ## Main CLI execution function
-    ## Processes command line arguments and delegates to appropriate handlers
-    let params = commandLineParams()
+    let parameters = commandLineParams()
 
-    # Check if no arguments provided
-    if params.len == 0:
+    if parameters.len == 0:
         printUsage()
         quit(1)
 
     # Get command and arguments
-    let cmd = params[0]
-    let args = params[1..^1]
+    let command = parameters[0]
+    let targetParameters = parameters[1..^1]
 
-    # Handle help requests
-    if handler.checkHelpFlag(cmd):
+    if handler.checkHelpFlag(command):
         printUsage()
         quit(0)
 
-    # Handle version requests
-    if handler.checkVersionFlag(cmd):
+    if handler.checkVersionFlag(command):
         printVersion()
         quit(0)
 
-    # Validate and execute command
-    let command = handler.resolveCommand(cmd)
-    if command == "":
-        stderr.writeLine("Error: Invalid command '" & cmd & "'")
+    let targetCommand = handler.resolveCommand(command)
+    if targetCommand == "":
+        stderr.writeLine("invalid command, '" & targetCommand & "'")
         printUsage()
         quit(1)
 
-    # Check for command-specific help
-    if handler.checkCommandHelpFlag(args):
-        printCommandHelp(command)
+    if handler.checkCommandHelpFlag(targetParameters):
+        printCommandHelp(targetCommand)
         quit(0)
 
-    # Execute the command
-    executeCommand(command, args)
+    executeCommand(targetCommand, targetParameters)
