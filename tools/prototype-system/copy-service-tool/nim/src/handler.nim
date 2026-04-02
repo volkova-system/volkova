@@ -6,46 +6,45 @@ import utils
 
 type
     ValidationResult* = object
-        ## Result of parameter validation
-        valid*: bool
-        srcRel*: string
-        dstRel*: string
-        errorMsg*: string
+        status*: bool
+        source*: string
+        target*: string
+        issue*: string
 
 proc checkHelpFlag*(flag: string): bool =
     ## Check if argument is a help flag
     ## Args: flag - The flag to check
     ## Returns: Boolean true if it's a help flag
-    ##
+
     return flag in ["-h", "--help", "help"]
 
 proc checkVersionFlag*(flag: string): bool =
     ## Check if argument is a version flag
     ## Args: flag - The flag to check
     ## Returns: Boolean true if it's a version flag
-    ##
+
     return flag in ["-v", "--version", "version"]
 
-proc checkCommandHelpFlag*(args: seq[string]): bool =
+proc checkCommandHelpFlag*(parameters: seq[string]): bool =
     ## Check if arguments contain command help flag
-    ## Args: args - List of arguments to check
+    ## Args: parameters - List of arguments to check
     ## Returns: Boolean true if help flag found
-    ##
-    for arg in args:
-        if checkHelpFlag(arg):
+
+    for parameter in parameters:
+        if checkHelpFlag(parameter):
             return true
 
     return false
 
-proc resolveCommand*(cmdName: string): string =
+proc resolveCommand*(command: string): string =
     ## Resolve command name to internal command
-    ## Args: cmdName - Command name from user input
+    ## Args: command - Command name from user input
     ## Returns: Resolved command name or empty string if invalid
-    ##
-    let validCommands = @[commandName]
 
-    if cmdName in validCommands:
-        return cmdName
+    let validCommands = @[copyServiceCommand]
+
+    if command in validCommands:
+        return command
 
     return ""
 
@@ -54,7 +53,7 @@ proc within(base: string, path: string): bool =
     ## Args: base - Base directory path
     ##       path - Path to check
     ## Returns: Boolean true if path is within base
-    ##
+
     let normalBase = absolutePath(base)
     let normalPath = absolutePath(path)
 
@@ -66,128 +65,126 @@ proc validateServiceStructure*(servicePath: string,
     ## Args: servicePath - Path of the service directory
     ##       servicesRoot - Absolute path to services directory
     ## Returns: ValidationResult with validation status
-    ##
-    var serviceDir = absolutePath(servicesRoot / servicePath)
-    if not dirExists(serviceDir):
+
+    var serviceDirectory = absolutePath(servicesRoot / servicePath)
+    if not dirExists(serviceDirectory):
         try:
-            serviceDir = utils.resolveServiceDir(servicePath)
+            serviceDirectory = utils.resolveServicesDirectory(servicePath)
         except OSError:
             return ValidationResult(
-              valid: false,
-              errorMsg: "service directory not found: " & servicePath
+              status: false,
+              issue: "service directory not found: " & servicePath
             )
 
     # Validate service directory exists
-    if not dirExists(serviceDir):
+    if not dirExists(serviceDirectory):
         return ValidationResult(
-          valid: false,
-          errorMsg: "service directory not found: " & servicePath
+          status: false,
+          issue: "service directory not found: " & servicePath
         )
 
     # Validate service is within services directory
-    if not within(servicesRoot, serviceDir):
+    if not within(servicesRoot, serviceDirectory):
         return ValidationResult(
-          valid: false,
-          errorMsg: "service path outside services directory: " & servicePath
+          status: false,
+          issue: "service path outside services directory: " & servicePath
         )
 
     # Return successful validation
     return ValidationResult(
-      valid: true,
-      srcRel: servicePath,
-      dstRel: "",
-      errorMsg: ""
+      status: true,
+      source: servicePath,
+      target: "",
+      issue: ""
     )
 
-proc validatePaths*(srcRel: string, dstRel: string,
-        servicesRoot: string): ValidationResult =
+proc validatePaths*(source: string, target: string): ValidationResult =
     ## Validate source and destination paths
-    ## Args: srcRel - Source path relative to services
-    ##       dstRel - Destination path relative to services
-    ##       servicesRoot - Absolute path to services directory
+    ## Args: source - Source path relative to services or systems
+    ##       target - Target path relative to services or systems
     ## Returns: ValidationResult with validation status
-    ##
-    let srcAbs = absolutePath(servicesRoot / srcRel)
-    let dstDirAbs = absolutePath(servicesRoot / dstRel)
+
+    let servicesRootPath = utils.getServicesRootPath()
+    let systemsRootPath = utils.getSystemsRootPath()
+
+    let srcAbs = absolutePath(servicesRootPath / source)
+
+    let dstDirAbs = absolutePath(target)
     let srcName = lastPathPart(srcAbs)
     let dstFinalAbs = absolutePath(dstDirAbs / srcName)
 
     # Validate source exists and is directory
     if not dirExists(srcAbs):
         return ValidationResult(
-          valid: false,
-          errorMsg: "source directory not found: " & srcRel
+          status: false,
+          issue: "source directory not found: " & srcRel
         )
 
-    # Validate paths are within services directory
+    # Validate source is within services directory
     if not within(servicesRoot, srcAbs):
         return ValidationResult(
-          valid: false,
-          errorMsg: "source path outside services directory: " & srcRel
+          status: false,
+          issue: "source path outside services directory: " & srcRel
         )
 
-    if not within(servicesRoot, dstDirAbs):
+    # Validate destination end child directory is named "services"
+    if lastPathPart(dstDirAbs) != servicesDirectory:
         return ValidationResult(
-          valid: false,
-          errorMsg: "target path outside services directory: " & dstRel
+          status: false,
+          issue: "target directory must end with '" & servicesDirectory & "': " & dstRel
         )
 
     # Validate source and target relationship
     if dstFinalAbs == srcAbs:
         return ValidationResult(
-          valid: false,
-          errorMsg: "source and target are identical: " & srcRel
+          status: false,
+          issue: "source and target are identical: " & srcRel
         )
 
     if dstFinalAbs.startsWith(srcAbs):
         return ValidationResult(
-          valid: false,
-          errorMsg: "target cannot be inside source directory"
+          status: false,
+          issue: "target cannot be inside source directory"
         )
 
     # Return successful validation
     return ValidationResult(
-      valid: true,
-      srcRel: srcRel,
-      dstRel: dstRel,
-      errorMsg: ""
+      status: true,
+      source: source,
+      target: target,
+      issue: ""
     )
 
-proc validateCommand*(cmd: string, args: seq[string]): ValidationResult =
-    ## Validate copy-service command and arguments
-    ## Args: cmd - Command name (should be "copy-service")
-    ##       args - List of command arguments
+proc validateCommand*(command: string, parameters: seq[string]): ValidationResult =
+    ## Validate copy-service command and parameters
+    ## Args: command - Command name (should be "copy-service")
+    ##       parameters - List of command parameters
     ## Returns: ValidationResult with validation status and parsed parameters
 
-    # Validate command name
-    if cmd != commandName:
+    if command != copyServiceCommand:
         return ValidationResult(
-          valid: false,
-          errorMsg: "invalid command '" & cmd & "'"
+            status: false,
+            issue: "invalid command, '" & command & "'"
         )
 
-    # Validate argument count
-    if args.len != 2:
+    if parameters.len != 2:
         return ValidationResult(
-          valid: false,
-          errorMsg: "expected 2 arguments, got " & $args.len
+            status: false,
+            issue: "expected 2 parameters, got " & $parameters.len
         )
 
-    # Extract arguments
-    let srcRel = args[0]
-    let dstRel = args[1]
+    let source = parameters[0]
+    let target = parameters[1]
 
-    # Validate arguments are not empty
-    if srcRel == "" or dstRel == "":
+    if source == "" or target == "":
         return ValidationResult(
-          valid: false,
-          errorMsg: "source and target paths cannot be empty"
+            status: false,
+            issue: "source and target paths cannot be empty"
         )
 
-    # Return successful validation
     return ValidationResult(
-      valid: true,
-      srcRel: srcRel,
-      dstRel: dstRel,
-      errorMsg: ""
+        status: true,
+        source: source,
+        target: target,
+        issue: ""
     )
