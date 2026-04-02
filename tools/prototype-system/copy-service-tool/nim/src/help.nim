@@ -14,7 +14,7 @@ proc printUsage*() =
     echo ""
     echo "Arguments:"
     echo "  source_service  Source directory relative to services/"
-    echo "  target_service  Target directory relative to services/"
+    echo "  target_service  Target directory relative to services/ or systems/"
     echo ""
     echo ""
     echo "Example:"
@@ -32,13 +32,13 @@ proc printUsage*() =
 proc printVersion*() =
     ## Print version information to stdout
     ##
-    echo commandName, " version ", version
+    echo copyServiceCommand, " version ", version
 
 proc printCommandHelp*(command: string) =
     ## Print command-specific help information
     ##
     case command
-    of commandName:
+    of copyServiceCommand:
         printUsage()
     else:
         echo "No help available for command: ", command
