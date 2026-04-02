@@ -6,34 +6,56 @@ import setting
 proc findRoot*(): string =
     ## Find project root using git repository detection
     ## Returns: Absolute path to project root (git repository root)
-    ##
+
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
+
     if exitCode == 0:
-        let gitRoot = output.strip()
-        if gitRoot != "" and dirExists(gitRoot):
-            return absolutePath(gitRoot)
+        let repositoryRootPath = output.strip()
+        if repositoryRootPath != "" and dirExists(repositoryRootPath):
+            return absolutePath(repositoryRootPath)
 
     raise newException(IOError, "repository root not found")
 
-proc servicesRoot*(): string =
+proc getServicesRootPath*(): string =
     ## Get absolute path to services directory
     ## Returns: Absolute path to services directory
-    ##
+
     let root = findRoot()
     let servicesPath = root / servicesDirectory
 
     return absolutePath(servicesPath)
 
-proc resolveServiceDir*(servicePath: string): string =
+proc getSystemsRootPath*(): string =
+    ## Get absolute path to systems directory
+    ## Returns: Absolute path to systems directory
+
+    let root = findRoot()
+    let systemsPath = root / systemsDirectory
+
+    return absolutePath(systemsPath)
+
+proc resolveServicesDirectory*(servicePath: string): string =
     ## Resolve service directory by relative path
     ## Args: servicePath - Relative service path under services directory
     ## Returns: Absolute path to service directory
-    ##
-    let services = servicesRoot()
-    let normalized = servicePath.replace("\\", "/")
-    let direct = absolutePath(services / normalized)
 
-    if dirExists(direct):
-        return direct
+    let services = getServicesRootPath()
+    let servicesAbsolutePath = absolutePath(services / servicePath.replace("\\", "/"))
 
-    raise newException(OSError, "service directory not found: " & servicePath)
+    if dirExists(servicesAbsolutePath):
+        return servicesAbsolutePath
+
+    raise newException(OSError, "service directory not found: " & servicesAbsolutePath)
+
+proc resolveSystemsDirectory*(systemsPath: string): string =
+    ## Resolve systems directory by relative path
+    ## Args: systemsPath - Relative systems path under systems directory
+    ## Returns: Absolute path to systems directory
+
+    let systems = getSystemsRootPath()
+    let systemsAbsolutePath = absolutePath(systems / systemsPath.replace("\\", "/"))
+
+    if dirExists(systemsAbsolutePath):
+        return systemsAbsolutePath
+
+    raise newException(OSError, "systems absolute directory path not found: " & systemsAbsolutePath)
