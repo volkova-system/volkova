@@ -3,12 +3,13 @@ import os
 import utils
 
 proc copyService*(source: string, target: string): string =
+
     ## Copy directory from source to destination within services
     ## Args: source - Source service path relative to services
     ##       target - Target service path relative to services or systems
     ## Returns: Absolute path to created destination
 
-    
+
 
     let services = utils.getServicesRootPath()
     let srcAbs = absolutePath(services / srcRel)
