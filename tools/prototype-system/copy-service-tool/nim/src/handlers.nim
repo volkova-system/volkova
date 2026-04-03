@@ -1,5 +1,5 @@
 
-import os
+import os, strutils
 import models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
@@ -75,7 +75,8 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(command: string, parameters: seq[string]): ValidationResult =
+proc validateCommand*(command: string, parameters: seq[
+        string]): ValidationResult =
 
     ## Validate copy-service command and parameters
     ## Args: command - Command name (should be "copy-service")
@@ -148,14 +149,16 @@ proc validateTargetServiceStructure*(servicePath: string): ValidationResult =
 
     if not dirExists(serviceDirectory):
         try:
-            serviceDirectory = utils.resolveSystemDirectory(servicePath)
-        except OSError:
+            serviceDirectory = utils.resolveServiceDirectory(servicePath)
+        except OSError as issue:
             return ValidationResult(
                 status: false,
-                issue: "target service directory validation failed, " & servicePath
+                issue: "target service directory validation failed, " &
+                servicePath & ", " & issue.msg
             )
 
-    if lastPathPart(serviceDirectory) != "services":
+    if lastPathPart(serviceDirectory) != "services" and
+            not serviceDirectory.endsWith("-service"):
         return ValidationResult(
             status: false,
             issue: "invalid target service directory, " & servicePath
@@ -185,10 +188,11 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
                 issue: "target system directory validation failed, " & systemPath
             )
 
-    if lastPathPart(systemDirectory) != "services":
+    if lastPathPart(systemDirectory) != "services" and
+            not systemsDirectory.endsWith("-service"):
         return ValidationResult(
             status: false,
-            issue: "invalid target service directory, " & systemPath
+            issue: "invalid target systems service directory, " & systemPath
         )
 
     return ValidationResult(
