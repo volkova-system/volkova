@@ -2,11 +2,12 @@
 import os
 import utils
 
-proc copyService*(source: string, target: string): string =
+proc copyService*(source: string, target: string, systems: bool): string =
 
-    ## Copy directory from source to destination within services
+    ## Copy source directory inside the target service directory
     ## Args: source - Source service path relative to services
     ##       target - Target service path relative to services or systems
+    ##       systems - If target path is relative to systems
     ## Returns: Absolute path to created destination
 
 
