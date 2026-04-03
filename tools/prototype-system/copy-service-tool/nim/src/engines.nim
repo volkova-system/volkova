@@ -22,7 +22,7 @@ proc copyService*(source: string, target: string, systems: bool): string =
 
 
     if dirExists(targetOutputDirectory):
-        removeDir(dstAbs)
+        removeDir(normalizedPath())
 
     # Perform the copy operation
     copyDirWithPermissions(srcAbs, dstAbs)
