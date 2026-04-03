@@ -10,20 +10,16 @@ proc copyService*(source: string, target: string, systems: bool): string =
     ##       systems - If target path is relative to systems
     ## Returns: Absolute path to created destination
 
+    let sourceDirectory = utils.resolveServiceDirectory(source)
+
+    var targetDirectory = ""
+    if systems:
+        targetDirectory = utils.resolveSystemDirectory(target)
+    else:
+        targetDirectory = utils.resolveServiceDirectory(target)
 
 
-    let services = utils.getServicesRootPath()
-    let srcAbs = absolutePath(services / srcRel)
-    let dstDirAbs = absolutePath(dstRel)
-    let srcName = lastPathPart(srcAbs)
-    let dstAbs = absolutePath(dstDirAbs / srcName)
-
-    # Create parent directory if needed
-    let parent = parentDir(dstAbs)
-    if not dirExists(parent):
-        createDir(parent)
-
-    if dirExists(dstAbs):
+    if dirExists():
         removeDir(dstAbs)
 
     # Perform the copy operation
