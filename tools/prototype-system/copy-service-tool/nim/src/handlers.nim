@@ -1,5 +1,5 @@
 
-import os, strutils
+import os
 import models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
@@ -116,18 +116,6 @@ proc validateCommand*(command: string, parameters: seq[string]): ValidationResul
         issue: ""
     )
 
-proc within(base: string, path: string): bool =
-
-    ## Check if path is within base directory
-    ## Args: base - Base directory path
-    ##       path - Path to check
-    ## Returns: Boolean true if path is within base
-
-    let normalBase = absolutePath(base)
-    let normalPath = absolutePath(path)
-
-    return normalPath.startsWith(normalBase)
-
 proc validateSourceServiceStructure*(servicePath: string): ValidationResult =
 
     ## Validate source service directory structure
@@ -156,13 +144,21 @@ proc validateTargetServiceStructure*(servicePath: string): ValidationResult =
     ## Args: servicePath - Path of the target service directory
     ## Returns: ValidationResult with validation status
 
-    var serviceDirectory = ""
-    try:
-        serviceDirectory = utils.resolveSystemDirectory(servicePath)
-    except OSError:
+    var serviceDirectory = absolutePath(servicePath)
+
+    if not dirExists(serviceDirectory):
+        try:
+            serviceDirectory = utils.resolveSystemDirectory(servicePath)
+        except OSError:
+            return ValidationResult(
+                status: false,
+                issue: "target service directory validation failed, " & servicePath
+            )
+
+    if lastPathPart(serviceDirectory) != "services":
         return ValidationResult(
             status: false,
-            issue: "target service directory validation failed, " & servicePath
+            issue: "invalid target service directory, " & servicePath
         )
 
     return ValidationResult(
@@ -178,13 +174,21 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
     ## Args: systemPath - Path of the system directory
     ## Returns: ValidationResult with validation status
 
-    var systemDirectory = ""
-    try:
-        systemDirectory = utils.resolveSystemDirectory(systemPath)
-    except OSError:
+    var systemDirectory = absolutePath(systemPath)
+
+    if not dirExists(systemDirectory):
+        try:
+            systemDirectory = utils.resolveSystemDirectory(systemPath)
+        except OSError:
+            return ValidationResult(
+                status: false,
+                issue: "target system directory validation failed, " & systemPath
+            )
+
+    if lastPathPart(systemDirectory) != "services":
         return ValidationResult(
             status: false,
-            issue: "target system directory validation failed, " & systemPath
+            issue: "invalid target service directory, " & systemPath
         )
 
     return ValidationResult(
@@ -206,7 +210,18 @@ proc validatePaths*(
     ##       systems - If target path is relative to systems
     ## Returns: ValidationResult with validation status
 
-    
+    var valid = validateSourceServiceStructure(source)
+
+    if not valid.status:
+        return valid
+
+    if systems:
+        valid = validateTargetSystemStructure(target)
+    else:
+        valid = validateTargetServiceStructure(target)
+
+    if not valid.status:
+        return valid
 
     return ValidationResult(
         status: true,
