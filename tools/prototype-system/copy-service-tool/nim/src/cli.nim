@@ -19,13 +19,15 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
             quit(1)
 
+        valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
+
+        if not valid.status:
+            stderr.writeLine("issue, ", valid.issue)
+
+            quit(2)
+
         try:
-            valid = handlers.validatePaths(valid.source, valid.target)
 
-            if not valid.status:
-                stderr.writeLine("issue, ", valid.issue)
-
-                quit(2)
 
             let target = engines.copyService(valid.source, valid.target)
 
