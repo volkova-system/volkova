@@ -38,6 +38,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("issue, ", valid.issue)
             quit(1)
 
+        echo "copy-service done " & valid.target
         quit(0)
 
     else:
