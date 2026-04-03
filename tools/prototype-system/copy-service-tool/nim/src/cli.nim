@@ -3,6 +3,7 @@ import os
 import helps, handlers, engines
 
 proc executeCommand(command: string, parameters: seq[string]) =
+
     ## Execute the resolved command with arguments
     ## Args: command - The resolved command name
     ##       parameters - List of command parameters
@@ -28,7 +29,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
             let target = engines.copyService(valid.source, valid.target)
 
-            
+
 
             quit(0)
 
