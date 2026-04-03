@@ -3,6 +3,7 @@ import os, strutils, osproc
 import settings
 
 proc findRoot*(): string =
+
     ## Find project root using git repository detection
     ## Returns: Absolute path to project root (git repository root)
 
@@ -19,6 +20,7 @@ proc findRoot*(): string =
     raise newException(OSError, "cannot determine repository root path")
 
 proc getServicesRootPath*(): string =
+
     ## Get absolute path to services directory
     ## Returns: Absolute path to services root directory
 
@@ -31,6 +33,7 @@ proc getServicesRootPath*(): string =
         "services root path not found, " & servicesRootPath)
 
 proc getSystemsRootPath*(): string =
+
     ## Get absolute path to systems directory
     ## Returns: Absolute path to systems root directory
 
@@ -43,6 +46,7 @@ proc getSystemsRootPath*(): string =
         "systems root path not found, " & systemsRootPath)
 
 proc resolveServiceDirectory*(servicePath: string): string =
+
     ## Resolve service directory by relative path
     ## Args: servicePath - Relative service path under services directory
     ## Returns: Absolute path to service directory
@@ -58,6 +62,7 @@ proc resolveServiceDirectory*(servicePath: string): string =
         "service absolute directory not found, " & servicesAbsolutePath)
 
 proc resolveSystemDirectory*(systemPath: string): string =
+
     ## Resolve systems directory by relative path
     ## Args: systemsPath - Relative systems path under systems directory
     ## Returns: Absolute path to systems directory
