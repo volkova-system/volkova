@@ -24,7 +24,7 @@ proc printUsage*() =
     echo "    -v, --version, version    Show version information"
     echo ""
     echo "Command Options:"
-    echo "    -s, --systems             Targets systems root directory"
+    echo "    -s, --systems, systems    Targets systems root directory"
     echo ""
     echo "Example:"
     echo "    > copy-service source-system/source-service "
