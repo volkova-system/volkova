@@ -18,8 +18,10 @@ proc copyService*(source: string, target: string, systems: bool): string =
     else:
         targetDirectory = utils.resolveServiceDirectory(target)
 
+    let targetOutputDirectory = normalizedPath(targetDirectory / source)
 
-    if dirExists():
+
+    if dirExists(targetOutputDirectory):
         removeDir(dstAbs)
 
     # Perform the copy operation
