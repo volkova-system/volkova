@@ -88,14 +88,19 @@ proc validateCommand*(command: string, parameters: seq[string]): ValidationResul
             issue: "invalid command, '" & command & "'"
         )
 
-    if parameters.len != 2:
+    if parameters.len < 2 or parameters.len > 3:
         return ValidationResult(
             status: false,
-            issue: "expected 2 parameters, got " & $parameters.len
+            issue: "expected 2-3 parameters, got " & $parameters.len
         )
 
     let source = parameters[0]
-    let target = parameters[1]
+    var target = parameters[1]
+
+    var systems = false
+    if checkCommandSystemsFlag(parameters):
+        target = parameters[2]
+        systems = true
 
     if source == "" or target == "":
         return ValidationResult(
@@ -106,6 +111,7 @@ proc validateCommand*(command: string, parameters: seq[string]): ValidationResul
     return ValidationResult(
         status: true,
         source: source,
+        systems: systems,
         target: target,
         issue: ""
     )
@@ -188,14 +194,19 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
         issue: ""
     )
 
-proc validatePaths*(source: string, target: string): ValidationResult =
+proc validatePaths*(
+        source: string,
+        target: string,
+        systems: bool
+    ): ValidationResult =
 
     ## Validate source and target paths
     ## Args: source - Source path relative to services
     ##       target - Target path relative to services or systems
+    ##       systems - If target path is relative to systems
     ## Returns: ValidationResult with validation status
 
-
+    
 
     return ValidationResult(
         status: true,
