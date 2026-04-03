@@ -23,7 +23,7 @@ proc checkCommandHelpFlag*(parameters: seq[string]): bool =
     return false
 
 proc checkVersionFlag*(flag: string): bool =
-    
+
     ## Check if argument is a version flag
     ## Args: flag - The flag to check
     ## Returns: Boolean true if it's a version flag
@@ -38,6 +38,26 @@ proc checkCommandVersionFlag*(parameters: seq[string]): bool =
 
     for parameter in parameters:
         if checkVersionFlag(parameter):
+            return true
+
+    return false
+
+proc checkSystemsFlag*(flag: string): bool =
+
+    ## Check if argument is a systems flag
+    ## Args: flag - The flag to check
+    ## Returns: Boolean true if it's a systems flag
+
+    return flag in ["-s", "--systems", "systems"]
+
+proc checkCommandSystemsFlag*(parameters: seq[string]): bool =
+
+    ## Check if arguments contain command version flag
+    ## Args: parameters - List of arguments to check
+    ## Returns: Boolean true if systems flag found
+
+    for parameter in parameters:
+        if checkSystemsFlag(parameter):
             return true
 
     return false
