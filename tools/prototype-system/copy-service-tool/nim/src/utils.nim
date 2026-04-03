@@ -1,7 +1,6 @@
-# Utility procedures for copy-service tool
 
 import os, strutils, osproc
-import setting
+import settings
 
 proc findRoot*(): string =
     ## Find project root using git repository detection
@@ -14,48 +13,61 @@ proc findRoot*(): string =
         if repositoryRootPath != "" and dirExists(repositoryRootPath):
             return absolutePath(repositoryRootPath)
 
-    raise newException(IOError, "repository root not found")
+        raise newException(OSError,
+            "repository root not found, " & repositoryRootPath)
+
+    raise newException(OSError, "cannot determine repository root path")
 
 proc getServicesRootPath*(): string =
     ## Get absolute path to services directory
-    ## Returns: Absolute path to services directory
+    ## Returns: Absolute path to services root directory
 
-    let root = findRoot()
-    let servicesPath = root / servicesDirectory
+    let servicesRootPath = absolutePath(findRoot() / servicesDirectory)
 
-    return absolutePath(servicesPath)
+    if dirExists(servicesRootPath):
+        return servicesRootPath
+
+    raise newException(OSError,
+        "services root path not found, " & servicesRootPath)
 
 proc getSystemsRootPath*(): string =
     ## Get absolute path to systems directory
-    ## Returns: Absolute path to systems directory
+    ## Returns: Absolute path to systems root directory
 
-    let root = findRoot()
-    let systemsPath = root / systemsDirectory
+    let systemsRootPath = absolutePath(findRoot() / systemsDirectory)
 
-    return absolutePath(systemsPath)
+    if dirExists(systemsRootPath):
+        return systemsRootPath
 
-proc resolveServicesDirectory*(servicePath: string): string =
+    raise newException(OSError,
+        "systems root path not found, " & systemsRootPath)
+
+proc resolveServiceDirectory*(servicePath: string): string =
     ## Resolve service directory by relative path
     ## Args: servicePath - Relative service path under services directory
     ## Returns: Absolute path to service directory
 
-    let services = getServicesRootPath()
-    let servicesAbsolutePath = absolutePath(services / servicePath.replace("\\", "/"))
+    let servicesAbsolutePath = absolutePath(
+        getServicesRootPath() / normalizedPath(servicePath)
+    )
 
     if dirExists(servicesAbsolutePath):
         return servicesAbsolutePath
 
-    raise newException(OSError, "service directory not found: " & servicesAbsolutePath)
+    raise newException(OSError,
+        "service absolute directory not found, " & servicesAbsolutePath)
 
-proc resolveSystemsDirectory*(systemsPath: string): string =
+proc resolveSystemDirectory*(systemPath: string): string =
     ## Resolve systems directory by relative path
     ## Args: systemsPath - Relative systems path under systems directory
     ## Returns: Absolute path to systems directory
 
-    let systems = getSystemsRootPath()
-    let systemsAbsolutePath = absolutePath(systems / systemsPath.replace("\\", "/"))
+    let systemsAbsolutePath = absolutePath(
+        getSystemsRootPath() / normalizedPath(systemPath)
+    )
 
     if dirExists(systemsAbsolutePath):
         return systemsAbsolutePath
 
-    raise newException(OSError, "systems absolute directory path not found: " & systemsAbsolutePath)
+    raise newException(OSError,
+        "systems absolute directory path not found, " & systemsAbsolutePath)
