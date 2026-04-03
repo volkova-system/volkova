@@ -14,31 +14,31 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
         if not valid.status:
             stderr.writeLine("issue, ", valid.issue)
-
             printUsage()
-
             quit(1)
 
         valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
 
         if not valid.status:
             stderr.writeLine("issue, ", valid.issue)
-
             quit(2)
 
         try:
-
-
-            let target = engines.copyService(valid.source, valid.target)
-
-
-
-            quit(0)
-
+            valid.target = engines.copyService(valid.source, valid.target, valid.systems)
         except CatchableError as issue:
             stderr.writeLine("issue, ", issue.msg)
-
             quit(2)
+
+        if valid.systems:
+            valid = handlers.validateTargetSystemStructure(valid.target)
+        else:
+            valid = handlers.validateTargetServiceStructure(valid.target)
+
+        if not valid.status:
+            stderr.writeLine("issue, ", valid.issue)
+            quit(1)
+
+        quit(0)
 
     else:
         stderr.writeLine("unknown command, '" & command & "'")
@@ -49,7 +49,6 @@ proc run*() =
 
     if parameters.len == 0:
         printUsage()
-
         quit(1)
 
     let command = parameters[0]
@@ -57,24 +56,20 @@ proc run*() =
 
     if handlers.checkHelpFlag(command):
         printUsage()
-
         quit(0)
 
     if handlers.checkVersionFlag(command):
         printVersion()
-
         quit(0)
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
         stderr.writeLine("invalid command, '" & targetCommand & "'")
         printUsage()
-
         quit(1)
 
     if handlers.checkCommandHelpFlag(targetParameters):
         printCommandHelp(targetCommand)
-
         quit(0)
 
     executeCommand(targetCommand, targetParameters)
