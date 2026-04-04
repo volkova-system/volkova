@@ -277,17 +277,15 @@ containers/*/data/**/*.*
 !tools/*-system/
 !tools/*-system/*-tool/
 
-!tools/*-system/**/*.tool
+!tools/**/*.tool
 
 !tools/*-system/*-tool/python/
-
 !tools/*-system/*-tool/**/*.py
+
 !tools/*-system/*-tool/zig/
 !tools/*-system/*-tool/zig/src/
 !tools/*-system/*-tool/zig/dist/
 !tools/*-system/*-tool/zig/dist/windows/
-!tools/*-system/*-tool/**/*.tool
-
 !tools/*-system/*-tool/**/*.zig
 
 !tools/*-system/*-tool/nim/
