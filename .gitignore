@@ -286,6 +286,7 @@ containers/*/data/**/*.*
 !tools/*-system/*-tool/zig/
 !tools/*-system/*-tool/zig/src/
 !tools/*-system/*-tool/zig/dist/
+!tools/*-system/*-tool/zig/dist/windows/
 !tools/*-system/*-tool/**/*.tool
 
 !tools/*-system/*-tool/**/*.py
