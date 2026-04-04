@@ -1,8 +1,8 @@
-./build-nim-tool/setup.tool
-./build-fiber-go-tool/setup.tool
-./build-zig-tool/setup.tool
-./copy-interface-tool/setup.tool
-./copy-service-tool/setup.tool
-./copy-system-tool/setup.tool
-./install-fiber-go-tool/setup.tool
-./install-zig-tool/setup.tool
+./build-nim-tool/nim/setup.tool
+./build-fiber-go-tool/nim/setup.tool
+./build-zig-tool/nim/setup.tool
+./copy-interface-tool/nim/setup.tool
+./copy-service-tool/nim/setup.tool
+./copy-system-tool/nim/setup.tool
+./install-fiber-go-tool/nim/setup.tool
+./install-zig-tool/nim/setup.tool
