@@ -1,1 +1,1 @@
-./services/web-automation-system/setup.tool
+./web-automation-system/setup.tool
