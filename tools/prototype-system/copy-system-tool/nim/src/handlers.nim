@@ -56,8 +56,9 @@ proc resolveCommand*(command: string): string =
     return ""
 
 proc validateCommand*(
-        command: string, parameters: seq[
-        string]): ValidationResult =
+        command: string,
+        parameters: seq[string]
+    ): ValidationResult =
 
     ## Validate copy-system command and parameters
     ## Args: command - Command name (should be "copy-system")
