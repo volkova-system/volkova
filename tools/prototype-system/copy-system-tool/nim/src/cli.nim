@@ -9,7 +9,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
     ##       parameters - List of command parameters
 
     case command
-    of "copy-interface":
+    of "copy-system":
         var valid = handlers.validateCommand(command, parameters)
 
         if not valid.status:
@@ -17,28 +17,25 @@ proc executeCommand(command: string, parameters: seq[string]) =
             printUsage()
             quit(1)
 
-        valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
+        valid = handlers.validatePaths(valid.source, valid.target)
 
         if not valid.status:
             stderr.writeLine("issue, ", valid.issue)
             quit(2)
 
         try:
-            valid.target = engines.copyInterface(valid.source, valid.target, valid.systems)
+            valid.target = engines.copySystem(valid.source, valid.target)
         except CatchableError as issue:
             stderr.writeLine("issue, ", issue.msg)
             quit(2)
 
-        if valid.systems:
-            valid = handlers.validateTargetSystemStructure(valid.target)
-        else:
-            valid = handlers.validateTargetInterfaceStructure(valid.target)
+        valid = handlers.validateTargetSystemStructure(valid.target)
 
         if not valid.status:
             stderr.writeLine("issue, ", valid.issue)
             quit(1)
 
-        echo "copy-interface done " & valid.target
+        echo "copy-system done " & valid.target
         quit(0)
 
     else:
