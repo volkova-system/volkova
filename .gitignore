@@ -191,6 +191,13 @@ containers/*/data/**/*.*
 !services/*-system/*-service/nginx/logs/
 !services/*-system/*-service/nginx/*.conf
 
+!services/*-system/*-service/varnish/
+
+!services/*-system/*-service/nats/
+
+!services/*-system/*-service/go/
+!services/*-system/*-service/go/agents
+
 !services/*-system/*-service/fastify-node/
 !services/*-system/*-service/fastify-node/logs/
 !services/*-system/*-service/fastify-node/dist/
@@ -201,13 +208,6 @@ containers/*/data/**/*.*
 !services/*-system/*-service/fastify-node/src/models/
 !services/*-system/*-service/fastify-node/**/*.ts
 !services/*-system/*-service/fastify-node/**/*.json
-
-!services/*-system/*-service/varnish/
-
-!services/*-system/*-service/nats/
-
-!services/*-system/*-service/go/
-!services/*-system/*-service/go/agents
 
 !services/*-system/*-service/fiber-go/
 !services/*-system/*-service/fiber-go/channels/
