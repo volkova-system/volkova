@@ -13,20 +13,20 @@ proc executeCommand(command: string, parameters: seq[string]) =
         var valid = handlers.validateCommand(command, parameters)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-service issue, ", valid.issue)
             printUsage()
             quit(1)
 
         valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-service issue, ", valid.issue)
             quit(2)
 
         try:
             valid.target = engines.copyService(valid.source, valid.target, valid.systems)
         except CatchableError as issue:
-            stderr.writeLine("issue, ", issue.msg)
+            stderr.writeLine("copy-service issue, ", issue.msg)
             quit(2)
 
         if valid.systems:
@@ -35,14 +35,14 @@ proc executeCommand(command: string, parameters: seq[string]) =
             valid = handlers.validateTargetServiceStructure(valid.target)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-service issue, ", valid.issue)
             quit(1)
 
-        echo "copy-service done " & valid.target
+        echo "copy-service done, target, " & valid.target
         quit(0)
 
     else:
-        stderr.writeLine("unknown command, '" & command & "'")
+        stderr.writeLine("copy-service issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
@@ -65,7 +65,8 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("invalid command, '" & targetCommand & "'")
+        stderr.writeLine("copy-service issue, invalid command, '" &
+                targetCommand & "'")
         printUsage()
         quit(1)
 
