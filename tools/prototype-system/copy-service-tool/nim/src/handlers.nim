@@ -188,8 +188,11 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
                 issue: "target system directory validation failed, " & systemPath
             )
 
+    echo "last part " & lastPathPart(systemDirectory)
+    echo "ends with " & $systemDirectory.endsWith("-service")
+
     if lastPathPart(systemDirectory) != "services" and
-            not systemsDirectory.endsWith("-service"):
+            not systemDirectory.endsWith("-service"):
         return ValidationResult(
             status: false,
             issue: "invalid target systems service directory, " & systemPath
@@ -230,6 +233,7 @@ proc validatePaths*(
     return ValidationResult(
         status: true,
         source: source,
+        systems: systems,
         target: target,
         issue: ""
     )
