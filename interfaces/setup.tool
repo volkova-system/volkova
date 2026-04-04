@@ -1,1 +1,1 @@
-./web-automation-system/
+./interface/web-automation-system/setup.tool
