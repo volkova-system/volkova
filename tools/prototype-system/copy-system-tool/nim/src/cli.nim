@@ -13,33 +13,33 @@ proc executeCommand(command: string, parameters: seq[string]) =
         var valid = handlers.validateCommand(command, parameters)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-system issue, ", valid.issue)
             printUsage()
             quit(1)
 
         valid = handlers.validatePaths(valid.source, valid.target)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-system issue, ", valid.issue)
             quit(2)
 
         try:
             valid.target = engines.copySystem(valid.source, valid.target)
         except CatchableError as issue:
-            stderr.writeLine("issue, ", issue.msg)
+            stderr.writeLine("copy-system issue, ", issue.msg)
             quit(2)
 
         valid = handlers.validateTargetSystemStructure(valid.target)
 
         if not valid.status:
-            stderr.writeLine("issue, ", valid.issue)
+            stderr.writeLine("copy-system issue, ", valid.issue)
             quit(1)
 
-        echo "copy-system done " & valid.target
+        echo "copy-system done, target, " & valid.target
         quit(0)
 
     else:
-        stderr.writeLine("unknown command, '" & command & "'")
+        stderr.writeLine("copy-system issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
@@ -62,7 +62,8 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("invalid command, '" & targetCommand & "'")
+        stderr.writeLine("copy-system issue, invalid command, '" &
+                targetCommand & "'")
         printUsage()
         quit(1)
 
