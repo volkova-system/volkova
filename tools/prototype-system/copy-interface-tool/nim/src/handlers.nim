@@ -230,6 +230,7 @@ proc validatePaths*(
     return ValidationResult(
         status: true,
         source: source,
+        systems: systems,
         target: target,
         issue: ""
     )
