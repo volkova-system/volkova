@@ -58,29 +58,29 @@ proc validateCommand*(cmd: string, args: seq[string]): ValidationResult =
 
     if cmd != commandName:
         return ValidationResult(
-          valid: false,
-          errorMsg: "Invalid command '" & cmd & "'"
+            valid: false,
+            errorMsg: "Invalid command '" & cmd & "'"
         )
 
     if args.len != 1:
         return ValidationResult(
-          valid: false,
-          errorMsg: "Expected 1 argument, got " & $args.len
+            valid: false,
+            errorMsg: "Expected 1 argument, got " & $args.len
         )
 
     let toolFilePathArg = args[0]
 
     if toolFilePathArg == "":
         return ValidationResult(
-          valid: false,
-          errorMsg: "Tool file path cannot be empty"
+            valid: false,
+            errorMsg: "Tool file path cannot be empty"
         )
 
     if not toolFilePathArg.endsWith(toolFileExtension):
         return ValidationResult(
             valid: false,
             errorMsg: "Tool file must have " & toolFileExtension &
-              " extension: " & toolFilePathArg
+                " extension: " & toolFilePathArg
         )
 
     let resolvedPath = utils.resolveToolFilePath(toolFilePathArg)
