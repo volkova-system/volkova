@@ -3,7 +3,9 @@
 import setting
 
 proc printUsage*() =
+
     ## Print usage information to stdout
+
     echo "Usage: run <tool_file_path>"
     echo ""
     echo "Description:"
@@ -27,11 +29,15 @@ proc printUsage*() =
     echo "  -v, --version        Show version information"
 
 proc printVersion*() =
+
     ## Print version information to stdout
+
     echo commandName, " version ", version
 
 proc printCommandHelp*(command: string) =
+
     ## Print command-specific help information
+
     case command
     of commandName:
         printUsage()
