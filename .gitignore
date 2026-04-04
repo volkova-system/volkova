@@ -181,6 +181,8 @@ containers/*/data/**/*.*
 !services/*-system/
 !services/*-system/*-service/
 
+!services/**/*.tool
+
 !services/*-system/*-service/caddy/
 !services/*-system/*-service/caddy/logs/
 !services/*-system/*-service/caddy/Caddyfile*
@@ -206,8 +208,6 @@ containers/*/data/**/*.*
 
 !services/*-system/*-service/go/
 !services/*-system/*-service/go/agents
-
-!services/*-system/*-service/**/*.tool
 
 !services/*-system/*-service/fiber-go/
 !services/*-system/*-service/fiber-go/channels/
