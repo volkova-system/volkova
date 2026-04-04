@@ -115,6 +115,11 @@ containers/*/data/**/*.*
 # START INTERFACES
 !interfaces/
 !interfaces/*-system/
+!interfaces/*-system/*-cai/
+!interfaces/*-system/*-cli/
+
+!interfaces/**/*.tool
+
 !interfaces/*-system/storybook/
 !interfaces/*-system/storybook/.storybook/
 !interfaces/*-system/storybook/public/
@@ -125,7 +130,6 @@ containers/*/data/**/*.*
 !interfaces/*-system/storybook/package.json
 !interfaces/*-system/storybook/tsconfig.json
 
-!interfaces/*-system/*-cai/
 !interfaces/*-system/*-cai/storybook/
 !interfaces/*-system/*-cai/storybook/.storybook/
 !interfaces/*-system/*-cai/storybook/public/
@@ -138,7 +142,7 @@ containers/*/data/**/*.*
 
 !interfaces/*-system/*-cli/**/*.tool
 
-!interfaces/*-system/*-cli/
+
 !interfaces/*-system/*-cli/zig/
 !interfaces/*-system/*-cli/zig/src/
 !interfaces/*-system/*-cli/zig/dist/
