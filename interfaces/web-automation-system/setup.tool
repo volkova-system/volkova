@@ -4,4 +4,3 @@
 ./interface/web-automation-system/queues-data-service-cli/zig/setup.tool
 ./interface/web-automation-system/sessions-data-service-cli/zig/setup.tool
 ./interface/web-automation-system/runtimes-data-service-cli/zig/setup.tool
-./interface/web-automation-system/automations-data-service-cli/zig/setup.tool
