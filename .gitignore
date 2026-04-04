@@ -140,9 +140,6 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cai/storybook/package.json
 !interfaces/*-system/*-cai/storybook/tsconfig.json
 
-!interfaces/*-system/*-cli/**/*.tool
-
-
 !interfaces/*-system/*-cli/zig/
 !interfaces/*-system/*-cli/zig/src/
 !interfaces/*-system/*-cli/zig/dist/
@@ -150,7 +147,6 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cli/zig/src/*.zig
 !interfaces/*-system/*-cli/zig/src/*.tool
 
-!interfaces/*-system/*-cli/
 !interfaces/*-system/*-cli/go/
 !interfaces/*-system/*-cli/go/src/
 !interfaces/*-system/*-cli/go/dist/
