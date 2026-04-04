@@ -52,7 +52,7 @@ proc checkSystemsFlag*(flag: string): bool =
 
 proc checkCommandSystemsFlag*(parameters: seq[string]): bool =
 
-    ## Check if arguments contain command version flag
+    ## Check if arguments contain command systems flag
     ## Args: parameters - List of arguments to check
     ## Returns: Boolean true if systems flag found
 
@@ -189,7 +189,7 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
             )
 
     if lastPathPart(systemDirectory) != "interfaces" and
-            not systemsDirectory.endsWith("-interface"):
+            (not systemDirectory.endsWith("-interface")):
         return ValidationResult(
             status: false,
             issue: "invalid target systems interface directory, " & systemPath
