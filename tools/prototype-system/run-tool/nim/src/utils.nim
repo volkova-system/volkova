@@ -3,8 +3,10 @@
 import os, strutils, osproc
 
 proc findRoot*(): string =
+
     ## Find project root using git repository detection
     ## Returns: Absolute path to project root (git repository root)
+
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
     if exitCode == 0:
         let gitRoot = output.strip()
@@ -15,6 +17,7 @@ proc findRoot*(): string =
 
 proc resolveToolFilePath*(toolFilePath: string,
         currentToolFile: string = ""): string =
+
     ## Resolve a tool file path to an absolute path
     ## Paths starting with "./" are relative to the parent directory of currentToolFile
     ## If currentToolFile is empty, paths are relative to the project root
@@ -22,7 +25,7 @@ proc resolveToolFilePath*(toolFilePath: string,
     ## Args: toolFilePath - Tool file path (relative or absolute)
     ##       currentToolFile - Path to the current tool file (optional)
     ## Returns: Absolute path to the tool file
-    ##
+
     let normalized = toolFilePath.replace("\\", "/")
 
     if isAbsolute(normalized):
