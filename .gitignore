@@ -142,6 +142,7 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cli/zig/
 !interfaces/*-system/*-cli/zig/src/
 !interfaces/*-system/*-cli/zig/dist/
+!interfaces/*-system/*-cli/zig/dist/windows/
 !interfaces/*-system/*-cli/zig/src/*.zig
 !interfaces/*-system/*-cli/zig/src/*.tool
 
@@ -149,6 +150,7 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cli/go/
 !interfaces/*-system/*-cli/go/src/
 !interfaces/*-system/*-cli/go/dist/
+!interfaces/*-system/*-cli/go/dist/windows/
 !interfaces/*-system/*-cli/go/src/*.go
 !interfaces/*-system/*-cli/go/src/*.mod
 !interfaces/*-system/*-cli/go/src/*.tool
@@ -211,6 +213,7 @@ containers/*/data/**/*.*
 !services/*-system/*-service/fiber-go/channels/
 !services/*-system/*-service/fiber-go/data/
 !services/*-system/*-service/fiber-go/dist/
+!services/*-system/*-service/fiber-go/dist/windows/
 !services/*-system/*-service/fiber-go/engines/
 !services/*-system/*-service/fiber-go/handlers/
 !services/*-system/*-service/fiber-go/logs/
@@ -235,6 +238,7 @@ containers/*/data/**/*.*
 !systems/*-system/services/
 !systems/*-system/systems/
 !systems/*-system/tools/
+!systems/*-system/tools/windows/
 !systems/*-system/**/*.tool
 # END SYSTEMS
 
