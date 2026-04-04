@@ -71,14 +71,14 @@ proc validateCommand*(
             issue: "invalid command, '" & command & "'"
         )
 
-    if parameters.len < 2 or parameters.len > 3:
+    if parameters.len != 2:
         return ValidationResult(
             status: false,
-            issue: "expected 2-3 parameters, got " & $parameters.len
+            issue: "expected 2 parameters, got " & $parameters.len
         )
 
     let source = parameters[0]
-    var target = parameters[1]
+    let target = parameters[1]
 
     if source == "" or target == "":
         return ValidationResult(
@@ -134,7 +134,7 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
             )
 
     if lastPathPart(systemDirectory) != "systems" and
-            not systemDirectory.endsWith("-system"):
+            (not systemDirectory.endsWith("-system")):
         return ValidationResult(
             status: false,
             issue: "invalid target system directory, " & systemPath
@@ -147,11 +147,14 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
         issue: ""
     )
 
-proc validatePaths*(source: string, target: string): ValidationResult =
+proc validatePaths*(
+        source: string,
+        target: string
+    ): ValidationResult =
 
     ## Validate source and target paths
     ## Args: source - Source path relative to systems
-    ##       target - Target path relative to systems or systems
+    ##       target - Target path relative to systems
     ## Returns: ValidationResult with validation status
 
     var valid = validateSourceSystemStructure(source)
