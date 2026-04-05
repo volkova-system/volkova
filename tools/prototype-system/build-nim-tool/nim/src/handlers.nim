@@ -109,8 +109,7 @@ proc validateToolStructure*(session: ToolSession): ToolSession =
         )
 
     var mainFilePath = utils.resolveExecutableToolFile(session.tool)
-
-    if not fileExists(toolSourcePath / mainFile):
+    if not fileExists(mainFilePath):
         return ToolSession(
             status: false,
             issue: "tool source main file not found, " & session.tool
@@ -125,6 +124,7 @@ proc validateToolStructure*(session: ToolSession): ToolSession =
     return ToolSession(
         status: true,
         tool: session.tool,
+        main: mainFilePath,
         issue: ""
     )
 
