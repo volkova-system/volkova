@@ -40,7 +40,7 @@ proc printVersion*() =
 
     ## Print version information to stdout
 
-    echo copyServiceCommand, " version ", version
+    echo copyServiceCommand, " version, ", version
 
 proc printCommandHelp*(command: string) =
 
@@ -50,4 +50,4 @@ proc printCommandHelp*(command: string) =
     of copyServiceCommand:
         printUsage()
     else:
-        echo "No help available for command: ", command
+        echo "cannot determine help for command, ", command
