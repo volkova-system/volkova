@@ -2,9 +2,6 @@
 import settings
 
 proc printUsage*() =
-
-    ## Print usage information to stdout
-
     echo ""
     echo ""
     echo "build-nim-tool - Build Nim tool executables"
@@ -34,15 +31,9 @@ proc printUsage*() =
     echo ""
 
 proc printVersion*() =
-
-    ## Print version information to stdout
-
     echo buildCommand, " version, ", version
 
 proc printCommandHelp*(command: string) =
-
-    ## Print command-specific help information
-
     case command
     of buildCommand:
         printUsage()
