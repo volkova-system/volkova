@@ -1,6 +1,12 @@
 
 type
-    ValidationResult* = object
+    ToolSession* = object
+        command*: string
+        parameters*: seq[string]
+
         status*: bool
-        tool*: string
         issue*: string
+
+        tool*: string
+        executable*: string
+        target*: string
