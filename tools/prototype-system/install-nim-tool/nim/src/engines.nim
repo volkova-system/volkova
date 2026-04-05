@@ -34,7 +34,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
         """)
 
         if code == 0:
-            putEnv("PATH", session.target & ";" & getEnv("PATH"))
+            putEnv("PATH", parentDir(session.target) & ";" & getEnv("PATH"))
         else:
             raise newException(OSError,
                 "cannot install executable in windows, " & output)
