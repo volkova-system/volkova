@@ -3,11 +3,6 @@ import os
 import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
-
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       parameters - List of command parameters
-
     case command
     of "build-nim":
         var session = ToolSession(
@@ -16,26 +11,25 @@ proc executeCommand(command: string, parameters: seq[string]) =
         )
 
         session = handlers.validateCommand(session)
-
         if not session.status:
             stderr.writeLine("build-nim issue, ", session.issue)
             printUsage()
             quit(1)
 
         session = handlers.validateToolStructure(session)
-
         if not session.status:
             stderr.writeLine("build-nim issue, ", session.issue)
             quit(1)
 
         try:
-            session = engines.buildTool(session)
+            session = engines.buildTool(engines.formatToolSource(session))
         except CatchableError as issue:
             stderr.writeLine("build-nim issue, ", issue.msg)
             quit(2)
 
-        if not fileExists(session.tool):
-            stderr.writeLine("build-nim issue, executable file not found, " & session.tool)
+        session = handlers.validateExecutable(session)
+        if not session.status:
+            stderr.writeLine("build-nim issue, " & session.issue)
             quit(1)
 
         echo "build-nim done, target, " & session.executable
@@ -46,10 +40,6 @@ proc executeCommand(command: string, parameters: seq[string]) =
         quit(1)
 
 proc run*() =
-
-    ## Main CLI execution function
-    ## Processes command line arguments and delegates to appropriate handlers
-
     let parameters = commandLineParams()
 
     if parameters.len == 0:
