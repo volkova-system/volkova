@@ -24,6 +24,11 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("install-nim issue, ", issue.msg)
             quit(2)
 
+        session = handlers.validateInstalledExecutable(session)
+        if not session.status:
+            stderr.writeLine("install-nim issue, ", session.issue)
+            quit(1)
+
         echo "install-nim done, target, " & session.target
         quit(0)
 
