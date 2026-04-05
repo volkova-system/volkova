@@ -1,36 +1,39 @@
-# Help and usage information for install-nim tool
 
-import setting
+import settings
 
 proc printUsage*() =
-    ## Print usage information to stdout
-    echo "Usage: install-nim <tool_path>"
+    echo ""
+    echo ""
+    echo "install-nim-tool - Install Nim tool executables"
+    echo ""
+    echo "Usage:"
+    echo "    install-nim <tool_path>"
     echo ""
     echo "Description:"
-    echo "  Installs a built Nim tool executable for the current platform"
-    echo "  as a terminal command available to all users"
+    echo "    Installs a built Nim tool executable for the current platform"
+    echo "    as a terminal command available to all users"
     echo ""
     echo "Arguments:"
-    echo "  tool_path   Relative path 'name-system/name-tool'"
-    echo "              Parent directory must end with '-system'"
-    echo "              Tool directory must end with '-tool'"
+    echo "    tool_path     Relative path 'name-system/name-tool'"
+    echo "                  Parent directory must end with '-system'"
+    echo "                  Tool directory must end with '-tool'"
     echo ""
     echo "Example:"
-    echo "  install-nim sample-system/sample-tool"
-    echo "  Installs: tools/sample-system/sample-tool/nim/dist/windows/sample-tool.exe"
+    echo "    install-nim sample-system/sample-tool"
+    echo "    Installs: tools/sample-system/sample-tool/nim/dist/windows/sample-tool.exe"
     echo ""
     echo "Options:"
-    echo "  -h, --help, help     Show this help message"
-    echo "  -v, --version        Show version information"
+    echo "    -h, --help, help     Show this help message"
+    echo "    -v, --version        Show version information"
+    echo ""
+    echo ""
 
 proc printVersion*() =
-    ## Print version information to stdout
-    echo commandName, " version ", version
+    echo installCommand, " version ", version
 
 proc printCommandHelp*(command: string) =
-    ## Print command-specific help information
     case command
-    of commandName:
+    of installCommand:
         printUsage()
     else:
-        echo "No help available for command: ", command
+        echo "cannot determine help for command, ", command
