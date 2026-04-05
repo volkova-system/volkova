@@ -53,6 +53,7 @@ proc validateCommand*(session: ToolSession): ToolSession =
 
     return ToolSession(
         status: true,
+
         tool: tool
     )
 
@@ -86,6 +87,7 @@ proc validateToolStructure*(session: ToolSession): ToolSession =
 
     return ToolSession(
         status: true,
+
         tool: session.tool,
         source: toolSourcePath,
         main: mainFilePath,
@@ -101,6 +103,7 @@ proc validateExecutable*(session: ToolSession): ToolSession =
 
     return ToolSession(
         status: true,
+
         executable: session.executable
     )
 
