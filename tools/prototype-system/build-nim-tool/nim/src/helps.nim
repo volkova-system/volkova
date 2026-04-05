@@ -26,7 +26,7 @@ proc printUsage*() =
     echo "    > build-nim sample-system/sample-tool"
     echo ""
     echo "Output:"
-    echo "    tools/sample-system/sample-tool/nim/dist/windows/sample-tool.exe (on Windows)"
+    echo "    tools/sample-system/sample-tool/nim/dist/windows/sample-tool.exe (windows)"
     echo ""
     echo ""
 
