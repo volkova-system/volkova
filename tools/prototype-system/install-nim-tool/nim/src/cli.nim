@@ -1,102 +1,62 @@
-# CLI interface for install-nim tool
 
 import os
-import helps, handlers, engines, utils
+import engines, handlers, helps, models
 
-proc executeCommand(command: string, args: seq[string]) =
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       args - List of command arguments
+proc executeCommand(command: string, parameters: seq[string]) =
     case command
     of "install-nim":
-        # Validate command and basic parameters
-        let cmdValidation = handler.validateCommand(command, args)
+        var session = ToolSession(command: command, parameters: parameters)
 
-        if not cmdValidation.valid:
-            stderr.writeLine("Error: ", cmdValidation.errorMsg)
+        session = handlers.validateCommand(session)
+        if not session.status:
+            stderr.writeLine("install-nim issue, ", session.issue)
             printUsage()
             quit(1)
 
-        # Get tools root and validate tool structure
+        session = handlers.validateExecutable(session)
+        if not session.status:
+            stderr.writeLine("install-nim issue, ", session.issue)
+            quit(1)
+
         try:
-            let toolsRoot = utils.toolsRoot()
-            let structureValidation = handler.validateToolStructure(
-                    cmdValidation.toolName, toolsRoot)
-
-            if not structureValidation.valid:
-                stderr.writeLine("Error: ", structureValidation.errorMsg)
-                quit(2)
-
-            # Resolve and assert executable exists
-            let execPath = engine.resolveExecutablePath(
-                cmdValidation.toolName
-            )
-
-            handler.assertExecutableExists(execPath)
-
-            # Install executable to system-wide directory
-            let installDir = engine.getInstallDirectory()
-            let installedPath = engine.installExecutable(execPath, installDir)
-            let platform = engine.getCurrentPlatform()
-
-            echo "Successfully installed tool:"
-            echo "  Tool: ", cmdValidation.toolName
-            echo "  Platform: ", platform
-            echo "  Source: ", execPath
-            echo "  Installed: ", installedPath
-
-            if not engine.ensureInstallDirOnPath(installDir):
-                raise newException(OSError,
-                        "Failed to ensure install directory on path: " & installDir)
-
-            handler.assertInstallDirectoryOnPath(installDir)
-
-            quit(0)
-        except IOError as e:
-            stderr.writeLine("Error: ", e.msg)
+            session = engines.installExecutable(session)
+        except CatchableError as issue:
+            stderr.writeLine("install-nim issue, ", issue.msg)
             quit(2)
-        except OSError as e:
-            stderr.writeLine("Error: ", e.msg)
-            quit(2)
+
+        echo "install-nim done, target, " & session.target
+        quit(0)
+
     else:
-        stderr.writeLine("Error: Unknown command '" & command & "'")
+        stderr.writeLine("install-nim issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
-    ## Main CLI execution function
-    ## Processes command line arguments and delegates to appropriate handlers
-    let params = commandLineParams()
+    let parameters = commandLineParams()
 
-    # Check if no arguments provided
-    if params.len == 0:
+    if parameters.len == 0:
         printUsage()
         quit(1)
 
-    # Get command and arguments
-    let cmd = params[0]
-    let args = params[1..^1]
+    let command = parameters[0]
+    let targetParameters = parameters[1..^1]
 
-    # Handle help requests
-    if handler.checkHelpFlag(cmd):
+    if handlers.checkHelpFlag(command):
         printUsage()
         quit(0)
 
-    # Handle version requests
-    if handler.checkVersionFlag(cmd):
+    if handlers.checkVersionFlag(command):
         printVersion()
         quit(0)
 
-    # Validate and execute command
-    let command = handler.resolveCommand(cmd)
-    if command == "":
-        stderr.writeLine("Error: Invalid command '" & cmd & "'")
+    let targetCommand = handlers.resolveCommand(command)
+    if targetCommand == "":
+        stderr.writeLine("install-nim issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
-    # Check for command-specific help
-    if handler.checkCommandHelpFlag(args):
-        printCommandHelp(command)
+    if handlers.checkCommandHelpFlag(targetParameters):
+        printCommandHelp(targetCommand)
         quit(0)
 
-    # Execute the command
-    executeCommand(command, args)
+    executeCommand(targetCommand, targetParameters)
