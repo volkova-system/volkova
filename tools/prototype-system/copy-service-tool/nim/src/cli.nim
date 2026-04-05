@@ -65,8 +65,7 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("copy-service issue, invalid command, '" &
-                targetCommand & "'")
+        stderr.writeLine("copy-service issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
