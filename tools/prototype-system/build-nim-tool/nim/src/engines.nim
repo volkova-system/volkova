@@ -1,6 +1,6 @@
 
 import os, osproc, strutils
-import settings, utils
+import models, settings, utils
 
 proc formatToolSource*(source: string) =
 
@@ -17,14 +17,14 @@ proc formatToolSource*(source: string) =
                 raise newException(OSError,
                     "format tool source failed, " & output)
 
-proc buildTool*(tool: string): string =
+proc buildTool*(session: ToolSession): ToolSession =
 
     ## Build Nim tool executable for current platform
     ## Args: tool - Tool namespace
     ## Returns: Absolute path to created executable
 
-    let toolSourceDirectory = utils.resolveToolSourceDirectory(tool)
-    let toolTargetBuildDirectory = utils.resolveToolTargetBuildDirectory(tool)
+    let toolSourceDirectory = utils.resolveToolSourceDirectory(session.tool)
+    let toolTargetBuildDirectory = utils.resolveToolTargetBuildDirectory(session.tool)
 
     formatToolSource(toolSourceDirectory)
 
@@ -33,7 +33,7 @@ proc buildTool*(tool: string): string =
         toolTargetBuildDirectory / utils.getCurrentPlatform()
     )
     let executableFilePath = (
-        buildDirectory / lastPathPart(tool) & utils.getExecutableExtension()
+        buildDirectory / lastPathPart(session.tool) & utils.getExecutableExtension()
     )
 
     let (output, exitCode) = execCmdEx(
@@ -43,4 +43,4 @@ proc buildTool*(tool: string): string =
     if exitCode != 0:
         raise newException(OSError, "build tool failed, " & output)
 
-    return executableFilePath
+    return session
