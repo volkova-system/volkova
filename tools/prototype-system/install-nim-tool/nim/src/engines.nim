@@ -32,6 +32,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
                     }}
                 "
         """)
+
         if code == 0:
             putEnv("PATH", session.target & ";" & getEnv("PATH"))
         else:
@@ -48,10 +49,12 @@ proc installExecutable*(session: ToolSession): ToolSession =
                         }}
                     "
             """)
+
             if code == 0:
                 putEnv("PATH", session.target & ";" & getEnv("PATH"))
             else:
-                
+                raise newException(OSError,
+                    "cannot install executable in windows")
     else:
         raise newException(OSError,
             "cannot install executable, platform not support")
