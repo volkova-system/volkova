@@ -19,8 +19,10 @@ proc installExecutable*(session: ToolSession): ToolSession =
         )
 
     elif defined(windows):
+
     else:
-        raise newException(OSError, "cannot install executable, platform not support, " & output)
+        raise newException(OSError,
+            "cannot install executable, platform not support")
 
     return session
 
