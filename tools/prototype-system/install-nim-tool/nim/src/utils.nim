@@ -20,74 +20,39 @@ proc getRepositoryRootDirectory*(): string =
 
     raise newException(OSError, "cannot determine repository root directory path")
 
-proc getToolsRootDirectory*(): string =
-
-    ## Get absolute path to tools directory
-    ## Returns: Absolute path to tools directory
-
-    let toolsRootDirectory = getRepositoryRootDirectory() / toolsDirectory
-
-    if dirExists(toolsRootDirectory):
-        return toolsRootDirectory
-
-    raise newException(OSError,
-        "tools root directory not found, " & toolsRootDirectory)
-
-proc resolveToolSourceDirectory*(tool: string): string =
-
-    ## Resolve tool source directory by relative path 'name-system/name-tool'
-    ## Args: tool - Relative tool path under tools directory
-    ## Returns: Absolute path to tool source directory
-
-    let toolSourcePath = (
-        getToolsRootDirectory() / normalizedPath(tool) / sourceDirectory
-    )
-
-    if dirExists(toolSourcePath):
-        return toolSourcePath
-
-    raise newException(OSError,
-        "tool source directory not found, " & toolSourcePath)
-
-proc resolveToolMainFile*(tool: string): string =
-
-    let toolSourceDirectory = resolveToolSourceDirectory(tool)
-
-    return toolSourceDirectory / mainFile
+proc resolveToolsRootDirectory*(): string =
+    return getRepositoryRootDirectory() / toolsDirectory
 
 proc resolveToolTargetBuildDirectory*(tool: string): string =
+    return resolveToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
 
-    ## Resolve tool target build directory by relative path 'name-system/name-tool'
-    ## Args: tool - Relative tool path under tools directory
-    ## Returns: Absolute path to tool target build directory
-
-    let toolTargetBuildPath = (
-        getToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
-    )
-
-    if dirExists(toolTargetBuildPath):
-        return toolTargetBuildPath
-
-    raise newException(OSError,
-        "tool target build directory not found, " & toolTargetBuildPath)
-
-proc getExecutableExtension*(): string =
-
-    ## Get executable file extension for current platform
-    ## Returns: File extension (.exe for Windows, empty for others)
-
+proc resolveExecutableExtension*(): string =
     when defined(windows):
         return ".exe"
     else:
         return ""
 
 proc resolveExecutableToolFile*(tool: string): string =
+    let toolTargetBuildDirectory = resolveToolTargetBuildDirectory(tool)
+    let buildDirectory = toolTargetBuildDirectory / getCurrentPlatform()
+    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
 
-    let toolTargetBuildDirectory = utils.resolveToolTargetBuildDirectory(tool)
-    let buildDirectory = (
-        toolTargetBuildDirectory / utils.getCurrentPlatform()
-    )
+    return buildDirectory / executableFile
 
-    return (
-        buildDirectory / lastPathPart(tool) & utils.getExecutableExtension()
-    )
+proc getInstallDirectory*(): string =
+    when defined(windows):
+        let installDirectory = absolutePath(
+            getEnv("ProgramFiles") / "tools" / "bin"
+        )
+
+        if not dirExists(installDirectory):
+            createDir(installDirectory)
+
+        return installDirectory
+
+    elif defined(linux):
+        return "/usr/local/bin"
+
+    elif defined(macosx):
+        return "/usr/local/bin"
+
