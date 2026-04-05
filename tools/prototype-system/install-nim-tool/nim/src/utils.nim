@@ -3,10 +3,6 @@ import os, osproc, strutils
 import settings
 
 proc getCurrentPlatform*(): string =
-
-    ## Get current platform name for executable output
-    ## Returns: Platform name (windows, linux, darwin)
-
     when defined(windows):
         return "windows"
     elif defined(linux):
