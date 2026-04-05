@@ -86,34 +86,4 @@ proc validateInstalledExecutable*(session: ToolSession): ToolSession =
         )
 
 proc validateExecutableCommand*(session: ToolSession): ToolSession =
-    
 
-proc assertInstallDirectoryOnPath*(installDir: string) =
-    ## Assert that the install directory is on the system PATH
-    ## Args: installDir - Absolute path to the install directory
-    when defined(windows):
-        # On Windows, check both system and user PATH
-        let systemPath = getEnv("PATH")
-        let normalInstall = installDir.toLowerAscii()
-        let pathEntries = systemPath.split(';')
-        for entry in pathEntries:
-            if entry.strip().toLowerAscii() == normalInstall:
-                return
-        stderr.writeLine(
-            "Warning: Install directory not on PATH: " & installDir
-        )
-        stderr.writeLine(
-            "Add it to the system PATH to use the command globally"
-        )
-    else:
-        let systemPath = getEnv("PATH")
-        let pathEntries = systemPath.split(':')
-        for entry in pathEntries:
-            if entry.strip() == installDir:
-                return
-        stderr.writeLine(
-            "Warning: Install directory not on PATH: " & installDir
-        )
-        stderr.writeLine(
-            "Add it to the system PATH to use the command globally"
-        )
