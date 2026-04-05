@@ -58,7 +58,7 @@ proc validateCommand*(session: ToolSession): ToolSession =
 
 proc validateExecutable*(session: ToolSession): ToolSession =
     let executableFile = utils.resolveExecutableToolFile(session.tool)
-    if not dirExists(executableFile):
+    if not fileExists(executableFile):
         return ToolSession(
             status: false,
             issue: "tool executable not found, " & executableFile
@@ -68,7 +68,7 @@ proc validateExecutable*(session: ToolSession): ToolSession =
     if not dirExists(installDirectory):
         return ToolSession(
             status: false,
-            issue: "tool executable install directory not found, " & installDirectory
+            issue: "tool install directory not found, " & installDirectory
         )
 
     return ToolSession(
@@ -82,7 +82,7 @@ proc validateInstalledExecutable*(session: ToolSession): ToolSession =
     if not fileExists(session.target):
         return ToolSession(
             status: false,
-            issue: "installed tool executable file not found, " & session.target
+            issue: "installed tool not found, " & session.target
         )
 
     return session
