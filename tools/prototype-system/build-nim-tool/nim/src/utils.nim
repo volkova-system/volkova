@@ -63,6 +63,12 @@ proc resolveToolSourceDirectory*(tool: string): string =
     raise newException(OSError,
         "tool source directory not found, " & toolSourcePath)
 
+proc resolveToolMainFile*(tool: string): string =
+
+    let toolSourceDirectory = resolveToolSourceDirectory(tool)
+
+    return toolSourceDirectory / mainFile
+
 proc resolveToolTargetBuildDirectory*(tool: string): string =
 
     ## Resolve tool target build directory by relative path 'name-system/name-tool'
@@ -79,12 +85,20 @@ proc resolveToolTargetBuildDirectory*(tool: string): string =
     raise newException(OSError,
         "tool target build directory not found, " & toolTargetBuildPath)
 
-proc getExecutableExtension*(): string =
+proc resolveExecutableExtension*(): string =
 
-    ## Get executable file extension for current platform
+    ## Resolve executable file extension for current platform
     ## Returns: File extension (.exe for Windows, empty for others)
 
     when defined(windows):
         return ".exe"
     else:
         return ""
+
+proc resolveExecutableToolFile*(tool: string): string =
+
+    let toolTargetBuildDirectory = resolveToolTargetBuildDirectory(tool)
+    let buildDirectory = toolTargetBuildDirectory / getCurrentPlatform()
+    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
+
+    return buildDirectory / executableFile
