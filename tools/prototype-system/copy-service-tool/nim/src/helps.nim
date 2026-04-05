@@ -5,8 +5,9 @@ proc printUsage*() =
 
     ## Print usage information to stdout
 
-    echo "copy-service-tool - Copy services from source to target directory"
     echo ""
+    echo ""
+    echo "copy-service-tool - Copy services from source to target directory"
     echo ""
     echo "Description:"
     echo "    Copies source service directory inside the target service directory"
