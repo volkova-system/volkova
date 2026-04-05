@@ -10,10 +10,9 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
     case command
     of "build-nim":
-        var session = handlers.validateCommand(ToolSession(
-            command: command,
-            parameters: parameters
-        ))
+        var session = ToolSession(command,)
+
+        session = handlers.validateCommand(session)
 
         if not session.status:
             stderr.writeLine("build-nim issue, ", session.issue)
