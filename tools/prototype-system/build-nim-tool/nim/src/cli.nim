@@ -10,7 +10,10 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
     case command
     of "build-nim":
-        var session = ToolSession(command,)
+        var session = ToolSession(
+            command: command,
+            parameters: parameters
+        )
 
         session = handlers.validateCommand(session)
 
@@ -32,9 +35,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             quit(2)
 
         if not fileExists(session.tool):
-            stderr.writeLine(
-                "build-nim issue, executable file not found, " & session.tool
-            )
+            stderr.writeLine("build-nim issue, executable file not found, " & session.tool)
             quit(1)
 
         echo "build-nim done, target, " & session.executable
