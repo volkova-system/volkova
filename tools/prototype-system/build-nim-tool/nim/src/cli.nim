@@ -1,85 +1,77 @@
-# CLI interface for build-nim tool
 
 import os
-import help, handler, engine, utils
+import helps, handlers, engines
 
-proc executeCommand(command: string, args: seq[string]) =
+proc executeCommand(command: string, parameters: seq[string]) =
+
     ## Execute the resolved command with arguments
     ## Args: command - The resolved command name
-    ##       args - List of command arguments
+    ##       parameters - List of command parameters
+
     case command
     of "build-nim":
-        # Validate command and basic parameters
-        let cmdValidation = handler.validateCommand(command, args)
+        var valid = handlers.validateCommand(command, parameters)
 
-        if not cmdValidation.valid:
-            stderr.writeLine("Error: ", cmdValidation.errorMsg)
+        if not valid.status:
+            stderr.writeLine("build-nim issue, ", valid.issue)
             printUsage()
             quit(1)
 
-        # Get tools root and validate tool structure
+        valid = handlers.validateToolStructure(valid.tool)
+
+        if not valid.status:
+            stderr.writeLine("build-nim issue, ", valid.issue)
+            quit(1)
+
         try:
-            let toolsRoot = utils.toolsRoot()
-            let structureValidation = handler.validateToolStructure(
-                    cmdValidation.toolName, toolsRoot)
-
-            if not structureValidation.valid:
-                stderr.writeLine("Error: ", structureValidation.errorMsg)
-                quit(2)
-
-            # Execute build using engine with validated parameters
-            let execPath = engine.buildTool(cmdValidation.toolName)
-            let platform = engine.getCurrentPlatform()
-            echo "Successfully built tool:"
-            echo "  Tool: ", cmdValidation.toolName
-            echo "  Platform: ", platform
-            echo "  Executable: ", execPath
-            quit(0)
-        except IOError as e:
-            stderr.writeLine("Error: ", e.msg)
+            valid.tool = engines.buildTool(valid.tool)
+        except CatchableError as issue:
+            stderr.writeLine("build-nim issue, ", issue.msg)
             quit(2)
-        except OSError as e:
-            stderr.writeLine("Error: ", e.msg)
-            quit(2)
+
+        if not fileExists(valid.tool):
+            stderr.writeLine(
+                "build-nim issue, executable file not found, " & valid.tool
+            )
+            quit(1)
+
+        echo "build-nim done, target, " & valid.tool
+        quit(0)
+
     else:
-        stderr.writeLine("Error: Unknown command '" & command & "'")
+        stderr.writeLine("build-nim issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
+
     ## Main CLI execution function
     ## Processes command line arguments and delegates to appropriate handlers
-    let params = commandLineParams()
 
-    # Check if no arguments provided
-    if params.len == 0:
+    let parameters = commandLineParams()
+
+    if parameters.len == 0:
         printUsage()
         quit(1)
 
-    # Get command and arguments
-    let cmd = params[0]
-    let args = params[1..^1]
+    let command = parameters[0]
+    let targetParameters = parameters[1..^1]
 
-    # Handle help requests
-    if handler.checkHelpFlag(cmd):
+    if handlers.checkHelpFlag(command):
         printUsage()
         quit(0)
 
-    # Handle version requests
-    if handler.checkVersionFlag(cmd):
+    if handlers.checkVersionFlag(command):
         printVersion()
         quit(0)
 
-    # Validate and execute command
-    let command = handler.resolveCommand(cmd)
-    if command == "":
-        stderr.writeLine("Error: Invalid command '" & cmd & "'")
+    let targetCommand = handlers.resolveCommand(command)
+    if targetCommand == "":
+        stderr.writeLine("build-nim issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
-    # Check for command-specific help
-    if handler.checkCommandHelpFlag(args):
-        printCommandHelp(command)
+    if handlers.checkCommandHelpFlag(targetParameters):
+        printCommandHelp(targetCommand)
         quit(0)
 
-    # Execute the command
-    executeCommand(command, args)
+    executeCommand(targetCommand, targetParameters)
