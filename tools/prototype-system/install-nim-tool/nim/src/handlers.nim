@@ -85,5 +85,4 @@ proc validateInstalledExecutable*(session: ToolSession): ToolSession =
             issue: "installed tool executable file not found, " & session.target
         )
 
-proc validateExecutableCommand*(session: ToolSession): ToolSession =
-
+    return session
