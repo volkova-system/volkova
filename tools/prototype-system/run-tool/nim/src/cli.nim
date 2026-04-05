@@ -1,66 +1,63 @@
-# CLI interface for run-tool
 
 import os
-import help, handler, engine
+import helps, handlers, engines
 
-proc executeCommand(command: string, args: seq[string]) =
+proc executeCommand(command: string, parameters: seq[string]) =
 
     ## Execute the resolved command with arguments
     ## Args: command - The resolved command name
-    ##       args - List of command arguments
+    ##       parameters - List of command arguments
 
     case command
     of "run":
-        let cmdValidation = handler.validateCommand(command, args)
+        var valid = handlers.validateCommand(command, parameters)
 
-        if not cmdValidation.valid:
-            stderr.writeLine("Error: ", cmdValidation.errorMsg)
+        if not valid.status:
+            stderr.writeLine("run issue, ", valid.issue)
             printUsage()
             quit(1)
 
         try:
-            engine.executeToolFile(cmdValidation.toolFilePath)
+            engines.executeToolFile(valid.target)
             quit(0)
-        except IOError as e:
-            stderr.writeLine("Error: ", e.msg)
-            quit(2)
-        except OSError as e:
-            stderr.writeLine("Error: ", e.msg)
+        except CatchableError as issue:
+            stderr.writeLine("run issue, ", issue.msg)
             quit(2)
 
     else:
-        stderr.writeLine("Error: Unknown command '" & command & "'")
+        stderr.writeLine("run issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
+
     ## Main CLI execution function
     ## Processes command line arguments and delegates to appropriate handlers
 
-    let params = commandLineParams()
+    let parameters = commandLineParams()
 
-    if params.len == 0:
+    if parameters.len == 0:
         printUsage()
         quit(1)
 
-    let cmd = params[0]
-    let args = params[1..^1]
+    let command = parameters[0]
+    let targetParameters = parameters[1..^1]
 
-    if handler.checkHelpFlag(cmd):
+    if handlers.checkHelpFlag(command):
         printUsage()
         quit(0)
 
-    if handler.checkVersionFlag(cmd):
+    if handlers.checkVersionFlag(command):
         printVersion()
         quit(0)
 
-    let command = handler.resolveCommand(cmd)
-    if command == "":
-        stderr.writeLine("Error: Invalid command '" & cmd & "'")
+    let targetCommand = handlers.resolveCommand(command)
+    if targetCommand == "":
+        stderr.writeLine("run issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
-    if handler.checkCommandHelpFlag(args):
-        printCommandHelp(command)
+    if handlers.checkCommandHelpFlag(targetParameters):
+        printCommandHelp(targetCommand)
         quit(0)
 
-    executeCommand(command, args)
+    executeCommand(targetCommand, targetParameters)
