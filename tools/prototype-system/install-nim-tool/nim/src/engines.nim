@@ -37,7 +37,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
             putEnv("PATH", session.target & ";" & getEnv("PATH"))
         else:
             raise newException(OSError,
-                "cannot install executable in windows, issue, " & output)
+                "cannot install executable in windows, " & output)
 
     else:
         raise newException(OSError,
