@@ -77,21 +77,29 @@ proc validateCommand*(
             issue: "invalid parameter count, " & $parameters.len
         )
 
-    let toolFilePathParameter = parameters[0]
+    let toolFilePath = parameters[0]
 
-    if toolFilePathParameter == "":
+    if toolFilePath == "":
         return ValidationResult(
             status: false,
             issue: "empty tool file path"
         )
 
-    if not toolFilePathParameter.endsWith(toolFileExtension):
+    return ValidationResult(
+        status: true,
+        target: toolFilePath,
+        issue: ""
+    )
+
+proc validateToolFile*(toolFilePath: string): ValidationResult =
+
+    if not toolFilePath.endsWith(toolFileExtension):
         return ValidationResult(
             status: false,
-            issue: "invalid tool file extension, " & toolFilePathParameter
+            issue: "invalid tool file extension, " & toolFilePath
         )
 
-    let toolFile = utils.resolveToolFilePath(toolFilePathParameter)
+    let toolFile = utils.resolveToolFilePath(toolFilePath)
 
     if not fileExists(toolFile):
         return ValidationResult(
