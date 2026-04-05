@@ -1,5 +1,5 @@
 
-import os, osproc, strutils
+import os, osproc, strformat
 import models
 
 proc installExecutable*(session: ToolSession): ToolSession =
@@ -19,33 +19,41 @@ proc installExecutable*(session: ToolSession): ToolSession =
         )
 
     elif defined(windows):
-
+        var (_, code) = execCmdEx(fmt"""
+            pwsh
+                -NoProfile
+                -NonInteractive
+                -ExecutionPolicy Bypass
+                -Command "
+                    $currentPath = [Environment]::GetEnvironmentVariable('Path','Machine');
+                    $installPath = '{session.target}';
+                    if ($currentPath -split ';' -notcontains $installPath) {{
+                        [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'Machine');
+                    }}
+                "
+        """)
+        if code == 0:
+            putEnv("PATH", session.target & ";" & getEnv("PATH"))
+        else:
+            (_, code) = execCmdEx(fmt"""
+                pwsh
+                    -NoProfile
+                    -NonInteractive
+                    -ExecutionPolicy Bypass
+                    -Command "
+                        $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
+                        $installPath = '{session.target}';
+                        if ($currentPath -split ';' -notcontains $installPath) {{
+                            [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
+                        }}
+                    "
+            """)
+            if code == 0:
+                putEnv("PATH", session.target & ";" & getEnv("PATH"))
+            else:
+                
     else:
         raise newException(OSError,
             "cannot install executable, platform not support")
 
     return session
-
-proc ensureInstallDirOnPath*(installDir: string): bool =
-    when defined(windows):
-        let dir = absolutePath(installDir)
-        let quotedDir = dir.replace("\\", "\\\\")
-        let ps1 = "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command " &
-                  "\"$p=[Environment]::GetEnvironmentVariable('Path','Machine');" &
-                  "$i='" & quotedDir & "';" &
-                  "if ($p -split ';' -notcontains $i) {[Environment]::SetEnvironmentVariable('Path',$i+';'+$p,'Machine');}\""
-        let (_, code1) = execCmdEx(ps1)
-        if code1 == 0:
-            putEnv("PATH", dir & ";" & getEnv("PATH"))
-            return true
-        let ps2 = "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command " &
-                  "\"$p=[Environment]::GetEnvironmentVariable('Path','User');" &
-                  "$i='" & quotedDir & "';" &
-                  "if ($p -split ';' -notcontains $i) {[Environment]::SetEnvironmentVariable('Path',$i+';'+$p,'User');}\""
-        let (_, code2) = execCmdEx(ps2)
-        if code2 == 0:
-            putEnv("PATH", dir & ";" & getEnv("PATH"))
-            return true
-        return false
-    else:
-        return false
