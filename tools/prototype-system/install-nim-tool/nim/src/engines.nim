@@ -5,7 +5,9 @@ import models
 proc installExecutable*(session: ToolSession): ToolSession =
     copyFile(session.executable, session.target)
 
-    when defined(linux) or defined(macosx):
+    let installDirectory = parentDir(session.target)
+
+    when defined(linux):
         setFilePermissions(
             session.target,
             {
@@ -18,6 +20,55 @@ proc installExecutable*(session: ToolSession): ToolSession =
             }
         )
 
+        putEnv("PATH", installDirectory & ":" & getEnv("PATH"))
+
+        let profileFile = getHomeDir() / ".profile"
+        if not fileExists(profileFile):
+            writeFile(profileFile, "")
+
+        var content = if fileExists(profileFile): readFile(profileFile) else: ""
+        if not content.contains(installDirectory):
+            appendFile(profileFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+
+        let bashrcFile = getHomeDir() / ".bashrc"
+        if not fileExists(bashrcFile):
+            writeFile(bashrcFile, "")
+
+        var content = if fileExists(bashrcFile): readFile(bashrcFile) else: ""
+        if not content.contains(installDirectory):
+            appendFile(bashrcFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+
+    elif defined(macosx):
+        setFilePermissions(
+            session.target,
+            {
+                fpUserExec,
+                fpUserRead,
+                fpGroupExec,
+                fpGroupRead,
+                fpOthersExec,
+                fpOthersRead
+            }
+        )
+
+        putEnv("PATH", installDirectory & ":" & getEnv("PATH"))
+
+        let profileFile = getHomeDir() / ".zprofile"
+        if not fileExists(profileFile):
+            writeFile(profileFile, "")
+
+        var content = if fileExists(profileFile): readFile(profileFile) else: ""
+        if not content.contains(installDirectory):
+            appendFile(profileFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+
+        let zshrcFile = getHomeDir() / ".zshrc"
+        if not fileExists(zshrcFile):
+            writeFile(zshrcFile, "")
+
+        var content = if fileExists(zshrcFile): readFile(zshrcFile) else: ""
+        if not content.contains(installDirectory):
+            appendFile(zshrcFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+
     elif defined(windows):
         var (output, code) = execCmdEx(fmt"""
             pwsh
@@ -26,7 +77,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
                 -ExecutionPolicy Bypass
                 -Command "
                     $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
-                    $installPath = '{parentDir(session.target)}';
+                    $installPath = '{installDirectory}';
                     if ($currentPath -split ';' -notcontains $installPath) {{
                         [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
                     }}
@@ -34,7 +85,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
         """)
 
         if code == 0:
-            putEnv("PATH", parentDir(session.target) & ";" & getEnv("PATH"))
+            putEnv("PATH", installDirectory & ";" & getEnv("PATH"))
         else:
             raise newException(OSError,
                 "cannot install executable in windows, " & output)
