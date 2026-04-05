@@ -1,6 +1,6 @@
 
 import os
-import helps, handlers, engines
+import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
 
@@ -10,32 +10,35 @@ proc executeCommand(command: string, parameters: seq[string]) =
 
     case command
     of "build-nim":
-        var valid = handlers.validateCommand(command, parameters)
+        var session = handlers.validateCommand(ToolSession(
+            command: command,
+            parameters: parameters
+        ))
 
-        if not valid.status:
-            stderr.writeLine("build-nim issue, ", valid.issue)
+        if not session.status:
+            stderr.writeLine("build-nim issue, ", session.issue)
             printUsage()
             quit(1)
 
-        valid = handlers.validateToolStructure(valid.tool)
+        session = handlers.validateToolStructure(session)
 
-        if not valid.status:
-            stderr.writeLine("build-nim issue, ", valid.issue)
+        if not session.status:
+            stderr.writeLine("build-nim issue, ", session.issue)
             quit(1)
 
         try:
-            valid.tool = engines.buildTool(valid.tool)
+            session = engines.buildTool(session)
         except CatchableError as issue:
             stderr.writeLine("build-nim issue, ", issue.msg)
             quit(2)
 
-        if not fileExists(valid.tool):
+        if not fileExists(session.tool):
             stderr.writeLine(
-                "build-nim issue, executable file not found, " & valid.tool
+                "build-nim issue, executable file not found, " & session.tool
             )
             quit(1)
 
-        echo "build-nim done, target, " & valid.tool
+        echo "build-nim done, target, " & session.executable
         quit(0)
 
     else:
