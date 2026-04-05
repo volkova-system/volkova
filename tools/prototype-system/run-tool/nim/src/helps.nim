@@ -5,8 +5,9 @@ proc printUsage*() =
 
     ## Print usage information to stdout
 
-    echo "run-tool - Run tool files"
     echo ""
+    echo ""
+    echo "run-tool - Run tool files"
     echo ""
     echo "Usage:"
     echo "    run <tool_file_path>"
