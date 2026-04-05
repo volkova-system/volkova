@@ -65,7 +65,7 @@ proc validateToolStructure*(session: ToolSession): ToolSession =
             issue: "tool source directory not found, " & session.tool
         )
 
-    let mainFilePath = utils.resolveExecutableToolFile(session.tool)
+    let mainFilePath = utils.resolveToolMainFile(session.tool)
     if not fileExists(mainFilePath):
         return ToolSession(
             status: false,
