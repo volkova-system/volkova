@@ -1,22 +1,37 @@
-# Utility procedures for run-tool
 
 import os, strutils, osproc
 
-proc findRoot*(): string =
+proc getRepositoryRootDirectory*(): string =
 
-    ## Find project root using git repository detection
-    ## Returns: Absolute path to project root (git repository root)
+    ## Find repository root directory using git repository detection
+    ## Returns: Absolute path to repository root directory (git repository root)
 
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
+
     if exitCode == 0:
-        let gitRoot = output.strip()
-        if gitRoot != "" and dirExists(gitRoot):
-            return absolutePath(gitRoot)
+        let repositoryRootPath = output.strip()
+        if repositoryRootPath != "" and dirExists(repositoryRootPath):
+            return absolutePath(repositoryRootPath)
 
-    raise newException(IOError, "repository root not found")
+        raise newException(OSError,
+            "repository root directory not found, " & repositoryRootPath)
 
-proc resolveToolFilePath*(toolFilePath: string,
-        currentToolFile: string = ""): string =
+    raise newException(OSError,
+        "cannot determine repository root directory path")
+
+proc getProcessCurrentDirectory*(): string =
+
+    ## Get the current directory of the process
+    ## Returns: Absolute path to the current directory of the process
+
+    let processCurrentDirectory = getCurrentDir()
+    if processCurrentDirectory != "" and dirExists(processCurrentDirectory):
+        return absolutePath(processCurrentDirectory)
+
+    raise newException(OSError,
+        "cannot determine process current directory")
+
+proc resolveToolFilePath*(toolFile: string, currentToolFile: string = ""): string =
 
     ## Resolve a tool file path to an absolute path
     ## Paths starting with "./" are relative to the parent directory of currentToolFile
@@ -26,27 +41,17 @@ proc resolveToolFilePath*(toolFilePath: string,
     ##       currentToolFile - Path to the current tool file (optional)
     ## Returns: Absolute path to the tool file
 
-    let normalized = toolFilePath.replace("\\", "/")
+    let toolFilePath = normalizedPath(toolFile)
 
-    if isAbsolute(normalized):
-        let absPath = absolutePath(normalized)
-        if fileExists(absPath):
-            return absPath
+    if currentToolFile != "":
+        if fileExists(parentDir(currentToolFile) / toolFilePath):
+            return parentDir(currentToolFile) / toolFilePath
 
-    # If absolute path doesn't exist, continue with relative resolution
-    if normalized.startsWith("./") or not isAbsolute(normalized):
-        # Try relative to current tool file directory first
-        if currentToolFile != "":
-            let parentDir = parentDir(absolutePath(currentToolFile))
-            let relativePath = absolutePath(parentDir / normalized)
-            if fileExists(relativePath):
-                return relativePath
+    if fileExists(getRepositoryRootDirectory() / toolFilePath):
+        return getRepositoryRootDirectory() / toolFilePath
 
-        # Fallback to project root
-        let root = findRoot()
-        let rootPath = absolutePath(root / normalized)
-        if fileExists(rootPath):
-            return rootPath
+    if fileExists(getProcessCurrentDirectory() / toolFilePath):
+        return getProcessCurrentDirectory() / toolFilePath
 
-    raise newException(IOError, "tool file path not found")
+    raise newException(OSError, "tool file path not found")
 
