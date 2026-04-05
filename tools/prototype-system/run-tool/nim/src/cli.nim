@@ -17,12 +17,20 @@ proc executeCommand(command: string, parameters: seq[string]) =
             printUsage()
             quit(1)
 
+        valid = handlers.validateToolFile(valid.target)
+
+        if not valid.status:
+            stderr.writeLine("run issue, ", valid.issue)
+            quit(1)
+
         try:
             engines.executeToolFile(valid.target)
-            quit(0)
         except CatchableError as issue:
             stderr.writeLine("run issue, ", issue.msg)
             quit(2)
+
+        echo "run done, target, " & valid.target
+        quit(0)
 
     else:
         stderr.writeLine("run issue, unknown command, '" & command & "'")
