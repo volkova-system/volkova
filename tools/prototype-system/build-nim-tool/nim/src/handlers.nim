@@ -55,77 +55,74 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(
-        command: string,
-        parameters: seq[string]
-    ): ValidationResult =
+proc validateCommand*(session: ToolSession): ToolSession =
 
     ## Validate build-nim command and parameters
     ## Args: command - Command name (should be "build-nim")
     ##       parameters - List of command parameters
     ## Returns: ValidationResult with validation status and parsed parameters
 
-    if command != buildCommand:
-        return ValidationResult(
+    if session.command != buildCommand:
+        return ToolSession(
             status: false,
-            issue: "invalid command, '" & command & "'"
+            issue: "invalid command, '" & session.command & "'"
         )
 
-    if parameters.len != 1:
-        return ValidationResult(
+    if session.parameters.len != 1:
+        return ToolSession(
             status: false,
-            issue: "invalid parameter count, " & $parameters.len
+            issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let tool = parameters[0]
+    let tool = session.parameters[0]
 
     if tool == "":
-        return ValidationResult(
+        return ToolSession(
             status: false,
             issue: "empty tool"
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
         tool: tool,
         issue: ""
     )
 
-proc validateToolStructure*(tool: string): ValidationResult =
+proc validateToolStructure*(session: ToolSession): ToolSession =
 
     var toolSourcePath = ""
     try:
-        toolSourcePath = utils.resolveToolSourceDirectory(tool)
+        toolSourcePath = utils.resolveToolSourceDirectory(session.tool)
     except CatchableError as issue:
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "tool source directory, " & tool & ", resolution issue, " & issue.msg
+            issue: "tool source directory, " & session.tool & ", resolution issue, " & issue.msg
         )
 
     var toolTargetPath = ""
     try:
-        toolTargetPath = utils.resolveToolTargetBuildDirectory(tool)
+        toolTargetPath = utils.resolveToolTargetBuildDirectory(session.tool)
     except CatchableError as issue:
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "tool target directory, " & tool & ", resolution issue, " & issue.msg
+            issue: "tool target directory, " & session.tool & ", resolution issue, " & issue.msg
         )
 
     if not fileExists(toolSourcePath / mainFile):
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "tool source main file not found, " & tool
+            issue: "tool source main file not found, " & session.tool
         )
 
     if not dirExists(toolTargetPath / utils.getCurrentPlatform()):
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "tool target platform directory not found, " & tool
+            issue: "tool target platform directory not found, " & session.tool
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        tool: tool,
+        tool: session.tool,
         issue: ""
     )
 
