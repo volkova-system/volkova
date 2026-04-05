@@ -1,187 +1,92 @@
-# Command handler for install-nim tool
 
 import os
-import strutils
-import setting
-import utils
-
-type
-    ValidationResult* = object
-        ## Result of parameter validation
-        valid*: bool
-        toolName*: string
-        errorMsg*: string
+import models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
-    ## Check if argument is a help flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a help flag
     return flag in ["-h", "--help", "help"]
 
-proc checkVersionFlag*(flag: string): bool =
-    ## Check if argument is a version flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a version flag
-    return flag in ["-v", "--version", "version"]
-
-proc checkCommandHelpFlag*(args: seq[string]): bool =
-    ## Check if arguments contain command help flag
-    ## Args: args - List of arguments to check
-    ## Returns: Boolean true if help flag found
-    for arg in args:
-        if checkHelpFlag(arg):
+proc checkCommandHelpFlag*(parameters: seq[string]): bool =
+    for parameter in parameters:
+        if checkHelpFlag(parameter):
             return true
+
     return false
 
-proc resolveCommand*(cmdName: string): string =
-    ## Resolve command name to internal command
-    ## Args: cmdName - Command name from user input
-    ## Returns: Resolved command name or empty string if invalid
-    let validCommands = @[commandName]
+proc checkVersionFlag*(flag: string): bool =
+    return flag in ["-v", "--version", "version"]
 
-    if cmdName in validCommands:
-        return cmdName
+proc checkCommandVersionFlag*(parameters: seq[string]): bool =
+    for parameter in parameters:
+        if checkVersionFlag(parameter):
+            return true
+
+    return false
+
+proc resolveCommand*(command: string): string =
+    let validCommands = @[installCommand]
+
+    if command in validCommands:
+        return command
 
     return ""
 
-proc within(base: string, path: string): bool =
-    ## Check if path is within base directory
-    ## Args: base - Base directory path
-    ##       path - Path to check
-    ## Returns: Boolean true if path is within base
-    let normalBase = absolutePath(base)
-    let normalPath = absolutePath(path)
-    return normalPath.startsWith(normalBase)
-
-proc validateToolStructure*(toolName: string,
-        toolsRoot: string): ValidationResult =
-    ## Validate tool directory structure
-    ## Args: toolName - Name of the tool directory
-    ##       toolsRoot - Absolute path to tools directory
-    ## Returns: ValidationResult with validation status
-    var toolDir = absolutePath(toolsRoot / toolName)
-    if not dirExists(toolDir):
-        try:
-            toolDir = utils.resolveToolDir(toolName)
-        except OSError:
-            return ValidationResult(
-              valid: false,
-              errorMsg: "Tool directory not found: " & toolName
-            )
-    let nimDir = absolutePath(toolDir / "nim")
-    let distDir = absolutePath(nimDir / "dist")
-
-    # Validate tool directory exists
-    if not dirExists(toolDir):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Tool directory not found: " & toolName
+proc validateCommand*(session: ToolSession): ToolSession =
+    if session.command != installCommand:
+        return ToolSession(
+            status: false,
+            issue: "invalid command, '" & session.command & "'"
         )
 
-    # Validate tool is within tools directory
-    if not within(toolsRoot, toolDir):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Tool path outside tools directory: " & toolName
+    if session.parameters.len != 1:
+        return ToolSession(
+            status: false,
+            issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    # Validate nim directory exists
-    if not dirExists(nimDir):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Nim directory not found in tool: " & toolName & "/nim"
+    let tool = session.parameters[0]
+
+    if tool == "":
+        return ToolSession(
+            status: false,
+            issue: "empty tool"
         )
 
-    # Validate dist directory exists
-    if not dirExists(distDir):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Dist directory not found in tool: " & toolName & "/nim/dist"
-        )
-
-    # Return successful validation
-    return ValidationResult(
-      valid: true,
-      toolName: toolName,
-      errorMsg: ""
+    return ToolSession(
+        status: true,
+        tool: tool
     )
 
-proc validateCommand*(cmd: string, args: seq[string]): ValidationResult =
-    ## Validate install-nim command and arguments
-    ## Args: cmd - Command name (should be "install-nim")
-    ##       args - List of command arguments
-    ## Returns: ValidationResult with validation status and parsed parameters
-
-    # Validate command name
-    if cmd != commandName:
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Invalid command '" & cmd & "'"
+proc validateExecutable*(session: ToolSession): ToolSession =
+    let executableFile = utils.resolveExecutableToolFile(session.tool)
+    if not dirExists(executableFile):
+        return ToolSession(
+            status: false,
+            issue: "tool executable not found, " & executableFile
         )
 
-    # Validate argument count
-    if args.len != 1:
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Expected 1 argument, got " & $args.len
+    let installDirectory = utils.getInstallDirectory()
+    if not dirExists(installDirectory):
+        return ToolSession(
+            status: false,
+            issue: "tool executable install directory not found, " & installDirectory
         )
 
-    # Extract tool path
-    let toolPathArg = args[0]
-
-    # Validate tool path is not empty
-    if toolPathArg == "":
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Tool path cannot be empty"
-        )
-
-    # Validate tool path format 'name-system/name-tool'
-    let normalized = toolPathArg.replace("\\", "/")
-    let segments = normalized.split("/")
-    if segments.len != 2:
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Tool path must be in the form 'name-system/name-tool': " & toolPathArg
-        )
-
-    let systemName = segments[0]
-    let toolNameOnly = segments[1]
-
-    # Validate suffixes
-    if not systemName.endsWith("-system"):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Parent path must end with '-system': " & systemName
-        )
-
-    if not toolNameOnly.endsWith("-tool"):
-        return ValidationResult(
-          valid: false,
-          errorMsg: "Tool name must end with '-tool': " & toolNameOnly
-        )
-
-    # Normalize tool path using OS separator
-    let toolPath = systemName / toolNameOnly
-
-    # Return successful validation
-    return ValidationResult(
-      valid: true,
-      toolName: toolPath,
-      errorMsg: ""
+    return ToolSession(
+        status: true,
+        tool: session.tool,
+        executable: executableFile,
+        target: installDirectory / lastPathPart(executableFile)
     )
 
-proc assertExecutableExists*(execPath: string) =
-    ## Assert that the executable file exists, terminate loudly if not
-    ## Args: execPath - Absolute path to the executable file
-    if not fileExists(execPath):
-        stderr.writeLine(
-            "Error: Executable not found: " & execPath
+proc validateInstalledExecutable*(session: ToolSession): ToolSession =
+    if not fileExists(session.target):
+        return ToolSession(
+            status: false,
+            issue: "installed tool executable file not found, " & session.target
         )
-        stderr.writeLine(
-            "Run build-nim first to build the tool for this platform"
-        )
-        quit(2)
+
+proc validateExecutableCommand*(session: ToolSession): ToolSession =
+    
 
 proc assertInstallDirectoryOnPath*(installDir: string) =
     ## Assert that the install directory is on the system PATH
