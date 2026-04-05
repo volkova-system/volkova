@@ -13,22 +13,12 @@ proc getCurrentPlatform*(): string =
         raise newException(OSError, "unsupported platform")
 
 proc getRepositoryRootDirectory*(): string =
-
-    ## Find repository root directory using git repository detection
-    ## Returns: Absolute path to repository root directory (git repository root)
-
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
 
     if exitCode == 0:
-        let repositoryRootPath = output.strip()
-        if repositoryRootPath != "" and dirExists(repositoryRootPath):
-            return absolutePath(repositoryRootPath)
+        return output.strip()
 
-        raise newException(OSError,
-            "repository root directory not found, " & repositoryRootPath)
-
-    raise newException(OSError,
-        "cannot determine repository root directory path")
+    raise newException(OSError, "cannot determine repository root directory path")
 
 proc getToolsRootDirectory*(): string =
 
