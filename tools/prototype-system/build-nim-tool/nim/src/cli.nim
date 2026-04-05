@@ -5,10 +5,7 @@ import engines, handlers, helps, models
 proc executeCommand(command: string, parameters: seq[string]) =
     case command
     of "build-nim":
-        var session = ToolSession(
-            command: command,
-            parameters: parameters
-        )
+        var session = ToolSession(command: command, parameters: parameters)
 
         session = handlers.validateCommand(session)
         if not session.status:
