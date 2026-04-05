@@ -25,10 +25,10 @@ proc installExecutable*(session: ToolSession): ToolSession =
                 -NonInteractive
                 -ExecutionPolicy Bypass
                 -Command "
-                    $currentPath = [Environment]::GetEnvironmentVariable('Path','Machine');
-                    $installPath = '{session.target}';
+                    $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
+                    $installPath = '{parentDir(session.target)}';
                     if ($currentPath -split ';' -notcontains $installPath) {{
-                        [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'Machine');
+                        [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
                     }}
                 "
         """)
