@@ -70,19 +70,20 @@ proc installExecutable*(session: ToolSession): ToolSession =
             appendFile(zshrcFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
 
     elif defined(windows):
-        var (output, code) = execCmdEx(fmt"""
-            pwsh
-                -NoProfile
-                -NonInteractive
-                -ExecutionPolicy Bypass
-                -Command "
-                    $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
-                    $installPath = '{installDirectory}';
-                    if ($currentPath -split ';' -notcontains $installPath) {{
-                        [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
-                    }}
-                "
-        """)
+        let scriptContent = fmt"""
+            $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
+            $installPath = '{installDirectory}';
+            if ($currentPath -split ';' -notcontains $installPath) {{
+                [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
+            }}
+        """
+
+        let scriptPath = getTempDir() / "install-nim-path.ps1"
+        writeFile(scriptPath, scriptContent)
+
+        var (output, code) = execCmdEx(fmt"pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File {scriptPath}")
+
+        removeFile(scriptPath)
 
         if code == 0:
             putEnv("PATH", installDirectory & ";" & getEnv("PATH"))
