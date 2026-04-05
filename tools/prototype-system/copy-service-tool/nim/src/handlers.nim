@@ -75,8 +75,10 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(command: string, parameters: seq[
-        string]): ValidationResult =
+proc validateCommand*(
+        command: string,
+        parameters: seq[string]
+    ): ValidationResult =
 
     ## Validate copy-service command and parameters
     ## Args: command - Command name (should be "copy-service")
@@ -92,7 +94,7 @@ proc validateCommand*(command: string, parameters: seq[
     if parameters.len < 2 or parameters.len > 3:
         return ValidationResult(
             status: false,
-            issue: "expected 2-3 parameters, got " & $parameters.len
+            issue: "invalid parameter count, " & $parameters.len
         )
 
     let source = parameters[0]
@@ -103,10 +105,16 @@ proc validateCommand*(command: string, parameters: seq[
         target = parameters[2]
         systems = true
 
-    if source == "" or target == "":
+    if source == "":
         return ValidationResult(
             status: false,
-            issue: "source and target paths cannot be empty"
+            issue: "empty source path"
+        )
+
+    if target == "":
+        return ValidationResult(
+            status: false,
+            issue: "empty target path"
         )
 
     return ValidationResult(
@@ -126,10 +134,10 @@ proc validateSourceServiceStructure*(servicePath: string): ValidationResult =
     var serviceDirectory = ""
     try:
         serviceDirectory = utils.resolveServiceDirectory(servicePath)
-    except OSError:
+    except OSError as issue:
         return ValidationResult(
             status: false,
-            issue: "source service directory not found, " & servicePath
+            issue: "source path, " & servicePath & " resolution issue, " & issue.msg
         )
 
     return ValidationResult(
@@ -153,8 +161,7 @@ proc validateTargetServiceStructure*(servicePath: string): ValidationResult =
         except OSError as issue:
             return ValidationResult(
                 status: false,
-                issue: "target service directory validation failed, " &
-                servicePath & ", " & issue.msg
+                issue: "target path, " & servicePath & " resolution issue, " & issue.msg
             )
 
     if lastPathPart(serviceDirectory) != "services" and
@@ -182,10 +189,10 @@ proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
     if not dirExists(systemDirectory):
         try:
             systemDirectory = utils.resolveSystemDirectory(systemPath)
-        except OSError:
+        except OSError as issue:
             return ValidationResult(
                 status: false,
-                issue: "target system directory validation failed, " & systemPath
+                issue: "target path, " & systemPath & " resolution issue, " & issue.msg
             )
 
     if lastPathPart(systemDirectory) != "services" and
