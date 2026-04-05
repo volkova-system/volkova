@@ -1,7 +1,7 @@
 # CLI interface for install-nim tool
 
 import os
-import help, handler, engine, utils
+import helps, handlers, engines, utils
 
 proc executeCommand(command: string, args: seq[string]) =
     ## Execute the resolved command with arguments
