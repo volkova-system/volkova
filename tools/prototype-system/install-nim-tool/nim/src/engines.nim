@@ -19,7 +19,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
         )
 
     elif defined(windows):
-        var (_, code) = execCmdEx(fmt"""
+        var (output, code) = execCmdEx(fmt"""
             pwsh
                 -NoProfile
                 -NonInteractive
@@ -36,25 +36,9 @@ proc installExecutable*(session: ToolSession): ToolSession =
         if code == 0:
             putEnv("PATH", session.target & ";" & getEnv("PATH"))
         else:
-            (_, code) = execCmdEx(fmt"""
-                pwsh
-                    -NoProfile
-                    -NonInteractive
-                    -ExecutionPolicy Bypass
-                    -Command "
-                        $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
-                        $installPath = '{session.target}';
-                        if ($currentPath -split ';' -notcontains $installPath) {{
-                            [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
-                        }}
-                    "
-            """)
+            raise newException(OSError,
+                "cannot install executable in windows, issue, " & output)
 
-            if code == 0:
-                putEnv("PATH", session.target & ";" & getEnv("PATH"))
-            else:
-                raise newException(OSError,
-                    "cannot install executable in windows")
     else:
         raise newException(OSError,
             "cannot install executable, platform not support")
