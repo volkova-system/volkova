@@ -21,21 +21,12 @@ proc getRepositoryRootDirectory*(): string =
     raise newException(OSError, "cannot determine repository root directory path")
 
 proc getInstallDirectory*(): string =
-    when defined(windows):
-        let installDirectory = absolutePath(
-            getEnv("ProgramFiles") / "tools" / "bin"
-        )
+    let installDirectory = absolutePath(getHomeDir() / ".local" / "bin")
 
-        if not dirExists(installDirectory):
-            createDir(installDirectory)
+    if not dirExists(installDirectory):
+        createDir(installDirectory)
 
-        return installDirectory
-
-    elif defined(linux):
-        return "/usr/local/bin"
-
-    elif defined(macosx):
-        return "/usr/local/bin"
+    return installDirectory
 
 proc resolveToolsRootDirectory*(): string =
     return getRepositoryRootDirectory() / toolsDirectory
