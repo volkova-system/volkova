@@ -37,9 +37,9 @@ proc executeCommand*(command: string) =
     ## Fails loudly and terminates if the command exits non-zero
     ## Args: command - The command expression to execute
 
-    let shellInfo = resolveShell()
+    let (shell, flag) = resolveShell()
 
-    let exitCode = execCmd(shellInfo.shell & " " & shellInfo.flag & " " & command)
+    let exitCode = execCmd(shell & " " & flag & " " & command)
 
     if exitCode != 0:
         raise newException(OSError,
