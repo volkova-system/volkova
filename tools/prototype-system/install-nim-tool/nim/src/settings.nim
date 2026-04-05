@@ -9,3 +9,5 @@ const
     targetBuildDirectory* = normalizedPath("nim/dist")
 
     version* = "0.0.0"
+
+
