@@ -31,7 +31,10 @@ proc getProcessCurrentDirectory*(): string =
     raise newException(OSError,
         "cannot determine process current directory")
 
-proc resolveToolFilePath*(toolFile: string, currentToolFile: string = ""): string =
+proc resolveToolFilePath*(
+        toolFile: string,
+        currentToolFile: string = ""
+    ): string =
 
     ## Resolve a tool file path to an absolute path
     ## Paths starting with "./" are relative to the parent directory of currentToolFile
