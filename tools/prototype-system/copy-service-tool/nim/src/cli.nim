@@ -1,44 +1,39 @@
 
 import os
-import helps, handlers, engines
+import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
-
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       parameters - List of command parameters
-
     case command
     of "copy-service":
-        var valid = handlers.validateCommand(command, parameters)
+        var session = ToolSession(command: command, parameters: parameters)
 
-        if not valid.status:
-            stderr.writeLine("copy-service issue, ", valid.issue)
+        session = handlers.validateCommand(session)
+        if not session.status:
+            stderr.writeLine("copy-service issue, ", session.issue)
             printUsage()
             quit(1)
 
-        valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
-
-        if not valid.status:
-            stderr.writeLine("copy-service issue, ", valid.issue)
+        session = handlers.validatePaths(session)
+        if not session.status:
+            stderr.writeLine("copy-service issue, ", session.issue)
             quit(2)
 
         try:
-            valid.target = engines.copyService(valid.source, valid.target, valid.systems)
+            session = engines.copyService(session)
         except CatchableError as issue:
             stderr.writeLine("copy-service issue, ", issue.msg)
             quit(2)
 
-        if valid.systems:
-            valid = handlers.validateTargetSystemStructure(valid.target)
+        if session.systems:
+            session = handlers.validateTargetSystemStructure(session)
         else:
-            valid = handlers.validateTargetServiceStructure(valid.target)
+            session = handlers.validateTargetServiceStructure(session)
 
-        if not valid.status:
-            stderr.writeLine("copy-service issue, ", valid.issue)
+        if not session.status:
+            stderr.writeLine("copy-service issue, ", session.issue)
             quit(1)
 
-        echo "copy-service done, target, " & valid.target
+        echo "copy-service done, target, " & session.target
         quit(0)
 
     else:
