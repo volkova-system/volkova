@@ -25,14 +25,14 @@ proc getRepositoryRootDirectory*(): string =
     raise newException(OSError,
         "cannot determine repository root directory path")
 
-proc resolveServicesRootPath*(): string =
+proc resolveServicesRootDirectory*(): string =
     return getRepositoryRootDirectory() / servicesDirectory
 
-proc resolveSystemsRootPath*(): string =
+proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
 proc resolveServiceDirectory*(servicePath: string): string =
-    return resolveServicesRootPath() / normalizedPath(servicePath)
+    return resolveServicesRootDirectory() / normalizedPath(servicePath)
 
 proc resolveSystemDirectory*(systemPath: string): string =
-    return resolveSystemsRootPath() / normalizedPath(systemPath)
+    return resolveSystemsRootDirectory() / normalizedPath(systemPath)
