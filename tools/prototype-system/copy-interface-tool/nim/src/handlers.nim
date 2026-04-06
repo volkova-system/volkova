@@ -109,7 +109,7 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
             issue: "target interface directory not found, " & interfaceDirectory
         )
 
-    if lastPathPart(interfaceDirectory) != "interfaces" and
+    if lastPathPart(interfaceDirectory) != interfacesDirectory and
         (not interfaceDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
@@ -117,7 +117,7 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
         )
 
     let targetOutputDirectory = interfaceDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != "interfaces" and
+    if lastPathPart(parentDir(targetOutputDirectory)) != interfacesDirectory and
         (not targetOutputDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
@@ -153,7 +153,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
         )
 
     let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != "interfaces" and
+    if lastPathPart(parentDir(targetOutputDirectory)) != interfacesDirectory and
         (not targetOutputDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
