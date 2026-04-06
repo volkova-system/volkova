@@ -1,9 +1,13 @@
 
 type
-    ValidationResult* = object
+    ToolSession* = object
+        command*: string
+        parameters*: seq[string]
+
         status*: bool
-        target*: string
         issue*: string
+
+        target*: string
 
 type
     LineType* = enum
