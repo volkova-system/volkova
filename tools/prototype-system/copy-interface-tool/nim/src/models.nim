@@ -9,4 +9,5 @@ type
 
         source*: string
         systems*: bool
+        targetSuffix*: string
         target*: string
