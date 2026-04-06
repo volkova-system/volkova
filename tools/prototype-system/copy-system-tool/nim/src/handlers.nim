@@ -1,21 +1,11 @@
 
 import os, strutils
-import models, settings, utils
+import macros, models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
-
-    ## Check if argument is a help flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a help flag
-
     return flag in ["-h", "--help", "help"]
 
 proc checkCommandHelpFlag*(parameters: seq[string]): bool =
-
-    ## Check if arguments contain command help flag
-    ## Args: parameters - List of arguments to check
-    ## Returns: Boolean true if help flag found
-
     for parameter in parameters:
         if checkHelpFlag(parameter):
             return true
@@ -23,19 +13,9 @@ proc checkCommandHelpFlag*(parameters: seq[string]): bool =
     return false
 
 proc checkVersionFlag*(flag: string): bool =
-
-    ## Check if argument is a version flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a version flag
-
     return flag in ["-v", "--version", "version"]
 
 proc checkCommandVersionFlag*(parameters: seq[string]): bool =
-
-    ## Check if arguments contain command version flag
-    ## Args: parameters - List of arguments to check
-    ## Returns: Boolean true if version flag found
-
     for parameter in parameters:
         if checkVersionFlag(parameter):
             return true
@@ -43,11 +23,6 @@ proc checkCommandVersionFlag*(parameters: seq[string]): bool =
     return false
 
 proc resolveCommand*(command: string): string =
-
-    ## Resolve command name to internal command
-    ## Args: command - Command name from user input
-    ## Returns: Resolved command name or empty string if invalid
-
     let validCommands = @[copySystemCommand]
 
     if command in validCommands:
@@ -55,123 +30,106 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(
-        command: string,
-        parameters: seq[string]
-    ): ValidationResult =
-
-    ## Validate copy-system command and parameters
-    ## Args: command - Command name (should be "copy-system")
-    ##       parameters - List of command parameters
-    ## Returns: ValidationResult with validation status and parsed parameters
-
-    if command != copySystemCommand:
-        return ValidationResult(
+proc validateCommand*(session: ToolSession): ToolSession =
+    if session.command != copySystemCommand:
+        return ToolSession(
             status: false,
-            issue: "invalid command, '" & command & "'"
+            issue: "invalid command, '" & session.command & "'"
         )
 
-    if parameters.len != 2:
-        return ValidationResult(
+    if session.parameters.len < 2 or session.parameters.len > 3:
+        return ToolSession(
             status: false,
-            issue: "expected 2 parameters, got " & $parameters.len
+            issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let source = parameters[0]
-    let target = parameters[1]
+    let source = session.parameters[0]
+    var target = session.parameters[1]
 
-    if source == "" or target == "":
-        return ValidationResult(
+    if source == "":
+        return ToolSession(
             status: false,
-            issue: "source and target paths cannot be empty"
+            issue: "empty source path"
         )
 
-    return ValidationResult(
+    if target == "":
+        return ToolSession(
+            status: false,
+            issue: "empty target path"
+        )
+
+    return ToolSession(
         status: true,
+
         source: source,
-        target: target,
-        issue: ""
+        target: target
     )
 
-proc validateSourceSystemStructure*(systemPath: string): ValidationResult =
-
-    ## Validate source system directory structure
-    ## Args: systemPath - Path of the source system directory
-    ## Returns: ValidationResult with validation status
-
-    var systemDirectory = ""
-    try:
-        systemDirectory = utils.resolveSystemDirectory(systemPath)
-    except OSError:
-        return ValidationResult(
-            status: false,
-            issue: "source system directory not found, " & systemPath
-        )
-
-    return ValidationResult(
-        status: true,
-        source: systemPath,
-        target: "",
-        issue: ""
-    )
-
-proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
-
-    ## Validate target system directory structure
-    ## Args: systemPath - Path of the target system directory
-    ## Returns: ValidationResult with validation status
-
-    var systemDirectory = absolutePath(systemPath)
+proc validateSourceSystemDirectory*(session: ToolSession): ToolSession =
+    let systemDirectory = utils.resolveSystemDirectory(session.source)
 
     if not dirExists(systemDirectory):
-        try:
-            systemDirectory = utils.resolveSystemDirectory(systemPath)
-        except OSError as issue:
-            return ValidationResult(
-                status: false,
-                issue: "target system directory validation failed, " &
-                systemPath & ", " & issue.msg
-            )
-
-    if lastPathPart(systemDirectory) != "systems" and
-            (not systemDirectory.endsWith("-system")):
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "invalid target system directory, " & systemPath
+            issue: "source system directory not found, " & systemDirectory
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        source: "",
-        target: systemPath,
-        issue: ""
+
+        source: systemDirectory,
+        target: session.target
     )
 
-proc validatePaths*(
-        source: string,
-        target: string
-    ): ValidationResult =
+proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
+    let systemDirectory = utils.resolveSystemDirectory(session.target)
 
-    ## Validate source and target paths
-    ## Args: source - Source path relative to systems
-    ##       target - Target path relative to systems
-    ## Returns: ValidationResult with validation status
+    if not dirExists(systemDirectory):
+        return ToolSession(
+            status: false,
+            issue: "target system directory not found, " & systemDirectory
+        )
 
-    var valid = validateSourceSystemStructure(source)
+    if lastPathPart(systemDirectory) != systemsDirectory and
+        (not systemDirectory.endsWith(systemSuffix)):
 
-    if not valid.status:
-        return valid
+        return ToolSession(
+            status: false,
+            issue: "invalid target system directory, " & systemDirectory
+        )
 
-    valid = validateTargetSystemStructure(target)
+    let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
+    if lastPathPart(parentDir(targetOutputDirectory)) != systemsDirectory and
+        (not targetOutputDirectory.endsWith(systemSuffix)):
+        return ToolSession(
+            status: false,
+            issue: "invalid target output directory, " & targetOutputDirectory
+        )
 
-    if not valid.status:
-        return valid
-
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        source: source,
-        target: target,
-        issue: ""
+
+        source: session.source,
+        target: targetOutputDirectory
+    )
+
+proc validatePaths*(session: ToolSession): ToolSession =
+    return session |>
+        validateSourceSystemDirectory() |>
+        validateTargetSystemDirectory()
+
+proc validateTargetOutputDirectory*(session: ToolSession): ToolSession =
+    if not dirExists(session.target):
+        return ToolSession(
+            status: false,
+            issue: "target output directory not found, " & session.target
+        )
+
+    return ToolSession(
+        status: true,
+
+        source: session.source,
+        target: session.target
     )
 
 
