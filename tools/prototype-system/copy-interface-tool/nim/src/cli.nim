@@ -1,44 +1,35 @@
 
 import os
-import helps, handlers, engines
+import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
-
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       parameters - List of command parameters
-
     case command
     of "copy-interface":
-        var valid = handlers.validateCommand(command, parameters)
+        var session = ToolSession(command: command, parameters: parameters)
 
-        if not valid.status:
-            stderr.writeLine("copy-interface issue, ", valid.issue)
+        session = handlers.validateCommand(session)
+        if not session.status:
+            stderr.writeLine("copy-interface issue, ", session.issue)
             printUsage()
             quit(1)
 
-        valid = handlers.validatePaths(valid.source, valid.target, valid.systems)
-
-        if not valid.status:
-            stderr.writeLine("copy-interface issue, ", valid.issue)
+        session = handlers.validatePaths(session)
+        if not session.status:
+            stderr.writeLine("copy-interface issue, ", session.issue)
             quit(2)
 
         try:
-            valid.target = engines.copyInterface(valid.source, valid.target, valid.systems)
+            session = engines.copyInterface(session)
         except CatchableError as issue:
             stderr.writeLine("copy-interface issue, ", issue.msg)
             quit(2)
 
-        if valid.systems:
-            valid = handlers.validateTargetSystemStructure(valid.target)
-        else:
-            valid = handlers.validateTargetInterfaceStructure(valid.target)
-
-        if not valid.status:
-            stderr.writeLine("copy-interface issue, ", valid.issue)
+        session = handlers.validateTargetOutputDirectory(session)
+        if not session.status:
+            stderr.writeLine("copy-interface issue, ", session.issue)
             quit(1)
 
-        echo "copy-interface done, target, " & valid.target
+        echo "copy-interface done, target, " & session.target
         quit(0)
 
     else:
@@ -65,8 +56,7 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("copy-interface issue, invalid command, '" &
-                targetCommand & "'")
+        stderr.writeLine("copy-interface issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
