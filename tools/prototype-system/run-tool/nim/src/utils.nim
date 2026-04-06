@@ -1,5 +1,16 @@
 
 import os, strutils, osproc
+import settings
+
+proc getCurrentPlatform*(): string =
+    when defined(windows):
+        return "windows"
+    elif defined(linux):
+        return "linux"
+    elif defined(macosx):
+        return "darwin"
+    else:
+        raise newException(OSError, "unsupported platform")
 
 proc getRepositoryRootDirectory*(): string =
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
@@ -22,6 +33,9 @@ proc getProcessCurrentDirectory*(): string =
 
     raise newException(OSError,
         "cannot determine process current directory")
+
+proc resolveToolsRootDirectory*(): string =
+    return getRepositoryRootDirectory() / toolsDirectory
 
 proc resolveToolFilePath*(
         toolFile: string,
