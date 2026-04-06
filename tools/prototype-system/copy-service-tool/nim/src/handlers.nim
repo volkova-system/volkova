@@ -107,8 +107,8 @@ proc validateTargetServiceDirectory*(session: ToolSession): ToolSession =
             issue: "target service directory not found, " & serviceDirectory
         )
 
-    if lastPathPart(serviceDirectory) != "services" and
-        (not serviceDirectory.endsWith(serviceFileSuffix)):
+    if lastPathPart(serviceDirectory) != servicesDirectory and
+        (not serviceDirectory.endsWith(serviceSuffix)):
 
         return ToolSession(
             status: false,
@@ -116,8 +116,8 @@ proc validateTargetServiceDirectory*(session: ToolSession): ToolSession =
         )
 
     let targetOutputDirectory = serviceDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
-        (not targetOutputDirectory.endsWith(serviceFileSuffix)):
+    if lastPathPart(parentDir(targetOutputDirectory)) != servicesDirectory and
+        (not targetOutputDirectory.endsWith(serviceSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
@@ -143,16 +143,16 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
             issue: "target system directory not found, " & systemDirectory
         )
 
-    if lastPathPart(systemDirectory) != "services" and
-        (not systemDirectory.endsWith(serviceFileSuffix)):
+    if lastPathPart(systemDirectory) != servicesDirectory and
+        (not systemDirectory.endsWith(serviceSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target system directory, " & systemDirectory
         )
 
     let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
-        (not targetOutputDirectory.endsWith(serviceFileSuffix)):
+    if lastPathPart(parentDir(targetOutputDirectory)) != servicesDirectory and
+        (not targetOutputDirectory.endsWith(serviceSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
