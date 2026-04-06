@@ -1,3 +1,4 @@
+
 import os
 import models, settings, utils
 
@@ -42,37 +43,39 @@ proc validateCommand*(session: ToolSession): ToolSession =
             issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let tool = session.parameters[0]
+    let terminalInterface = session.parameters[0]
 
-    if tool == "":
+    if terminalInterface == "":
         return ToolSession(
             status: false,
-            issue: "empty tool"
+            issue: "empty interface"
         )
 
     return ToolSession(
         status: true,
-        tool: tool
+
+        terminalInterface: terminalInterface
     )
 
 proc validateExecutable*(session: ToolSession): ToolSession =
-    let executableFile = utils.resolveExecutableToolFile(session.tool)
+    let executableFile = utils.resolveExecutableToolFile(session.terminalInterface)
     if not fileExists(executableFile):
         return ToolSession(
             status: false,
-            issue: "tool executable not found, " & executableFile
+            issue: "interface executable not found, " & executableFile
         )
 
     let installDirectory = utils.getInstallDirectory()
     if not dirExists(installDirectory):
         return ToolSession(
             status: false,
-            issue: "tool install directory not found, " & installDirectory
+            issue: "interface install directory not found, " & installDirectory
         )
 
     return ToolSession(
         status: true,
-        tool: session.tool,
+
+        terminalInterface: session.terminalInterface,
         executable: executableFile,
         target: installDirectory / lastPathPart(executableFile)
     )
@@ -81,7 +84,7 @@ proc validateInstalledExecutable*(session: ToolSession): ToolSession =
     if not fileExists(session.target):
         return ToolSession(
             status: false,
-            issue: "installed tool not found, " & session.target
+            issue: "installed interface not found, " & session.target
         )
 
     return session
