@@ -30,49 +30,49 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(command: string, parameters: seq[string]): ValidationResult =
-    if command != runCommand:
-        return ValidationResult(
+proc validateCommand*(session: ToolSession): ToolSession =
+    if session.command != runCommand:
+        return ToolSession(
             status: false,
-            issue: "invalid command, '" & command & "'"
+            issue: "invalid command, '" & session.command & "'"
         )
 
-    if parameters.len != 1:
-        return ValidationResult(
+    if session.parameters.len != 1:
+        return ToolSession(
             status: false,
-            issue: "invalid parameter count, " & $parameters.len
+            issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let toolFilePath = parameters[0]
+    let toolFilePath = session.parameters[0]
 
     if toolFilePath == "":
-        return ValidationResult(
+        return ToolSession(
             status: false,
             issue: "empty tool file path"
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
 
         target: toolFilePath
     )
 
-proc validateToolFile*(toolFilePath: string): ValidationResult =
-    if not toolFilePath.endsWith(toolFileExtension):
-        return ValidationResult(
+proc validateToolFile*(session: ToolSession): ToolSession =
+    if not session.target.endsWith(toolFileExtension):
+        return ToolSession(
             status: false,
-            issue: "invalid tool file extension, " & toolFilePath
+            issue: "invalid tool file extension, " & session.target
         )
 
-    let toolFile = utils.resolveToolFilePath(toolFilePath)
+    let toolFile = utils.resolveToolFilePath(session.target)
 
     if not fileExists(toolFile):
-        return ValidationResult(
+        return ToolSession(
             status: false,
             issue: "tool file not found, " & toolFile
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
 
         target: toolFile
