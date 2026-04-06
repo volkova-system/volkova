@@ -22,11 +22,10 @@ proc printUsage*() =
     echo "    -v, --version, version    Show version information"
     echo ""
     echo "Example:"
-    echo "    > copy prototype-system/run-tool tools/prototype-system"
+    echo "    > copy prototype-system/run-tool target-system/tools"
     echo ""
     echo "Output:"
-    echo "    Copies from tools/prototype-system/run-tool/dist/<platform>/*"
-    echo "    to tools/prototype-system/<platform>/"
+    echo "    target-system/tools/windows/run-tool.exe"
     echo ""
     echo ""
 
