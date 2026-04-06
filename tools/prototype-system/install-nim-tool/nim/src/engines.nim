@@ -28,7 +28,10 @@ proc installExecutable*(session: ToolSession): ToolSession =
 
         var content = if fileExists(profileFile): readFile(profileFile) else: ""
         if not content.contains(installDirectory):
-            appendFile(profileFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+            appendFile(
+                profileFile,
+                "export PATH=\"" & installDirectory & ":$PATH\"\n"
+            )
 
         let bashrcFile = getHomeDir() / ".bashrc"
         if not fileExists(bashrcFile):
@@ -36,7 +39,10 @@ proc installExecutable*(session: ToolSession): ToolSession =
 
         var content = if fileExists(bashrcFile): readFile(bashrcFile) else: ""
         if not content.contains(installDirectory):
-            appendFile(bashrcFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+            appendFile(
+                bashrcFile,
+                "export PATH=\"" & installDirectory & ":$PATH\"\n"
+            )
 
     elif defined(macosx):
         setFilePermissions(
@@ -59,7 +65,10 @@ proc installExecutable*(session: ToolSession): ToolSession =
 
         var content = if fileExists(profileFile): readFile(profileFile) else: ""
         if not content.contains(installDirectory):
-            appendFile(profileFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+            appendFile(
+                profileFile,
+                "export PATH=\"" & installDirectory & ":$PATH\"\n"
+            )
 
         let zshrcFile = getHomeDir() / ".zshrc"
         if not fileExists(zshrcFile):
@@ -67,21 +76,34 @@ proc installExecutable*(session: ToolSession): ToolSession =
 
         var content = if fileExists(zshrcFile): readFile(zshrcFile) else: ""
         if not content.contains(installDirectory):
-            appendFile(zshrcFile, "export PATH=\"" & installDirectory & ":$PATH\"\n")
+            appendFile(
+                zshrcFile,
+                "export PATH=\"" & installDirectory & ":$PATH\"\n"
+            )
 
     elif defined(windows):
         let scriptContent = fmt"""
             $currentPath = [Environment]::GetEnvironmentVariable('Path','User');
             $installPath = '{installDirectory}';
             if ($currentPath -split ';' -notcontains $installPath) {{
-                [Environment]::SetEnvironmentVariable('Path', $installPath + ';' + $currentPath, 'User');
+                [Environment]::SetEnvironmentVariable(
+                    'Path',
+                    $installPath + ';' + $currentPath,
+                    'User'
+                );
             }}
         """
 
         let scriptPath = getTempDir() / "install-nim-path.ps1"
         writeFile(scriptPath, scriptContent)
 
-        var (output, code) = execCmdEx(fmt"pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File {scriptPath}")
+        var (output, code) = execCmdEx(
+                "pwsh" &
+                " -NoProfile" &
+                " -NonInteractive" &
+                " -ExecutionPolicy Bypass " &
+                " -File " & "\"" & scriptPath & "\""
+            )
 
         removeFile(scriptPath)
 
