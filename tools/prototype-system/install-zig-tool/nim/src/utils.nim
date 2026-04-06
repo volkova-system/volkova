@@ -4,10 +4,13 @@ import settings
 proc getCurrentPlatform*(): string =
     when defined(windows):
         return "windows"
+
     elif defined(linux):
         return "linux"
+
     elif defined(macosx):
         return "darwin"
+
     else:
         raise newException(OSError, "unsupported platform")
 
@@ -30,7 +33,7 @@ proc getInstallDirectory*(): string =
 proc resolveInterfacesRootDirectory*(): string =
     return getRepositoryRootDirectory() / interfacesDirectory
 
-proc resolveCliTargetBuildDirectory*(cli: string): string =
+proc resolveInterfaceTargetBuildDirectory*(cli: string): string =
     return resolveInterfacesRootDirectory() / normalizedPath(cli) / targetBuildDirectory
 
 proc resolveExecutableExtension*(): string =
@@ -40,8 +43,8 @@ proc resolveExecutableExtension*(): string =
         return ""
 
 proc resolveExecutableToolFile*(tool: string): string =
-    let cliTargetBuildDirectory = resolveCliTargetBuildDirectory(tool)
-    let buildDirectory = cliTargetBuildDirectory / getCurrentPlatform()
+    let interfaceTargetBuildDirectory = resolveInterfaceTargetBuildDirectory(tool)
+    let buildDirectory = interfaceTargetBuildDirectory / getCurrentPlatform()
     let executableFile = lastPathPart(tool) & resolveExecutableExtension()
 
     return buildDirectory / executableFile
