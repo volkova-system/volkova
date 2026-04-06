@@ -58,7 +58,6 @@ proc validateCommand*(command: string, parameters: seq[string]): ValidationResul
     )
 
 proc validateToolFile*(toolFilePath: string): ValidationResult =
-
     if not toolFilePath.endsWith(toolFileExtension):
         return ValidationResult(
             status: false,
