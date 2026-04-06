@@ -1,36 +1,47 @@
-# Utility procedures for install-zig tool
+import os, osproc, strutils
+import settings
 
-import os, strutils, osproc
-import setting
+proc getCurrentPlatform*(): string =
+    when defined(windows):
+        return "windows"
+    elif defined(linux):
+        return "linux"
+    elif defined(macosx):
+        return "darwin"
+    else:
+        raise newException(OSError, "unsupported platform")
 
-proc findRoot*(): string =
-    ## Find project root using git repository detection
-    ## Returns: Absolute path to project root (git repository root)
+proc getRepositoryRootDirectory*(): string =
     let (output, exitCode) = execCmdEx("git rev-parse --show-toplevel")
+
     if exitCode == 0:
-        let gitRoot = output.strip()
-        if gitRoot != "" and dirExists(gitRoot):
-            return absolutePath(gitRoot)
-    raise newException(IOError, "Git repository root not found")
+        return output.strip()
 
-proc interfacesRoot*(): string =
-    ## Get absolute path to interfaces directory
-    ## Returns: Absolute path to interfaces directory
-    let root = findRoot()
-    let interfacesPath = root / interfacesDirectory
-    return absolutePath(interfacesPath)
+    raise newException(OSError, "cannot determine repository root directory path")
 
-proc resolveCliDir*(cliPath: string): string =
-    ## Resolve CLI directory by relative path 'name-system/name-cli'
-    ## Args: cliPath - Relative CLI path under interfaces directory
-    ## Returns: Absolute path to CLI directory
-    let interfaces = interfacesRoot()
-    let normalized = cliPath.replace("\\", "/")
-    let segments = normalized.split("/")
-    if segments.len != 2:
-        raise newException(OSError, "Invalid CLI path, expected 'name-system/name-cli': " & cliPath)
-    let direct = absolutePath(interfaces / segments[0] / segments[1])
-    if dirExists(direct):
-        return direct
-    raise newException(OSError, "CLI directory not found: " & segments[0] &
-            "/" & segments[1])
+proc getInstallDirectory*(): string =
+    let installDirectory = absolutePath(getHomeDir() / ".local" / "bin")
+
+    if not dirExists(installDirectory):
+        createDir(installDirectory)
+
+    return installDirectory
+
+proc resolveInterfacesRootDirectory*(): string =
+    return getRepositoryRootDirectory() / interfacesDirectory
+
+proc resolveCliTargetBuildDirectory*(cli: string): string =
+    return resolveInterfacesRootDirectory() / normalizedPath(cli) / targetBuildDirectory
+
+proc resolveExecutableExtension*(): string =
+    when defined(windows):
+        return ".exe"
+    else:
+        return ""
+
+proc resolveExecutableToolFile*(tool: string): string =
+    let cliTargetBuildDirectory = resolveCliTargetBuildDirectory(tool)
+    let buildDirectory = cliTargetBuildDirectory / getCurrentPlatform()
+    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
+
+    return buildDirectory / executableFile
