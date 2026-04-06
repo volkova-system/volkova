@@ -53,8 +53,8 @@ proc validateCommand*(command: string, parameters: seq[string]): ValidationResul
 
     return ValidationResult(
         status: true,
-        target: toolFilePath,
-        issue: ""
+
+        target: toolFilePath
     )
 
 proc validateToolFile*(toolFilePath: string): ValidationResult =
@@ -74,6 +74,6 @@ proc validateToolFile*(toolFilePath: string): ValidationResult =
 
     return ValidationResult(
         status: true,
-        target: toolFile,
-        issue: ""
+
+        target: toolFile
     )
