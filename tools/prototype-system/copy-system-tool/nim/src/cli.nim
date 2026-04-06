@@ -1,41 +1,35 @@
 
 import os
-import helps, handlers, engines
+import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
-
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       parameters - List of command parameters
-
     case command
     of "copy-system":
-        var valid = handlers.validateCommand(command, parameters)
+        var session = ToolSession(command: command, parameters: parameters)
 
-        if not valid.status:
-            stderr.writeLine("copy-system issue, ", valid.issue)
+        session = handlers.validateCommand(session)
+        if not session.status:
+            stderr.writeLine("copy-system issue, ", session.issue)
             printUsage()
             quit(1)
 
-        valid = handlers.validatePaths(valid.source, valid.target)
-
-        if not valid.status:
-            stderr.writeLine("copy-system issue, ", valid.issue)
+        session = handlers.validatePaths(session)
+        if not session.status:
+            stderr.writeLine("copy-system issue, ", session.issue)
             quit(2)
 
         try:
-            valid.target = engines.copySystem(valid.source, valid.target)
+            session = engines.copySystem(session)
         except CatchableError as issue:
             stderr.writeLine("copy-system issue, ", issue.msg)
             quit(2)
 
-        valid = handlers.validateTargetSystemStructure(valid.target)
-
-        if not valid.status:
-            stderr.writeLine("copy-system issue, ", valid.issue)
+        session = handlers.validateTargetOutputDirectory(session)
+        if not session.status:
+            stderr.writeLine("copy-system issue, ", session.issue)
             quit(1)
 
-        echo "copy-system done, target, " & valid.target
+        echo "copy-system done, target, " & session.target
         quit(0)
 
     else:
@@ -62,8 +56,7 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("copy-system issue, invalid command, '" &
-                targetCommand & "'")
+        stderr.writeLine("copy-system issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
