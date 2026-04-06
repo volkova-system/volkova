@@ -78,6 +78,7 @@ proc validateCommand*(session: ToolSession): ToolSession =
 
         source: source,
         systems: systems,
+        targetSuffix: utils.resolveInterfaceSuffix(source),
         target: target
     )
 
@@ -95,6 +96,7 @@ proc validateSourceInterfaceDirectory*(session: ToolSession): ToolSession =
 
         source: interfaceDirectory,
         systems: session.systems,
+        targetSuffix: session.targetSuffix,
         target: session.target
     )
 
@@ -108,8 +110,7 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
         )
 
     if lastPathPart(interfaceDirectory) != "interfaces" and
-        (not interfaceDirectory.endsWith("-interface")):
-
+        (not interfaceDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target interface directory, " & interfaceDirectory
@@ -117,7 +118,7 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
 
     let targetOutputDirectory = interfaceDirectory / lastPathPart(session.source)
     if lastPathPart(parentDir(targetOutputDirectory)) != "interfaces" and
-        (not targetOutputDirectory.endsWith("-interface")):
+        (not targetOutputDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
@@ -128,6 +129,7 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
 
         source: session.source,
         systems: session.systems,
+        targetSuffix: session.targetSuffix,
         target: targetOutputDirectory
     )
 
@@ -144,7 +146,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
         )
 
     if lastPathPart(systemDirectory) != "interfaces" and
-        (not systemDirectory.endsWith("-interface")):
+        (not systemDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target system directory, " & systemDirectory
@@ -152,7 +154,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
 
     let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
     if lastPathPart(parentDir(targetOutputDirectory)) != "interfaces" and
-        (not targetOutputDirectory.endsWith("-interface")):
+        (not targetOutputDirectory.endsWith(session.targetSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
@@ -163,6 +165,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
 
         source: session.source,
         systems: session.systems,
+        targetSuffix: session.targetSuffix,
         target: targetOutputDirectory
     )
 
