@@ -1,5 +1,5 @@
 
-import os, strutils
+import os
 import models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
@@ -43,42 +43,18 @@ proc validateCommand*(session: ToolSession): ToolSession =
             issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let servicePath = session.parameters[0]
+    let service = session.parameters[0]
 
-    if servicePath == "":
+    if service == "":
         return ToolSession(
             status: false,
-            issue: "empty service path"
-        )
-
-    let normalized = servicePath.replace("\\", "/")
-    let segments = normalized.split("/")
-
-    if segments.len != 2:
-        return ToolSession(
-            status: false,
-            issue: "service path must be in the form 'name-system/name-service', " & servicePath
-        )
-
-    let systemName = segments[0]
-    let serviceNameOnly = segments[1]
-
-    if not systemName.endsWith("-system"):
-        return ToolSession(
-            status: false,
-            issue: "parent path must end with '-system', " & systemName
-        )
-
-    if not serviceNameOnly.endsWith("-service"):
-        return ToolSession(
-            status: false,
-            issue: "service name must end with '-service', " & serviceNameOnly
+            issue: "empty service"
         )
 
     return ToolSession(
         status: true,
 
-        service: systemName / serviceNameOnly
+        service: service
     )
 
 proc validateServiceStructure*(session: ToolSession): ToolSession =
@@ -89,18 +65,11 @@ proc validateServiceStructure*(session: ToolSession): ToolSession =
             issue: "service directory not found, " & session.service
         )
 
-    let sourceDirectory = utils.resolveServiceSourceDirectory(session.service)
-    if not dirExists(sourceDirectory):
-        return ToolSession(
-            status: false,
-            issue: "service source directory not found, " & session.service & "/" & settings.sourceDirectory
-        )
-
     let mainFilePath = utils.resolveServiceMainFile(session.service)
     if not fileExists(mainFilePath):
         return ToolSession(
             status: false,
-            issue: "service main file not found, " & session.service & "/" & settings.sourceDirectory & "/" & settings.mainFile
+            issue: "service main file not found, " & session.service
         )
 
     let targetBuildDirectory = utils.resolveServiceTargetBuildDirectory(session.service)
@@ -120,7 +89,7 @@ proc validateServiceStructure*(session: ToolSession): ToolSession =
         status: true,
 
         service: session.service,
-        source: sourceDirectory,
+        source: utils.resolveServiceSourceDirectory(session.service),
         executable: utils.resolveExecutableServiceFile(session.service)
     )
 
