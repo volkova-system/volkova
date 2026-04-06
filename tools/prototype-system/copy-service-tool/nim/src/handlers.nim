@@ -108,7 +108,8 @@ proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
         )
 
     if lastPathPart(serviceDirectory) != "services" and
-            (not serviceDirectory.endsWith("-service")):
+        (not serviceDirectory.endsWith("-service")):
+
         return ToolSession(
             status: false,
             issue: "invalid target service directory, " & serviceDirectory
@@ -123,31 +124,28 @@ proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
     )
 
 proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
-    var systemDirectory = absolutePath(session.target)
+    let systemDirectory = utils.resolveSystemDirectory(session.target)
 
     if not dirExists(systemDirectory):
-        try:
-            systemDirectory = utils.resolveSystemDirectory(session.target)
-        except OSError as issue:
-            return ToolSession(
-                status: false,
-                issue: "target path, " & session.target & " resolution issue, " & issue.msg
-            )
-
-    if lastPathPart(systemDirectory) != "services" and
-            (not systemDirectory.endsWith("-service")):
         return ToolSession(
             status: false,
-            issue: "invalid target systems service directory, " & session.target
+            issue: "target system directory not found, " & systemDirectory
+        )
+
+    if lastPathPart(systemDirectory) != "services" and
+        (not systemDirectory.endsWith("-service")):
+
+        return ToolSession(
+            status: false,
+            issue: "invalid target system directory, " & systemDirectory
         )
 
     return ToolSession(
         status: true,
-        command: session.command,
-        parameters: session.parameters,
+
         source: session.source,
         systems: session.systems,
-        target: session.target
+        target: systemDirectory
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
