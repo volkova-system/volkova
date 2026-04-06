@@ -3,7 +3,7 @@ import os
 const
     buildCommand* = "build-zig"
 
-    toolsDirectory* = "tools"
+    targetRootDirectory* = "interfaces"
 
     sourceDirectory* = normalizedPath("zig/src")
 
