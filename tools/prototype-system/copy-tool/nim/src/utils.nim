@@ -1,3 +1,4 @@
+
 import os, strutils, osproc
 import settings
 
@@ -27,8 +28,11 @@ proc getRepositoryRootDirectory*(): string =
 proc resolveToolsRootDirectory*(): string =
     return getRepositoryRootDirectory() / toolsDirectory
 
+proc resolveSystemsRootDirectory*(): string =
+    return getRepositoryRootDirectory() / systemsDirectory
+
 proc resolveSourceToolDirectory*(toolPath: string): string =
     return resolveToolsRootDirectory() / normalizedPath(toolPath)
 
 proc resolveTargetToolsDirectory*(toolsPath: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(toolsPath)
+    return resolveSystemsRootDirectory() / normalizedPath(toolsPath)
