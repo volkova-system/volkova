@@ -2,9 +2,6 @@
 import settings
 
 proc printUsage*() =
-
-    ## Print usage information to stdout
-
     echo ""
     echo ""
     echo "copy-service-tool - Copy services from source to target directory"
@@ -38,15 +35,9 @@ proc printUsage*() =
     echo ""
 
 proc printVersion*() =
-
-    ## Print version information to stdout
-
     echo copyServiceCommand, " version, ", version
 
 proc printCommandHelp*(command: string) =
-
-    ## Print command-specific help information
-
     case command
     of copyServiceCommand:
         printUsage()
