@@ -3,11 +3,6 @@ import os
 import helps, handlers, engines
 
 proc executeCommand(command: string, parameters: seq[string]) =
-
-    ## Execute the resolved command with arguments
-    ## Args: command - The resolved command name
-    ##       parameters - List of command arguments
-
     case command
     of "run":
         var valid = handlers.validateCommand(command, parameters)
@@ -37,10 +32,6 @@ proc executeCommand(command: string, parameters: seq[string]) =
         quit(1)
 
 proc run*() =
-
-    ## Main CLI execution function
-    ## Processes command line arguments and delegates to appropriate handlers
-
     let parameters = commandLineParams()
 
     if parameters.len == 0:
