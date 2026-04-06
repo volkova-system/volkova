@@ -108,7 +108,7 @@ proc validateTargetServiceDirectory*(session: ToolSession): ToolSession =
         )
 
     if lastPathPart(serviceDirectory) != "services" and
-        (not serviceDirectory.endsWith("-service")):
+        (not serviceDirectory.endsWith(serviceFileSuffix)):
 
         return ToolSession(
             status: false,
@@ -117,7 +117,7 @@ proc validateTargetServiceDirectory*(session: ToolSession): ToolSession =
 
     let targetOutputDirectory = serviceDirectory / lastPathPart(session.source)
     if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
-        (not targetOutputDirectory.endsWith("-service")):
+        (not targetOutputDirectory.endsWith(serviceFileSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
@@ -144,7 +144,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
         )
 
     if lastPathPart(systemDirectory) != "services" and
-        (not systemDirectory.endsWith("-service")):
+        (not systemDirectory.endsWith(serviceFileSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target system directory, " & systemDirectory
@@ -152,7 +152,7 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
 
     let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
     if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
-        (not targetOutputDirectory.endsWith("-service")):
+        (not targetOutputDirectory.endsWith(serviceFileSuffix)):
         return ToolSession(
             status: false,
             issue: "invalid target output directory, " & targetOutputDirectory
