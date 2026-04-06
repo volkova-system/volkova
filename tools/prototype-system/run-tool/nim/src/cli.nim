@@ -1,30 +1,30 @@
 
 import os
-import helps, handlers, engines
+import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
     case command
     of "run":
-        var valid = handlers.validateCommand(command, parameters)
+        var session = ToolSession(command: command, parameters: parameters)
 
-        if not valid.status:
-            stderr.writeLine("run issue, ", valid.issue)
+        session = handlers.validateCommand(session)
+        if not session.status:
+            stderr.writeLine("run issue, ", session.issue)
             printUsage()
             quit(1)
 
-        valid = handlers.validateToolFile(valid.target)
-
-        if not valid.status:
-            stderr.writeLine("run issue, ", valid.issue)
+        session = handlers.validateToolFile(session)
+        if not session.status:
+            stderr.writeLine("run issue, ", session.issue)
             quit(1)
 
         try:
-            engines.executeToolFile(valid.target)
+            session = engines.executeTool(session)
         except CatchableError as issue:
             stderr.writeLine("run issue, ", issue.msg)
             quit(2)
 
-        echo "run done, target, " & valid.target
+        echo "run done, target, " & session.target
         quit(0)
 
     else:
