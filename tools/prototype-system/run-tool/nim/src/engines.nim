@@ -2,7 +2,7 @@
 import os, osproc, strutils
 import models, settings, utils
 
-proc classifyLine*(line: string): LineType =
+proc classifyLine(line: string): LineType =
     let trimmed = line.strip()
 
     if trimmed == "":
@@ -16,13 +16,13 @@ proc classifyLine*(line: string): LineType =
 
     return lineCommand
 
-proc resolveShell*(): tuple[shell: string, flag: string] =
+proc resolveShell(): tuple[shell: string, flag: string] =
     when defined(windows):
         return (shell: "pwsh", flag: "-Command")
     else:
         return (shell: "sh", flag: "-c")
 
-proc executeCommand*(command: string) =
+proc executeCommand(command: string) =
     let (shell, flag) = resolveShell()
 
     let exitCode = execCmd(shell & " " & flag & " " & command)
@@ -31,7 +31,7 @@ proc executeCommand*(command: string) =
         raise newException(OSError,
             "command, " & command & " failed with exit code, " & $exitCode)
 
-proc executeToolFile*(toolFile: string) =
+proc executeToolFile(toolFile: string) =
     let lines = readFile(toolFile).splitLines()
 
     for line in lines:
@@ -55,3 +55,8 @@ proc executeToolFile*(toolFile: string) =
 
         of lineCommand:
             executeCommand(line.strip())
+
+proc executeTool*(session: ToolSession): ToolSession =
+    executeToolFile(session.target)
+
+    return session
