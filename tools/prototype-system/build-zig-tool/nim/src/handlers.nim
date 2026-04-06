@@ -1,3 +1,4 @@
+
 import os
 import models, settings, utils
 
@@ -42,62 +43,62 @@ proc validateCommand*(session: ToolSession): ToolSession =
             issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let tool = session.parameters[0]
+    let terminalInterface = session.parameters[0]
 
-    if tool == "":
+    if terminalInterface == "":
         return ToolSession(
             status: false,
-            issue: "empty tool"
+            issue: "empty interface"
         )
 
     return ToolSession(
         status: true,
 
-        tool: tool
+        terminalInterface: terminalInterface
     )
 
-proc validateToolStructure*(session: ToolSession): ToolSession =
-    let toolSourcePath = utils.resolveToolSourceDirectory(session.tool)
-    if not dirExists(toolSourcePath):
+proc validateInterfaceStructure*(session: ToolSession): ToolSession =
+    let interfaceSourcePath = utils.resolveInterfaceSourceDirectory(session.terminalInterface)
+    if not dirExists(interfaceSourcePath):
         return ToolSession(
             status: false,
-            issue: "tool source directory not found, " & session.tool
+            issue: "interface source directory not found, " & session.terminalInterface
         )
 
-    let mainFilePath = utils.resolveToolMainFile(session.tool)
+    let mainFilePath = utils.resolveInterfaceMainFile(session.terminalInterface)
     if not fileExists(mainFilePath):
         return ToolSession(
             status: false,
-            issue: "tool source main file not found, " & session.tool
+            issue: "interface source main file not found, " & session.terminalInterface
         )
 
-    let toolTargetPath = utils.resolveToolTargetBuildDirectory(session.tool)
-    if not dirExists(toolTargetPath):
+    let interfaceTargetPath = utils.resolveInterfaceTargetBuildDirectory(session.terminalInterface)
+    if not dirExists(interfaceTargetPath):
         return ToolSession(
             status: false,
-            issue: "tool target build directory not found, " & session.tool
+            issue: "interface target build directory not found, " & session.terminalInterface
         )
 
-    if not dirExists(toolTargetPath / utils.getCurrentPlatform()):
+    if not dirExists(interfaceTargetPath / utils.getCurrentPlatform()):
         return ToolSession(
             status: false,
-            issue: "tool target build platform directory not found, " & session.tool
+            issue: "interface target build platform directory not found, " & session.terminalInterface
         )
 
     return ToolSession(
         status: true,
 
-        tool: session.tool,
-        source: toolSourcePath,
+        terminalInterface: session.terminalInterface,
+        source: interfaceSourcePath,
         main: mainFilePath,
-        executable: utils.resolveExecutableToolFile(session.tool)
+        executable: utils.resolveExecutableInterfaceFile(session.terminalInterface)
     )
 
 proc validateExecutable*(session: ToolSession): ToolSession =
     if not fileExists(session.executable):
         return ToolSession(
             status: false,
-            issue: "tool executable not found, " & session.tool
+            issue: "tool executable not found, " & session.terminalInterface
         )
 
     return ToolSession(
