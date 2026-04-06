@@ -5,10 +5,13 @@ import settings
 proc getCurrentPlatform*(): string =
     when defined(windows):
         return "windows"
+
     elif defined(linux):
         return "linux"
+
     elif defined(macosx):
         return "darwin"
+
     else:
         raise newException(OSError, "unsupported platform")
 
