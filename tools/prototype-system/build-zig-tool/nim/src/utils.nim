@@ -22,17 +22,17 @@ proc getRepositoryRootDirectory*(): string =
 
     raise newException(OSError, "cannot determine repository root directory path")
 
-proc resolveToolsRootDirectory*(): string =
-    return getRepositoryRootDirectory() / toolsDirectory
+proc resolveInterfacesRootDirectory*(): string =
+    return getRepositoryRootDirectory() / targetRootDirectory
 
-proc resolveToolSourceDirectory*(tool: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(tool) / sourceDirectory
+proc resolveInterfaceSourceDirectory*(terminalInterface: string): string =
+    return resolveInterfacesRootDirectory() / normalizedPath(terminalInterface) / sourceDirectory
 
-proc resolveToolMainFile*(tool: string): string =
-    return resolveToolSourceDirectory(tool) / mainFile
+proc resolveInterfaceMainFile*(terminalInterface: string): string =
+    return resolveInterfaceSourceDirectory(terminalInterface) / mainFile
 
-proc resolveToolTargetBuildDirectory*(tool: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
+proc resolveInterfaceTargetBuildDirectory*(terminalInterface: string): string =
+    return resolveInterfacesRootDirectory() / normalizedPath(terminalInterface) / targetBuildDirectory
 
 proc resolveExecutableExtension*(): string =
     when defined(windows):
@@ -40,9 +40,9 @@ proc resolveExecutableExtension*(): string =
     else:
         return ""
 
-proc resolveExecutableToolFile*(tool: string): string =
-    let toolTargetBuildDirectory = resolveToolTargetBuildDirectory(tool)
-    let buildDirectory = toolTargetBuildDirectory / getCurrentPlatform()
-    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
+proc resolveExecutableInterfaceFile*(terminalInterface: string): string =
+    let interfaceTargetBuildDirectory = resolveInterfaceTargetBuildDirectory(terminalInterface)
+    let buildDirectory = interfaceTargetBuildDirectory / getCurrentPlatform()
+    let executableFile = lastPathPart(terminalInterface) & resolveExecutableExtension()
 
     return buildDirectory / executableFile
