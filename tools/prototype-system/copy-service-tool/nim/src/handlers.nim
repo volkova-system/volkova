@@ -1,6 +1,6 @@
 
 import os, strutils
-import models, settings, utils
+import macros, models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
     return flag in ["-h", "--help", "help"]
@@ -120,10 +120,13 @@ proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
 
         source: session.source,
         systems: session.systems,
-        target: serviceDirectory
+        target: serviceDirectory / lastPathPart(session.source)
     )
 
 proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
+    if not session.systems:
+        return session
+
     let systemDirectory = utils.resolveSystemDirectory(session.target)
 
     if not dirExists(systemDirectory):
@@ -134,7 +137,6 @@ proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
 
     if lastPathPart(systemDirectory) != "services" and
         (not systemDirectory.endsWith("-service")):
-
         return ToolSession(
             status: false,
             issue: "invalid target system directory, " & systemDirectory
@@ -145,30 +147,14 @@ proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
 
         source: session.source,
         systems: session.systems,
-        target: systemDirectory
+        target: systemDirectory / lastPathPart(session.source)
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
-    var validatedSession = validateSourceServiceStructure(session)
+    return session |>
+        validateSourceServiceStructure() |>
+        validateTargetServiceStructure() |>
+        validateTargetSystemStructure()
 
-    if not validatedSession.status:
-        return validatedSession
-
-    if session.systems:
-        validatedSession = validateTargetSystemStructure(validatedSession)
-    else:
-        validatedSession = validateTargetServiceStructure(validatedSession)
-
-    if not validatedSession.status:
-        return validatedSession
-
-    return ToolSession(
-        status: true,
-        command: session.command,
-        parameters: session.parameters,
-        source: session.source,
-        systems: session.systems,
-        target: session.target
-    )
 
 
