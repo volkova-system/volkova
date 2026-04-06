@@ -3,10 +3,10 @@ const
 
     toolsDirectory* = "tools"
 
+    systemsDirectory* = "systems"
+
     toolSuffix* = "-tool"
 
     systemSuffix* = "-system"
-
-    distDirectory* = "dist"
 
     version* = "0.0.0"
