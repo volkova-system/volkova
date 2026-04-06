@@ -24,11 +24,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("copy-service issue, ", issue.msg)
             quit(2)
 
-        if session.systems:
-            session = handlers.validateTargetSystemStructure(session)
-        else:
-            session = handlers.validateTargetServiceStructure(session)
-
+        session = handlers.validateTargetOutputDirectory(session)
         if not session.status:
             stderr.writeLine("copy-service issue, ", session.issue)
             quit(1)
