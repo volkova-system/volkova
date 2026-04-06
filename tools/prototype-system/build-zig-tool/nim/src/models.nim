@@ -6,7 +6,7 @@ type
         command*: string
         parameters*: seq[string]
 
-        tool*: string
+        terminalInterface*: string
         source*: string
         main*: string
         executable*: string
