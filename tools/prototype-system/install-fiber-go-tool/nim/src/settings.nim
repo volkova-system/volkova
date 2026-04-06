@@ -4,7 +4,7 @@ import os
 const
     installCommand* = "install-fiber-go"
 
-    toolsDirectory* = "tools"
+    servicesDirectory* = "services"
 
     targetBuildDirectory* = normalizedPath("fiber-go/dist")
 
