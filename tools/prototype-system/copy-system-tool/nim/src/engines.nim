@@ -1,23 +1,11 @@
 
 import os
-import utils
+import models
 
-proc copySystem*(source: string, target: string): string =
+proc copySystem*(session: ToolSession): ToolSession =
+    if dirExists(session.target):
+        removeDir(session.target)
 
-    ## Copy source directory inside the target system directory
-    ## Args: source - Source system path relative to systems
-    ##       target - Target system path relative to systems
-    ## Returns: Absolute path to created destination
+    copyDirWithPermissions(session.source, session.target)
 
-    let sourceDirectory = utils.resolveSystemDirectory(source)
-
-    let targetDirectory = utils.resolveSystemDirectory(target)
-
-    let targetOutputDirectory = normalizedPath(targetDirectory / lastPathPart(source))
-
-    if dirExists(targetOutputDirectory):
-        removeDir(targetOutputDirectory)
-
-    copyDirWithPermissions(sourceDirectory, targetOutputDirectory)
-
-    return targetOutputDirectory
+    return session
