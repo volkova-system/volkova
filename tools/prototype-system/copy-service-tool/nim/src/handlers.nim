@@ -81,7 +81,7 @@ proc validateCommand*(session: ToolSession): ToolSession =
         target: target
     )
 
-proc validateSourceServiceStructure*(session: ToolSession): ToolSession =
+proc validateSourceServiceDirectory*(session: ToolSession): ToolSession =
     let serviceDirectory = utils.resolveServiceDirectory(session.source)
 
     if not dirExists(serviceDirectory):
@@ -98,7 +98,7 @@ proc validateSourceServiceStructure*(session: ToolSession): ToolSession =
         target: session.target
     )
 
-proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
+proc validateTargetServiceDirectory*(session: ToolSession): ToolSession =
     let serviceDirectory = utils.resolveServiceDirectory(session.target)
 
     if not dirExists(serviceDirectory):
@@ -115,15 +115,23 @@ proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
             issue: "invalid target service directory, " & serviceDirectory
         )
 
+    let targetOutputDirectory = serviceDirectory / lastPathPart(session.source)
+    if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
+        (not targetOutputDirectory.endsWith("-service")):
+        return ToolSession(
+            status: false,
+            issue: "invalid target output directory, " & targetOutputDirectory
+        )
+
     return ToolSession(
         status: true,
 
         source: session.source,
         systems: session.systems,
-        target: serviceDirectory / lastPathPart(session.source)
+        target: targetOutputDirectory
     )
 
-proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
+proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
     if not session.systems:
         return session
 
@@ -142,19 +150,41 @@ proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
             issue: "invalid target system directory, " & systemDirectory
         )
 
+    let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
+    if lastPathPart(parentDir(targetOutputDirectory)) != "services" and
+        (not targetOutputDirectory.endsWith("-service")):
+        return ToolSession(
+            status: false,
+            issue: "invalid target output directory, " & targetOutputDirectory
+        )
+
     return ToolSession(
         status: true,
 
         source: session.source,
         systems: session.systems,
-        target: systemDirectory / lastPathPart(session.source)
+        target: targetOutputDirectory
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
     return session |>
-        validateSourceServiceStructure() |>
-        validateTargetServiceStructure() |>
-        validateTargetSystemStructure()
+        validateSourceServiceDirectory() |>
+        validateTargetServiceDirectory() |>
+        validateTargetSystemDirectory()
 
+proc validateTargetOutputDirectory*(session: ToolSession): ToolSession =
+    if not dirExists(session.target):
+        return ToolSession(
+            status: false,
+            issue: "target output directory not found, " & session.target
+        )
+
+    return ToolSession(
+        status: true,
+
+        source: session.source,
+        systems: session.systems,
+        target: session.target
+    )
 
 
