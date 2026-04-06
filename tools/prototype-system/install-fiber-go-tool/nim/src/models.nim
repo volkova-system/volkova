@@ -7,7 +7,7 @@ type
         status*: bool
         issue*: string
 
-        tool*: string
+        service*: string
         executable*: string
         target*: string
 
