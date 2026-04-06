@@ -36,3 +36,6 @@ proc resolveInterfaceDirectory*(interfacePath: string): string =
 
 proc resolveSystemDirectory*(systemPath: string): string =
     return resolveSystemsRootDirectory() / normalizedPath(systemPath)
+
+proc resolveInterfaceSuffix*(interfacePath: string): string =
+    return interfacePath.split("-")[^1]
