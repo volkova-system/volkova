@@ -4,7 +4,7 @@ const
 
     servicesDirectory* = "services"
 
-    serviceFileSuffix* = "-service"
+    serviceSuffix* = "-service"
 
     systemsDirectory* = "systems"
 
