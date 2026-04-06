@@ -3,19 +3,9 @@ import os, strutils
 import models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
-
-    ## Check if argument is a help flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a help flag
-
     return flag in ["-h", "--help", "help"]
 
 proc checkCommandHelpFlag*(parameters: seq[string]): bool =
-
-    ## Check if arguments contain command help flag
-    ## Args: parameters - List of arguments to check
-    ## Returns: Boolean true if help flag found
-
     for parameter in parameters:
         if checkHelpFlag(parameter):
             return true
@@ -23,19 +13,9 @@ proc checkCommandHelpFlag*(parameters: seq[string]): bool =
     return false
 
 proc checkVersionFlag*(flag: string): bool =
-
-    ## Check if argument is a version flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a version flag
-
     return flag in ["-v", "--version", "version"]
 
 proc checkCommandVersionFlag*(parameters: seq[string]): bool =
-
-    ## Check if arguments contain command version flag
-    ## Args: parameters - List of arguments to check
-    ## Returns: Boolean true if version flag found
-
     for parameter in parameters:
         if checkVersionFlag(parameter):
             return true
@@ -43,19 +23,9 @@ proc checkCommandVersionFlag*(parameters: seq[string]): bool =
     return false
 
 proc checkSystemsFlag*(flag: string): bool =
-
-    ## Check if argument is a systems flag
-    ## Args: flag - The flag to check
-    ## Returns: Boolean true if it's a systems flag
-
     return flag in ["-s", "--systems", "systems"]
 
 proc checkCommandSystemsFlag*(parameters: seq[string]): bool =
-
-    ## Check if arguments contain command version flag
-    ## Args: parameters - List of arguments to check
-    ## Returns: Boolean true if systems flag found
-
     for parameter in parameters:
         if checkSystemsFlag(parameter):
             return true
@@ -63,11 +33,6 @@ proc checkCommandSystemsFlag*(parameters: seq[string]): bool =
     return false
 
 proc resolveCommand*(command: string): string =
-
-    ## Resolve command name to internal command
-    ## Args: command - Command name from user input
-    ## Returns: Resolved command name or empty string if invalid
-
     let validCommands = @[copyServiceCommand]
 
     if command in validCommands:
@@ -75,171 +40,137 @@ proc resolveCommand*(command: string): string =
 
     return ""
 
-proc validateCommand*(
-        command: string,
-        parameters: seq[string]
-    ): ValidationResult =
-
-    ## Validate copy-service command and parameters
-    ## Args: command - Command name (should be "copy-service")
-    ##       parameters - List of command parameters
-    ## Returns: ValidationResult with validation status and parsed parameters
-
-    if command != copyServiceCommand:
-        return ValidationResult(
+proc validateCommand*(session: ToolSession): ToolSession =
+    if session.command != copyServiceCommand:
+        return ToolSession(
             status: false,
-            issue: "invalid command, '" & command & "'"
+            issue: "invalid command, '" & session.command & "'"
         )
 
-    if parameters.len < 2 or parameters.len > 3:
-        return ValidationResult(
+    if session.parameters.len < 2 or session.parameters.len > 3:
+        return ToolSession(
             status: false,
-            issue: "invalid parameter count, " & $parameters.len
+            issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let source = parameters[0]
-    var target = parameters[1]
+    let source = session.parameters[0]
+    var target = session.parameters[1]
 
     var systems = false
-    if checkCommandSystemsFlag(parameters):
-        target = parameters[2]
+    if checkCommandSystemsFlag(session.parameters):
+        target = session.parameters[2]
         systems = true
 
     if source == "":
-        return ValidationResult(
+        return ToolSession(
             status: false,
             issue: "empty source path"
         )
 
     if target == "":
-        return ValidationResult(
+        return ToolSession(
             status: false,
             issue: "empty target path"
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
+
         source: source,
         systems: systems,
-        target: target,
-        issue: ""
+        target: target
     )
 
-proc validateSourceServiceStructure*(servicePath: string): ValidationResult =
-
-    ## Validate source service directory structure
-    ## Args: servicePath - Path of the source service directory
-    ## Returns: ValidationResult with validation status
-
-    var serviceDirectory = ""
-    try:
-        serviceDirectory = utils.resolveServiceDirectory(servicePath)
-    except OSError as issue:
-        return ValidationResult(
-            status: false,
-            issue: "source path, " & servicePath & " resolution issue, " & issue.msg
-        )
-
-    return ValidationResult(
-        status: true,
-        source: servicePath,
-        target: "",
-        issue: ""
-    )
-
-proc validateTargetServiceStructure*(servicePath: string): ValidationResult =
-
-    ## Validate target service directory structure
-    ## Args: servicePath - Path of the target service directory
-    ## Returns: ValidationResult with validation status
-
-    var serviceDirectory = absolutePath(servicePath)
+proc validateSourceServiceStructure*(session: ToolSession): ToolSession =
+    let serviceDirectory = utils.resolveServiceDirectory(session.source)
 
     if not dirExists(serviceDirectory):
-        try:
-            serviceDirectory = utils.resolveServiceDirectory(servicePath)
-        except OSError as issue:
-            return ValidationResult(
-                status: false,
-                issue: "target path, " & servicePath & " resolution issue, " & issue.msg
-            )
+        return ToolSession(
+            status: false,
+            issue: "source service directory not found, " & serviceDirectory
+        )
+
+    return ToolSession(
+        status: true,
+
+        source: serviceDirectory,
+        systems: session.systems,
+        target: session.target
+    )
+
+proc validateTargetServiceStructure*(session: ToolSession): ToolSession =
+    let serviceDirectory = utils.resolveServiceDirectory(session.target)
+
+    if not dirExists(serviceDirectory):
+        return ToolSession(
+            status: false,
+            issue: "target service directory not found, " & serviceDirectory
+        )
 
     if lastPathPart(serviceDirectory) != "services" and
             (not serviceDirectory.endsWith("-service")):
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "invalid target service directory, " & servicePath
+            issue: "invalid target service directory, " & serviceDirectory
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        source: "",
-        target: servicePath,
-        issue: ""
+
+        source: session.source,
+        systems: session.systems,
+        target: serviceDirectory
     )
 
-proc validateTargetSystemStructure*(systemPath: string): ValidationResult =
-
-    ## Validate system directory structure
-    ## Args: systemPath - Path of the system directory
-    ## Returns: ValidationResult with validation status
-
-    var systemDirectory = absolutePath(systemPath)
+proc validateTargetSystemStructure*(session: ToolSession): ToolSession =
+    var systemDirectory = absolutePath(session.target)
 
     if not dirExists(systemDirectory):
         try:
-            systemDirectory = utils.resolveSystemDirectory(systemPath)
+            systemDirectory = utils.resolveSystemDirectory(session.target)
         except OSError as issue:
-            return ValidationResult(
+            return ToolSession(
                 status: false,
-                issue: "target path, " & systemPath & " resolution issue, " & issue.msg
+                issue: "target path, " & session.target & " resolution issue, " & issue.msg
             )
 
     if lastPathPart(systemDirectory) != "services" and
             (not systemDirectory.endsWith("-service")):
-        return ValidationResult(
+        return ToolSession(
             status: false,
-            issue: "invalid target systems service directory, " & systemPath
+            issue: "invalid target systems service directory, " & session.target
         )
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        source: "",
-        target: systemPath,
-        issue: ""
+        command: session.command,
+        parameters: session.parameters,
+        source: session.source,
+        systems: session.systems,
+        target: session.target
     )
 
-proc validatePaths*(
-        source: string,
-        target: string,
-        systems: bool
-    ): ValidationResult =
+proc validatePaths*(session: ToolSession): ToolSession =
+    var validatedSession = validateSourceServiceStructure(session)
 
-    ## Validate source and target paths
-    ## Args: source - Source path relative to services
-    ##       target - Target path relative to services or systems
-    ##       systems - If target path is relative to systems
-    ## Returns: ValidationResult with validation status
+    if not validatedSession.status:
+        return validatedSession
 
-    var valid = validateSourceServiceStructure(source)
-
-    if not valid.status:
-        return valid
-
-    if systems:
-        valid = validateTargetSystemStructure(target)
+    if session.systems:
+        validatedSession = validateTargetSystemStructure(validatedSession)
     else:
-        valid = validateTargetServiceStructure(target)
+        validatedSession = validateTargetServiceStructure(validatedSession)
 
-    if not valid.status:
-        return valid
+    if not validatedSession.status:
+        return validatedSession
 
-    return ValidationResult(
+    return ToolSession(
         status: true,
-        source: source,
-        systems: systems,
-        target: target,
-        issue: ""
+        command: session.command,
+        parameters: session.parameters,
+        source: session.source,
+        systems: session.systems,
+        target: session.target
     )
 
 
