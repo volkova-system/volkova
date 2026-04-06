@@ -12,13 +12,13 @@ proc executeCommand(command: string, parameters: seq[string]) =
             printUsage()
             quit(1)
 
-        session = handlers.validateToolStructure(session)
+        session = handlers.validateInterfaceStructure(session)
         if not session.status:
             stderr.writeLine("build-zig issue, ", session.issue)
             quit(1)
 
         try:
-            session = engines.buildTool(engines.formatToolSource(session))
+            session = engines.buildInterface(engines.formatInterfaceSource(session))
         except CatchableError as issue:
             stderr.writeLine("build-zig issue, ", issue.msg)
             quit(2)
