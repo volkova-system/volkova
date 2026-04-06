@@ -2,9 +2,6 @@
 import settings
 
 proc printUsage*() =
-
-    ## Print usage information to stdout
-
     echo ""
     echo ""
     echo "run-tool - Run tool files"
@@ -19,9 +16,9 @@ proc printUsage*() =
     echo "    tool_file_path    Path to a .tool file"
     echo ""
     echo "Format:"
-    echo "    # comment line        (ignored)"
-    echo "    ./path/to/other.tool  (nested tool file, executed first)"
-    echo "    <command expression>  (executed on compatible shell)"
+    echo "    # comment line          (ignored)"
+    echo "    ./path/to/other.tool    (nested tool file, executed first)"
+    echo "    <command expression>    (executed on compatible shell)"
     echo ""
     echo "Example:"
     echo "    run ./tools/prototype-system/run-tool/build.tool"
@@ -33,15 +30,9 @@ proc printUsage*() =
     echo ""
 
 proc printVersion*() =
-
-    ## Print version information to stdout
-
     echo runCommand, " version, ", version
 
 proc printCommandHelp*(command: string) =
-
-    ## Print command-specific help information
-
     case command
     of runCommand:
         printUsage()
