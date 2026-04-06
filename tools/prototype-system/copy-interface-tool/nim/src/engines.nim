@@ -1,28 +1,26 @@
 
 import os
-import utils
+import models, utils
 
-proc copyInterface*(source: string, target: string, systems: bool): string =
-
-    ## Copy source directory inside the target interface directory
-    ## Args: source - Source interface path relative to interfaces
-    ##       target - Target interface path relative to interfaces or systems
-    ##       systems - If target path is relative to systems
-    ## Returns: Absolute path to created destination
-
-    let sourceDirectory = utils.resolveInterfaceDirectory(source)
+proc copyInterface*(session: ToolSession): ToolSession =
+    let sourceDirectory = utils.resolveInterfaceDirectory(session.source)
 
     var targetDirectory = ""
-    if systems:
-        targetDirectory = utils.resolveSystemDirectory(target)
+    if session.systems:
+        targetDirectory = utils.resolveSystemDirectory(session.target)
     else:
-        targetDirectory = utils.resolveInterfaceDirectory(target)
+        targetDirectory = utils.resolveInterfaceDirectory(session.target)
 
-    let targetOutputDirectory = normalizedPath(targetDirectory / lastPathPart(source))
+    let targetOutputDirectory = normalizedPath(targetDirectory / lastPathPart(session.source))
 
     if dirExists(targetOutputDirectory):
         removeDir(targetOutputDirectory)
 
     copyDirWithPermissions(sourceDirectory, targetOutputDirectory)
 
-    return targetOutputDirectory
+    return ToolSession(
+        status: true,
+        source: session.source,
+        systems: session.systems,
+        target: targetOutputDirectory
+    )
