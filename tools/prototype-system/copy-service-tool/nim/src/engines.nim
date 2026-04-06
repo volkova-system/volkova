@@ -1,28 +1,30 @@
 
 import os
-import utils
+import models, utils
 
-proc copyService*(source: string, target: string, systems: bool): string =
-
-    ## Copy source directory inside the target service directory
-    ## Args: source - Source service path relative to services
-    ##       target - Target service path relative to services or systems
-    ##       systems - If target path is relative to systems
-    ## Returns: Absolute path to created destination
-
-    let sourceDirectory = utils.resolveServiceDirectory(source)
+proc copyService*(session: ToolSession): ToolSession =
+    let sourceDirectory = utils.resolveServiceDirectory(session.source)
 
     var targetDirectory = ""
-    if systems:
-        targetDirectory = utils.resolveSystemDirectory(target)
+    if session.systems:
+        targetDirectory = utils.resolveSystemDirectory(session.target)
     else:
-        targetDirectory = utils.resolveServiceDirectory(target)
+        targetDirectory = utils.resolveServiceDirectory(session.target)
 
-    let targetOutputDirectory = normalizedPath(targetDirectory / lastPathPart(source))
+    let targetOutputDirectory = normalizedPath(
+        targetDirectory / lastPathPart(session.source)
+    )
 
     if dirExists(targetOutputDirectory):
         removeDir(targetOutputDirectory)
 
     copyDirWithPermissions(sourceDirectory, targetOutputDirectory)
 
-    return targetOutputDirectory
+    return ToolSession(
+        status: true,
+        command: session.command,
+        parameters: session.parameters,
+        source: session.source,
+        systems: session.systems,
+        target: targetOutputDirectory
+    )
