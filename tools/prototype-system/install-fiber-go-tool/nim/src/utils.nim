@@ -31,11 +31,11 @@ proc getInstallDirectory*(): string =
 
     return installDirectory
 
-proc resolveToolsRootDirectory*(): string =
-    return getRepositoryRootDirectory() / toolsDirectory
+proc resolveServicesRootDirectory*(): string =
+    return getRepositoryRootDirectory() / servicesDirectory
 
-proc resolveToolTargetBuildDirectory*(tool: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
+proc resolveServiceTargetBuildDirectory*(service: string): string =
+    return resolveServicesRootDirectory() / normalizedPath(service) / targetBuildDirectory
 
 proc resolveExecutableExtension*(): string =
     when defined(windows):
@@ -43,10 +43,10 @@ proc resolveExecutableExtension*(): string =
     else:
         return ""
 
-proc resolveExecutableToolFile*(tool: string): string =
-    let toolTargetBuildDirectory = resolveToolTargetBuildDirectory(tool)
-    let buildDirectory = toolTargetBuildDirectory / getCurrentPlatform()
-    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
+proc resolveExecutableServiceFile*(service: string): string =
+    let serviceTargetBuildDirectory = resolveServiceTargetBuildDirectory(service)
+    let buildDirectory = serviceTargetBuildDirectory / getCurrentPlatform()
+    let executableFile = lastPathPart(service) & resolveExecutableExtension()
 
     return buildDirectory / executableFile
 
