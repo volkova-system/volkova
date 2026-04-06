@@ -2,11 +2,9 @@
 import settings
 
 proc printUsage*() =
-
-    ## Print usage information to stdout
-
-    echo "copy-interface-tool - Copy interfaces from source to target directory"
     echo ""
+    echo ""
+    echo "copy-interface-tool - Copy interfaces from source to target directory"
     echo ""
     echo "Description:"
     echo "    Copies source interface directory inside the target interface directory"
@@ -37,17 +35,11 @@ proc printUsage*() =
     echo ""
 
 proc printVersion*() =
-
-    ## Print version information to stdout
-
-    echo copyInterfaceCommand, " version ", version
+    echo copyInterfaceCommand, " version, ", version
 
 proc printCommandHelp*(command: string) =
-
-    ## Print command-specific help information
-
     case command
     of copyInterfaceCommand:
         printUsage()
     else:
-        echo "No help available for command: ", command
+        echo "cannot determine help for command, ", command
