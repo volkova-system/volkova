@@ -7,6 +7,6 @@ type
         status*: bool
         issue*: string
 
-        tool*: string
+        terminalInterface*: string
         executable*: string
         target*: string
