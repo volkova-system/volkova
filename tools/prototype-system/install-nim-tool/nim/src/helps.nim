@@ -24,8 +24,6 @@ proc printUsage*() =
     echo "Installs:"
     echo "    tools/sample-system/sample-tool/nim/dist/windows/sample-tool.exe"
     echo ""
-    echo ""
-    echo ""
     echo "Options:"
     echo "    -h, --help, help    Show this help message"
     echo "    -v, --version       Show version information"
