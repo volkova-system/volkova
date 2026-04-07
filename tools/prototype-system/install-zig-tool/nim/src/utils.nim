@@ -28,6 +28,12 @@ proc getInstallDirectory*(): string =
 
     return installDirectory
 
+proc getArchiveDirectory*(): string =
+    if not dirExists(archiveDirectory):
+        createDir(archiveDirectory)
+
+    return archiveDirectory
+
 proc resolveInterfacesRootDirectory*(): string =
     return getRepositoryRootDirectory() / interfacesDirectory
 
