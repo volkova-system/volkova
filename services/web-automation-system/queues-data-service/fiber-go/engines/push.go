@@ -12,7 +12,6 @@ import (
 )
 
 // PushQueue stores a queue in the cache using its reference as the key.
-//
 func PushQueue(cache *data.Cache, queue models.Queue) error {
 	// Set timestamps for new queues
 	now := time.Now()
