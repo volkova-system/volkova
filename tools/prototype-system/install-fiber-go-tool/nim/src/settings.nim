@@ -6,9 +6,11 @@ const
 
     servicesDirectory* = "services"
 
-    targetBuildDirectory* = normalizedPath("fiber-go/dist")
-
     installDirectory* = getHomeDir() / ".local" / "bin"
+
+    archiveDirectory* = getHomeDir() / ".archive" / "install-fiber-go-tool"
+
+    targetBuildDirectory* = normalizedPath("fiber-go/dist")
 
     version* = "0.0.0"
 
