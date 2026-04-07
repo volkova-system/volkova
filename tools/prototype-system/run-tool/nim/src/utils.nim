@@ -37,7 +37,10 @@ proc getProcessCurrentDirectory*(): string =
 proc resolveToolsRootDirectory*(): string =
     return getRepositoryRootDirectory() / toolsDirectory
 
-proc resolveToolFilePath*(
+proc resolveScriptsRootDirectory*(): string =
+    return getRepositoryRootDirectory() / scriptsDirectory
+
+proc getToolFilePath*(
         toolFile: string,
         currentToolFile: string = ""
     ): string =
@@ -55,3 +58,14 @@ proc resolveToolFilePath*(
 
     raise newException(OSError, "tool file path not found")
 
+proc getPowerShellScriptPath*(scriptFile: string): string =
+
+    var scriptFilePath = absolutePath(normalizedPath(scriptFile))
+    if fileExists(scriptFilePath):
+        return scriptFilePath
+
+    scriptFilePath = resolveScriptsRootDirectory() / normalizedPath(scriptFile)
+    if fileExists(scriptFilePath):
+        return scriptFilePath
+
+    raise newException(OSError, "script file path not found")
