@@ -12,7 +12,6 @@ import (
 
 // PopQueue removes a queue from the cache by its key and returns
 // the retrieved data.
-//
 func PopQueue(cache *data.Cache, key string) (*models.Queue, error) {
 	if key == "" {
 		return nil, fmt.Errorf("key cannot be empty")
