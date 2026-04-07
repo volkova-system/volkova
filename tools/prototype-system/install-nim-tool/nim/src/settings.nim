@@ -8,6 +8,8 @@ const
 
     targetBuildDirectory* = normalizedPath("nim/dist")
 
+    installDirectory* = getHomeDir() / ".local" / "bin"
+
     version* = "0.0.0"
 
 
