@@ -32,10 +32,12 @@ proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
 proc resolveSourceToolDirectory*(source: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(source) / toolLanguage / toolBuildDirectory / getCurrentPlatform()
+    return resolveToolsRootDirectory() / normalizedPath(source) / toolLanguage /
+            toolBuildDirectory / getCurrentPlatform()
 
 proc resolveTargetToolsDirectory*(target: string): string =
-    return resolveSystemsRootDirectory() / normalizedPath(target) / getCurrentPlatform()
+    return resolveSystemsRootDirectory() / normalizedPath(target) /
+            getCurrentPlatform()
 
 proc resolveExecutableExtension*(): string =
     when defined(windows):
@@ -44,8 +46,10 @@ proc resolveExecutableExtension*(): string =
         return ""
 
 proc resolveSourceToolExecutable*(source: string): string =
-    return resolveSourceToolDirectory(source) / lastPathPart(source) & resolveExecutableExtension()
+    return resolveSourceToolDirectory(source) / lastPathPart(source) &
+            resolveExecutableExtension()
 
 proc resolveTargetToolExecutable*(target: string, source: string): string =
-    return resolveTargetToolsDirectory(target) / lastPathPart(source) & resolveExecutableExtension()
+    return resolveTargetToolsDirectory(target) / lastPathPart(source) &
+            resolveExecutableExtension()
 
