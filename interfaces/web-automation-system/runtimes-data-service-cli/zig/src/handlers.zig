@@ -139,8 +139,21 @@ pub fn resolvePushRuntimeParameters(
 
     var action_reference: ?[]const u8 = null;
     var action_name: ?[]const u8 = null;
-    var action_description:
-".len..];
+    var action_description: ?[]const u8 = null;
+    var action_type: ?[]const u8 = null;
+
+    var action_address: ?[]const u8 = null;
+    var action_selector: ?[]const u8 = null;
+    var action_value: ?[]const u8 = null;
+    var action_script: ?[]const u8 = null;
+    var action_delay: ?u32 = null;
+
+    var state: ?[]const u8 = null;
+    var issue: ?[]const u8 = null;
+
+    for (arguments) |argument_value| {
+        if (std.mem.startsWith(u8, argument_value, "--runtime=")) {
+            runtime_file = argument_value["--runtime=".len..];
 
             return try resolvePushRuntimeParametersFromFile(setting.allocator, runtime_file.?);
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
@@ -308,8 +321,19 @@ fn resolvePushRuntimeParametersFromFile(
 
                     if (session_object.get("reference")) |key_value| {
                         if (key_value == .string)
-                            session_reference = tr
-object;
+                            session_reference = try allocator.dupe(u8, key_value.string);
+                    }
+
+                    if (session_object.get("storage_state")) |key_value| {
+                        if (key_value == .string)
+                            session_storage_state = try allocator.dupe(u8, key_value.string);
+                    }
+                }
+            }
+
+            if (object_value.get("queue")) |queue_value| {
+                if (queue_value == .object) {
+                    const queue_object = queue_value.object;
 
                     if (queue_object.get("reference")) |key_value| {
                         if (key_value == .string)
@@ -394,9 +418,9 @@ object;
                 }
             }
 
-            if (object_value.get("action")) |action_value| {
-                if (action_value == .object) {
-                    const action_object = action_value.object;
+            if (object_value.get("action")) |action_json| {
+                if (action_json == .object) {
+                    const action_object = action_json.object;
 
                     if (action_object.get("reference")) |key_value| {
                         if (key_value == .string)
@@ -497,6 +521,7 @@ object;
         else => return error.InvalidRuntimeFile,
     }
 }
+
 // resolveGetRuntimeParameters parses required reference and optional output flags.
 // Required: reference
 // Optional: --output=DIR
@@ -614,6 +639,7 @@ pub fn resolvePopRuntimeParameters(arguments: []const []const u8) !PopRuntimePar
         .file_name = file_name,
     };
 }
+
 pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealthResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
@@ -781,7 +807,7 @@ pub fn resolveGetRuntimeResult(setting: Setting, result: Response) !GetRuntimeRe
     if (parsed_json.value.object.get("runtime")) |runtime_value| {
         switch (runtime_value) {
             .object => |object_value| {
-                const runtime = try parseRuntimeFromJson(setting.allocator, object_value);
+                const runtime = try resolveRuntimeFromObject(setting.allocator, object_value);
 
                 return GetRuntimeResult{
                     .runtime = runtime,
@@ -816,7 +842,7 @@ pub fn resolveGetRuntimesResult(setting: Setting, result: Response) !GetRuntimes
                 for (array_value.items) |runtime_json| {
                     if (runtime_json != .object) continue;
 
-                    const runtime = try parseRuntimeFromJson(setting.allocator, runtime_json.object);
+                    const runtime = try resolveRuntimeFromObject(setting.allocator, runtime_json.object);
                     try runtimes.append(setting.allocator, runtime);
                 }
 
@@ -847,7 +873,7 @@ pub fn resolvePopRuntimeResult(setting: Setting, result: Response) !PopRuntimeRe
     if (parsed_json.value.object.get("runtime")) |runtime_value| {
         switch (runtime_value) {
             .object => |object_value| {
-                const runtime = try parseRuntimeFromJson(setting.allocator, object_value);
+                const runtime = try resolveRuntimeFromObject(setting.allocator, object_value);
 
                 return PopRuntimeResult{
                     .runtime = runtime,
@@ -860,7 +886,7 @@ pub fn resolvePopRuntimeResult(setting: Setting, result: Response) !PopRuntimeRe
         return error.InvalidJsonFormat;
     }
 }
-fn parseRuntimeFromJson(allocator: std.mem.Allocator, object_value: std.json.ObjectMap) !Runtime {
+fn resolveRuntimeFromObject(allocator: std.mem.Allocator, object_value: std.json.ObjectMap) !Runtime {
     var reference: ?[]const u8 = null;
 
     var session_reference: ?[]const u8 = null;
@@ -1007,9 +1033,9 @@ fn parseRuntimeFromJson(allocator: std.mem.Allocator, object_value: std.json.Obj
         }
     }
 
-    if (object_value.get("action")) |action_value| {
-        if (action_value == .object) {
-            const action_object = action_value.object;
+    if (object_value.get("action")) |action_json| {
+        if (action_json == .object) {
+            const action_object = action_json.object;
 
             if (action_object.get("reference")) |key_value| {
                 if (key_value == .string)
