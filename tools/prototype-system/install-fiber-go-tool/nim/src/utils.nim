@@ -29,6 +29,12 @@ proc getInstallDirectory*(): string =
 
     return installDirectory
 
+proc getArchiveDirectory*(): string =
+    if not dirExists(archiveDirectory):
+        createDir(archiveDirectory)
+
+    return archiveDirectory
+
 proc resolveServicesRootDirectory*(): string =
     return getRepositoryRootDirectory() / servicesDirectory
 
