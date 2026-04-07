@@ -3,7 +3,7 @@ import os, osproc, strformat
 import models
 
 proc installExecutable*(session: ToolSession): ToolSession =
-    copyFileWithPermissions(session.executable, session.target)
+    copyFileWithPermissions(session.source, session.target)
 
     let installDirectory = parentDir(session.target)
 
@@ -94,7 +94,11 @@ proc installExecutable*(session: ToolSession): ToolSession =
             }}
         """
 
-        let scriptPath = getTempDir() / "install-nim-path.ps1"
+        let scriptPath = getTempDir() / "install-path.ps1"
+
+        if fileExists(scriptPath):
+            removeFile(scriptPath)
+
         writeFile(scriptPath, scriptContent)
 
         var (output, code) = execCmdEx(
