@@ -29,6 +29,12 @@ proc getInstallDirectory*(): string =
 
     return installDirectory
 
+proc getArchiveDirectory*(): string =
+    if not dirExists(archiveDirectory):
+        createDir(archiveDirectory)
+
+    return archiveDirectory
+
 proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
@@ -37,5 +43,7 @@ proc resolveSourceExecutable*(source: string): string =
 
 proc resolveTargetExecutable*(source: string): string =
     return getInstallDirectory() / lastPathPart(normalizedPath(source))
+
+
 
 
