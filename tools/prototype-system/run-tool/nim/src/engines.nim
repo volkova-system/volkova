@@ -37,7 +37,8 @@ proc executeCommand(command: string) =
 proc executePowerShellScript(scriptPath: string) =
     let scriptFile = utils.getPowerShellScriptPath(scriptPath)
 
-    let exitCode = execCmd("pwsh -ExecutionPolicy Bypass -File \"" & scriptFile & "\"")
+    let exitCode = execCmd("pwsh -ExecutionPolicy Bypass -File \"" &
+            scriptFile & "\"")
 
     if exitCode != 0:
         raise newException(OSError,
