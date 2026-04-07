@@ -83,7 +83,6 @@ proc validateSourceToolExecutable(session: ToolSession): ToolSession =
 
 proc validateTargetToolDirectory(session: ToolSession): ToolSession =
     let targetToolsDirectory = resolveTargetToolsDirectory(session.target)
-
     if not dirExists(targetToolsDirectory):
         return ToolSession(
             status: false,
