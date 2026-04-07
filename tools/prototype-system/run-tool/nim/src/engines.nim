@@ -14,6 +14,9 @@ proc classifyLine(line: string): LineType =
     if trimmed.endsWith(toolFileExtension):
         return lineToolFile
 
+    if trimmed.endsWith(powerShellExtension):
+        return linePowerShellScript
+
     return lineCommand
 
 proc resolveShell(): tuple[shell: string, flag: string] =
@@ -31,6 +34,15 @@ proc executeCommand(command: string) =
         raise newException(OSError,
             "command, " & command & " failed with exit code, " & $exitCode)
 
+proc executePowerShellScript(scriptPath: string) =
+    let scriptFile = utils.getPowerShellScriptPath(scriptPath)
+
+    let exitCode = execCmd("pwsh -ExecutionPolicy Bypass -File \"" & scriptFile & "\"")
+
+    if exitCode != 0:
+        raise newException(OSError,
+            "script, " & scriptFile & " failed with exit code, " & $exitCode)
+
 proc executeToolFile(toolFile: string) =
     let lines = readFile(toolFile).splitLines()
 
@@ -45,13 +57,19 @@ proc executeToolFile(toolFile: string) =
             continue
 
         of lineToolFile:
-            let toolFilePath = utils.resolveToolFilePath(line.strip(), toolFile)
+            let toolFilePath = utils.getToolFilePath(line.strip(), toolFile)
 
             if not fileExists(toolFilePath):
                 raise newException(OSError,
                     "tool file path not found, " & toolFilePath)
 
             executeToolFile(toolFilePath)
+
+        of linePowerShellScript:
+            when defined(windows):
+                executePowerShellScript(line.strip())
+            else:
+                continue
 
         of lineCommand:
             executeCommand(line.strip())
