@@ -64,7 +64,7 @@ proc validateToolFile*(session: ToolSession): ToolSession =
             issue: "invalid tool file extension, " & session.target
         )
 
-    let toolFile = utils.resolveToolFilePath(session.target)
+    let toolFile = utils.getToolFilePath(session.target)
 
     if not fileExists(toolFile):
         return ToolSession(
