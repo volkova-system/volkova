@@ -58,7 +58,8 @@ proc validateCommand*(session: ToolSession): ToolSession =
     )
 
 proc validateExecutable*(session: ToolSession): ToolSession =
-    let executableFile = utils.resolveExecutableToolFile(session.terminalInterface)
+    let executableFile = utils.resolveExecutableToolFile(
+            session.terminalInterface)
     if not fileExists(executableFile):
         return ToolSession(
             status: false,
