@@ -1,2 +1,1 @@
 ./compose.tool
-./install.tool
