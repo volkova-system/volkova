@@ -58,31 +58,37 @@ proc validateCommand*(session: ToolSession): ToolSession =
     )
 
 proc validateInterfaceStructure*(session: ToolSession): ToolSession =
-    let interfaceSourcePath = utils.resolveInterfaceSourceDirectory(session.terminalInterface)
+    let interfaceSourcePath = utils.resolveInterfaceSourceDirectory(
+            session.terminalInterface)
     if not dirExists(interfaceSourcePath):
         return ToolSession(
             status: false,
-            issue: "interface source directory not found, " & session.terminalInterface
+            issue: "interface source directory not found, " &
+            session.terminalInterface
         )
 
     let mainFilePath = utils.resolveInterfaceMainFile(session.terminalInterface)
     if not fileExists(mainFilePath):
         return ToolSession(
             status: false,
-            issue: "interface source main file not found, " & session.terminalInterface
+            issue: "interface source main file not found, " &
+            session.terminalInterface
         )
 
-    let interfaceTargetPath = utils.resolveInterfaceTargetBuildDirectory(session.terminalInterface)
+    let interfaceTargetPath = utils.resolveInterfaceTargetBuildDirectory(
+            session.terminalInterface)
     if not dirExists(interfaceTargetPath):
         return ToolSession(
             status: false,
-            issue: "interface target build directory not found, " & session.terminalInterface
+            issue: "interface target build directory not found, " &
+            session.terminalInterface
         )
 
     if not dirExists(interfaceTargetPath / utils.getCurrentPlatform()):
         return ToolSession(
             status: false,
-            issue: "interface target build platform directory not found, " & session.terminalInterface
+            issue: "interface target build platform directory not found, " &
+            session.terminalInterface
         )
 
     return ToolSession(
@@ -91,7 +97,8 @@ proc validateInterfaceStructure*(session: ToolSession): ToolSession =
         terminalInterface: session.terminalInterface,
         source: interfaceSourcePath,
         main: mainFilePath,
-        executable: utils.resolveExecutableInterfaceFile(session.terminalInterface)
+        executable: utils.resolveExecutableInterfaceFile(
+                session.terminalInterface)
     )
 
 proc validateExecutable*(session: ToolSession): ToolSession =
