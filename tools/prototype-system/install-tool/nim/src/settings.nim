@@ -4,9 +4,11 @@ import os
 const
     installCommand* = "install"
 
+    systemsDirectory* = "systems"
+
     installDirectory* = getHomeDir() / ".local" / "bin"
 
-    systemsDirectory* = "systems"
+    archiveDirectory* = getHomeDir() / ".archive" / "install-tool"
 
     version* = "0.0.0"
 
