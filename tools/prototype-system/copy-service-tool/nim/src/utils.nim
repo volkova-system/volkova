@@ -31,8 +31,14 @@ proc resolveServicesRootDirectory*(): string =
 proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
-proc resolveServiceDirectory*(servicePath: string): string =
-    return resolveServicesRootDirectory() / normalizedPath(servicePath)
+proc resolveServiceDirectory*(target: string): string =
+    return resolveServicesRootDirectory() / normalizedPath(target)
 
-proc resolveSystemDirectory*(systemPath: string): string =
-    return resolveSystemsRootDirectory() / normalizedPath(systemPath)
+proc resolveSystemDirectory*(target: string): string =
+    return resolveSystemsRootDirectory() / normalizedPath(target)
+
+proc resolveTargetServiceDirectory*(target: string, source: string): string =
+    return resolveServiceDirectory(target) / lastPathPart(source)
+
+proc resolveTargetSystemDirectory*(target: string, source: string): string =
+    return resolveSystemDirectory(target) / lastPathPart(source)
