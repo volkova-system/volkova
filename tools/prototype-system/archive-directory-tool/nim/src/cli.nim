@@ -1,3 +1,4 @@
+
 import os
 import engines, handlers, helps, models
 
@@ -32,8 +33,9 @@ proc executeCommand(command: string, parameters: seq[string]) =
         quit(0)
 
     else:
-        stderr.writeLine("archive-directory issue, unknown command, '" &
-                command & "'")
+        stderr.writeLine(
+            "archive-directory issue, unknown command, '" & command & "'"
+        )
         quit(1)
 
 proc run*() =
@@ -56,8 +58,9 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("archive-directory issue, invalid command, '" &
-                command & "'")
+        stderr.writeLine(
+            "archive-directory issue, invalid command, '" & command & "'"
+        )
         printUsage()
         quit(1)
 
