@@ -5,8 +5,10 @@ const
 
     interfacesDirectory* = "interfaces"
 
-    targetBuildDirectory* = normalizedPath("zig/dist")
-
     installDirectory* = getHomeDir() / ".local" / "bin"
+
+    archiveDirectory* = getHomeDir() / ".archive" / "install-zig-tool"
+
+    targetBuildDirectory* = normalizedPath("zig/dist")
 
     version* = "0.0.0"
