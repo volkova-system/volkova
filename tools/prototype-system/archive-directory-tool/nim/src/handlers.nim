@@ -74,35 +74,15 @@ proc validateSourceDirectory*(session: ToolSession): ToolSession =
         target: utils.resolveTargetArchiveDirectory(session.source)
     )
 
-proc validateTargetArchiveDirectory*(session: ToolSession): ToolSession =
-    let targetParentDirectory = parentDir(session.target)
+proc validatePaths*(session: ToolSession): ToolSession =
+    return session |>
+        validateSourceDirectory()
 
-    if not dirExists(targetParentDirectory):
-        createDir(targetParentDirectory)
-
+proc validateTargetArchivedDirectory*(session: ToolSession): ToolSession =
     if dirExists(session.target):
         return ToolSession(
             status: false,
-            issue: "target archive directory already exists, " & session.target
-        )
-
-    return ToolSession(
-        status: true,
-
-        source: session.source,
-        target: session.target
-    )
-
-proc validatePaths*(session: ToolSession): ToolSession =
-    return session |>
-        validateSourceDirectory() |>
-        validateTargetArchiveDirectory()
-
-proc validateTargetArchiveExists*(session: ToolSession): ToolSession =
-    if not dirExists(session.target):
-        return ToolSession(
-            status: false,
-            issue: "target archive directory not found, " & session.target
+            issue: "target archived directory not found, " & session.target
         )
 
     return ToolSession(
