@@ -12,8 +12,8 @@ exit /b 1
 
 .DESCRIPTION
     A PowerShell implementation of the run-tool utility that executes .tool
-    files line by line. Supports comments, nested tool files, and shell
-    commands. Provides cross-platform compatibility and follows SOLID
+    files line by line. Supports comments, nested tool files, PowerShell scripts,
+    and shell commands. Provides cross-platform compatibility and follows SOLID
     principles for maintainability and extensibility.
 
 .NOTES
@@ -126,6 +126,10 @@ function Get-LineType {
 
     if ($trimmedLine.EndsWith($script:ToolFileExtension)) {
         return 'ToolFile'
+    }
+
+    if ($trimmedLine.EndsWith('.ps1')) {
+        return 'PowerShellScript'
     }
 
     return 'Command'
@@ -245,6 +249,65 @@ function Resolve-ToolFilePath {
 
 #region Command Execution Functions
 
+function Invoke-PowerShellScript {
+    <#
+    .SYNOPSIS
+        Executes a PowerShell script file on Windows platform using pwsh command.
+
+    .DESCRIPTION
+        Runs a PowerShell script (.ps1) file using the pwsh command on Windows.
+        The script path is resolved relative to the scripts directory and
+        executed with proper error handling and logging.
+
+    .PARAMETER ScriptPath
+        The relative path to the PowerShell script file to execute.
+
+    .EXAMPLE
+        Invoke-PowerShellScript "build-helper.ps1"
+        Executes the build-helper.ps1 script from the scripts directory.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ScriptPath
+    )
+
+    Write-InfoLog -Scope "PS1-EXEC" -Message "Executing PowerShell script: $ScriptPath"
+
+    # Resolve script path relative to the scripts directory
+    $scriptsDirectory = $PSScriptRoot
+    $absoluteScriptPath = Join-Path $scriptsDirectory $ScriptPath
+    $resolvedScriptPath = [System.IO.Path]::GetFullPath($absoluteScriptPath)
+
+    if (-not (Test-Path -LiteralPath $resolvedScriptPath)) {
+        throw "PowerShell script not found: $resolvedScriptPath"
+    }
+
+    try {
+        # Execute using pwsh command for Windows platform
+        $pwshCommand = "pwsh -File `"$resolvedScriptPath`""
+
+        Write-DebugLog -Scope "PS1-EXEC" -Message "Executing: $pwshCommand"
+
+        $result = Invoke-Expression $pwshCommand
+
+        if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne $null) {
+            throw "PowerShell script failed with exit code: $LASTEXITCODE"
+        }
+
+        Write-DebugLog -Scope "PS1-EXEC" `
+            -Message "PowerShell script completed successfully"
+
+        return $result
+    } catch {
+        $errorMessage = "PowerShell script execution failed: $($_.Exception.Message)"
+        Write-ErrorLog -Scope "PS1-EXEC" -Message $errorMessage
+
+        throw $errorMessage
+    }
+}
+
 function Invoke-ShellCommand {
     <#
     .SYNOPSIS
@@ -344,6 +407,9 @@ function Invoke-ToolFileExecution {
                         -CurrentToolFile $ToolFilePath
 
                     Invoke-ToolFileExecution -ToolFilePath $nestedToolPath
+                }
+                'PowerShellScript' {
+                    Invoke-PowerShellScript -ScriptPath $line.Trim()
                 }
                 'Command' {
                     Invoke-ShellCommand -Command $line.Trim()
@@ -603,6 +669,7 @@ function Show-Usage {
     Write-Host "Format:"
     Write-Host "    # comment line          (ignored)"
     Write-Host "    ./path/to/other.tool    (nested tool file, executed first)"
+    Write-Host "    script.ps1              (PowerShell script, executed with pwsh on Windows)"
     Write-Host "    <command expression>    (executed on compatible shell)"
     Write-Host ""
     Write-Host "Example:"
