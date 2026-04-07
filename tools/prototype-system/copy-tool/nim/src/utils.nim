@@ -31,8 +31,21 @@ proc resolveToolsRootDirectory*(): string =
 proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
-proc resolveSourceToolDirectory*(toolPath: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(toolPath)
+proc resolveSourceToolDirectory*(source: string): string =
+    return resolveToolsRootDirectory() / normalizedPath(source) / toolLanguage / toolBuildDirectory / getCurrentPlatform()
 
-proc resolveTargetToolsDirectory*(toolsPath: string): string =
-    return resolveSystemsRootDirectory() / normalizedPath(toolsPath)
+proc resolveTargetToolsDirectory*(target: string): string =
+    return resolveSystemsRootDirectory() / normalizedPath(target) / getCurrentPlatform()
+
+proc resolveExecutableExtension*(): string =
+    when defined(windows):
+        return ".exe"
+    else:
+        return ""
+
+proc resolveSourceToolExecutable*(source: string): string =
+    return resolveSourceToolDirectory(source) / lastPathPart(source) & resolveExecutableExtension()
+
+proc resolveTargetToolExecutable*(target: string, source: string): string =
+    return resolveTargetToolsDirectory(target) / lastPathPart(source) & resolveExecutableExtension()
+
