@@ -24,7 +24,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("copy issue, ", issue.msg)
             quit(2)
 
-        session = handlers.validateTargetOutputDirectory(session)
+        session = handlers.validateTargetToolExecutable(session)
         if not session.status:
             stderr.writeLine("copy issue, ", session.issue)
             quit(1)
