@@ -8,3 +8,5 @@ type
 
         source*: string
         target*: string
+        sourceExecutable*: string
+        targetExecutable*: string
