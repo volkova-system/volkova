@@ -4,36 +4,36 @@ import engines, handlers, helps, models
 
 proc executeCommand(command: string, parameters: seq[string]) =
     case command
-    of "install-nim":
+    of "install":
         var session = ToolSession(command: command, parameters: parameters)
 
         session = handlers.validateCommand(session)
         if not session.status:
-            stderr.writeLine("install-nim issue, ", session.issue)
+            stderr.writeLine("install issue, ", session.issue)
             printUsage()
             quit(1)
 
         session = handlers.validateExecutable(session)
         if not session.status:
-            stderr.writeLine("install-nim issue, ", session.issue)
+            stderr.writeLine("install issue, ", session.issue)
             quit(1)
 
         try:
             session = engines.installExecutable(session)
         except CatchableError as issue:
-            stderr.writeLine("install-nim issue, ", issue.msg)
+            stderr.writeLine("install issue, ", issue.msg)
             quit(2)
 
         session = handlers.validateInstalledExecutable(session)
         if not session.status:
-            stderr.writeLine("install-nim issue, ", session.issue)
+            stderr.writeLine("install issue, ", session.issue)
             quit(1)
 
-        echo "install-nim done, target, " & session.target
+        echo "install done, target, " & session.target
         quit(0)
 
     else:
-        stderr.writeLine("install-nim issue, unknown command, '" & command & "'")
+        stderr.writeLine("install issue, unknown command, '" & command & "'")
         quit(1)
 
 proc run*() =
@@ -56,7 +56,7 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("install-nim issue, invalid command, '" & command & "'")
+        stderr.writeLine("install issue, invalid command, '" & command & "'")
         printUsage()
         quit(1)
 
