@@ -1,6 +1,6 @@
 
 import os, osproc, strformat
-import models
+import models, utils
 
 proc installExecutable*(session: ToolSession): ToolSession =
     copyFileWithPermissions(session.source, session.target)
@@ -94,7 +94,7 @@ proc installExecutable*(session: ToolSession): ToolSession =
             }}
         """
 
-        let scriptPath = getTempDir() / "install-path.ps1"
+        let scriptPath = getArchiveDirectory() / "install-path.ps1"
 
         if fileExists(scriptPath):
             removeFile(scriptPath)
