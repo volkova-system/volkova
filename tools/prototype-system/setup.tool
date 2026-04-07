@@ -9,3 +9,4 @@
 ./copy-service-tool/nim/setup.tool
 ./copy-interface-tool/nim/setup.tool
 ./copy-system-tool/nim/setup.tool
+./copy-tool/nim/setup.tool
