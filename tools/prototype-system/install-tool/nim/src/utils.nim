@@ -24,14 +24,12 @@ proc getRepositoryRootDirectory*(): string =
     raise newException(OSError, "cannot determine repository root directory path")
 
 proc getInstallDirectory*(): string =
-    let installDirectory = absolutePath(getHomeDir() / ".local" / "bin")
-
     if not dirExists(installDirectory):
         createDir(installDirectory)
 
     return installDirectory
 
-proc resolveToolsRootDirectory*(): string =
+proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / toolsDirectory
 
 proc resolveToolTargetBuildDirectory*(tool: string): string =
