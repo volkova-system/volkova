@@ -33,7 +33,8 @@ proc executeCommand(command: string, parameters: seq[string]) =
         quit(0)
 
     else:
-        stderr.writeLine("install-fiber-go issue, unknown command, '" & command & "'")
+        stderr.writeLine("install-fiber-go issue, unknown command, '" &
+                command & "'")
         quit(1)
 
 proc run*() =
@@ -56,7 +57,8 @@ proc run*() =
 
     let targetCommand = handlers.resolveCommand(command)
     if targetCommand == "":
-        stderr.writeLine("install-fiber-go issue, invalid command, '" & command & "'")
+        stderr.writeLine("install-fiber-go issue, invalid command, '" &
+                command & "'")
         printUsage()
         quit(1)
 
