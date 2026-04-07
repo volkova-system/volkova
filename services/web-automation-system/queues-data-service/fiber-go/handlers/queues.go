@@ -1,12 +1,12 @@
 package handlers
 
 import (
-"strconv"
+	"strconv"
 
-"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3"
 
-"queues-data-service/data"
-"queues-data-service/engines"
+	"queues-data-service/data"
+	"queues-data-service/engines"
 )
 
 // GetQueuesHandler handles GET /service/data/queues endpoint.
@@ -23,94 +23,94 @@ import (
 //
 // Fails fast on any cache retrieval error.
 func GetQueuesHandler(cache *data.Cache) fiber.Handler {
-return func(c fiber.Ctx) error {
-return getQueuesFromCache(c, cache)
-}
+	return func(c fiber.Ctx) error {
+		return getQueuesFromCache(c, cache)
+	}
 }
 
 // getQueuesFromCache processes the queues list request.
 func getQueuesFromCache(c fiber.Ctx, cache *data.Cache) error {
-skip, limit, err := parsePaginationParams(c)
-if err != nil {
-return IssueResponse(c, fiber.StatusBadRequest, "invalid queues request parameters")
-}
+	skip, limit, err := parsePaginationParams(c)
+	if err != nil {
+		return IssueResponse(c, fiber.StatusBadRequest, "invalid queues request parameters")
+	}
 
-queues, err := retrieveQueuesFromCache(cache, skip, limit)
-if err != nil {
-return IssueResponse(c, fiber.StatusInternalServerError, "queue cache error")
-}
+	queues, err := retrieveQueuesFromCache(cache, skip, limit)
+	if err != nil {
+		return IssueResponse(c, fiber.StatusInternalServerError, "queue cache error")
+	}
 
-total, err := engines.GetQueuesCount(cache)
-if err != nil {
-return IssueResponse(c, fiber.StatusInternalServerError, "queue cache count error")
-}
+	total, err := engines.GetQueuesCount(cache)
+	if err != nil {
+		return IssueResponse(c, fiber.StatusInternalServerError, "queue cache count error")
+	}
 
-return sendQueuesResponse(c, queues, skip, limit, total)
+	return sendQueuesResponse(c, queues, skip, limit, total)
 }
 
 // parsePaginationParams extracts skip and limit from query parameters.
 // Sets defaults: skip=0, limit=10. Enforces maximum limit of 100.
 func parsePaginationParams(c fiber.Ctx) (int, int, error) {
-skip := 0
-limit := 10
+	skip := 0
+	limit := 10
 
-if skipParam := c.Query("skip"); skipParam != "" {
-parsedSkip, err := strconv.Atoi(skipParam)
-if err != nil {
-return 0, 0, fiber.NewError(fiber.StatusBadRequest,
-"skip must be integer")
-}
+	if skipParam := c.Query("skip"); skipParam != "" {
+		parsedSkip, err := strconv.Atoi(skipParam)
+		if err != nil {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"skip must be integer")
+		}
 
-if parsedSkip < 0 {
-return 0, 0, fiber.NewError(fiber.StatusBadRequest,
-"skip must be non-negative")
-}
+		if parsedSkip < 0 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"skip must be non-negative")
+		}
 
-skip = parsedSkip
-}
+		skip = parsedSkip
+	}
 
-if limitParam := c.Query("limit"); limitParam != "" {
-parsedLimit, err := strconv.Atoi(limitParam)
-if err != nil {
-return 0, 0, fiber.NewError(fiber.StatusBadRequest,
-"limit must be integer")
-}
+	if limitParam := c.Query("limit"); limitParam != "" {
+		parsedLimit, err := strconv.Atoi(limitParam)
+		if err != nil {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit must be integer")
+		}
 
-if parsedLimit <= 0 {
-return 0, 0, fiber.NewError(fiber.StatusBadRequest,
-"limit must be positive")
-}
+		if parsedLimit <= 0 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit must be positive")
+		}
 
-if parsedLimit > 100 {
-return 0, 0, fiber.NewError(fiber.StatusBadRequest,
-"limit cannot exceed 100")
-}
+		if parsedLimit > 100 {
+			return 0, 0, fiber.NewError(fiber.StatusBadRequest,
+				"limit cannot exceed 100")
+		}
 
-limit = parsedLimit
-}
+		limit = parsedLimit
+	}
 
-return skip, limit, nil
+	return skip, limit, nil
 }
 
 // retrieveQueuesFromCache gets queues from cache with pagination.
 func retrieveQueuesFromCache(cache *data.Cache, skip, limit int) (
-interface{}, error) {
-return engines.GetQueues(cache, skip, limit)
+	interface{}, error) {
+	return engines.GetQueues(cache, skip, limit)
 }
 
 // sendQueuesResponse returns queues list as JSON response
 // with pagination metadata.
 func sendQueuesResponse(c fiber.Ctx, queues interface{},
-skip, limit, total int) error {
-pages, page := ComputePageData(skip, limit, total)
+	skip, limit, total int) error {
+	pages, page := ComputePageData(skip, limit, total)
 
-return c.JSON(fiber.Map{
-"queues": queues,
+	return c.JSON(fiber.Map{
+		"queues": queues,
 
-"skip":  skip,
-"limit": limit,
-"total": total,
-"pages": pages,
-"page":  page,
-})
+		"skip":  skip,
+		"limit": limit,
+		"total": total,
+		"pages": pages,
+		"page":  page,
+	})
 }
