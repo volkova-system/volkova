@@ -6,7 +6,7 @@ const
 
     installDirectory* = getHomeDir() / ".local" / "bin" / "tools"
 
-    toolsDirectory* = "tools"
+    systemsDirectory* = "systems"
 
     targetBuildDirectory* = normalizedPath("nim/dist")
 
