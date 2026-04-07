@@ -26,13 +26,15 @@ proc resolveInterfacesRootDirectory*(): string =
     return getRepositoryRootDirectory() / targetRootDirectory
 
 proc resolveInterfaceSourceDirectory*(terminalInterface: string): string =
-    return resolveInterfacesRootDirectory() / normalizedPath(terminalInterface) / sourceDirectory
+    return resolveInterfacesRootDirectory() / normalizedPath(
+            terminalInterface) / sourceDirectory
 
 proc resolveInterfaceMainFile*(terminalInterface: string): string =
     return resolveInterfaceSourceDirectory(terminalInterface) / mainFile
 
 proc resolveInterfaceTargetBuildDirectory*(terminalInterface: string): string =
-    return resolveInterfacesRootDirectory() / normalizedPath(terminalInterface) / targetBuildDirectory
+    return resolveInterfacesRootDirectory() / normalizedPath(
+            terminalInterface) / targetBuildDirectory
 
 proc resolveExecutableExtension*(): string =
     when defined(windows):
@@ -43,6 +45,7 @@ proc resolveExecutableExtension*(): string =
 proc resolveExecutableInterfaceFile*(terminalInterface: string): string =
     let interfaceTargetBuildDirectory = resolveInterfaceTargetBuildDirectory(terminalInterface)
     let buildDirectory = interfaceTargetBuildDirectory / getCurrentPlatform()
-    let executableFile = lastPathPart(terminalInterface) & resolveExecutableExtension()
+    let executableFile = lastPathPart(terminalInterface) &
+            resolveExecutableExtension()
 
     return buildDirectory / executableFile
