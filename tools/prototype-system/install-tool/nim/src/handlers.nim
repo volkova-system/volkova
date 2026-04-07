@@ -43,46 +43,47 @@ proc validateCommand*(session: ToolSession): ToolSession =
             issue: "invalid parameter count, " & $session.parameters.len
         )
 
-    let tool = session.parameters[0]
+    let source = session.parameters[0]
 
-    if tool == "":
+    if source == "":
         return ToolSession(
             status: false,
-            issue: "empty tool"
+            issue: "empty source executable"
         )
 
     return ToolSession(
         status: true,
-        tool: tool
+
+        source: source
     )
 
 proc validateExecutable*(session: ToolSession): ToolSession =
-    let executableFile = utils.resolveExecutableToolFile(session.tool)
+    let executableFile = utils.resolveSourceExecutable(session.source)
     if not fileExists(executableFile):
         return ToolSession(
             status: false,
-            issue: "tool executable not found, " & executableFile
+            issue: "source executable not found, " & executableFile
         )
 
     let installDirectory = utils.getInstallDirectory()
     if not dirExists(installDirectory):
         return ToolSession(
             status: false,
-            issue: "tool install directory not found, " & installDirectory
+            issue: "install directory not found, " & installDirectory
         )
 
     return ToolSession(
         status: true,
-        tool: session.tool,
-        executable: executableFile,
-        target: installDirectory / lastPathPart(executableFile)
+
+        source: session.source,
+        target: utils.resolveTargetExecutable(session.source)
     )
 
 proc validateInstalledExecutable*(session: ToolSession): ToolSession =
     if not fileExists(session.target):
         return ToolSession(
             status: false,
-            issue: "installed tool not found, " & session.target
+            issue: "installed executable not found, " & session.target
         )
 
     return session
