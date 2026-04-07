@@ -24,7 +24,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("archive-directory issue, ", issue.msg)
             quit(2)
 
-        session = handlers.validateTargetArchiveExists(session)
+        session = handlers.validateTargetArchivedDirectory(session)
         if not session.status:
             stderr.writeLine("archive-directory issue, ", session.issue)
             quit(1)
