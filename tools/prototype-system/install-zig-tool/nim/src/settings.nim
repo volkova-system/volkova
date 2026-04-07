@@ -7,4 +7,6 @@ const
 
     targetBuildDirectory* = normalizedPath("zig/dist")
 
+    installDirectory* = getHomeDir() / ".local" / "bin"
+
     version* = "0.0.0"
