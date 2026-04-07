@@ -72,17 +72,20 @@ proc validateServiceStructure*(session: ToolSession): ToolSession =
             issue: "service main file not found, " & session.service
         )
 
-    let targetBuildDirectory = utils.resolveServiceTargetBuildDirectory(session.service)
+    let targetBuildDirectory = utils.resolveServiceTargetBuildDirectory(
+            session.service)
     if not dirExists(targetBuildDirectory):
         return ToolSession(
             status: false,
-            issue: "service target build directory not found, " & session.service
+            issue: "service target build directory not found, " &
+            session.service
         )
 
     if not dirExists(targetBuildDirectory / utils.getCurrentPlatform()):
         return ToolSession(
             status: false,
-            issue: "service target build platform directory not found, " & session.service
+            issue: "service target build platform directory not found, " &
+            session.service
         )
 
     return ToolSession(
