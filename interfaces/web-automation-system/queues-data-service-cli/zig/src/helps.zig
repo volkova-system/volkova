@@ -1,5 +1,5 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const Command = model.Command;
 
@@ -7,12 +7,15 @@ const Command = model.Command;
 //
 pub fn printUsage() void {
     std.debug.print(
+        \\
+        \\
         \\queues-data-service-cli - Web automation queues data service CLI
         \\
         \\Usage:
         \\  queues-data-service-cli [global options] <command> [command options] [arguments]
         \\
         \\Use 'queues-data-service-cli --help' for more information.
+        \\
         \\
     , .{});
 }
@@ -21,6 +24,8 @@ pub fn printUsage() void {
 //
 pub fn printHelp() void {
     std.debug.print(
+        \\
+        \\
         \\queues-data-service-cli - Web automation queues data service CLI
         \\
         \\Usage:
@@ -89,6 +94,7 @@ pub fn printHelp() void {
         \\  queues-data-service-cli push --reference=queue-1 --name="Queue" --job-reference=job-1 --job-name="Job" --task-reference=task-1 --task-name="Task" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
         \\  queues-data-service-cli pop my-queue-ref
         \\
+        \\
     , .{});
 }
 
@@ -96,8 +102,7 @@ pub fn printHelp() void {
 //
 pub fn printVersion() void {
     std.debug.print(
-        \\queues-data-service-cli version 0.0.0
-        \\
+        \\queues-data-service-cli version, 0.0.0
     , .{});
 }
 // printCommandHelp prints help for specific commands
@@ -106,6 +111,8 @@ pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
+                \\
+                \\
                 \\health - Check service health status
                 \\
                 \\Usage:
@@ -114,10 +121,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Checks if the queues data service is running and responsive.
                 \\
+                \\
             , .{});
         },
         .stop => {
             std.debug.print(
+                \\
+                \\
                 \\stop - Stop the service
                 \\
                 \\Usage:
@@ -126,10 +136,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a stop signal to the queues data service.
                 \\
+                \\
             , .{});
         },
         .abort => {
             std.debug.print(
+                \\
+                \\
                 \\abort - Abort the service
                 \\
                 \\Usage:
@@ -138,10 +151,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends an abort signal to the queues data service.
                 \\
+                \\
             , .{});
         },
         .start => {
             std.debug.print(
+                \\
+                \\
                 \\start - Start the service
                 \\
                 \\Usage:
@@ -150,10 +166,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a start signal to the queues data service.
                 \\
+                \\
             , .{});
         },
         .kill => {
             std.debug.print(
+                \\
+                \\
                 \\kill - Kill the service
                 \\
                 \\Usage:
@@ -162,10 +181,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a kill signal to the queues data service.
                 \\
+                \\
             , .{});
         },
         .push => {
             std.debug.print(
+                \\
+                \\
                 \\push - Push a new queue to the service
                 \\
                 \\Usage:
@@ -208,10 +230,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  queues-data-service-cli push --queue=queue.json
                 \\  queues-data-service-cli push --reference=queue-1 --name="Queue" --job-reference=job-1 --job-name="Job" --task-reference=task-1 --task-name="Task" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
                 \\
+                \\
             , .{});
         },
         .get => {
             std.debug.print(
+                \\
+                \\
                 \\get - Get a specific queue by reference
                 \\
                 \\Usage:
@@ -227,10 +252,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  queues-data-service-cli get my-queue-ref
                 \\  queues-data-service-cli get my-queue-ref --output=./queues
                 \\
+                \\
             , .{});
         },
         .list => {
             std.debug.print(
+                \\
+                \\
                 \\list - List queues with optional filtering
                 \\
                 \\Usage:
@@ -246,10 +274,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  queues-data-service-cli list --limit=20
                 \\  queues-data-service-cli list --skip=10 --limit=5 --output=./queues
                 \\
+                \\
             , .{});
         },
         .pop => {
             std.debug.print(
+                \\
+                \\
                 \\pop - Remove a queue by reference
                 \\
                 \\Usage:
@@ -263,6 +294,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  queues-data-service-cli pop my-queue-ref
+                \\
                 \\
             , .{});
         },

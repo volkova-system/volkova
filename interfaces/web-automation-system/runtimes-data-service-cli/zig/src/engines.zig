@@ -1,10 +1,10 @@
 const std = @import("std");
 const request = @import("request.zig");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const httpRequest = request.httpRequest;
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 
 const Response = request.Response;
 

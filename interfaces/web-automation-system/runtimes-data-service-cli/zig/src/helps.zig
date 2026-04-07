@@ -1,5 +1,5 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const Command = model.Command;
 
@@ -7,12 +7,15 @@ const Command = model.Command;
 //
 pub fn printUsage() void {
     std.debug.print(
+        \\
+        \\
         \\runtimes-data-service-cli - Web automation runtimes data service CLI
         \\
         \\Usage:
         \\  runtimes-data-service-cli [global options] <command> [command options] [arguments]
         \\
         \\Use 'runtimes-data-service-cli --help' for more information.
+        \\
         \\
     , .{});
 }
@@ -21,6 +24,8 @@ pub fn printUsage() void {
 //
 pub fn printHelp() void {
     std.debug.print(
+        \\
+        \\
         \\runtimes-data-service-cli - Web automation runtimes data service CLI
         \\
         \\Usage:
@@ -88,6 +93,7 @@ pub fn printHelp() void {
         \\  runtimes-data-service-cli push --runtime=runtime.json
         \\  runtimes-data-service-cli pop my-runtime-ref
         \\
+        \\
     , .{});
 }
 
@@ -95,8 +101,7 @@ pub fn printHelp() void {
 //
 pub fn printVersion() void {
     std.debug.print(
-        \\runtimes-data-service-cli version 0.0.0
-        \\
+        \\runtimes-data-service-cli version, 0.0.0
     , .{});
 }
 
@@ -106,6 +111,8 @@ pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
+                \\
+                \\
                 \\health - Check service health status
                 \\
                 \\Usage:
@@ -114,10 +121,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Checks if the runtimes data service is running and responsive.
                 \\
+                \\
             , .{});
         },
         .stop => {
             std.debug.print(
+                \\
+                \\
                 \\stop - Stop the service
                 \\
                 \\Usage:
@@ -126,10 +136,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a stop signal to the runtimes data service.
                 \\
+                \\
             , .{});
         },
         .abort => {
             std.debug.print(
+                \\
+                \\
                 \\abort - Abort the service
                 \\
                 \\Usage:
@@ -138,10 +151,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends an abort signal to the runtimes data service.
                 \\
+                \\
             , .{});
         },
         .start => {
             std.debug.print(
+                \\
+                \\
                 \\start - Start the service
                 \\
                 \\Usage:
@@ -150,10 +166,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a start signal to the runtimes data service.
                 \\
+                \\
             , .{});
         },
         .kill => {
             std.debug.print(
+                \\
+                \\
                 \\kill - Kill the service
                 \\
                 \\Usage:
@@ -162,10 +181,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a kill signal to the runtimes data service.
                 \\
+                \\
             , .{});
         },
         .push => {
             std.debug.print(
+                \\
+                \\
                 \\push - Push a new runtime to the service
                 \\
                 \\Usage:
@@ -206,10 +228,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Examples:
                 \\  runtimes-data-service-cli push --runtime=runtime.json
                 \\
+                \\
             , .{});
         },
         .get => {
             std.debug.print(
+                \\
+                \\
                 \\get - Get a specific runtime by reference
                 \\
                 \\Usage:
@@ -225,10 +250,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  runtimes-data-service-cli get my-runtime-ref
                 \\  runtimes-data-service-cli get my-runtime-ref --output=./runtimes
                 \\
+                \\
             , .{});
         },
         .list => {
             std.debug.print(
+                \\
+                \\
                 \\list - List runtimes with optional filtering
                 \\
                 \\Usage:
@@ -244,10 +272,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  runtimes-data-service-cli list --limit=20
                 \\  runtimes-data-service-cli list --skip=10 --limit=5 --output=./runtimes
                 \\
+                \\
             , .{});
         },
         .pop => {
             std.debug.print(
+                \\
+                \\
                 \\pop - Remove a runtime by reference
                 \\
                 \\Usage:
@@ -261,6 +292,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  runtimes-data-service-cli pop my-runtime-ref
+                \\
                 \\
             , .{});
         },

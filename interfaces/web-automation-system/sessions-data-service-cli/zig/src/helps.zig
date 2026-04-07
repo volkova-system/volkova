@@ -1,5 +1,5 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const Command = model.Command;
 
@@ -7,12 +7,15 @@ const Command = model.Command;
 //
 pub fn printUsage() void {
     std.debug.print(
+        \\
+        \\
         \\sessions-data-service-cli - Web automation sessions data service CLI
         \\
         \\Usage:
         \\  sessions-data-service-cli [global options] <command> [command options] [arguments]
         \\
         \\Use 'sessions-data-service-cli --help' for more information.
+        \\
         \\
     , .{});
 }
@@ -21,6 +24,8 @@ pub fn printUsage() void {
 //
 pub fn printHelp() void {
     std.debug.print(
+        \\
+        \\
         \\sessions-data-service-cli - Web automation sessions data service CLI
         \\
         \\Usage:
@@ -66,6 +71,7 @@ pub fn printHelp() void {
         \\  sessions-data-service-cli push --reference=sess-1 --storage-state='{"cookies":[],"localStorage":{}}'
         \\  sessions-data-service-cli pop my-session-ref
         \\
+        \\
     , .{});
 }
 
@@ -73,8 +79,7 @@ pub fn printHelp() void {
 //
 pub fn printVersion() void {
     std.debug.print(
-        \\sessions-data-service-cli version 0.0.0
-        \\
+        \\sessions-data-service-cli version, 0.0.0
     , .{});
 }
 
@@ -84,6 +89,8 @@ pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
+                \\
+                \\
                 \\health - Check service health status
                 \\
                 \\Usage:
@@ -92,10 +99,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Checks if the sessions data service is running and responsive.
                 \\
+                \\
             , .{});
         },
         .stop => {
             std.debug.print(
+                \\
+                \\
                 \\stop - Stop the service
                 \\
                 \\Usage:
@@ -104,10 +114,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a stop signal to the sessions data service.
                 \\
+                \\
             , .{});
         },
         .abort => {
             std.debug.print(
+                \\
+                \\
                 \\abort - Abort the service
                 \\
                 \\Usage:
@@ -116,10 +129,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends an abort signal to the sessions data service.
                 \\
+                \\
             , .{});
         },
         .start => {
             std.debug.print(
+                \\
+                \\
                 \\start - Start the service
                 \\
                 \\Usage:
@@ -128,10 +144,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a start signal to the sessions data service.
                 \\
+                \\
             , .{});
         },
         .kill => {
             std.debug.print(
+                \\
+                \\
                 \\kill - Kill the service
                 \\
                 \\Usage:
@@ -140,10 +159,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a kill signal to the sessions data service.
                 \\
+                \\
             , .{});
         },
         .push => {
             std.debug.print(
+                \\
+                \\
                 \\push - Push a new session to the service
                 \\
                 \\Usage:
@@ -161,10 +183,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  sessions-data-service-cli push --session=session.json
                 \\  sessions-data-service-cli push --reference=sess-1 --storage-state='{"cookies":[],"localStorage":{}}'
                 \\
+                \\
             , .{});
         },
         .get => {
             std.debug.print(
+                \\
+                \\
                 \\get - Get a specific session by reference
                 \\
                 \\Usage:
@@ -180,10 +205,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  sessions-data-service-cli get my-session-ref
                 \\  sessions-data-service-cli get my-session-ref --output=./sessions
                 \\
+                \\
             , .{});
         },
         .list => {
             std.debug.print(
+                \\
+                \\
                 \\list - List sessions with optional filtering
                 \\
                 \\Usage:
@@ -199,10 +227,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  sessions-data-service-cli list --limit=20
                 \\  sessions-data-service-cli list --skip=10 --limit=5 --output=./sessions
                 \\
+                \\
             , .{});
         },
         .pop => {
             std.debug.print(
+                \\
+                \\
                 \\pop - Remove a session by reference
                 \\
                 \\Usage:
@@ -216,6 +247,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  sessions-data-service-cli pop my-session-ref
+                \\
                 \\
             , .{});
         },

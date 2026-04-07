@@ -86,7 +86,6 @@ pub fn printHelp() void {
 pub fn printVersion() void {
     std.debug.print(
         \\actions-data-service-cli version 0.0.0
-        \\
     , .{});
 }
 
@@ -96,6 +95,8 @@ pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
+                \\
+                \\
                 \\health - Check service health status
                 \\
                 \\Usage:
@@ -104,10 +105,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Checks if the actions data service is running and responsive.
                 \\
+                \\
             , .{});
         },
         .stop => {
             std.debug.print(
+                \\
+                \\
                 \\stop - Stop the service
                 \\
                 \\Usage:
@@ -116,10 +120,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a stop signal to the actions data service.
                 \\
+                \\
             , .{});
         },
         .abort => {
             std.debug.print(
+                \\
+                \\
                 \\abort - Abort the service
                 \\
                 \\Usage:
@@ -128,10 +135,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends an abort signal to the actions data service.
                 \\
+                \\
             , .{});
         },
         .start => {
             std.debug.print(
+                \\
+                \\
                 \\start - Start the service
                 \\
                 \\Usage:
@@ -140,10 +150,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a start signal to the actions data service.
                 \\
+                \\
             , .{});
         },
         .kill => {
             std.debug.print(
+                \\
+                \\
                 \\kill - Kill the service
                 \\
                 \\Usage:
@@ -152,10 +165,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\Description:
                 \\  Sends a kill signal to the actions data service.
                 \\
+                \\
             , .{});
         },
         .push => {
             std.debug.print(
+                \\
+                \\
                 \\push - Push a new action to the service
                 \\
                 \\Usage:
@@ -180,10 +196,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  actions-data-service-cli push --action=action.json
                 \\  actions-data-service-cli push --reference=click-btn --name="Click Button" --description="Click submit button" --flow=click --selector="#submit"
                 \\
+                \\
             , .{});
         },
         .get => {
             std.debug.print(
+                \\
+                \\
                 \\get - Get a specific action by reference
                 \\
                 \\Usage:
@@ -199,10 +218,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  actions-data-service-cli get my-action-ref
                 \\  actions-data-service-cli get my-action-ref --output=./actions
                 \\
+                \\
             , .{});
         },
         .list => {
             std.debug.print(
+                \\
+                \\
                 \\list - List actions with optional filtering
                 \\
                 \\Usage:
@@ -218,10 +240,13 @@ pub fn printCommandHelp(command: Command) void {
                 \\  actions-data-service-cli list --limit=20
                 \\  actions-data-service-cli list --skip=10 --limit=5 --output=./actions
                 \\
+                \\
             , .{});
         },
         .pop => {
             std.debug.print(
+                \\
+                \\
                 \\pop - Remove an action by reference
                 \\
                 \\Usage:
@@ -235,6 +260,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  actions-data-service-cli pop my-action-ref
+                \\
                 \\
             , .{});
         },

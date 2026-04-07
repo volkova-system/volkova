@@ -1,18 +1,19 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 const Response = @import("request.zig").Response;
 
 const Command = model.Command;
 const Action = model.Action;
 const Task = model.Task;
 const Job = model.Job;
+const Queue = model.Queue;
 
-const PushJobParameters = model.PushJobParameters;
-const GetJobParameters = model.GetJobParameters;
-const GetJobsParameters = model.GetJobsParameters;
-const PopJobParameters = model.PopJobParameters;
+const PushQueueParameters = model.PushQueueParameters;
+const GetQueueParameters = model.GetQueueParameters;
+const GetQueuesParameters = model.GetQueuesParameters;
+const PopQueueParameters = model.PopQueueParameters;
 
 const Health = model.Health;
 const Operation = model.Operation;
@@ -23,10 +24,10 @@ const AbortServiceResult = model.AbortServiceResult;
 const StartServiceResult = model.StartServiceResult;
 const KillServiceResult = model.KillServiceResult;
 
-const PushJobResult = model.PushJobResult;
-const GetJobResult = model.GetJobResult;
-const GetJobsResult = model.GetJobsResult;
-const PopJobResult = model.PopJobResult;
+const PushQueueResult = model.PushQueueResult;
+const GetQueueResult = model.GetQueueResult;
+const GetQueuesResult = model.GetQueuesResult;
+const PopQueueResult = model.PopQueueResult;
 
 pub fn checkVersionFlag(arguments: []const []const u8) bool {
     for (arguments) |argument_value| {
@@ -71,13 +72,17 @@ pub fn resolveCommand(raw: []const u8) !Command {
 
     return error.UnknownCommand;
 }
-
-pub fn resolvePushJobParameters(setting: Setting, arguments: []const []const u8) !PushJobParameters {
-    var job_file: ?[]const u8 = null;
+pub fn resolvePushQueueParameters(setting: Setting, arguments: []const []const u8) !PushQueueParameters {
+    var queue_file: ?[]const u8 = null;
     var reference: ?[]const u8 = null;
     var name: ?[]const u8 = null;
     var description: ?[]const u8 = null;
-    var schedule: ?[]const u8 = null;
+    var state: ?[]const u8 = null;
+    var index: ?u32 = null;
+    var job_reference: ?[]const u8 = null;
+    var job_name: ?[]const u8 = null;
+    var job_description: ?[]const u8 = null;
+    var job_schedule: ?[]const u8 = null;
     var task_reference: ?[]const u8 = null;
     var task_name: ?[]const u8 = null;
     var task_description: ?[]const u8 = null;
@@ -92,9 +97,9 @@ pub fn resolvePushJobParameters(setting: Setting, arguments: []const []const u8)
     var action_delay: ?u32 = null;
 
     for (arguments) |argument_value| {
-        if (std.mem.startsWith(u8, argument_value, "--job=")) {
-            job_file = argument_value["--job=".len..];
-            return try resolvePushJobParametersFromFile(setting.allocator, job_file.?);
+        if (std.mem.startsWith(u8, argument_value, "--queue=")) {
+            queue_file = argument_value["--queue=".len..];
+            return try resolvePushQueueParametersFromFile(setting.allocator, queue_file.?);
         } else if (std.mem.startsWith(u8, argument_value, "--reference=")) {
             reference = argument_value["--reference=".len..];
             if (reference) |reference_value| if (reference_value.len == 0) return error.InvalidReference;
@@ -102,8 +107,20 @@ pub fn resolvePushJobParameters(setting: Setting, arguments: []const []const u8)
             name = argument_value["--name=".len..];
         } else if (std.mem.startsWith(u8, argument_value, "--description=")) {
             description = argument_value["--description=".len..];
-        } else if (std.mem.startsWith(u8, argument_value, "--schedule=")) {
-            schedule = argument_value["--schedule=".len..];
+        } else if (std.mem.startsWith(u8, argument_value, "--state=")) {
+            state = argument_value["--state=".len..];
+        } else if (std.mem.startsWith(u8, argument_value, "--index=")) {
+            const raw = argument_value["--index=".len..];
+            index = std.fmt.parseInt(u32, raw, 10) catch return error.InvalidIndex;
+        } else if (std.mem.startsWith(u8, argument_value, "--job-reference=")) {
+            job_reference = argument_value["--job-reference=".len..];
+            if (job_reference) |value| if (value.len == 0) return error.InvalidReference;
+        } else if (std.mem.startsWith(u8, argument_value, "--job-name=")) {
+            job_name = argument_value["--job-name=".len..];
+        } else if (std.mem.startsWith(u8, argument_value, "--job-description=")) {
+            job_description = argument_value["--job-description=".len..];
+        } else if (std.mem.startsWith(u8, argument_value, "--job-schedule=")) {
+            job_schedule = argument_value["--job-schedule=".len..];
         } else if (std.mem.startsWith(u8, argument_value, "--task-reference=")) {
             task_reference = argument_value["--task-reference=".len..];
             if (task_reference) |value| if (value.len == 0) return error.InvalidReference;
@@ -174,18 +191,34 @@ pub fn resolvePushJobParameters(setting: Setting, arguments: []const []const u8)
         try tasks.append(setting.allocator, task);
     }
 
-    return PushJobParameters{
+    if (reference == null) return error.MissingReference;
+    if (name == null) return error.MissingName;
+    if (job_reference == null) return error.MissingJobReference;
+    if (job_name == null) return error.MissingJobName;
+
+    const job = Job{
+        .reference = job_reference.?,
+        .name = job_name.?,
+        .description = job_description orelse "",
+        .tasks = try tasks.toOwnedSlice(setting.allocator),
+        .schedule = job_schedule,
+        .created_at = "",
+        .updated_at = "",
+    };
+
+    return PushQueueParameters{
         .reference = reference.?,
         .name = name.?,
         .description = description orelse "",
-        .schedule = schedule,
-        .tasks = try tasks.toOwnedSlice(setting.allocator),
+        .job = job,
+        .state = state orelse "pending",
+        .index = index orelse 0,
     };
 }
 
-fn resolvePushJobParametersFromFile(allocator: std.mem.Allocator, path: []const u8) !PushJobParameters {
+fn resolvePushQueueParametersFromFile(allocator: std.mem.Allocator, path: []const u8) !PushQueueParameters {
     var file = std.fs.openFileAbsolute(path, .{}) catch std.fs.cwd().openFile(path, .{}) catch {
-        return error.InvalidJobFile;
+        return error.InvalidQueueFile;
     };
     defer file.close();
 
@@ -200,7 +233,13 @@ fn resolvePushJobParametersFromFile(allocator: std.mem.Allocator, path: []const 
             var reference: ?[]const u8 = null;
             var name: ?[]const u8 = null;
             var description: ?[]const u8 = null;
-            var schedule: ?[]const u8 = null;
+            var state: ?[]const u8 = null;
+            var index: ?u32 = null;
+
+            var job_reference: ?[]const u8 = null;
+            var job_name: ?[]const u8 = null;
+            var job_description: ?[]const u8 = null;
+            var job_schedule: ?[]const u8 = null;
 
             var tasks: std.ArrayList(Task) = .empty;
             defer tasks.deinit(allocator);
@@ -219,140 +258,185 @@ fn resolvePushJobParametersFromFile(allocator: std.mem.Allocator, path: []const 
                 if (key_value == .string) description = try allocator.dupe(u8, key_value.string);
             }
 
-            if (object_value.get("schedule")) |key_value| {
-                if (key_value == .string) schedule = try allocator.dupe(u8, key_value.string);
+            if (object_value.get("state")) |key_value| {
+                if (key_value == .string) state = try allocator.dupe(u8, key_value.string);
             }
 
-            if (object_value.get("tasks")) |tasks_value| {
-                if (tasks_value == .array) {
-                    for (tasks_value.array.items) |task_json| {
-                        if (task_json != .object) continue;
-                        const task_obj = task_json.object;
+            if (object_value.get("index")) |key_value| {
+                switch (key_value) {
+                    .string => |sv| index = std.fmt.parseInt(u32, sv, 10) catch return error.InvalidIndex,
+                    .integer => |iv| index = @intCast(iv),
+                    else => return error.InvalidIndex,
+                }
+            }
 
-                        var t_reference: ?[]const u8 = null;
-                        var t_name: ?[]const u8 = null;
-                        var t_description: ?[]const u8 = null;
+            if (object_value.get("job")) |job_value| {
+                if (job_value == .object) {
+                    const job_obj = job_value.object;
 
-                        var actions: std.ArrayList(Action) = .empty;
-                        defer actions.deinit(allocator);
+                    if (job_obj.get("reference")) |kv| {
+                        if (kv == .string) job_reference = try allocator.dupe(u8, kv.string);
+                    }
 
-                        if (task_obj.get("reference")) |kv| {
-                            if (kv == .string) t_reference = try allocator.dupe(u8, kv.string);
-                        }
+                    if (job_obj.get("name")) |kv| {
+                        if (kv == .string) job_name = try allocator.dupe(u8, kv.string);
+                    }
 
-                        if (task_obj.get("name")) |kv| {
-                            if (kv == .string) t_name = try allocator.dupe(u8, kv.string);
-                        }
+                    if (job_obj.get("description")) |kv| {
+                        if (kv == .string) job_description = try allocator.dupe(u8, kv.string);
+                    }
 
-                        if (task_obj.get("description")) |kv| {
-                            if (kv == .string) t_description = try allocator.dupe(u8, kv.string);
-                        }
+                    if (job_obj.get("schedule")) |kv| {
+                        if (kv == .string) job_schedule = try allocator.dupe(u8, kv.string);
+                    }
 
-                        if (task_obj.get("actions")) |actions_value| {
-                            if (actions_value == .array) {
-                                for (actions_value.array.items) |action_json| {
-                                    if (action_json != .object) continue;
-                                    const obj = action_json.object;
+                    if (job_obj.get("tasks")) |tasks_value| {
+                        if (tasks_value == .array) {
+                            for (tasks_value.array.items) |task_json| {
+                                if (task_json != .object) continue;
+                                const task_obj = task_json.object;
 
-                                    var a_reference: ?[]const u8 = null;
-                                    var a_name: ?[]const u8 = null;
-                                    var a_description: ?[]const u8 = null;
-                                    var a_flow: ?[]const u8 = null;
-                                    var a_address: ?[]const u8 = null;
-                                    var a_selector: ?[]const u8 = null;
-                                    var a_value: ?[]const u8 = null;
-                                    var a_script: ?[]const u8 = null;
-                                    var a_delay: ?u32 = null;
+                                var t_reference: ?[]const u8 = null;
+                                var t_name: ?[]const u8 = null;
+                                var t_description: ?[]const u8 = null;
 
-                                    if (obj.get("reference")) |kv| {
-                                        if (kv == .string) a_reference = try allocator.dupe(u8, kv.string);
-                                    }
+                                var actions: std.ArrayList(Action) = .empty;
+                                defer actions.deinit(allocator);
 
-                                    if (obj.get("name")) |kv| {
-                                        if (kv == .string) a_name = try allocator.dupe(u8, kv.string);
-                                    }
+                                if (task_obj.get("reference")) |kv| {
+                                    if (kv == .string) t_reference = try allocator.dupe(u8, kv.string);
+                                }
 
-                                    if (obj.get("description")) |kv| {
-                                        if (kv == .string) a_description = try allocator.dupe(u8, kv.string);
-                                    }
+                                if (task_obj.get("name")) |kv| {
+                                    if (kv == .string) t_name = try allocator.dupe(u8, kv.string);
+                                }
 
-                                    if (obj.get("flow")) |kv| {
-                                        if (kv == .string) a_flow = try allocator.dupe(u8, kv.string);
-                                    }
+                                if (task_obj.get("description")) |kv| {
+                                    if (kv == .string) t_description = try allocator.dupe(u8, kv.string);
+                                }
 
-                                    if (obj.get("address")) |kv| {
-                                        if (kv == .string) a_address = try allocator.dupe(u8, kv.string);
-                                    }
+                                if (task_obj.get("actions")) |actions_value| {
+                                    if (actions_value == .array) {
+                                        for (actions_value.array.items) |action_json| {
+                                            if (action_json != .object) continue;
+                                            const obj = action_json.object;
 
-                                    if (obj.get("selector")) |kv| {
-                                        if (kv == .string) a_selector = try allocator.dupe(u8, kv.string);
-                                    }
+                                            var a_reference: ?[]const u8 = null;
+                                            var a_name: ?[]const u8 = null;
+                                            var a_description: ?[]const u8 = null;
+                                            var a_flow: ?[]const u8 = null;
+                                            var a_address: ?[]const u8 = null;
+                                            var a_selector: ?[]const u8 = null;
+                                            var a_value: ?[]const u8 = null;
+                                            var a_script: ?[]const u8 = null;
+                                            var a_delay: ?u32 = null;
 
-                                    if (obj.get("value")) |kv| {
-                                        if (kv == .string) a_value = try allocator.dupe(u8, kv.string);
-                                    }
+                                            if (obj.get("reference")) |kv| {
+                                                if (kv == .string) a_reference = try allocator.dupe(u8, kv.string);
+                                            }
 
-                                    if (obj.get("script")) |kv| {
-                                        if (kv == .string) a_script = try allocator.dupe(u8, kv.string);
-                                    }
+                                            if (obj.get("name")) |kv| {
+                                                if (kv == .string) a_name = try allocator.dupe(u8, kv.string);
+                                            }
 
-                                    if (obj.get("delay")) |kv| {
-                                        switch (kv) {
-                                            .string => |sv| a_delay = std.fmt.parseInt(u32, sv, 10) catch return error.InvalidDelay,
-                                            .integer => |iv| a_delay = @intCast(iv),
-                                            else => return error.InvalidDelay,
+                                            if (obj.get("description")) |kv| {
+                                                if (kv == .string) a_description = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("flow")) |kv| {
+                                                if (kv == .string) a_flow = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("address")) |kv| {
+                                                if (kv == .string) a_address = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("selector")) |kv| {
+                                                if (kv == .string) a_selector = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("value")) |kv| {
+                                                if (kv == .string) a_value = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("script")) |kv| {
+                                                if (kv == .string) a_script = try allocator.dupe(u8, kv.string);
+                                            }
+
+                                            if (obj.get("delay")) |kv| {
+                                                switch (kv) {
+                                                    .string => |sv| a_delay = std.fmt.parseInt(u32, sv, 10) catch return error.InvalidDelay,
+                                                    .integer => |iv| a_delay = @intCast(iv),
+                                                    else => return error.InvalidDelay,
+                                                }
+                                            }
+
+                                            if (a_reference == null) return error.MissingReference;
+                                            if (a_name == null) return error.MissingName;
+                                            if (a_flow == null) return error.MissingFlow;
+
+                                            const action = Action{
+                                                .reference = a_reference.?,
+                                                .name = a_name.?,
+                                                .description = a_description orelse "",
+                                                .flow = a_flow.?,
+                                                .address = a_address,
+                                                .selector = a_selector,
+                                                .value = a_value,
+                                                .script = a_script,
+                                                .delay = a_delay,
+                                            };
+
+                                            try actions.append(allocator, action);
                                         }
                                     }
-
-                                    if (a_reference == null) return error.MissingReference;
-                                    if (a_name == null) return error.MissingName;
-                                    if (a_flow == null) return error.MissingFlow;
-
-                                    const action = Action{
-                                        .reference = a_reference.?,
-                                        .name = a_name.?,
-                                        .description = a_description orelse "",
-                                        .flow = a_flow.?,
-                                        .address = a_address,
-                                        .selector = a_selector,
-                                        .value = a_value,
-                                        .script = a_script,
-                                        .delay = a_delay,
-                                    };
-
-                                    try actions.append(allocator, action);
                                 }
+
+                                if (t_reference == null) return error.MissingReference;
+                                if (t_name == null) return error.MissingName;
+
+                                const task = Task{
+                                    .reference = t_reference.?,
+                                    .name = t_name.?,
+                                    .description = t_description orelse "",
+                                    .actions = try actions.toOwnedSlice(allocator),
+                                };
+
+                                try tasks.append(allocator, task);
                             }
                         }
-
-                        if (t_reference == null) return error.MissingReference;
-                        if (t_name == null) return error.MissingName;
-
-                        const task = Task{
-                            .reference = t_reference.?,
-                            .name = t_name.?,
-                            .description = t_description orelse "",
-                            .actions = try actions.toOwnedSlice(allocator),
-                        };
-
-                        try tasks.append(allocator, task);
                     }
                 }
             }
 
-            return PushJobParameters{
+            if (reference == null) return error.MissingReference;
+            if (name == null) return error.MissingName;
+            if (job_reference == null) return error.MissingJobReference;
+            if (job_name == null) return error.MissingJobName;
+
+            const job = Job{
+                .reference = job_reference.?,
+                .name = job_name.?,
+                .description = job_description orelse "",
+                .tasks = try tasks.toOwnedSlice(allocator),
+                .schedule = job_schedule,
+                .created_at = "",
+                .updated_at = "",
+            };
+
+            return PushQueueParameters{
                 .reference = reference.?,
                 .name = name.?,
                 .description = description orelse "",
-                .schedule = schedule,
-                .tasks = try tasks.toOwnedSlice(allocator),
+                .job = job,
+                .state = state orelse "pending",
+                .index = index orelse 0,
             };
         },
-        else => return error.InvalidJobFile,
+        else => return error.InvalidQueueFile,
     }
 }
-
-pub fn resolveGetJobParameters(arguments: []const []const u8) !GetJobParameters {
+pub fn resolveGetQueueParameters(arguments: []const []const u8) !GetQueueParameters {
     var reference: ?[]const u8 = null;
     var output_directory: ?[]const u8 = null;
 
@@ -370,11 +454,11 @@ pub fn resolveGetJobParameters(arguments: []const []const u8) !GetJobParameters 
 
     var file_name_buffer: [256]u8 = undefined;
 
-    const file_name = std.fmt.bufPrint(&file_name_buffer, "job-{s}.json", .{reference.?}) catch "job.json";
-    return GetJobParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
+    const file_name = std.fmt.bufPrint(&file_name_buffer, "queue-{s}.json", .{reference.?}) catch "queue.json";
+    return GetQueueParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
 }
 
-pub fn resolveGetJobsParameters(arguments: []const []const u8) !GetJobsParameters {
+pub fn resolveGetQueuesParameters(arguments: []const []const u8) !GetQueuesParameters {
     var skip: u32 = 0;
     var limit: u32 = 10;
     var output_directory: ?[]const u8 = null;
@@ -397,11 +481,11 @@ pub fn resolveGetJobsParameters(arguments: []const []const u8) !GetJobsParameter
     }
 
     var file_name_buffer: [256]u8 = undefined;
-    const file_name = std.fmt.bufPrint(&file_name_buffer, "jobs-{d}-{d}.json", .{ skip, limit }) catch "jobs.json";
-    return GetJobsParameters{ .skip = skip, .limit = limit, .output_directory = output_directory, .file_name = file_name };
+    const file_name = std.fmt.bufPrint(&file_name_buffer, "queues-{d}-{d}.json", .{ skip, limit }) catch "queues.json";
+    return GetQueuesParameters{ .skip = skip, .limit = limit, .output_directory = output_directory, .file_name = file_name };
 }
 
-pub fn resolvePopJobParameters(arguments: []const []const u8) !PopJobParameters {
+pub fn resolvePopQueueParameters(arguments: []const []const u8) !PopQueueParameters {
     var reference: ?[]const u8 = null;
     var output_directory: ?[]const u8 = null;
 
@@ -418,10 +502,9 @@ pub fn resolvePopJobParameters(arguments: []const []const u8) !PopJobParameters 
     if (reference == null or reference.?.len == 0) return error.MissingReference;
 
     var file_name_buffer: [256]u8 = undefined;
-    const file_name = std.fmt.bufPrint(&file_name_buffer, "job-{s}.json", .{reference.?}) catch "job.json";
-    return PopJobParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
+    const file_name = std.fmt.bufPrint(&file_name_buffer, "queue-{s}.json", .{reference.?}) catch "queue.json";
+    return PopQueueParameters{ .reference = reference.?, .output_directory = output_directory, .file_name = file_name };
 }
-
 pub fn resolveCheckHealthResult(setting: Setting, result: Response) !CheckHealthResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
@@ -507,8 +590,7 @@ fn resolveOperationResult(allocator: std.mem.Allocator, result: Response) !Opera
         }
     } else return error.InvalidJsonFormat;
 }
-
-pub fn resolvePushJobResult(setting: Setting, result: Response) !PushJobResult {
+pub fn resolvePushQueueResult(setting: Setting, result: Response) !PushQueueResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
@@ -522,28 +604,28 @@ pub fn resolvePushJobResult(setting: Setting, result: Response) !PushJobResult {
             reference = try setting.allocator.dupe(u8, key_value.string);
     }
 
-    if (reference == null) return error.MissingJobReference;
+    if (reference == null) return error.MissingQueueReference;
 
-    return PushJobResult{
+    return PushQueueResult{
         .reference = reference.?,
     };
 }
 
-pub fn resolveGetJobResult(setting: Setting, result: Response) !GetJobResult {
+pub fn resolveGetQueueResult(setting: Setting, result: Response) !GetQueueResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
     var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
-    if (parsed_json.value.object.get("job")) |job_value| {
-        switch (job_value) {
+    if (parsed_json.value.object.get("queue")) |queue_value| {
+        switch (queue_value) {
             .object => |object_value| {
-                const job = try resolveJobFromObject(setting.allocator, object_value);
+                const queue = try resolveQueueFromObject(setting.allocator, object_value);
 
-                return GetJobResult{
-                    .job = job,
-                    .raw_job = result.body,
+                return GetQueueResult{
+                    .queue = queue,
+                    .raw_queue = result.body,
                 };
             },
             else => return error.InvalidJsonFormat,
@@ -553,23 +635,23 @@ pub fn resolveGetJobResult(setting: Setting, result: Response) !GetJobResult {
     }
 }
 
-pub fn resolveGetJobsResult(setting: Setting, result: Response) !GetJobsResult {
+pub fn resolveGetQueuesResult(setting: Setting, result: Response) !GetQueuesResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
     var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
-    if (parsed_json.value.object.get("jobs")) |jobs_value| {
-        switch (jobs_value) {
+    if (parsed_json.value.object.get("queues")) |queues_value| {
+        switch (queues_value) {
             .array => |array_value| {
-                var jobs: std.ArrayList(Job) = .empty;
-                defer jobs.deinit(setting.allocator);
+                var queues: std.ArrayList(Queue) = .empty;
+                defer queues.deinit(setting.allocator);
 
-                for (array_value.items) |job_json| {
-                    if (job_json != .object) continue;
-                    const job = try resolveJobFromObject(setting.allocator, job_json.object);
-                    try jobs.append(setting.allocator, job);
+                for (array_value.items) |queue_json| {
+                    if (queue_json != .object) continue;
+                    const queue = try resolveQueueFromObject(setting.allocator, queue_json.object);
+                    try queues.append(setting.allocator, queue);
                 }
 
                 var skip: u32 = 0;
@@ -613,9 +695,9 @@ pub fn resolveGetJobsResult(setting: Setting, result: Response) !GetJobsResult {
                     }
                 }
 
-                return GetJobsResult{
-                    .jobs = try jobs.toOwnedSlice(setting.allocator),
-                    .raw_jobs = result.body,
+                return GetQueuesResult{
+                    .queues = try queues.toOwnedSlice(setting.allocator),
+                    .raw_queues = result.body,
                     .skip = skip,
                     .limit = limit,
                     .total = total,
@@ -630,21 +712,21 @@ pub fn resolveGetJobsResult(setting: Setting, result: Response) !GetJobsResult {
     }
 }
 
-pub fn resolvePopJobResult(setting: Setting, result: Response) !PopJobResult {
+pub fn resolvePopQueueResult(setting: Setting, result: Response) !PopQueueResult {
     if (result.status < 200 or result.status >= 300) return error.InvalidResponse;
     if (result.body.len == 0) return error.EmptyResponse;
 
     var parsed_json = try std.json.parseFromSlice(std.json.Value, setting.allocator, result.body, .{});
     defer parsed_json.deinit();
 
-    if (parsed_json.value.object.get("job")) |job_value| {
-        switch (job_value) {
+    if (parsed_json.value.object.get("queue")) |queue_value| {
+        switch (queue_value) {
             .object => |object_value| {
-                const job = try resolveJobFromObject(setting.allocator, object_value);
+                const queue = try resolveQueueFromObject(setting.allocator, object_value);
 
-                return PopJobResult{
-                    .job = job,
-                    .raw_job = result.body,
+                return PopQueueResult{
+                    .queue = queue,
+                    .raw_queue = result.body,
                 };
             },
             else => return error.InvalidJsonFormat,
@@ -654,13 +736,21 @@ pub fn resolvePopJobResult(setting: Setting, result: Response) !PopJobResult {
     }
 }
 
-fn resolveJobFromObject(allocator: std.mem.Allocator, object_value: std.json.ObjectMap) !Job {
+fn resolveQueueFromObject(allocator: std.mem.Allocator, object_value: std.json.ObjectMap) !Queue {
     var reference: ?[]const u8 = null;
     var name: ?[]const u8 = null;
     var description: ?[]const u8 = null;
-    var schedule: ?[]const u8 = null;
+    var state: ?[]const u8 = null;
+    var index: ?u32 = null;
     var created_at: ?[]const u8 = null;
     var updated_at: ?[]const u8 = null;
+
+    var job_reference: ?[]const u8 = null;
+    var job_name: ?[]const u8 = null;
+    var job_description: ?[]const u8 = null;
+    var job_schedule: ?[]const u8 = null;
+    var job_created_at: ?[]const u8 = null;
+    var job_updated_at: ?[]const u8 = null;
 
     var tasks: std.ArrayList(Task) = .empty;
     defer tasks.deinit(allocator);
@@ -680,9 +770,16 @@ fn resolveJobFromObject(allocator: std.mem.Allocator, object_value: std.json.Obj
             description = try allocator.dupe(u8, key_value.string);
     }
 
-    if (object_value.get("schedule")) |key_value| {
+    if (object_value.get("state")) |key_value| {
         if (key_value == .string)
-            schedule = try allocator.dupe(u8, key_value.string);
+            state = try allocator.dupe(u8, key_value.string);
+    }
+
+    if (object_value.get("index")) |key_value| {
+        switch (key_value) {
+            .integer => |iv| index = @intCast(iv),
+            else => {},
+        }
     }
 
     if (object_value.get("created_at")) |key_value| {
@@ -695,51 +792,81 @@ fn resolveJobFromObject(allocator: std.mem.Allocator, object_value: std.json.Obj
             updated_at = try allocator.dupe(u8, key_value.string);
     }
 
-    if (object_value.get("tasks")) |tasks_value| {
-        if (tasks_value == .array) {
-            for (tasks_value.array.items) |task_json| {
-                if (task_json != .object) continue;
-                const task_obj = task_json.object;
+    if (object_value.get("job")) |job_value| {
+        if (job_value == .object) {
+            const job_obj = job_value.object;
 
-                var t_reference: ?[]const u8 = null;
-                var t_name: ?[]const u8 = null;
-                var t_description: ?[]const u8 = null;
+            if (job_obj.get("reference")) |kv| {
+                if (kv == .string) job_reference = try allocator.dupe(u8, kv.string);
+            }
 
-                var actions: std.ArrayList(Action) = .empty;
-                defer actions.deinit(allocator);
+            if (job_obj.get("name")) |kv| {
+                if (kv == .string) job_name = try allocator.dupe(u8, kv.string);
+            }
 
-                if (task_obj.get("reference")) |kv| {
-                    if (kv == .string) t_reference = try allocator.dupe(u8, kv.string);
-                }
+            if (job_obj.get("description")) |kv| {
+                if (kv == .string) job_description = try allocator.dupe(u8, kv.string);
+            }
 
-                if (task_obj.get("name")) |kv| {
-                    if (kv == .string) t_name = try allocator.dupe(u8, kv.string);
-                }
+            if (job_obj.get("schedule")) |kv| {
+                if (kv == .string) job_schedule = try allocator.dupe(u8, kv.string);
+            }
 
-                if (task_obj.get("description")) |kv| {
-                    if (kv == .string) t_description = try allocator.dupe(u8, kv.string);
-                }
+            if (job_obj.get("created_at")) |kv| {
+                if (kv == .string) job_created_at = try allocator.dupe(u8, kv.string);
+            }
 
-                if (task_obj.get("actions")) |actions_value| {
-                    if (actions_value == .array) {
-                        for (actions_value.array.items) |action_json| {
-                            if (action_json != .object) continue;
-                            try actions.append(allocator, try resolveActionFromObject(allocator, action_json.object));
+            if (job_obj.get("updated_at")) |kv| {
+                if (kv == .string) job_updated_at = try allocator.dupe(u8, kv.string);
+            }
+
+            if (job_obj.get("tasks")) |tasks_value| {
+                if (tasks_value == .array) {
+                    for (tasks_value.array.items) |task_json| {
+                        if (task_json != .object) continue;
+                        const task_obj = task_json.object;
+
+                        var t_reference: ?[]const u8 = null;
+                        var t_name: ?[]const u8 = null;
+                        var t_description: ?[]const u8 = null;
+
+                        var actions: std.ArrayList(Action) = .empty;
+                        defer actions.deinit(allocator);
+
+                        if (task_obj.get("reference")) |kv| {
+                            if (kv == .string) t_reference = try allocator.dupe(u8, kv.string);
                         }
+
+                        if (task_obj.get("name")) |kv| {
+                            if (kv == .string) t_name = try allocator.dupe(u8, kv.string);
+                        }
+
+                        if (task_obj.get("description")) |kv| {
+                            if (kv == .string) t_description = try allocator.dupe(u8, kv.string);
+                        }
+
+                        if (task_obj.get("actions")) |actions_value| {
+                            if (actions_value == .array) {
+                                for (actions_value.array.items) |action_json| {
+                                    if (action_json != .object) continue;
+                                    try actions.append(allocator, try resolveActionFromObject(allocator, action_json.object));
+                                }
+                            }
+                        }
+
+                        if (t_reference == null) return error.MissingReference;
+                        if (t_name == null) return error.MissingName;
+
+                        const task = Task{
+                            .reference = t_reference.?,
+                            .name = t_name.?,
+                            .description = t_description orelse "",
+                            .actions = try actions.toOwnedSlice(allocator),
+                        };
+
+                        try tasks.append(allocator, task);
                     }
                 }
-
-                if (t_reference == null) return error.MissingReference;
-                if (t_name == null) return error.MissingName;
-
-                const task = Task{
-                    .reference = t_reference.?,
-                    .name = t_name.?,
-                    .description = t_description orelse "",
-                    .actions = try actions.toOwnedSlice(allocator),
-                };
-
-                try tasks.append(allocator, task);
             }
         }
     }
@@ -747,13 +874,26 @@ fn resolveJobFromObject(allocator: std.mem.Allocator, object_value: std.json.Obj
     if (reference == null) return error.MissingReference;
     if (name == null) return error.MissingName;
     if (description == null) return error.MissingDescription;
+    if (job_reference == null) return error.MissingJobReference;
+    if (job_name == null) return error.MissingJobName;
 
-    return Job{
+    const job = Job{
+        .reference = job_reference.?,
+        .name = job_name.?,
+        .description = job_description orelse "",
+        .tasks = try tasks.toOwnedSlice(allocator),
+        .schedule = job_schedule,
+        .created_at = job_created_at orelse "",
+        .updated_at = job_updated_at orelse "",
+    };
+
+    return Queue{
         .reference = reference.?,
         .name = name.?,
         .description = description.?,
-        .tasks = try tasks.toOwnedSlice(allocator),
-        .schedule = schedule,
+        .job = job,
+        .state = state orelse "pending",
+        .index = index orelse 0,
         .created_at = created_at orelse "",
         .updated_at = updated_at orelse "",
     };

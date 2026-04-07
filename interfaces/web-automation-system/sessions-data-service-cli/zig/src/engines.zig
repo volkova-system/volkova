@@ -1,17 +1,17 @@
 const std = @import("std");
 const request = @import("request.zig");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const httpRequest = request.httpRequest;
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 
 const Response = request.Response;
 
-const PushQueueParameters = model.PushQueueParameters;
-const GetQueueParameters = model.GetQueueParameters;
-const GetQueuesParameters = model.GetQueuesParameters;
-const PopQueueParameters = model.PopQueueParameters;
+const PushSessionParameters = model.PushSessionParameters;
+const GetSessionParameters = model.GetSessionParameters;
+const GetSessionsParameters = model.GetSessionsParameters;
+const PopSessionParameters = model.PopSessionParameters;
 
 const CheckHealthResult = model.CheckHealthResult;
 const StopServiceResult = model.StopServiceResult;
@@ -19,12 +19,12 @@ const AbortServiceResult = model.AbortServiceResult;
 const StartServiceResult = model.StartServiceResult;
 const KillServiceResult = model.KillServiceResult;
 
-const PushQueueResult = model.PushQueueResult;
-const GetQueueResult = model.GetQueueResult;
-const GetQueuesResult = model.GetQueuesResult;
-const PopQueueResult = model.PopQueueResult;
+const PushSessionResult = model.PushSessionResult;
+const GetSessionResult = model.GetSessionResult;
+const GetSessionsResult = model.GetSessionsResult;
+const PopSessionResult = model.PopSessionResult;
 
-// checkHealth calls GET /service/data/queues/health.
+// checkHealth calls GET /service/data/sessions/health.
 //
 pub fn checkHealth(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -44,7 +44,7 @@ pub fn checkHealth(setting: Setting) !Response {
     return try sendGet(setting.allocator, url);
 }
 
-// stopService calls POST /service/data/queues/stop.
+// stopService calls POST /service/data/sessions/stop.
 //
 pub fn stopService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -64,7 +64,7 @@ pub fn stopService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// abortService calls POST /service/data/queues/abort.
+// abortService calls POST /service/data/sessions/abort.
 //
 pub fn abortService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -84,7 +84,7 @@ pub fn abortService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// startService calls POST /service/data/queues/start.
+// startService calls POST /service/data/sessions/start.
 //
 pub fn startService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -104,7 +104,7 @@ pub fn startService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// killService calls POST /service/data/queues/kill.
+// killService calls POST /service/data/sessions/kill.
 //
 pub fn killService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -124,11 +124,11 @@ pub fn killService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// pushQueue calls POST /service/data/queues/push with a JSON body.
+// pushSession calls POST /service/data/sessions/push with a JSON body.
 //
-pub fn pushQueue(
+pub fn pushSession(
     setting: Setting,
-    parameters: PushQueueParameters,
+    parameters: PushSessionParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -151,11 +151,11 @@ pub fn pushQueue(
     return try sendPost(setting.allocator, url, body);
 }
 
-// getQueue calls GET /service/data/queues/:reference.
+// getSession calls GET /service/data/sessions/:reference.
 //
-pub fn getQueue(
+pub fn getSession(
     setting: Setting,
-    parameters: GetQueueParameters,
+    parameters: GetSessionParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -180,11 +180,11 @@ pub fn getQueue(
     return result;
 }
 
-// getQueues calls GET /service/data/queues?skip=N&limit=N.
+// getSessions calls GET /service/data/sessions?skip=N&limit=N.
 //
-pub fn getQueues(
+pub fn getSessions(
     setting: Setting,
-    parameters: GetQueuesParameters,
+    parameters: GetSessionsParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -209,11 +209,11 @@ pub fn getQueues(
     return result;
 }
 
-// popQueue calls DELETE /service/data/queues/pop/:reference.
+// popSession calls DELETE /service/data/sessions/pop/:reference.
 //
-pub fn popQueue(
+pub fn popSession(
     setting: Setting,
-    parameters: PopQueueParameters,
+    parameters: PopSessionParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -238,12 +238,12 @@ pub fn popQueue(
     return result;
 }
 
-// buildPushBody serializes PushQueueParameters into a JSON string.
+// buildPushBody serializes PushSessionParameters into a JSON string.
 // Caller owns the returned slice.
 //
 fn buildPushBody(
     allocator: std.mem.Allocator,
-    parameters: PushQueueParameters,
+    parameters: PushSessionParameters,
 ) ![]u8 {
     var buffer = std.ArrayList(u8){};
     const writer = buffer.writer(allocator);
@@ -252,114 +252,15 @@ fn buildPushBody(
 
     try writer.print(
         "\"reference\":\"{s}\"," ++
-            "\"name\":\"{s}\"," ++
-            "\"description\":\"{s}\"," ++
-            "\"state\":\"{s}\"," ++
-            "\"index\":{d}",
+            "\"storage_state\":{s}",
 
         .{
             parameters.reference,
-            parameters.name,
-            parameters.description,
-            parameters.state,
-            parameters.index,
+            parameters.storage_state,
         },
     );
 
-    // Add job object
-    try writer.writeAll(",\"job\":{");
-
-    try writer.print(
-        "\"reference\":\"{s}\"," ++
-            "\"name\":\"{s}\"," ++
-            "\"description\":\"{s}\"",
-
-        .{
-            parameters.job.reference,
-            parameters.job.name,
-            parameters.job.description,
-        },
-    );
-
-    if (parameters.job.schedule) |schedule_value|
-        try writer.print(",\"schedule\":\"{s}\"", .{schedule_value});
-
-    if (parameters.job.tasks.len > 0) {
-        try writer.writeAll(",\"tasks\":[");
-
-        var first_task: bool = true;
-        for (parameters.job.tasks) |task| {
-            if (!first_task) try writer.writeAll(",");
-            first_task = false;
-
-            try writer.writeAll("{");
-
-            try writer.print(
-                "\"reference\":\"{s}\"," ++
-                    "\"name\":\"{s}\"," ++
-                    "\"description\":\"{s}\"",
-
-                .{
-                    task.reference,
-                    task.name,
-                    task.description,
-                },
-            );
-
-            if (task.actions.len > 0) {
-                try writer.writeAll(",\"actions\":[");
-
-                var first_action: bool = true;
-                for (task.actions) |action| {
-                    if (!first_action) try writer.writeAll(",");
-                    first_action = false;
-
-                    try writer.writeAll("{");
-
-                    try writer.print(
-                        "\"reference\":\"{s}\"," ++
-                            "\"name\":\"{s}\"," ++
-                            "\"description\":\"{s}\"," ++
-                            "\"flow\":\"{s}\"",
-
-                        .{
-                            action.reference,
-                            action.name,
-                            action.description,
-                            action.flow,
-                        },
-                    );
-
-                    if (action.address) |value|
-                        try writer.print(",\"address\":\"{s}\"", .{value});
-
-                    if (action.selector) |value|
-                        try writer.print(",\"selector\":\"{s}\"", .{value});
-
-                    if (action.value) |value|
-                        try writer.print(",\"value\":\"{s}\"", .{value});
-
-                    if (action.script) |value|
-                        try writer.print(",\"script\":\"{s}\"", .{value});
-
-                    if (action.delay) |value|
-                        try writer.print(",\"delay\":{d}", .{value});
-
-                    try writer.writeAll("}");
-                }
-
-                try writer.writeAll("]");
-            }
-
-            try writer.writeAll("}");
-        }
-
-        try writer.writeAll("]");
-    }
-
-    try writer.writeAll("}"); // Close job object
-
-    try writer.writeAll("}"); // Close main object
+    try writer.writeAll("}");
 
     return buffer.toOwnedSlice(allocator);
 }

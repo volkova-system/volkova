@@ -1,17 +1,17 @@
 const std = @import("std");
 const request = @import("request.zig");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const httpRequest = request.httpRequest;
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 
 const Response = request.Response;
 
-const PushSessionParameters = model.PushSessionParameters;
-const GetSessionParameters = model.GetSessionParameters;
-const GetSessionsParameters = model.GetSessionsParameters;
-const PopSessionParameters = model.PopSessionParameters;
+const PushTaskParameters = model.PushTaskParameters;
+const GetTaskParameters = model.GetTaskParameters;
+const GetTasksParameters = model.GetTasksParameters;
+const PopTaskParameters = model.PopTaskParameters;
 
 const CheckHealthResult = model.CheckHealthResult;
 const StopServiceResult = model.StopServiceResult;
@@ -19,12 +19,12 @@ const AbortServiceResult = model.AbortServiceResult;
 const StartServiceResult = model.StartServiceResult;
 const KillServiceResult = model.KillServiceResult;
 
-const PushSessionResult = model.PushSessionResult;
-const GetSessionResult = model.GetSessionResult;
-const GetSessionsResult = model.GetSessionsResult;
-const PopSessionResult = model.PopSessionResult;
+const PushTaskResult = model.PushTaskResult;
+const GetTaskResult = model.GetTaskResult;
+const GetTasksResult = model.GetTasksResult;
+const PopTaskResult = model.PopTaskResult;
 
-// checkHealth calls GET /service/data/sessions/health.
+// checkHealth calls GET /service/data/tasks/health.
 //
 pub fn checkHealth(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -44,7 +44,7 @@ pub fn checkHealth(setting: Setting) !Response {
     return try sendGet(setting.allocator, url);
 }
 
-// stopService calls POST /service/data/sessions/stop.
+// stopService calls POST /service/data/tasks/stop.
 //
 pub fn stopService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -64,7 +64,7 @@ pub fn stopService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// abortService calls POST /service/data/sessions/abort.
+// abortService calls POST /service/data/tasks/abort.
 //
 pub fn abortService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -84,7 +84,7 @@ pub fn abortService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// startService calls POST /service/data/sessions/start.
+// startService calls POST /service/data/tasks/start.
 //
 pub fn startService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -104,7 +104,7 @@ pub fn startService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// killService calls POST /service/data/sessions/kill.
+// killService calls POST /service/data/tasks/kill.
 //
 pub fn killService(setting: Setting) !Response {
     const base_url = try setting.resolveBaseUrl();
@@ -124,11 +124,11 @@ pub fn killService(setting: Setting) !Response {
     return try sendPost(setting.allocator, url, "{}");
 }
 
-// pushSession calls POST /service/data/sessions/push with a JSON body.
+// pushTask calls POST /service/data/tasks/push with a JSON body.
 //
-pub fn pushSession(
+pub fn pushTask(
     setting: Setting,
-    parameters: PushSessionParameters,
+    parameters: PushTaskParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -151,11 +151,11 @@ pub fn pushSession(
     return try sendPost(setting.allocator, url, body);
 }
 
-// getSession calls GET /service/data/sessions/:reference.
+// getTask calls GET /service/data/tasks/:reference.
 //
-pub fn getSession(
+pub fn getTask(
     setting: Setting,
-    parameters: GetSessionParameters,
+    parameters: GetTaskParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -180,11 +180,11 @@ pub fn getSession(
     return result;
 }
 
-// getSessions calls GET /service/data/sessions?skip=N&limit=N.
+// getTasks calls GET /service/data/tasks?skip=N&limit=N.
 //
-pub fn getSessions(
+pub fn getTasks(
     setting: Setting,
-    parameters: GetSessionsParameters,
+    parameters: GetTasksParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -209,11 +209,11 @@ pub fn getSessions(
     return result;
 }
 
-// popSession calls DELETE /service/data/sessions/pop/:reference.
+// popTask calls DELETE /service/data/tasks/pop/:reference.
 //
-pub fn popSession(
+pub fn popTask(
     setting: Setting,
-    parameters: PopSessionParameters,
+    parameters: PopTaskParameters,
 ) !Response {
     const base_url = try setting.resolveBaseUrl();
 
@@ -238,12 +238,12 @@ pub fn popSession(
     return result;
 }
 
-// buildPushBody serializes PushSessionParameters into a JSON string.
+// buildPushBody serializes PushTaskParameters into a JSON string.
 // Caller owns the returned slice.
 //
 fn buildPushBody(
     allocator: std.mem.Allocator,
-    parameters: PushSessionParameters,
+    parameters: PushTaskParameters,
 ) ![]u8 {
     var buffer = std.ArrayList(u8){};
     const writer = buffer.writer(allocator);
@@ -252,13 +252,60 @@ fn buildPushBody(
 
     try writer.print(
         "\"reference\":\"{s}\"," ++
-            "\"storage_state\":{s}",
+            "\"name\":\"{s}\"," ++
+            "\"description\":\"{s}\"",
 
         .{
             parameters.reference,
-            parameters.storage_state,
+            parameters.name,
+            parameters.description,
         },
     );
+
+    if (parameters.actions.len > 0) {
+        try writer.writeAll(",\"actions\":[");
+
+        var first: bool = true;
+        for (parameters.actions) |action| {
+            if (!first) try writer.writeAll(",");
+            first = false;
+
+            try writer.writeAll("{");
+
+            try writer.print(
+                "\"reference\":\"{s}\"," ++
+                    "\"name\":\"{s}\"," ++
+                    "\"description\":\"{s}\"," ++
+                    "\"flow\":\"{s}\"",
+
+                .{
+                    action.reference,
+                    action.name,
+                    action.description,
+                    action.flow,
+                },
+            );
+
+            if (action.address) |value|
+                try writer.print(",\"address\":\"{s}\"", .{value});
+
+            if (action.selector) |value|
+                try writer.print(",\"selector\":\"{s}\"", .{value});
+
+            if (action.value) |value|
+                try writer.print(",\"value\":\"{s}\"", .{value});
+
+            if (action.script) |value|
+                try writer.print(",\"script\":\"{s}\"", .{value});
+
+            if (action.delay) |value|
+                try writer.print(",\"delay\":{d}", .{value});
+
+            try writer.writeAll("}");
+        }
+
+        try writer.writeAll("]");
+    }
 
     try writer.writeAll("}");
 

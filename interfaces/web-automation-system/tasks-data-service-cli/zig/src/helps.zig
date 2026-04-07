@@ -1,5 +1,5 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
 const Command = model.Command;
 
@@ -7,12 +7,15 @@ const Command = model.Command;
 //
 pub fn printUsage() void {
     std.debug.print(
-        \\jobs-data-service-cli - Web automation jobs data service CLI
+        \\
+        \\
+        \\tasks-data-service-cli - Web automation tasks data service CLI
         \\
         \\Usage:
-        \\  jobs-data-service-cli [global options] <command> [command options] [arguments]
+        \\  tasks-data-service-cli [global options] <command> [command options] [arguments]
         \\
-        \\Use 'jobs-data-service-cli --help' for more information.
+        \\Use 'tasks-data-service-cli --help' for more information.
+        \\
         \\
     , .{});
 }
@@ -21,10 +24,12 @@ pub fn printUsage() void {
 //
 pub fn printHelp() void {
     std.debug.print(
-        \\jobs-data-service-cli - Web automation jobs data service CLI
+        \\
+        \\
+        \\tasks-data-service-cli - Web automation tasks data service CLI
         \\
         \\Usage:
-        \\  jobs-data-service-cli [global options] <command> [command options] [arguments]
+        \\  tasks-data-service-cli [global options] <command> [command options] [arguments]
         \\
         \\Commands:
         \\  health        Check service health status
@@ -33,10 +38,10 @@ pub fn printHelp() void {
         \\  start         Start the service
         \\  kill          Kill the service
         \\
-        \\  list          List jobs with optional filtering
-        \\  get           Get a specific job by reference
-        \\  push          Push a new job to the service
-        \\  pop           Remove a job by reference
+        \\  list          List tasks with optional filtering
+        \\  get           Get a specific task by reference
+        \\  push          Push a new task to the service
+        \\  pop           Remove a task by reference
         \\
         \\Global Options:
         \\  -h, --help       Show this help message
@@ -44,26 +49,22 @@ pub fn printHelp() void {
         \\
         \\Command Options:
         \\  list:
-        \\    --skip=N       Skip N jobs (default: 0)
-        \\    --limit=N      Limit to N jobs (default: 10)
+        \\    --skip=N       Skip N tasks (default: 0)
+        \\    --limit=N      Limit to N tasks (default: 10)
         \\    --output=DIR   Save output to directory
         \\
         \\  get:
         \\    --output=DIR   Save output to directory
         \\
         \\  push:
-        \\    --job=FILE     Load job from JSON file
+        \\    --task=FILE    Load task from JSON file
         \\
         \\    OR specify inline:
-        \\    --reference=   Job reference (required)
-        \\    --name=        Job name (required)
-        \\    --description= Job description (optional)
-        \\    --schedule=    Cron schedule expression (optional)
+        \\    --reference=   Task reference (required)
+        \\    --name=        Task name (required)
+        \\    --description= Task description (required)
         \\
-        \\    Optionally include a single task with a single action:
-        \\    --task-reference=     Task reference (required when task provided)
-        \\    --task-name=          Task name (required when task provided)
-        \\    --task-description=   Task description (optional)
+        \\    Optionally include a single action:
         \\    --action-reference=   Action reference (required when action provided)
         \\    --action-name=        Action name (required when action provided)
         \\    --action-description= Action description (optional)
@@ -75,12 +76,13 @@ pub fn printHelp() void {
         \\    --action-delay=N      Delay in milliseconds (optional)
         \\
         \\Examples:
-        \\  jobs-data-service-cli health
-        \\  jobs-data-service-cli list --limit=20 --skip=10
-        \\  jobs-data-service-cli get my-job-ref
-        \\  jobs-data-service-cli push --job=job.json
-        \\  jobs-data-service-cli push --reference=job-1 --name="Job" --task-reference=task-1 --task-name="Task" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
-        \\  jobs-data-service-cli pop my-job-ref
+        \\  tasks-data-service-cli health
+        \\  tasks-data-service-cli list --limit=20 --skip=10
+        \\  tasks-data-service-cli get my-task-ref
+        \\  tasks-data-service-cli push --task=task.json
+        \\  tasks-data-service-cli push --reference=task-1 --name="Task" --description="Demo" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
+        \\  tasks-data-service-cli pop my-task-ref
+        \\
         \\
     , .{});
 }
@@ -89,8 +91,7 @@ pub fn printHelp() void {
 //
 pub fn printVersion() void {
     std.debug.print(
-        \\jobs-data-service-cli version 0.0.0
-        \\
+        \\tasks-data-service-cli version, 0.0.0
     , .{});
 }
 
@@ -100,87 +101,98 @@ pub fn printCommandHelp(command: Command) void {
     switch (command) {
         .health => {
             std.debug.print(
+                \\
+                \\
                 \\health - Check service health status
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli health
+                \\  tasks-data-service-cli health
                 \\
                 \\Description:
-                \\  Checks if the jobs data service is running and responsive.
+                \\  Checks if the tasks data service is running and responsive.
+                \\
                 \\
             , .{});
         },
         .stop => {
             std.debug.print(
+                \\
+                \\
                 \\stop - Stop the service
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli stop
+                \\  tasks-data-service-cli stop
                 \\
                 \\Description:
-                \\  Sends a stop signal to the jobs data service.
+                \\  Sends a stop signal to the tasks data service.
+                \\
                 \\
             , .{});
         },
         .abort => {
             std.debug.print(
+                \\
+                \\
                 \\abort - Abort the service
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli abort
+                \\  tasks-data-service-cli abort
                 \\
                 \\Description:
-                \\  Sends an abort signal to the jobs data service.
+                \\  Sends an abort signal to the tasks data service.
+                \\
                 \\
             , .{});
         },
         .start => {
             std.debug.print(
+                \\
+                \\
                 \\start - Start the service
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli start
+                \\  tasks-data-service-cli start
                 \\
                 \\Description:
-                \\  Sends a start signal to the jobs data service.
+                \\  Sends a start signal to the tasks data service.
+                \\
                 \\
             , .{});
         },
         .kill => {
             std.debug.print(
+                \\
+                \\
                 \\kill - Kill the service
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli kill
+                \\  tasks-data-service-cli kill
                 \\
                 \\Description:
-                \\  Sends a kill signal to the jobs data service.
+                \\  Sends a kill signal to the tasks data service.
+                \\
                 \\
             , .{});
         },
         .push => {
             std.debug.print(
-                \\push - Push a new job to the service
+                \\
+                \\
+                \\push - Push a new task to the service
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli push --job=FILE
-                \\  jobs-data-service-cli push --reference= --name= [--description=] [--schedule=] [task options]
+                \\  tasks-data-service-cli push --task=FILE
+                \\  tasks-data-service-cli push --reference= --name= --description= [action options]
                 \\
                 \\Options (file mode):
-                \\  --job=FILE     Load job from JSON file
+                \\  --task=FILE    Load task from JSON file
                 \\
                 \\Options (inline mode):
-                \\  --reference=   Job reference (required)
-                \\  --name=        Job name (required)
-                \\  --description= Job description (optional)
-                \\  --schedule=    Cron schedule expression (optional)
+                \\  --reference=   Task reference (required)
+                \\  --name=        Task name (required)
+                \\  --description= Task description (required)
                 \\
-                \\Optional single task:
-                \\  --task-reference=     Task reference (required when task provided)
-                \\  --task-name=          Task name (required when task provided)
-                \\  --task-description=   Task description (optional)
-                \\
-                \\Optional single action within task:
+                \\Optional single action:
                 \\  --action-reference=   Action reference (required when action provided)
                 \\  --action-name=        Action name (required when action provided)
                 \\  --action-description= Action description (optional)
@@ -192,64 +204,74 @@ pub fn printCommandHelp(command: Command) void {
                 \\  --action-delay=N      Delay in milliseconds (optional)
                 \\
                 \\Examples:
-                \\  jobs-data-service-cli push --job=job.json
-                \\  jobs-data-service-cli push --reference=job-1 --name="Job" --task-reference=task-1 --task-name="Task" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
+                \\  tasks-data-service-cli push --task=task.json
+                \\  tasks-data-service-cli push --reference=task-1 --name="Task" --description="Demo" --action-reference=act-1 --action-name="Click" --action-flow=click --action-selector="#submit"
+                \\
                 \\
             , .{});
         },
         .get => {
             std.debug.print(
-                \\get - Get a specific job by reference
+                \\
+                \\
+                \\get - Get a specific task by reference
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli get <reference> [options]
+                \\  tasks-data-service-cli get <reference> [options]
                 \\
                 \\Arguments:
-                \\  <reference>    Job reference identifier
+                \\  <reference>    Task reference identifier
                 \\
                 \\Options:
                 \\  --output=DIR   Save output to directory
                 \\
                 \\Examples:
-                \\  jobs-data-service-cli get my-job-ref
-                \\  jobs-data-service-cli get my-job-ref --output=./jobs
+                \\  tasks-data-service-cli get my-task-ref
+                \\  tasks-data-service-cli get my-task-ref --output=./tasks
+                \\
                 \\
             , .{});
         },
         .list => {
             std.debug.print(
-                \\list - List jobs with optional filtering
+                \\
+                \\
+                \\list - List tasks with optional filtering
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli list [options]
+                \\  tasks-data-service-cli list [options]
                 \\
                 \\Options:
-                \\  --skip=N       Skip N jobs (default: 0)
-                \\  --limit=N      Limit to N jobs (default: 10)
+                \\  --skip=N       Skip N tasks (default: 0)
+                \\  --limit=N      Limit to N tasks (default: 10)
                 \\  --output=DIR   Save output to directory
                 \\
                 \\Examples:
-                \\  jobs-data-service-cli list
-                \\  jobs-data-service-cli list --limit=20
-                \\  jobs-data-service-cli list --skip=10 --limit=5 --output=./jobs
+                \\  tasks-data-service-cli list
+                \\  tasks-data-service-cli list --limit=20
+                \\  tasks-data-service-cli list --skip=10 --limit=5 --output=./tasks
+                \\
                 \\
             , .{});
         },
         .pop => {
             std.debug.print(
-                \\pop - Remove a job by reference
+                \\
+                \\
+                \\pop - Remove a task by reference
                 \\
                 \\Usage:
-                \\  jobs-data-service-cli pop <reference>
+                \\  tasks-data-service-cli pop <reference>
                 \\
                 \\Arguments:
-                \\  <reference>    Job reference identifier to remove
+                \\  <reference>    Task reference identifier to remove
                 \\
                 \\Options:
                 \\  --output=DIR   Save output to directory
                 \\
                 \\Examples:
-                \\  jobs-data-service-cli pop my-job-ref
+                \\  tasks-data-service-cli pop my-task-ref
+                \\
                 \\
             , .{});
         },

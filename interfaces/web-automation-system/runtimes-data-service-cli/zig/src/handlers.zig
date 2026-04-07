@@ -1,7 +1,7 @@
 const std = @import("std");
-const model = @import("model.zig");
+const model = @import("models.zig");
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 
 const Response = @import("request.zig").Response;
 
