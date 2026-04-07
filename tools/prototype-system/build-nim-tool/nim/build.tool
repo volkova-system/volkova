@@ -1,1 +1,1 @@
-build-nim-tool build-nim prototype-system/build-nim-tool
+scripts/build-nim-tool.ps1 build-nim prototype-system/build-nim-tool
