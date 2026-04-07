@@ -7,6 +7,5 @@ type
         status*: bool
         issue*: string
 
-        tool*: string
-        executable*: string
+        source*: string
         target*: string
