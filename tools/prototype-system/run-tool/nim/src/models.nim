@@ -15,3 +15,4 @@ type
         lineComment
         lineToolFile
         lineCommand
+        linePowerShellScript
