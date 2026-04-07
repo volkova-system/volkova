@@ -5,8 +5,8 @@ const
 
     systemsDirectory* = "systems"
 
-    toolSuffix* = "-tool"
+    toolBuildDirectory* = "dist"
 
-    systemSuffix* = "-system"
+    toolLanguage* = "nim"
 
     version* = "0.0.0"
