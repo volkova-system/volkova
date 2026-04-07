@@ -32,21 +32,10 @@ proc getInstallDirectory*(): string =
 proc resolveSystemsRootDirectory*(): string =
     return getRepositoryRootDirectory() / systemsDirectory
 
-proc resolveTool*(tool: string): string =
-    return resolveToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
+proc resolveSourceExecutable*(source: string): string =
+    return resolveSystemsRootDirectory() / normalizedPath(source)
 
-proc resolveExecutableExtension*(): string =
-    when defined(windows):
-        return ".exe"
-    else:
-        return ""
-
-proc resolveExecutableToolFile*(tool: string): string =
-    let toolTargetBuildDirectory = resolveToolTargetBuildDirectory(tool)
-    let buildDirectory = toolTargetBuildDirectory / getCurrentPlatform()
-    let executableFile = lastPathPart(tool) & resolveExecutableExtension()
-
-    return buildDirectory / executableFile
-
+proc resolveTargetExecutable*(source: string): string =
+    return getInstallDirectory() / lastPathPart(normalizedPath(source))
 
 
