@@ -1,5 +1,6 @@
-import os, strutils
-import models, settings, utils
+
+import os
+import macros, models, settings, utils
 
 proc checkHelpFlag*(flag: string): bool =
     return flag in ["-h", "--help", "help"]
@@ -64,30 +65,23 @@ proc validateCommand*(session: ToolSession): ToolSession =
         target: target
     )
 
-proc validateSourceToolDirectory*(session: ToolSession): ToolSession =
-    let sourceToolDirectory = resolveSourceToolDirectory(session.source)
-
-    if not dirExists(sourceToolDirectory):
+proc validateSourceToolExecutable(session: ToolSession): ToolSession =
+    let sourceToolExecutable = resolveSourceToolExecutable(session.source)
+    if not fileExists(sourceToolExecutable):
         return ToolSession(
             status: false,
-            issue: "source tool directory not found, " & sourceToolDirectory
-        )
-
-    if not (sourceToolDirectory.contains(systemSuffix) and
-            sourceToolDirectory.endsWith(toolSuffix)):
-        return ToolSession(
-            status: false,
-            issue: "invalid source tool path, " & sourceToolDirectory
+            issue: "source tool executable not found, " & sourceToolExecutable
         )
 
     return ToolSession(
         status: true,
 
-        source: sourceToolDirectory,
-        target: session.target
+        source: session.source,
+        target: session.target,
+        sourceExecutable: sourceToolExecutable
     )
 
-proc validateTargetToolsDirectory*(session: ToolSession): ToolSession =
+proc validateTargetToolDirectory(session: ToolSession): ToolSession =
     let targetToolsDirectory = resolveTargetToolsDirectory(session.target)
 
     if not dirExists(targetToolsDirectory):
@@ -96,41 +90,32 @@ proc validateTargetToolsDirectory*(session: ToolSession): ToolSession =
             issue: "target tools directory not found, " & targetToolsDirectory
         )
 
-    if lastPathPart(targetToolsDirectory) != toolsDirectory:
-        return ToolSession(
-            status: false,
-            issue: "invalid target tools directory, " & targetToolsDirectory
-        )
-
     return ToolSession(
         status: true,
 
         source: session.source,
-        target: targetToolsDirectory
+        target: session.target,
+        sourceExecutable: session.sourceExecutable,
+        targetExecutable: resolveTargetToolExecutable(session.target, session.source)
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
-    var result = session
-    result = validateSourceToolDirectory(result)
-    if not result.status:
-        return result
+    return session |>
+        validateSourceToolExecutable() |>
+        validateTargetToolDirectory()
 
-    result = validateTargetToolsDirectory(result)
-    return result
-
-proc validateTargetOutputDirectory*(session: ToolSession): ToolSession =
-    let platform = getCurrentPlatform()
-    let targetOutputDirectory = session.target / platform
-
-    if not dirExists(targetOutputDirectory):
+proc validateTargetToolExecutable*(session: ToolSession): ToolSession =
+    if not fileExists(session.targetExecutable):
         return ToolSession(
             status: false,
-            issue: "target output directory not found, " & targetOutputDirectory
+            issue: "target tool executable not found, " & session.targetExecutable
         )
 
     return ToolSession(
         status: true,
 
         source: session.source,
-        target: session.target
+        target: session.target,
+        sourceExecutable: session.sourceExecutable,
+        targetExecutable: session.targetExecutable
     )
