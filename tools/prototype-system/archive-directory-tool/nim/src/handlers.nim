@@ -1,3 +1,4 @@
+
 import os
 import macros, models, settings, utils
 
@@ -82,8 +83,7 @@ proc validateTargetArchiveDirectory*(session: ToolSession): ToolSession =
     if dirExists(session.target):
         return ToolSession(
             status: false,
-            issue: "target archive directory already exists, " &
-                    session.target
+            issue: "target archive directory already exists, " & session.target
         )
 
     return ToolSession(
@@ -102,8 +102,7 @@ proc validateTargetArchiveExists*(session: ToolSession): ToolSession =
     if not dirExists(session.target):
         return ToolSession(
             status: false,
-            issue: "target archive directory not found, " &
-                    session.target
+            issue: "target archive directory not found, " & session.target
         )
 
     return ToolSession(
