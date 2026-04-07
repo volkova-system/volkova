@@ -95,7 +95,8 @@ proc validateTargetToolDirectory(session: ToolSession): ToolSession =
         source: session.source,
         target: session.target,
         sourceExecutable: session.sourceExecutable,
-        targetExecutable: resolveTargetToolExecutable(session.target, session.source)
+        targetExecutable: resolveTargetToolExecutable(session.target,
+                session.source)
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
@@ -107,7 +108,8 @@ proc validateTargetToolExecutable*(session: ToolSession): ToolSession =
     if not fileExists(session.targetExecutable):
         return ToolSession(
             status: false,
-            issue: "target tool executable not found, " & session.targetExecutable
+            issue: "target tool executable not found, " &
+            session.targetExecutable
         )
 
     return ToolSession(
