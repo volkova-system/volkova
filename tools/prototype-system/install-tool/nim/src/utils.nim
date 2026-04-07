@@ -30,9 +30,9 @@ proc getInstallDirectory*(): string =
     return installDirectory
 
 proc resolveSystemsRootDirectory*(): string =
-    return getRepositoryRootDirectory() / toolsDirectory
+    return getRepositoryRootDirectory() / systemsDirectory
 
-proc resolveToolTargetBuildDirectory*(tool: string): string =
+proc resolveTool*(tool: string): string =
     return resolveToolsRootDirectory() / normalizedPath(tool) / targetBuildDirectory
 
 proc resolveExecutableExtension*(): string =
