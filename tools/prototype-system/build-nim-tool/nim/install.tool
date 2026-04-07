@@ -1,1 +1,1 @@
-install-nim-tool install-nim prototype-system/build-nim-tool
+scripts/install-nim-tool.ps1 install-nim prototype-system/build-nim-tool
