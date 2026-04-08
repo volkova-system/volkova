@@ -92,7 +92,7 @@ pub fn run(setting: Setting, parameters: []const []const u8) !void {
             try std.fs.File.stdout().writeAll(result.raw_sessions);
         },
         .pop => {
-            const pop_parameters = try handler.resolvePopSessionParameters(setting, command_parameters);
+            const pop_parameters = try handler.resolvePopSessionParameters(command_parameters);
 
             const response = try engine.popSession(setting, pop_parameters);
 
