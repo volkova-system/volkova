@@ -1,0 +1,77 @@
+Process Acquisition and Modes
+
+- The Process Exit Monitor shall accept a monitoring mode selection.
+- Where Spawned mode is selected, the Process Exit Monitor shall spawn the target executable with specified arguments and environment, obtaining a handle to the new process.
+- Where PID mode is selected, the Process Exit Monitor shall open a handle to the specified process ID with SYNCHRONIZE access.
+- Where WMI mode is selected, the Process Exit Monitor shall subscribe to process-stop events using WMI for either a specific PID or process name filter.
+- When opening a process handle fails due to insufficient rights, the Process Exit Monitor shall report an authorization error and terminate with a non-zero exit code.
+- When the specified PID does not exist at the time of opening, the Process Exit Monitor shall report that the target does not exist and terminate with a non-zero exit code.
+Waiting Semantics
+
+- When the monitored process terminates, the Process Exit Monitor shall detect termination and transition to side-effect execution.
+- When Spawned mode is selected, the Process Exit Monitor shall wait on the child process handle until it is signaled.
+- When PID mode is selected, the Process Exit Monitor shall wait on the opened process handle until it is signaled.
+- Where Asynchronous wait is enabled, the Process Exit Monitor shall perform the waiting operation on a background thread or an asynchronous mechanism that does not block the main thread.
+- While waiting for termination, the Process Exit Monitor shall remain responsive to shutdown signals from the operating environment and attempt to disengage cleanly.
+Side-Effect Execution
+
+- When the monitored process terminates, the Process Exit Monitor shall execute the configured side effect exactly once per termination event.
+- Where the side effect is a command, the Process Exit Monitor shall launch the command with the configured arguments, working directory, and environment variables.
+- Where the side effect requires the exit code of the monitored process, the Process Exit Monitor shall obtain the exit code and make it available to the side effect (e.g., via environment variable or argument substitution).
+- When the side effect completes, the Process Exit Monitor shall capture the side effect’s exit status and include it in its own final status reporting.
+- If the side effect fails to start, the Process Exit Monitor shall report the failure and exit with a non-zero code.
+Filtering and Disambiguation
+
+- Where WMI mode is used with PID, the Process Exit Monitor shall filter events to the specified PID.
+- Where WMI mode is used with process name, the Process Exit Monitor shall trigger on all matching process instances and execute the side effect for each termination event.
+- Where the monitored process start time is available, the Process Exit Monitor should correlate on both PID and creation timestamp to mitigate PID reuse ambiguities.
+Configuration
+
+- The Process Exit Monitor shall accept configuration via command-line parameters for mode, target (executable path or PID or process name), side-effect command, working directory, environment variables, asynchronous flag, and logging options.
+- Where configuration is invalid or incomplete, the Process Exit Monitor shall emit a clear diagnostic and exit with a non-zero code.
+Permissions and Security
+
+- When attempting to monitor a process that requires elevated privileges, the Process Exit Monitor shall indicate that elevation is needed.
+- The Process Exit Monitor shall not log secret values from environment variables or command-line parameters.
+- Where the side effect involves executing external commands, the Process Exit Monitor shall pass only the configured environment variables and shall not inadvertently inherit sensitive variables unless explicitly requested.
+Resource Management
+
+- When the monitored process handle is no longer needed, the Process Exit Monitor shall close the handle.
+- When the system shuts down or receives termination signals, the Process Exit Monitor shall close all open handles, unsubscribe from WMI events, and terminate gracefully.
+Error Handling and Reporting
+
+- When a wait operation is abandoned or returns an error, the Process Exit Monitor shall report the error and terminate with a non-zero exit code.
+- When WMI event subscription fails, the Process Exit Monitor shall report the failure and terminate with a non-zero exit code.
+- When the side effect exceeds a configured timeout (where provided), the Process Exit Monitor shall terminate the side effect and report a timeout.
+Observability
+
+- While operating, the Process Exit Monitor shall emit log messages at configurable levels (e.g., info, warn, error) indicating start parameters, monitoring mode, state transitions, side-effect invocation, and outcomes.
+- Where enabled, the Process Exit Monitor shall emit a final summary including monitored process identity, exit code, side-effect command, and side-effect exit code.
+Multiple Targets (Optional)
+
+- Where multiple PIDs or names are specified, the Process Exit Monitor shall create a monitoring context per target and execute the side effect independently for each termination event.
+- Where an aggregate completion is requested, the Process Exit Monitor shall delay its own termination until all monitored targets have terminated and all side effects have completed.
+Extensibility (Optional)
+
+- Where ETW integration is enabled, the Process Exit Monitor shall subscribe to kernel process termination events and apply the same side-effect execution semantics per event.
+EARS Requirements (Non-Functional)
+
+- While idle waiting on a process handle, the Process Exit Monitor shall minimize CPU usage.
+- While monitoring, the Process Exit Monitor shall not leak OS handles or memory across repeated monitoring cycles.
+- When configured for asynchronous operation, the Process Exit Monitor shall avoid blocking the main thread and shall not starve other tasks.
+- When logging is enabled, the Process Exit Monitor shall avoid revealing sensitive data in logs.
+- When processing a termination event, the Process Exit Monitor shall initiate the side effect promptly.
+Constraints and Assumptions
+
+- The Process Exit Monitor operates on Windows platforms.
+- In PID and Spawned modes, monitoring relies on Windows process handles with SYNCHRONIZE access.
+- In WMI mode, monitoring relies on Win32_ProcessStopTrace event delivery and requires WMI availability and permissions.
+- The side effect is externalized as a command line program or script, and its invocation semantics are defined by the Windows process model.
+Acceptance (Testable Outcomes)
+
+- When a spawned child process exits, the Process Exit Monitor shall execute the configured side effect once and report both exit codes.
+- When monitoring a running PID that later exits, the Process Exit Monitor shall execute the configured side effect once and report both exit codes.
+- When using WMI mode for a specified PID, and that PID terminates, the Process Exit Monitor shall execute the side effect and report success.
+- When opening a process is denied, the Process Exit Monitor shall report an authorization error and exit non-zero.
+- When the side effect fails to start, the Process Exit Monitor shall report the failure and exit non-zero.
+- When configured for asynchronous wait, the Process Exit Monitor shall keep the main thread unblocked while still executing the side effect on termination.
