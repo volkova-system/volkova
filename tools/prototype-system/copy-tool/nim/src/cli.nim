@@ -29,7 +29,7 @@ proc executeCommand(command: string, parameters: seq[string]) =
             stderr.writeLine("copy issue, ", session.issue)
             quit(1)
 
-        echo "copy done, target, " & session.target
+        echo "copy done, target, " & session.targetExecutable
         quit(0)
 
     else:
