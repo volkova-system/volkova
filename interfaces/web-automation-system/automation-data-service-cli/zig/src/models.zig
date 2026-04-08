@@ -14,6 +14,13 @@ pub const Command = enum {
     abort,
     start,
     kill,
+
+    actions,
+    tasks,
+    jobs,
+    queues,
+    sessions,
+    runtimes,
 };
 
 pub const CheckHealthResult = struct {
