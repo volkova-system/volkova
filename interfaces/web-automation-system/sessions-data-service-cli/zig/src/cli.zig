@@ -5,28 +5,24 @@ const help = @import("helps.zig");
 
 const Setting = @import("settings.zig").Setting;
 
-pub fn run(setting: Setting) !void {
-    const arguments = try std.process.argsAlloc(setting.allocator);
-
-    defer std.process.argsFree(setting.allocator, arguments);
-
-    if (arguments.len < 2) {
+pub fn run(setting: Setting, parameters: []const []const u8) !void {
+    if (parameters.len < 2) {
         return help.printUsage();
     }
 
-    if (handler.checkHelpFlag(arguments)) {
+    if (handler.checkHelpFlag(parameters)) {
         return help.printHelp();
     }
 
-    if (handler.checkVersionFlag(arguments)) {
+    if (handler.checkVersionFlag(parameters)) {
         return help.printVersion();
     }
 
-    const command = handler.resolveCommand(arguments[1]) catch {
+    const command = handler.resolveCommand(parameters[1]) catch {
         return help.printUsage();
     };
 
-    const command_parameters = arguments[2..];
+    const command_parameters = parameters[2..];
 
     if (handler.checkCommandHelpFlag(command_parameters)) {
         return help.printCommandHelp(command);
@@ -69,36 +65,36 @@ pub fn run(setting: Setting) !void {
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
-            const parameters = try handler.resolvePushSessionParameters(setting, command_parameters);
+            const push_parameters = try handler.resolvePushSessionParameters(setting, command_parameters);
 
-            const response = try engine.pushSession(setting, parameters);
+            const response = try engine.pushSession(setting, push_parameters);
 
             const result = try handler.resolvePushSessionResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.reference);
         },
         .get => {
-            const parameters = try handler.resolveGetSessionParameters(command_parameters);
+            const get_parameters = try handler.resolveGetSessionParameters(command_parameters);
 
-            const response = try engine.getSession(setting, parameters);
+            const response = try engine.getSession(setting, get_parameters);
 
             const result = try handler.resolveGetSessionResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_session);
         },
         .list => {
-            const parameters = try handler.resolveGetSessionsParameters(command_parameters);
+            const list_parameters = try handler.resolveGetSessionsParameters(command_parameters);
 
-            const response = try engine.getSessions(setting, parameters);
+            const response = try engine.getSessions(setting, list_parameters);
 
             const result = try handler.resolveGetSessionsResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_sessions);
         },
         .pop => {
-            const parameters = try handler.resolvePopSessionParameters(command_parameters);
+            const pop_parameters = try handler.resolvePopSessionParameters(setting, command_parameters);
 
-            const response = try engine.popSession(setting, parameters);
+            const response = try engine.popSession(setting, pop_parameters);
 
             const result = try handler.resolvePopSessionResult(setting, response);
 
