@@ -65,7 +65,7 @@ pub fn run(setting: Setting, parameters: []const []const u8) !void {
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
-            const push_parameters = try handler.resolvePushQueueParameters(setting, command_parameters);
+            const push_parameters = try handler.resolvePushQueueParameters(command_parameters);
 
             const response = try engine.pushQueue(setting, push_parameters);
 
@@ -92,7 +92,7 @@ pub fn run(setting: Setting, parameters: []const []const u8) !void {
             try std.fs.File.stdout().writeAll(result.raw_queues);
         },
         .pop => {
-            const pop_parameters = try handler.resolvePopQueueParameters(setting, command_parameters);
+            const pop_parameters = try handler.resolvePopQueueParameters(command_parameters);
 
             const response = try engine.popQueue(setting, pop_parameters);
 
