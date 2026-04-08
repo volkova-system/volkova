@@ -5,28 +5,24 @@ const help = @import("helps.zig");
 
 const Setting = @import("settings.zig").Setting;
 
-pub fn run(setting: Setting) !void {
-    const arguments = try std.process.argsAlloc(setting.allocator);
-
-    defer std.process.argsFree(setting.allocator, arguments);
-
-    if (arguments.len < 2) {
+pub fn run(setting: Setting, parameters: []const []const u8) !void {
+    if (parameters.len < 2) {
         return help.printUsage();
     }
 
-    if (handler.checkHelpFlag(arguments)) {
+    if (handler.checkHelpFlag(parameters)) {
         return help.printHelp();
     }
 
-    if (handler.checkVersionFlag(arguments)) {
+    if (handler.checkVersionFlag(parameters)) {
         return help.printVersion();
     }
 
-    const command = handler.resolveCommand(arguments[1]) catch {
+    const command = handler.resolveCommand(parameters[1]) catch {
         return help.printUsage();
     };
 
-    const command_parameters = arguments[2..];
+    const command_parameters = parameters[2..];
 
     if (handler.checkCommandHelpFlag(command_parameters)) {
         return help.printCommandHelp(command);
@@ -69,36 +65,36 @@ pub fn run(setting: Setting) !void {
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
-            const parameters = try handler.resolvePushJobParameters(setting, command_parameters);
+            const push_parameters = try handler.resolvePushJobParameters(setting, command_parameters);
 
-            const response = try engine.pushJob(setting, parameters);
+            const response = try engine.pushJob(setting, push_parameters);
 
             const result = try handler.resolvePushJobResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.reference);
         },
         .get => {
-            const parameters = try handler.resolveGetJobParameters(command_parameters);
+            const get_parameters = try handler.resolveGetJobParameters(command_parameters);
 
-            const response = try engine.getJob(setting, parameters);
+            const response = try engine.getJob(setting, get_parameters);
 
             const result = try handler.resolveGetJobResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_job);
         },
         .list => {
-            const parameters = try handler.resolveGetJobsParameters(command_parameters);
+            const list_parameters = try handler.resolveGetJobsParameters(command_parameters);
 
-            const response = try engine.getJobs(setting, parameters);
+            const response = try engine.getJobs(setting, list_parameters);
 
             const result = try handler.resolveGetJobsResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_jobs);
         },
         .pop => {
-            const parameters = try handler.resolvePopJobParameters(command_parameters);
+            const pop_parameters = try handler.resolvePopJobParameters(command_parameters);
 
-            const response = try engine.popJob(setting, parameters);
+            const response = try engine.popJob(setting, pop_parameters);
 
             const result = try handler.resolvePopJobResult(setting, response);
 
