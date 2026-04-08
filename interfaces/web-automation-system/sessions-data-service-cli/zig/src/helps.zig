@@ -181,7 +181,7 @@ pub fn printCommandHelp(command: Command) void {
                 \\
                 \\Examples:
                 \\  sessions-data-service-cli push --session=session.json
-                \\  sessions-data-service-cli push --reference=sess-1 --storage-state='{"cookies":[],"localStorage":{}}'
+                \\  sessions-data-service-cli push --reference=session-1 --storage-state=<json-string>
                 \\
                 \\
             , .{});
