@@ -5,28 +5,24 @@ const help = @import("helps.zig");
 
 const Setting = @import("settings.zig").Setting;
 
-pub fn run(setting: Setting) !void {
-    const arguments = try std.process.argsAlloc(setting.allocator);
-
-    defer std.process.argsFree(setting.allocator, arguments);
-
-    if (arguments.len < 2) {
+pub fn run(setting: Setting, parameters: []const []const u8) !void {
+    if (parameters.len < 2) {
         return help.printUsage();
     }
 
-    if (handler.checkHelpFlag(arguments)) {
+    if (handler.checkHelpFlag(parameters)) {
         return help.printHelp();
     }
 
-    if (handler.checkVersionFlag(arguments)) {
+    if (handler.checkVersionFlag(parameters)) {
         return help.printVersion();
     }
 
-    const command = handler.resolveCommand(arguments[1]) catch {
+    const command = handler.resolveCommand(parameters[1]) catch {
         return help.printUsage();
     };
 
-    const command_parameters = arguments[2..];
+    const command_parameters = parameters[2..];
 
     if (handler.checkCommandHelpFlag(command_parameters)) {
         return help.printCommandHelp(command);
