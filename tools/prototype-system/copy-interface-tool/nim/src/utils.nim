@@ -39,3 +39,9 @@ proc resolveSystemDirectory*(systemPath: string): string =
 
 proc resolveInterfaceSuffix*(interfacePath: string): string =
     return interfacePath.split("-")[^1]
+
+proc resolveTargetInterfaceDirectory*(target: string, source: string): string =
+    return resolveInterfaceDirectory(target) / lastPathPart(source)
+
+proc resolveTargetSystemDirectory*(target: string, source: string): string =
+    return resolveSystemDirectory(target) / lastPathPart(source)
