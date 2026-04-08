@@ -121,7 +121,7 @@ fn resolvePushSessionParametersFromFile(allocator: std.mem.Allocator, path: []co
 
             if (object_value.get("storage_state")) |key_value| {
                 // Storage state can be an object or string, serialize it
-                var buffer = std.ArrayList(u8){};
+                var buffer: std.ArrayList(u8) = .empty;
                 defer buffer.deinit(allocator);
 
                 try std.json.stringify(key_value, .{}, buffer.writer(allocator));
@@ -409,7 +409,7 @@ fn resolveSessionFromObject(allocator: std.mem.Allocator, object_value: std.json
 
     if (object_value.get("storage_state")) |key_value| {
         // Storage state can be an object or string, serialize it
-        var buffer = std.ArrayList(u8){};
+        var buffer: std.ArrayList(u8) = .empty;
         defer buffer.deinit(allocator);
 
         try std.json.stringify(key_value, .{}, buffer.writer(allocator));
