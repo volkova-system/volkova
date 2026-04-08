@@ -5,28 +5,24 @@ const help = @import("helps.zig");
 
 const Setting = @import("settings.zig").Setting;
 
-pub fn run(setting: Setting) !void {
-    const arguments = try std.process.argsAlloc(setting.allocator);
-
-    defer std.process.argsFree(setting.allocator, arguments);
-
-    if (arguments.len < 2) {
+pub fn run(setting: Setting, parameters: []const []const u8) !void {
+    if (parameters.len < 2) {
         return help.printUsage();
     }
 
-    if (handler.checkHelpFlag(arguments)) {
+    if (handler.checkHelpFlag(parameters)) {
         return help.printHelp();
     }
 
-    if (handler.checkVersionFlag(arguments)) {
+    if (handler.checkVersionFlag(parameters)) {
         return help.printVersion();
     }
 
-    const command = handler.resolveCommand(arguments[1]) catch {
+    const command = handler.resolveCommand(parameters[1]) catch {
         return help.printUsage();
     };
 
-    const command_parameters = arguments[2..];
+    const command_parameters = parameters[2..];
 
     if (handler.checkCommandHelpFlag(command_parameters)) {
         return help.printCommandHelp(command);
@@ -69,36 +65,36 @@ pub fn run(setting: Setting) !void {
             try std.fs.File.stdout().writeAll(result.raw_operation);
         },
         .push => {
-            const parameters = try handler.resolvePushRuntimeParameters(setting, command_parameters);
+            const push_parameters = try handler.resolvePushRuntimeParameters(setting, command_parameters);
 
-            const response = try engine.pushRuntime(setting, parameters);
+            const response = try engine.pushRuntime(setting, push_parameters);
 
             const result = try handler.resolvePushRuntimeResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.reference);
         },
         .get => {
-            const parameters = try handler.resolveGetRuntimeParameters(command_parameters);
+            const get_parameters = try handler.resolveGetRuntimeParameters(command_parameters);
 
-            const response = try engine.getRuntime(setting, parameters);
+            const response = try engine.getRuntime(setting, get_parameters);
 
             const result = try handler.resolveGetRuntimeResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_runtime);
         },
         .list => {
-            const parameters = try handler.resolveGetRuntimesParameters(command_parameters);
+            const list_parameters = try handler.resolveGetRuntimesParameters(command_parameters);
 
-            const response = try engine.getRuntimes(setting, parameters);
+            const response = try engine.getRuntimes(setting, list_parameters);
 
             const result = try handler.resolveGetRuntimesResult(setting, response);
 
             try std.fs.File.stdout().writeAll(result.raw_runtimes);
         },
         .pop => {
-            const parameters = try handler.resolvePopRuntimeParameters(command_parameters);
+            const pop_parameters = try handler.resolvePopRuntimeParameters(setting, command_parameters);
 
-            const response = try engine.popRuntime(setting, parameters);
+            const response = try engine.popRuntime(setting, pop_parameters);
 
             const result = try handler.resolvePopRuntimeResult(setting, response);
 
