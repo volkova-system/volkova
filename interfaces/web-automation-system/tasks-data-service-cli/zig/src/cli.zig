@@ -1,9 +1,9 @@
 const std = @import("std");
-const handler = @import("handler.zig");
-const engine = @import("engine.zig");
-const help = @import("help.zig");
+const handler = @import("handlers.zig");
+const engine = @import("engines.zig");
+const help = @import("helps.zig");
 
-const Setting = @import("setting.zig").Setting;
+const Setting = @import("settings.zig").Setting;
 
 pub fn run(setting: Setting) !void {
     const arguments = try std.process.argsAlloc(setting.allocator);
