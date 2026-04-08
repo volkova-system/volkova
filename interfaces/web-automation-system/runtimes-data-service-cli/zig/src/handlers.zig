@@ -107,6 +107,7 @@ pub fn resolveCommand(raw: []const u8) !Command {
 
     return error.UnknownCommand;
 }
+
 // resolvePushRuntimeParameters parses required and optional push flags.
 // Required: --reference= --session-reference= --session-storage-state= --queue-reference= --queue-name= --queue-description= --queue-state= --queue-index= --job-reference= --job-name= --job-description= --job-schedule= --task-reference= --task-name= --task-description= --action-reference= --action-name= --action-description= --action-type= --state=
 // Optional: --action-address= --action-selector= --action-value= --action-script= --action-delay= --issue=
@@ -252,6 +253,7 @@ pub fn resolvePushRuntimeParameters(
         .issue = issue,
     };
 }
+
 fn resolvePushRuntimeParametersFromFile(
     allocator: std.mem.Allocator,
     path: []const u8,
@@ -792,6 +794,7 @@ pub fn resolvePushRuntimeResult(setting: Setting, result: Response) !PushRuntime
         .reference = reference.?,
     };
 }
+
 pub fn resolveGetRuntimeResult(setting: Setting, result: Response) !GetRuntimeResult {
     if (result.status < 200 or result.status >= 300) {
         return error.InvalidResponse;
@@ -886,6 +889,7 @@ pub fn resolvePopRuntimeResult(setting: Setting, result: Response) !PopRuntimeRe
         return error.InvalidJsonFormat;
     }
 }
+
 fn resolveRuntimeFromObject(allocator: std.mem.Allocator, object_value: std.json.ObjectMap) !Runtime {
     var reference: ?[]const u8 = null;
 
