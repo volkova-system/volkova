@@ -141,19 +141,12 @@ containers/*/data/**/*.*
 !interfaces/*-system/*-cai/storybook/tsconfig.json
 
 !interfaces/*-system/*-cli/zig/
-!interfaces/*-system/*-cli/zig/src/
 !interfaces/*-system/*-cli/zig/dist/
 !interfaces/*-system/*-cli/zig/dist/windows/
+!interfaces/*-system/*-cli/zig/src/
+!interfaces/*-system/*-cli/zig/src/interfaces/
 !interfaces/*-system/*-cli/zig/src/*.zig
 !interfaces/*-system/*-cli/zig/src/*.tool
-
-!interfaces/*-system/*-cli/go/
-!interfaces/*-system/*-cli/go/src/
-!interfaces/*-system/*-cli/go/dist/
-!interfaces/*-system/*-cli/go/dist/windows/
-!interfaces/*-system/*-cli/go/src/*.go
-!interfaces/*-system/*-cli/go/src/*.mod
-!interfaces/*-system/*-cli/go/src/*.tool
 # END INTERFACES
 
 !prompts/
