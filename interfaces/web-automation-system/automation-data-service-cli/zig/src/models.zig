@@ -14,11 +14,6 @@ pub const Command = enum {
     abort,
     start,
     kill,
-
-    list,
-    get,
-    push,
-    pop,
 };
 
 pub const CheckHealthResult = struct {
