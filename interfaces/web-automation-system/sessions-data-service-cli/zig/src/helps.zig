@@ -68,7 +68,7 @@ pub fn printHelp() void {
         \\  sessions-data-service-cli list --limit=20 --skip=10
         \\  sessions-data-service-cli get my-session-ref
         \\  sessions-data-service-cli push --session=session.json
-        \\  sessions-data-service-cli push --reference=sess-1 --storage-state='{"cookies":[],"localStorage":{}}'
+        \\  sessions-data-service-cli push --reference=session-1 --storage-state=<json-string>
         \\  sessions-data-service-cli pop my-session-ref
         \\
         \\
