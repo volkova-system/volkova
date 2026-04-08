@@ -101,8 +101,10 @@ proc validateSourceInterfaceDirectory*(session: ToolSession): ToolSession =
     )
 
 proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
-    let interfaceDirectory = utils.resolveInterfaceDirectory(session.target)
+    if session.systems:
+        return session
 
+    let interfaceDirectory = utils.resolveInterfaceDirectory(session.target)
     if not dirExists(interfaceDirectory):
         return ToolSession(
             status: false,
@@ -116,21 +118,14 @@ proc validateTargetInterfaceDirectory*(session: ToolSession): ToolSession =
             issue: "invalid target interface directory, " & interfaceDirectory
         )
 
-    let targetOutputDirectory = interfaceDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != interfacesDirectory and
-        (not targetOutputDirectory.endsWith(session.targetSuffix)):
-        return ToolSession(
-            status: false,
-            issue: "invalid target output directory, " & targetOutputDirectory
-        )
-
     return ToolSession(
         status: true,
 
         source: session.source,
         systems: session.systems,
         targetSuffix: session.targetSuffix,
-        target: targetOutputDirectory
+        target: utils.resolveTargetInterfaceDirectory(session.target,
+                session.source)
     )
 
 proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
@@ -138,7 +133,6 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
         return session
 
     let systemDirectory = utils.resolveSystemDirectory(session.target)
-
     if not dirExists(systemDirectory):
         return ToolSession(
             status: false,
@@ -152,21 +146,14 @@ proc validateTargetSystemDirectory*(session: ToolSession): ToolSession =
             issue: "invalid target system directory, " & systemDirectory
         )
 
-    let targetOutputDirectory = systemDirectory / lastPathPart(session.source)
-    if lastPathPart(parentDir(targetOutputDirectory)) != interfacesDirectory and
-        (not targetOutputDirectory.endsWith(session.targetSuffix)):
-        return ToolSession(
-            status: false,
-            issue: "invalid target output directory, " & targetOutputDirectory
-        )
-
     return ToolSession(
         status: true,
 
         source: session.source,
         systems: session.systems,
         targetSuffix: session.targetSuffix,
-        target: targetOutputDirectory
+        target: utils.resolveTargetSystemDirectory(session.target,
+                session.source)
     )
 
 proc validatePaths*(session: ToolSession): ToolSession =
