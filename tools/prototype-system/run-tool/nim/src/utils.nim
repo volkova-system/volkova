@@ -56,6 +56,9 @@ proc getToolFilePath*(
     if fileExists(getProcessCurrentDirectory() / toolFilePath):
         return getProcessCurrentDirectory() / toolFilePath
 
+    if fileExists(absolutePath(toolFilePath)):
+        return absolutePath(toolFilePath)
+
     raise newException(OSError, "tool file path not found")
 
 proc getPowerShellScriptPath*(scriptFile: string): string =
