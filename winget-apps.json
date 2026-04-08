@@ -22,7 +22,7 @@
                 },
                 {
                     "PackageIdentifier": "Python.Python.3.14",
-                    "Version": "3.14.3",
+                    "Version": "3.14.4",
                     "Source": "winget"
                 },
                 {
@@ -32,7 +32,7 @@
                 },
                 {
                     "PackageIdentifier": "Postman.Postman",
-                    "Version": "12.4.5",
+                    "Version": "12.5.2",
                     "Source": "winget"
                 },
                 {
