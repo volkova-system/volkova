@@ -136,5 +136,20 @@ pub fn printCommandHelp(command: Command) void {
                 \\
             , .{});
         },
+        else => {
+            std.debug.print(
+                \\
+                \\
+                \\module - Module command group help
+                \\
+                \\Usage:
+                \\  automation-data-service-cli <module> --help
+                \\
+                \\Description:
+                \\  Use this to see commands for modules like actions, tasks, jobs, queues, sessions, runtimes.
+                \\
+                \\
+            , .{});
+        },
     }
 }
