@@ -51,6 +51,13 @@ pub fn resolveCommand(raw: []const u8) !Command {
     if (std.mem.eql(u8, raw, "start")) return .start;
     if (std.mem.eql(u8, raw, "kill")) return .kill;
 
+    if (std.mem.eql(u8, raw, "actions")) return .actions;
+    if (std.mem.eql(u8, raw, "tasks")) return .tasks;
+    if (std.mem.eql(u8, raw, "jobs")) return .jobs;
+    if (std.mem.eql(u8, raw, "queues")) return .queues;
+    if (std.mem.eql(u8, raw, "sessions")) return .sessions;
+    if (std.mem.eql(u8, raw, "runtimes")) return .runtimes;
+
     return error.UnknownCommand;
 }
 
