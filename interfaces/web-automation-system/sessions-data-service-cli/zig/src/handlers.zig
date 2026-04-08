@@ -124,7 +124,8 @@ fn resolvePushSessionParametersFromFile(allocator: std.mem.Allocator, path: []co
                 var buffer: std.ArrayList(u8) = .empty;
                 defer buffer.deinit(allocator);
 
-                try std.json.stringify(key_value, .{}, buffer.writer(allocator));
+                var writer = buffer.writer(allocator);
+                try writer.print("{f}", .{std.json.fmt(key_value, .{})});
                 storage_state = try buffer.toOwnedSlice(allocator);
             }
 
@@ -412,7 +413,8 @@ fn resolveSessionFromObject(allocator: std.mem.Allocator, object_value: std.json
         var buffer: std.ArrayList(u8) = .empty;
         defer buffer.deinit(allocator);
 
-        try std.json.stringify(key_value, .{}, buffer.writer(allocator));
+        var writer = buffer.writer(allocator);
+        try writer.print("{f}", .{std.json.fmt(key_value, .{})});
         storage_state = try buffer.toOwnedSlice(allocator);
     }
 
